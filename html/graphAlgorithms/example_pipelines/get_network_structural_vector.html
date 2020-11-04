@@ -1,0 +1,766 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.5" />
+<title>graphAlgorithms.example_pipelines.get_network_structural_vector API documentation</title>
+<meta name="description" content="This is an example pipeline on how to estimate the similarity between multiple networks
+based computing a vector for each networks based on structural …" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>graphAlgorithms.example_pipelines.get_network_structural_vector</code></h1>
+</header>
+<section id="section-intro">
+<p>This is an example pipeline on how to estimate the similarity between multiple networks
+based computing a vector for each networks based on structural similarities</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+This is an example pipeline on how to estimate the similarity between multiple networks
+based computing a vector for each networks based on structural similarities
+&#34;&#34;&#34;
+
+import networkx as nx
+import pandas as pd
+import csv
+import random
+import sys
+import graphAlgorithms.distances.global_distances as global_distances
+import graphAlgorithms.distances.local as local
+import graphAlgorithms.simplification as simplification
+import graphAlgorithms.distances.trees as trees
+import pickle
+from scipy.stats import kurtosis, skew, kendalltau
+import statistics
+import numpy as np
+import scipy
+
+
+def graphlet_helper(network, estimate_on=50, edge_attribute=&#34;weight&#34;, motif_min_size=2, motif_max_size=4):
+    &#34;&#34;&#34;
+    helper function on how to estimate graphlets of different sizes  on a networks based on a random selection of nodes
+
+    Input
+        network is a networkx graph object
+
+        other parameters are iterate_graphlets() parameters, please refer to function declaration for their description
+
+    Output
+        list of sublists
+            for each estimated graphlet a separate sublist, containing its count and size distribution metrics
+            graphlets are orderd after their id (s. graph atlas for their order)
+
+        list of dicts containing counts for each graphlet where key is graphlet id
+
+    &#34;&#34;&#34;
+
+    temp = []
+    
+
+    graphlets_counted, graphlets, graphlets_size, motifs = local.iterate_graphlets(network, estimate_on=estimate_on, edge_attribute=edge_attribute, motif_min_size=motif_min_size, motif_max_size=motif_max_size)
+    #print(&#34;graphlets&#34;, graphlets_counted)
+    #print(&#34;graphlets size&#34;, graphlets_size)
+    
+    for key in graphlets_counted:
+        temp.append(graphlets_counted[key])
+        
+
+    for key in graphlets_size:
+        if len(graphlets_size[key]) &gt; 1:
+            mean = statistics.mean(graphlets_size[key])
+            median = statistics.median(graphlets_size[key])
+            std = statistics.stdev(graphlets_size[key])
+            skw = skew(graphlets_size[key])
+            kurt = kurtosis(graphlets_size[key])
+        else:
+            
+            mean = graphlets_size[key]
+            if len(mean) == 0:
+                mean = 0
+            else:
+                mean = mean[0]
+            median = graphlets_size[key]
+            if len(median) == 0:
+                median = 0
+            else:
+                median = median[0]
+            std = 0
+            skw = 0
+            kurt = 0
+
+
+        temp.append(mean)
+        temp.append(median)
+        temp.append(std)
+        temp.append(skw)
+        temp.append(kurt)
+
+    return temp, graphlets_counted, graphlets, motifs
+
+
+
+
+def estimate_vector(networks, edge_attribute=&#34;weight&#34;, is_file=False):
+    &#34;&#34;&#34;
+    helper function to estimate a feature vector for a network
+
+    Input
+        list of networkx graph objects or paths of their networkx weighted edgelist (if_file is True)
+
+        edge_attribute to be used for parameters taking edge weight into account
+
+        if is_file then networks is interpreted as list of paths else as list of networks graph objects
+
+    Output
+        list of vectors ordered as networks
+    &#34;&#34;&#34;
+
+
+
+    vectors = []
+
+    for nn in networks:
+        if is_file:
+            network = nx.read_weighted_edgelist(nn)
+        else:
+            network = nn
+        temp_vector = []
+        #mean_degree, median_degree, std_degree, skw_degree, kurt_degree = global_distances.node_degree_distribution(network)
+        print(&#34;global&#34;)
+
+
+        #size = global_distances.graph_size(network)
+        #radius = size[&#34;radius&#34;]
+        #diameter = size[&#34;diameter&#34;]
+        nodes = len(list(network.nodes()))
+        edges = len(list(network.edges()))
+        print(&#34;nodes&#34;, nodes)
+        print(&#34;edges&#34;, edges)
+        #temp_vector.append(radius)
+        #temp_vector.append(diameter)
+        temp_vector.append(nodes)
+        temp_vector.append(edges)
+
+        print(&#34;density&#34;)
+
+        density = global_distances.density(network)
+        temp_vector.append(density)
+        #print(&#34;clustering&#34;)
+        #clustering = global_distances.average_clustering(network)
+        #temp_vector.append(clustering)
+
+        print(&#34;graph edges&#34;)
+
+        edges = global_distances.graph_edges(network)
+        non_edges = edges[&#34;missing_edges_percentage&#34;]
+        ex_edges = edges[&#34;existing_edges_percentage&#34;]
+        temp_vector.append(non_edges)
+        temp_vector.append(ex_edges)
+
+        &#39;&#39;&#39;
+        print(&#34;cycles&#34;)
+
+        cycles = global_distances.cycle_distribution(network)
+        nr_cycles = cycles[&#34;number_of_cycles&#34;]
+        median_cycles = cycles[&#34;median_cycle_length&#34;]
+        mean_cycles = cycles[&#34;mean_cycle_length&#34;]
+        std_cycles = cycles[&#34;std_cycle_length&#34;]
+        skw_cycles = cycles[&#34;skw_cycle_length&#34;]
+        kurt_cycles = cycles[&#34;kurtosis_cycle_length&#34;]
+        temp_vector.append(nr_cycles)
+        temp_vector.append(mean_cycles)
+        temp_vector.append(median_cycles)
+        temp_vector.append(std_cycles)
+        temp_vector.append(skw_cycles)
+        temp_vector.append(kurt_cycles)
+
+        
+        paths = global_distances.path_length_distribution(network)
+        path_mean = paths[&#34;mean path length&#34;]
+        path_median = paths[&#34;median path length&#34;]
+        path_std = paths[&#34;std path length&#34;]
+        path_skw = paths[&#34;skw path length&#34;]
+        path_kurt = paths[&#34;kurtosis path length&#34;]
+        temp_vector.append(path_mean)
+        temp_vector.append(path_median)
+        temp_vector.append(path_std)
+        temp_vector.append(path_skw)
+        temp_vector.append(path_kurt)
+        
+
+        print(&#34;cc&#34;)
+        cc = global_distances.clustering_coefficient(network)
+        temp_vector.append(cc)
+        &#39;&#39;&#39;
+        print(&#34;degree dist&#34;)
+
+        degree = global_distances.degree_centrality(network)
+        mean_centrality = degree[&#34;mean_centrality&#34;]
+        median_centrality = degree[&#34;median_centrality&#34;]
+        std_centrality = degree[&#34;std_centrality&#34;]
+        skw_centrality = degree[&#34;skew_centrality&#34;]
+        kurt_centrality = degree[&#34;kurtosis_centrality&#34;]
+        temp_vector.append(mean_centrality)
+        temp_vector.append(median_centrality)
+        temp_vector.append(std_centrality)
+        temp_vector.append(skw_centrality)
+        temp_vector.append(kurt_centrality)
+
+        &#39;&#39;&#39;
+        print(&#34;cc dist&#34;)
+        close = global_distances.closeness_centrality(network, distance=edge_attribute)
+        mean_centrality = close[&#34;mean_centrality&#34;]
+        median_centrality = close[&#34;median_centrality&#34;]
+        std_centrality = close[&#34;std_centrality&#34;]
+        skw_centrality = close[&#34;skew_centrality&#34;]
+        kurt_centrality = close[&#34;kurtosis_centrality&#34;]
+        temp_vector.append(mean_centrality)
+        temp_vector.append(median_centrality)
+        temp_vector.append(std_centrality)
+        temp_vector.append(skw_centrality)
+        temp_vector.append(kurt_centrality)
+
+        print(&#34;betweenness dist&#34;)
+
+        bet = global_distances.betweeness_centrality(network, weight=edge_attribute)
+        mean_centrality = bet[&#34;mean_centrality&#34;]
+        median_centrality = bet[&#34;median_centrality&#34;]
+        std_centrality = bet[&#34;std_centrality&#34;]
+        skw_centrality = bet[&#34;skew_centrality&#34;]
+        kurt_centrality = bet[&#34;kurtosis_centrality&#34;]
+        temp_vector.append(mean_centrality)
+        temp_vector.append(median_centrality)
+        temp_vector.append(std_centrality)
+        temp_vector.append(skw_centrality)
+        temp_vector.append(kurt_centrality)
+        &#39;&#39;&#39;
+        &#39;&#39;&#39;
+        #local
+        graphlets, graphlets_counted, g, motifs= graphlet_helper(network)
+        for item in graphlets:
+            temp_vector.append(item)
+        &#39;&#39;&#39;
+        print(temp_vector)
+        
+        vectors.append(temp_vector)
+
+
+    return vectors
+
+def matrix_from_vector(vectors, normalize=False):
+    &#34;&#34;&#34;
+    this is an example function on how to estimate similarity/ distance matrices based on computed vectors
+    careful distances are only calculated one-sided (only half of matrix is calculated, other half is assumed to be the same)
+    None values in vector are replaced with 0
+    based on the vector parameters distance between the same networks may not be 0
+        if this is necessary matrix diagonal needs to be set manually to 0
+
+    this function provides eclidean, canberra, correlation, cosine &amp; jaccard distance
+        others can be added if needed
+
+    Input
+        list of vectors as returned by estimate_vector()
+
+        if normalize then euclidean &amp; canberra distance matrices are normalized
+
+    Output
+        returns numpy matrixes containing the similarity/ distance scores 
+            matrix indices are ordered as provided in vectors
+
+        euclidean distance #careful the distance may not be normalized!
+        canberra #careful distance may not be normalized!
+        correaltion
+        cosine
+        jaccard
+
+
+
+    &#34;&#34;&#34;
+
+    results_euclidean =  np.zeros((len(vectors), len(vectors)))
+    results_canberra =  np.zeros((len(vectors), len(vectors)))
+    results_correlation =  np.zeros((len(vectors), len(vectors)))
+    results_cosine =  np.zeros((len(vectors), len(vectors)))
+    results_jaccard =  np.zeros((len(vectors), len(vectors)))
+
+    results =  np.zeros((len(vectors), len(vectors)))
+
+    index_list = []
+    for index, x in np.ndenumerate(results):
+        temp = (index[1], index[0])
+        if temp not in index_list and index not in index_list:
+            index_list.append(index)
+
+    for i in index_list:
+        print(i)
+        v1 = vectors[i[0]]
+        v2 = vectors[i[1]]
+        
+        while None in v1:
+            ii = v1.index(None)
+            v1[ii] = 0
+            
+        while None in v2:
+            ii = v2.index(None)
+            v2[ii] = 0
+        
+        
+        e = scipy.spatial.distance.euclidean(v1, v2)
+        
+        results_euclidean[i[0]][i[1]] = e
+        results_euclidean[i[1]][i[0]] = e
+        
+        
+        e = scipy.spatial.distance.canberra(v1, v2)
+        
+        results_canberra[i[0]][i[1]] = e
+        results_canberra[i[1]][i[0]] = e
+        
+        e = scipy.spatial.distance.correlation(v1, v2)
+        
+        results_correlation[i[0]][i[1]] = e
+        results_correlation[i[1]][i[0]] = e
+        
+        e = scipy.spatial.distance.cosine(v1, v2)
+        
+        results_cosine[i[0]][i[1]] = e
+        results_cosine[i[1]][i[0]] = e
+        
+        e = scipy.spatial.distance.jaccard(v1, v2)
+        
+        results_jaccard[i[0]][i[1]] = e
+        results_jaccard[i[1]][i[0]] = e
+
+    if normalize:
+        xmax, xmin = results_canberra.max(), results_canberra.min()
+        results_canberra = (results_canberra - xmin)/(xmax - xmin)
+
+        xmax, xmin = results_euclidean.max(), results_euclidean.min()
+        results_euclidean = (results_euclidean - xmin)/(xmax - xmin)
+
+
+    return results_euclidean, results_canberra, results_correlation, results_cosine, results_jaccard</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="graphAlgorithms.example_pipelines.get_network_structural_vector.estimate_vector"><code class="name flex">
+<span>def <span class="ident">estimate_vector</span></span>(<span>networks, edge_attribute='weight', is_file=False)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>helper function to estimate a feature vector for a network</p>
+<p>Input
+list of networkx graph objects or paths of their networkx weighted edgelist (if_file is True)</p>
+<pre><code>edge_attribute to be used for parameters taking edge weight into account
+
+if is_file then networks is interpreted as list of paths else as list of networks graph objects
+</code></pre>
+<p>Output
+list of vectors ordered as networks</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def estimate_vector(networks, edge_attribute=&#34;weight&#34;, is_file=False):
+    &#34;&#34;&#34;
+    helper function to estimate a feature vector for a network
+
+    Input
+        list of networkx graph objects or paths of their networkx weighted edgelist (if_file is True)
+
+        edge_attribute to be used for parameters taking edge weight into account
+
+        if is_file then networks is interpreted as list of paths else as list of networks graph objects
+
+    Output
+        list of vectors ordered as networks
+    &#34;&#34;&#34;
+
+
+
+    vectors = []
+
+    for nn in networks:
+        if is_file:
+            network = nx.read_weighted_edgelist(nn)
+        else:
+            network = nn
+        temp_vector = []
+        #mean_degree, median_degree, std_degree, skw_degree, kurt_degree = global_distances.node_degree_distribution(network)
+        print(&#34;global&#34;)
+
+
+        #size = global_distances.graph_size(network)
+        #radius = size[&#34;radius&#34;]
+        #diameter = size[&#34;diameter&#34;]
+        nodes = len(list(network.nodes()))
+        edges = len(list(network.edges()))
+        print(&#34;nodes&#34;, nodes)
+        print(&#34;edges&#34;, edges)
+        #temp_vector.append(radius)
+        #temp_vector.append(diameter)
+        temp_vector.append(nodes)
+        temp_vector.append(edges)
+
+        print(&#34;density&#34;)
+
+        density = global_distances.density(network)
+        temp_vector.append(density)
+        #print(&#34;clustering&#34;)
+        #clustering = global_distances.average_clustering(network)
+        #temp_vector.append(clustering)
+
+        print(&#34;graph edges&#34;)
+
+        edges = global_distances.graph_edges(network)
+        non_edges = edges[&#34;missing_edges_percentage&#34;]
+        ex_edges = edges[&#34;existing_edges_percentage&#34;]
+        temp_vector.append(non_edges)
+        temp_vector.append(ex_edges)
+
+        &#39;&#39;&#39;
+        print(&#34;cycles&#34;)
+
+        cycles = global_distances.cycle_distribution(network)
+        nr_cycles = cycles[&#34;number_of_cycles&#34;]
+        median_cycles = cycles[&#34;median_cycle_length&#34;]
+        mean_cycles = cycles[&#34;mean_cycle_length&#34;]
+        std_cycles = cycles[&#34;std_cycle_length&#34;]
+        skw_cycles = cycles[&#34;skw_cycle_length&#34;]
+        kurt_cycles = cycles[&#34;kurtosis_cycle_length&#34;]
+        temp_vector.append(nr_cycles)
+        temp_vector.append(mean_cycles)
+        temp_vector.append(median_cycles)
+        temp_vector.append(std_cycles)
+        temp_vector.append(skw_cycles)
+        temp_vector.append(kurt_cycles)
+
+        
+        paths = global_distances.path_length_distribution(network)
+        path_mean = paths[&#34;mean path length&#34;]
+        path_median = paths[&#34;median path length&#34;]
+        path_std = paths[&#34;std path length&#34;]
+        path_skw = paths[&#34;skw path length&#34;]
+        path_kurt = paths[&#34;kurtosis path length&#34;]
+        temp_vector.append(path_mean)
+        temp_vector.append(path_median)
+        temp_vector.append(path_std)
+        temp_vector.append(path_skw)
+        temp_vector.append(path_kurt)
+        
+
+        print(&#34;cc&#34;)
+        cc = global_distances.clustering_coefficient(network)
+        temp_vector.append(cc)
+        &#39;&#39;&#39;
+        print(&#34;degree dist&#34;)
+
+        degree = global_distances.degree_centrality(network)
+        mean_centrality = degree[&#34;mean_centrality&#34;]
+        median_centrality = degree[&#34;median_centrality&#34;]
+        std_centrality = degree[&#34;std_centrality&#34;]
+        skw_centrality = degree[&#34;skew_centrality&#34;]
+        kurt_centrality = degree[&#34;kurtosis_centrality&#34;]
+        temp_vector.append(mean_centrality)
+        temp_vector.append(median_centrality)
+        temp_vector.append(std_centrality)
+        temp_vector.append(skw_centrality)
+        temp_vector.append(kurt_centrality)
+
+        &#39;&#39;&#39;
+        print(&#34;cc dist&#34;)
+        close = global_distances.closeness_centrality(network, distance=edge_attribute)
+        mean_centrality = close[&#34;mean_centrality&#34;]
+        median_centrality = close[&#34;median_centrality&#34;]
+        std_centrality = close[&#34;std_centrality&#34;]
+        skw_centrality = close[&#34;skew_centrality&#34;]
+        kurt_centrality = close[&#34;kurtosis_centrality&#34;]
+        temp_vector.append(mean_centrality)
+        temp_vector.append(median_centrality)
+        temp_vector.append(std_centrality)
+        temp_vector.append(skw_centrality)
+        temp_vector.append(kurt_centrality)
+
+        print(&#34;betweenness dist&#34;)
+
+        bet = global_distances.betweeness_centrality(network, weight=edge_attribute)
+        mean_centrality = bet[&#34;mean_centrality&#34;]
+        median_centrality = bet[&#34;median_centrality&#34;]
+        std_centrality = bet[&#34;std_centrality&#34;]
+        skw_centrality = bet[&#34;skew_centrality&#34;]
+        kurt_centrality = bet[&#34;kurtosis_centrality&#34;]
+        temp_vector.append(mean_centrality)
+        temp_vector.append(median_centrality)
+        temp_vector.append(std_centrality)
+        temp_vector.append(skw_centrality)
+        temp_vector.append(kurt_centrality)
+        &#39;&#39;&#39;
+        &#39;&#39;&#39;
+        #local
+        graphlets, graphlets_counted, g, motifs= graphlet_helper(network)
+        for item in graphlets:
+            temp_vector.append(item)
+        &#39;&#39;&#39;
+        print(temp_vector)
+        
+        vectors.append(temp_vector)
+
+
+    return vectors</code></pre>
+</details>
+</dd>
+<dt id="graphAlgorithms.example_pipelines.get_network_structural_vector.graphlet_helper"><code class="name flex">
+<span>def <span class="ident">graphlet_helper</span></span>(<span>network, estimate_on=50, edge_attribute='weight', motif_min_size=2, motif_max_size=4)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>helper function on how to estimate graphlets of different sizes
+on a networks based on a random selection of nodes</p>
+<p>Input
+network is a networkx graph object</p>
+<pre><code>other parameters are iterate_graphlets() parameters, please refer to function declaration for their description
+</code></pre>
+<p>Output
+list of sublists
+for each estimated graphlet a separate sublist, containing its count and size distribution metrics
+graphlets are orderd after their id (s. graph atlas for their order)</p>
+<pre><code>list of dicts containing counts for each graphlet where key is graphlet id
+</code></pre></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def graphlet_helper(network, estimate_on=50, edge_attribute=&#34;weight&#34;, motif_min_size=2, motif_max_size=4):
+    &#34;&#34;&#34;
+    helper function on how to estimate graphlets of different sizes  on a networks based on a random selection of nodes
+
+    Input
+        network is a networkx graph object
+
+        other parameters are iterate_graphlets() parameters, please refer to function declaration for their description
+
+    Output
+        list of sublists
+            for each estimated graphlet a separate sublist, containing its count and size distribution metrics
+            graphlets are orderd after their id (s. graph atlas for their order)
+
+        list of dicts containing counts for each graphlet where key is graphlet id
+
+    &#34;&#34;&#34;
+
+    temp = []
+    
+
+    graphlets_counted, graphlets, graphlets_size, motifs = local.iterate_graphlets(network, estimate_on=estimate_on, edge_attribute=edge_attribute, motif_min_size=motif_min_size, motif_max_size=motif_max_size)
+    #print(&#34;graphlets&#34;, graphlets_counted)
+    #print(&#34;graphlets size&#34;, graphlets_size)
+    
+    for key in graphlets_counted:
+        temp.append(graphlets_counted[key])
+        
+
+    for key in graphlets_size:
+        if len(graphlets_size[key]) &gt; 1:
+            mean = statistics.mean(graphlets_size[key])
+            median = statistics.median(graphlets_size[key])
+            std = statistics.stdev(graphlets_size[key])
+            skw = skew(graphlets_size[key])
+            kurt = kurtosis(graphlets_size[key])
+        else:
+            
+            mean = graphlets_size[key]
+            if len(mean) == 0:
+                mean = 0
+            else:
+                mean = mean[0]
+            median = graphlets_size[key]
+            if len(median) == 0:
+                median = 0
+            else:
+                median = median[0]
+            std = 0
+            skw = 0
+            kurt = 0
+
+
+        temp.append(mean)
+        temp.append(median)
+        temp.append(std)
+        temp.append(skw)
+        temp.append(kurt)
+
+    return temp, graphlets_counted, graphlets, motifs</code></pre>
+</details>
+</dd>
+<dt id="graphAlgorithms.example_pipelines.get_network_structural_vector.matrix_from_vector"><code class="name flex">
+<span>def <span class="ident">matrix_from_vector</span></span>(<span>vectors, normalize=False)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>this is an example function on how to estimate similarity/ distance matrices based on computed vectors
+careful distances are only calculated one-sided (only half of matrix is calculated, other half is assumed to be the same)
+None values in vector are replaced with 0
+based on the vector parameters distance between the same networks may not be 0
+if this is necessary matrix diagonal needs to be set manually to 0</p>
+<p>this function provides eclidean, canberra, correlation, cosine &amp; jaccard distance
+others can be added if needed</p>
+<p>Input
+list of vectors as returned by estimate_vector()</p>
+<pre><code>if normalize then euclidean &amp; canberra distance matrices are normalized
+</code></pre>
+<p>Output
+returns numpy matrixes containing the similarity/ distance scores
+matrix indices are ordered as provided in vectors</p>
+<pre><code>euclidean distance #careful the distance may not be normalized!
+canberra #careful distance may not be normalized!
+correaltion
+cosine
+jaccard
+</code></pre></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def matrix_from_vector(vectors, normalize=False):
+    &#34;&#34;&#34;
+    this is an example function on how to estimate similarity/ distance matrices based on computed vectors
+    careful distances are only calculated one-sided (only half of matrix is calculated, other half is assumed to be the same)
+    None values in vector are replaced with 0
+    based on the vector parameters distance between the same networks may not be 0
+        if this is necessary matrix diagonal needs to be set manually to 0
+
+    this function provides eclidean, canberra, correlation, cosine &amp; jaccard distance
+        others can be added if needed
+
+    Input
+        list of vectors as returned by estimate_vector()
+
+        if normalize then euclidean &amp; canberra distance matrices are normalized
+
+    Output
+        returns numpy matrixes containing the similarity/ distance scores 
+            matrix indices are ordered as provided in vectors
+
+        euclidean distance #careful the distance may not be normalized!
+        canberra #careful distance may not be normalized!
+        correaltion
+        cosine
+        jaccard
+
+
+
+    &#34;&#34;&#34;
+
+    results_euclidean =  np.zeros((len(vectors), len(vectors)))
+    results_canberra =  np.zeros((len(vectors), len(vectors)))
+    results_correlation =  np.zeros((len(vectors), len(vectors)))
+    results_cosine =  np.zeros((len(vectors), len(vectors)))
+    results_jaccard =  np.zeros((len(vectors), len(vectors)))
+
+    results =  np.zeros((len(vectors), len(vectors)))
+
+    index_list = []
+    for index, x in np.ndenumerate(results):
+        temp = (index[1], index[0])
+        if temp not in index_list and index not in index_list:
+            index_list.append(index)
+
+    for i in index_list:
+        print(i)
+        v1 = vectors[i[0]]
+        v2 = vectors[i[1]]
+        
+        while None in v1:
+            ii = v1.index(None)
+            v1[ii] = 0
+            
+        while None in v2:
+            ii = v2.index(None)
+            v2[ii] = 0
+        
+        
+        e = scipy.spatial.distance.euclidean(v1, v2)
+        
+        results_euclidean[i[0]][i[1]] = e
+        results_euclidean[i[1]][i[0]] = e
+        
+        
+        e = scipy.spatial.distance.canberra(v1, v2)
+        
+        results_canberra[i[0]][i[1]] = e
+        results_canberra[i[1]][i[0]] = e
+        
+        e = scipy.spatial.distance.correlation(v1, v2)
+        
+        results_correlation[i[0]][i[1]] = e
+        results_correlation[i[1]][i[0]] = e
+        
+        e = scipy.spatial.distance.cosine(v1, v2)
+        
+        results_cosine[i[0]][i[1]] = e
+        results_cosine[i[1]][i[0]] = e
+        
+        e = scipy.spatial.distance.jaccard(v1, v2)
+        
+        results_jaccard[i[0]][i[1]] = e
+        results_jaccard[i[1]][i[0]] = e
+
+    if normalize:
+        xmax, xmin = results_canberra.max(), results_canberra.min()
+        results_canberra = (results_canberra - xmin)/(xmax - xmin)
+
+        xmax, xmin = results_euclidean.max(), results_euclidean.min()
+        results_euclidean = (results_euclidean - xmin)/(xmax - xmin)
+
+
+    return results_euclidean, results_canberra, results_correlation, results_cosine, results_jaccard</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="graphAlgorithms.example_pipelines" href="index.html">graphAlgorithms.example_pipelines</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="graphAlgorithms.example_pipelines.get_network_structural_vector.estimate_vector" href="#graphAlgorithms.example_pipelines.get_network_structural_vector.estimate_vector">estimate_vector</a></code></li>
+<li><code><a title="graphAlgorithms.example_pipelines.get_network_structural_vector.graphlet_helper" href="#graphAlgorithms.example_pipelines.get_network_structural_vector.graphlet_helper">graphlet_helper</a></code></li>
+<li><code><a title="graphAlgorithms.example_pipelines.get_network_structural_vector.matrix_from_vector" href="#graphAlgorithms.example_pipelines.get_network_structural_vector.matrix_from_vector">matrix_from_vector</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

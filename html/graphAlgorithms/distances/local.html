@@ -1,0 +1,848 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.5" />
+<title>graphAlgorithms.distances.local API documentation</title>
+<meta name="description" content="LOCAL GRAPH METRICS …" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>graphAlgorithms.distances.local</code></h1>
+</header>
+<section id="section-intro">
+<p>LOCAL GRAPH METRICS</p>
+<p>RIGHT NOW ONLY CONTAINS NON NODE SPECIFIC GRAPHLET COUNT OPTIONS
+MULTIPLE OPTIONS AND NODE SPECIFIC OPTION NEED TO BE INTEGRATED
+NEED TO BE ADJUSTED TO ASYNC AND MULTIPROCESSES</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+LOCAL GRAPH METRICS
+
+RIGHT NOW ONLY CONTAINS NON NODE SPECIFIC GRAPHLET COUNT OPTIONS
+MULTIPLE OPTIONS AND NODE SPECIFIC OPTION NEED TO BE INTEGRATED 
+NEED TO BE ADJUSTED TO ASYNC AND MULTIPROCESSES
+&#34;&#34;&#34;
+
+
+import pandas as pd
+import glob
+import sys
+import os
+import datetime
+import math
+import networkx as nx
+import collections
+import matplotlib.pyplot as plt
+import random
+import treelib as bt
+import pickle
+
+import itertools
+from scipy.stats import kurtosis, skew
+import statistics
+#import pygraphviz
+from networkx.drawing.nx_agraph import graphviz_layout
+from networkx.algorithms.isomorphism.isomorph import graph_could_be_isomorphic as isomorphic
+from networkx.generators.atlas import graph_atlas_g
+
+
+
+def connected_component_subgraphs(G):
+    &#34;&#34;&#34;
+    replaces deprecated networkx function, which is still used in networkx generate_motifs code
+    &#34;&#34;&#34;
+    for c in nx.connected_components(G):
+        yield G.subgraph(c)
+
+
+
+
+def generate_motifs(x=208):
+    &#34;&#34;&#34; 
+    Return the atlas of all connected graphs of 5 nodes or less.
+        Attempt to check for isomorphisms and remove.
+
+    uses networkx graph atlas, which returns all possible graphs with up to 7 nodes
+    based on https://networkx.github.io/documentation/stable/auto_examples/drawing/plot_atlas.html
+
+    Input
+        x: which motifs of graph atlas are returned
+    Output
+        graph atlas
+    &#34;&#34;&#34;
+
+    #uses networkx graph atlas, which returns all possible graphs with up to 6 nodes
+    #based on https://networkx.github.io/documentation/stable/auto_examples/drawing/plot_atlas.html
+    Atlas = graph_atlas_g()[0:x]  
+    # remove isolated nodes, only connected graphs are left
+    U = nx.Graph()  # graph for union of all graphs in atlas
+    for G in Atlas:
+        zerodegree = [n for n in G if G.degree(n) == 0]
+        for n in zerodegree:
+            G.remove_node(n)
+        U = nx.disjoint_union(U, G)
+
+    # list of graphs of all connected components
+    C = (U.subgraph(c) for c in nx.connected_components(U))
+
+    UU = nx.Graph()
+    # do quick isomorphic-like check, not a true isomorphism checker
+    nlist = []  # list of nonisomorphic graphs
+    for G in C:
+        # check against all nonisomorphic graphs so far
+        
+        
+            if not iso(G, nlist):
+                nlist.append(G)
+                UU = nx.disjoint_union(UU, G)  # union the nonisomorphic graphs
+    return UU
+
+
+def iso(G1, glist):
+    &#34;&#34;&#34;
+    helper function of generate motifs
+    &#34;&#34;&#34;
+    for G2 in glist:
+        if isomorphic(G1, G2):
+            return True
+    return False
+        
+        
+        
+def get_neighbors(nodes, G):
+    &#34;&#34;&#34;
+    get all neighbors of a node in G
+
+    Input
+        nodes
+            list of node ids
+
+        G
+            networkx graph object
+
+    Output
+        list of neighbors 
+    &#34;&#34;&#34;
+    neighbors = []
+    for node in nodes:
+        neighbors_node = list(G[node])
+        
+        for neighbor in neighbors_node:
+            neighbors.append(neighbor)
+            
+    return neighbors
+        
+        
+def count_graphlets(G, H, estimate_on=300, edge_attribute=None):
+    
+    &#34;&#34;&#34;
+    counts graphlets occuring in G
+        iterate over network graph G and get all possible subgraphs of size k
+    
+    Input
+        G is networkx graph
+        H (networkx graph) is graphlet (generated with generate motifs to cmpare graph with)
+
+        graphlets are estimated based on a random selection of x nodes which cannot be larger than the number of nodes in G
+            which are specified in estimate_on
+
+        if edge attribute is not None, then based on the provided edge weight the size of the graphlets will be returned as list
+            which can be used to estimate its size distributions
+
+    Output
+        count of graphlets
+        list of the found graphlets in G
+        list of size of the estimated graphlets
+            if edge_attribute = None list only contains 0s
+
+
+    &#34;&#34;&#34;
+    nr_graphlets = 0
+    graphlets = []
+    length_graphlet = []
+    
+    #pick 300 nodes at random
+    count = estimate_on
+
+    for l in range(count):
+        subgraph_list = []
+        #get all nodes k steps apart from node n (size of H)
+        #select node at random
+        temp = list(nx.nodes(G))
+        node = random.choice(temp)
+        neighbors = [node]
+        for k in range(nx.number_of_nodes(H)):
+            for neighbor in neighbors:
+                subgraph_list.append(neighbor)
+            neighbors = get_neighbors(neighbors, G)
+
+        #build subgraph to investigate all possible structures
+        motif_neighborhood = G.subgraph(subgraph_list)
+
+        #find possible sets
+        for sub_nodes in itertools.combinations(motif_neighborhood.nodes(),len(H.nodes())):
+            subgraph = G.subgraph(sub_nodes)
+            if nx.is_connected(subgraph) and nx.is_isomorphic(subgraph, H) and (subgraph.edges() not in graphlets):
+                graphlets.append(subgraph.edges())
+                nr_graphlets = nr_graphlets + 1
+                #print(nr_graphlets)
+                length_temp = 0
+                if edge_attribute is not None:
+                    for edge in list(nx.get_edge_attributes(subgraph, edge_attribute).keys()):
+                        length_temp = length_temp + nx.get_edge_attributes(subgraph, edge_attribute)[edge]
+                
+                #sum of edges per graphlet
+                #print(nx.get_edge_attributes(subgraph, &#34;thickness&#34;))
+                length_graphlet.append(length_temp)
+                #average edge radius per graphlet
+                
+
+    return nr_graphlets, graphlets, length_graphlet
+
+
+def iterate_graphlets(G, estimate_on=300, edge_attribute=None, motif_min_size=3, motif_max_size=6):
+
+    &#34;&#34;&#34;
+    function to count over all defined motifs in graph G
+
+    Input
+        networkx graph object
+
+        graphlets are estimated based on a random selection of x nodes which cannot be larger than the number of nodes in G
+            which are specified in estimate_on
+
+        if edge attribute is not None, then based on the provided edge weight the size of the graphlets will be returned as list
+            which can be used to estimate its size distributions
+
+        motif_min_siz: number of nodes in smallest graphlet to be counted, min permitted value is 2
+
+        motif_max_size: number of nodes in largest graphlets, max permitted value is 6
+
+    Output
+        counted graphlets (dict)
+
+        all graphlets found (dict)
+
+        size of all graphlets (dict), all 0 if edge_attribute = None
+
+        motifs (list): list index corresponds to dict keys
+
+    &#34;&#34;&#34;
+    if motif_max_size &lt;= 6 and motif_min_size &gt;= 2:
+
+        #get all motifs
+        H = generate_motifs()
+        motifs = [H.subgraph(c) for c in nx.connected_components(H)]
+
+        graphlet_counter = {}
+        graphlets_found = {}
+        graphlet_size = {}
+
+        for i in range(len(motifs)):
+
+            
+            motif = motifs[i]
+
+            if int(nx.number_of_nodes(motif)) &gt;= motif_min_size and int(nx.number_of_nodes(motif)) &lt;= motif_max_size:
+                print(&#34;counting graphlet&#34;, i)
+                nr_graphlets, graphlets, length_graphlet = count_graphlets(G, motif, estimate_on=estimate_on, edge_attribute=edge_attribute)
+
+                graphlet_counter[i] = nr_graphlets
+                graphlets_found[i] = graphlets
+                graphlet_size[i] = length_graphlet
+
+    else:
+        print(&#34;motif min and/or max value not permitted&#34;)
+        graphlet_counter = {}
+        graphlets_found = {}
+        graphlet_size = {}
+        motifs = None
+
+
+    return graphlet_counter, graphlets_found, graphlet_size, motifs
+
+
+
+def generate_node_specific_graphlets(nodes, graphlet_size=3):
+    &#34;&#34;&#34;
+    function to generate all node specific graphlets of given size between all given nodes
+
+    Input
+        nodes is list of all possible nodes
+
+        graphlet size is number of nodes of to be generated graphlets
+
+    Output
+        dict of graphlet id and values is edge list of graphlet
+    &#34;&#34;&#34;
+    
+    pos_graphlets = {}
+    cnt = 0
+
+
+    #generate all possible node combinations
+    node_comb = itertools.combinations(nodes, graphlet_size)
+
+    for g in node_comb:
+        #get all possible edges
+        pos_edges = list(itertools.combinations(g, 2))
+        #min edges to have a connected graph
+        min_edges = len(g) - 1
+        print(&#34;generating graphlets &#34;, len(g), &#34;nodes&#34;)
+        #create all possible graphs with min min_edges
+        for x in range(min_edges, len(pos_edges)+1):
+            
+            temp_edges = itertools.combinations(pos_edges, x)
+
+            #print(&#34;temp edges&#34;, temp_edges)
+
+            for e in temp_edges:
+            #create graph and check if connected
+                X  = nx.Graph()
+                
+                X.add_edges_from(e)
+
+                if nx.is_connected(X):
+                    #save
+                    #print(&#34;is connected&#34;)
+                    pos_graphlets[cnt] = e
+                    cnt = cnt + 1
+
+    return pos_graphlets
+
+
+
+
+
+def find_graphlet(G, graphlets):
+    &#34;&#34;&#34;
+    function that checks if graphlets (node/edge specific) are in graph G
+
+    Input
+        networkx graph G
+
+        dict of graphlets where key is graphlet id and value is edge list
+
+    Output
+        dict containing graphlet id and value of 0 (False) or 1 (True) if graphlet is in Graph
+    &#34;&#34;&#34;
+    in_graph = {}
+
+    for g in graphlets.keys():
+        #construct a graph from edge list
+        e = graphlets[g]
+        #print(&#34;len e&#34;, len(e))
+        X  = nx.Graph()   
+        X.add_edges_from(e)
+
+        nodes = list(X.nodes())
+
+        #get subgraph from G with this nodes
+        S = G.subgraph(nodes)
+
+
+        #check if S &amp; X are the same
+        if nx.is_isomorphic(X, S):
+            #print(&#34;edges S&#34;, S.edges())
+            #print(&#34;edges X&#34;, X.edges())
+            if g in in_graph.keys():
+                print(&#34;error&#34;)
+            in_graph[g] = 1
+        else:
+            in_graph[g] = 0
+
+    return in_graph</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="graphAlgorithms.distances.local.connected_component_subgraphs"><code class="name flex">
+<span>def <span class="ident">connected_component_subgraphs</span></span>(<span>G)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>replaces deprecated networkx function, which is still used in networkx generate_motifs code</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def connected_component_subgraphs(G):
+    &#34;&#34;&#34;
+    replaces deprecated networkx function, which is still used in networkx generate_motifs code
+    &#34;&#34;&#34;
+    for c in nx.connected_components(G):
+        yield G.subgraph(c)</code></pre>
+</details>
+</dd>
+<dt id="graphAlgorithms.distances.local.count_graphlets"><code class="name flex">
+<span>def <span class="ident">count_graphlets</span></span>(<span>G, H, estimate_on=300, edge_attribute=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>counts graphlets occuring in G
+iterate over network graph G and get all possible subgraphs of size k</p>
+<p>Input
+G is networkx graph
+H (networkx graph) is graphlet (generated with generate motifs to cmpare graph with)</p>
+<pre><code>graphlets are estimated based on a random selection of x nodes which cannot be larger than the number of nodes in G
+    which are specified in estimate_on
+
+if edge attribute is not None, then based on the provided edge weight the size of the graphlets will be returned as list
+    which can be used to estimate its size distributions
+</code></pre>
+<p>Output
+count of graphlets
+list of the found graphlets in G
+list of size of the estimated graphlets
+if edge_attribute = None list only contains 0s</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def count_graphlets(G, H, estimate_on=300, edge_attribute=None):
+    
+    &#34;&#34;&#34;
+    counts graphlets occuring in G
+        iterate over network graph G and get all possible subgraphs of size k
+    
+    Input
+        G is networkx graph
+        H (networkx graph) is graphlet (generated with generate motifs to cmpare graph with)
+
+        graphlets are estimated based on a random selection of x nodes which cannot be larger than the number of nodes in G
+            which are specified in estimate_on
+
+        if edge attribute is not None, then based on the provided edge weight the size of the graphlets will be returned as list
+            which can be used to estimate its size distributions
+
+    Output
+        count of graphlets
+        list of the found graphlets in G
+        list of size of the estimated graphlets
+            if edge_attribute = None list only contains 0s
+
+
+    &#34;&#34;&#34;
+    nr_graphlets = 0
+    graphlets = []
+    length_graphlet = []
+    
+    #pick 300 nodes at random
+    count = estimate_on
+
+    for l in range(count):
+        subgraph_list = []
+        #get all nodes k steps apart from node n (size of H)
+        #select node at random
+        temp = list(nx.nodes(G))
+        node = random.choice(temp)
+        neighbors = [node]
+        for k in range(nx.number_of_nodes(H)):
+            for neighbor in neighbors:
+                subgraph_list.append(neighbor)
+            neighbors = get_neighbors(neighbors, G)
+
+        #build subgraph to investigate all possible structures
+        motif_neighborhood = G.subgraph(subgraph_list)
+
+        #find possible sets
+        for sub_nodes in itertools.combinations(motif_neighborhood.nodes(),len(H.nodes())):
+            subgraph = G.subgraph(sub_nodes)
+            if nx.is_connected(subgraph) and nx.is_isomorphic(subgraph, H) and (subgraph.edges() not in graphlets):
+                graphlets.append(subgraph.edges())
+                nr_graphlets = nr_graphlets + 1
+                #print(nr_graphlets)
+                length_temp = 0
+                if edge_attribute is not None:
+                    for edge in list(nx.get_edge_attributes(subgraph, edge_attribute).keys()):
+                        length_temp = length_temp + nx.get_edge_attributes(subgraph, edge_attribute)[edge]
+                
+                #sum of edges per graphlet
+                #print(nx.get_edge_attributes(subgraph, &#34;thickness&#34;))
+                length_graphlet.append(length_temp)
+                #average edge radius per graphlet
+                
+
+    return nr_graphlets, graphlets, length_graphlet</code></pre>
+</details>
+</dd>
+<dt id="graphAlgorithms.distances.local.find_graphlet"><code class="name flex">
+<span>def <span class="ident">find_graphlet</span></span>(<span>G, graphlets)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>function that checks if graphlets (node/edge specific) are in graph G</p>
+<p>Input
+networkx graph G</p>
+<pre><code>dict of graphlets where key is graphlet id and value is edge list
+</code></pre>
+<p>Output
+dict containing graphlet id and value of 0 (False) or 1 (True) if graphlet is in Graph</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def find_graphlet(G, graphlets):
+    &#34;&#34;&#34;
+    function that checks if graphlets (node/edge specific) are in graph G
+
+    Input
+        networkx graph G
+
+        dict of graphlets where key is graphlet id and value is edge list
+
+    Output
+        dict containing graphlet id and value of 0 (False) or 1 (True) if graphlet is in Graph
+    &#34;&#34;&#34;
+    in_graph = {}
+
+    for g in graphlets.keys():
+        #construct a graph from edge list
+        e = graphlets[g]
+        #print(&#34;len e&#34;, len(e))
+        X  = nx.Graph()   
+        X.add_edges_from(e)
+
+        nodes = list(X.nodes())
+
+        #get subgraph from G with this nodes
+        S = G.subgraph(nodes)
+
+
+        #check if S &amp; X are the same
+        if nx.is_isomorphic(X, S):
+            #print(&#34;edges S&#34;, S.edges())
+            #print(&#34;edges X&#34;, X.edges())
+            if g in in_graph.keys():
+                print(&#34;error&#34;)
+            in_graph[g] = 1
+        else:
+            in_graph[g] = 0
+
+    return in_graph</code></pre>
+</details>
+</dd>
+<dt id="graphAlgorithms.distances.local.generate_motifs"><code class="name flex">
+<span>def <span class="ident">generate_motifs</span></span>(<span>x=208)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Return the atlas of all connected graphs of 5 nodes or less.
+Attempt to check for isomorphisms and remove.</p>
+<p>uses networkx graph atlas, which returns all possible graphs with up to 7 nodes
+based on <a href="https://networkx.github.io/documentation/stable/auto_examples/drawing/plot_atlas.html">https://networkx.github.io/documentation/stable/auto_examples/drawing/plot_atlas.html</a></p>
+<p>Input
+x: which motifs of graph atlas are returned
+Output
+graph atlas</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_motifs(x=208):
+    &#34;&#34;&#34; 
+    Return the atlas of all connected graphs of 5 nodes or less.
+        Attempt to check for isomorphisms and remove.
+
+    uses networkx graph atlas, which returns all possible graphs with up to 7 nodes
+    based on https://networkx.github.io/documentation/stable/auto_examples/drawing/plot_atlas.html
+
+    Input
+        x: which motifs of graph atlas are returned
+    Output
+        graph atlas
+    &#34;&#34;&#34;
+
+    #uses networkx graph atlas, which returns all possible graphs with up to 6 nodes
+    #based on https://networkx.github.io/documentation/stable/auto_examples/drawing/plot_atlas.html
+    Atlas = graph_atlas_g()[0:x]  
+    # remove isolated nodes, only connected graphs are left
+    U = nx.Graph()  # graph for union of all graphs in atlas
+    for G in Atlas:
+        zerodegree = [n for n in G if G.degree(n) == 0]
+        for n in zerodegree:
+            G.remove_node(n)
+        U = nx.disjoint_union(U, G)
+
+    # list of graphs of all connected components
+    C = (U.subgraph(c) for c in nx.connected_components(U))
+
+    UU = nx.Graph()
+    # do quick isomorphic-like check, not a true isomorphism checker
+    nlist = []  # list of nonisomorphic graphs
+    for G in C:
+        # check against all nonisomorphic graphs so far
+        
+        
+            if not iso(G, nlist):
+                nlist.append(G)
+                UU = nx.disjoint_union(UU, G)  # union the nonisomorphic graphs
+    return UU</code></pre>
+</details>
+</dd>
+<dt id="graphAlgorithms.distances.local.generate_node_specific_graphlets"><code class="name flex">
+<span>def <span class="ident">generate_node_specific_graphlets</span></span>(<span>nodes, graphlet_size=3)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>function to generate all node specific graphlets of given size between all given nodes</p>
+<p>Input
+nodes is list of all possible nodes</p>
+<pre><code>graphlet size is number of nodes of to be generated graphlets
+</code></pre>
+<p>Output
+dict of graphlet id and values is edge list of graphlet</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def generate_node_specific_graphlets(nodes, graphlet_size=3):
+    &#34;&#34;&#34;
+    function to generate all node specific graphlets of given size between all given nodes
+
+    Input
+        nodes is list of all possible nodes
+
+        graphlet size is number of nodes of to be generated graphlets
+
+    Output
+        dict of graphlet id and values is edge list of graphlet
+    &#34;&#34;&#34;
+    
+    pos_graphlets = {}
+    cnt = 0
+
+
+    #generate all possible node combinations
+    node_comb = itertools.combinations(nodes, graphlet_size)
+
+    for g in node_comb:
+        #get all possible edges
+        pos_edges = list(itertools.combinations(g, 2))
+        #min edges to have a connected graph
+        min_edges = len(g) - 1
+        print(&#34;generating graphlets &#34;, len(g), &#34;nodes&#34;)
+        #create all possible graphs with min min_edges
+        for x in range(min_edges, len(pos_edges)+1):
+            
+            temp_edges = itertools.combinations(pos_edges, x)
+
+            #print(&#34;temp edges&#34;, temp_edges)
+
+            for e in temp_edges:
+            #create graph and check if connected
+                X  = nx.Graph()
+                
+                X.add_edges_from(e)
+
+                if nx.is_connected(X):
+                    #save
+                    #print(&#34;is connected&#34;)
+                    pos_graphlets[cnt] = e
+                    cnt = cnt + 1
+
+    return pos_graphlets</code></pre>
+</details>
+</dd>
+<dt id="graphAlgorithms.distances.local.get_neighbors"><code class="name flex">
+<span>def <span class="ident">get_neighbors</span></span>(<span>nodes, G)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>get all neighbors of a node in G</p>
+<p>Input
+nodes
+list of node ids</p>
+<pre><code>G
+    networkx graph object
+</code></pre>
+<p>Output
+list of neighbors</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_neighbors(nodes, G):
+    &#34;&#34;&#34;
+    get all neighbors of a node in G
+
+    Input
+        nodes
+            list of node ids
+
+        G
+            networkx graph object
+
+    Output
+        list of neighbors 
+    &#34;&#34;&#34;
+    neighbors = []
+    for node in nodes:
+        neighbors_node = list(G[node])
+        
+        for neighbor in neighbors_node:
+            neighbors.append(neighbor)
+            
+    return neighbors</code></pre>
+</details>
+</dd>
+<dt id="graphAlgorithms.distances.local.iso"><code class="name flex">
+<span>def <span class="ident">iso</span></span>(<span>G1, glist)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>helper function of generate motifs</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def iso(G1, glist):
+    &#34;&#34;&#34;
+    helper function of generate motifs
+    &#34;&#34;&#34;
+    for G2 in glist:
+        if isomorphic(G1, G2):
+            return True
+    return False</code></pre>
+</details>
+</dd>
+<dt id="graphAlgorithms.distances.local.iterate_graphlets"><code class="name flex">
+<span>def <span class="ident">iterate_graphlets</span></span>(<span>G, estimate_on=300, edge_attribute=None, motif_min_size=3, motif_max_size=6)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>function to count over all defined motifs in graph G</p>
+<p>Input
+networkx graph object</p>
+<pre><code>graphlets are estimated based on a random selection of x nodes which cannot be larger than the number of nodes in G
+    which are specified in estimate_on
+
+if edge attribute is not None, then based on the provided edge weight the size of the graphlets will be returned as list
+    which can be used to estimate its size distributions
+
+motif_min_siz: number of nodes in smallest graphlet to be counted, min permitted value is 2
+
+motif_max_size: number of nodes in largest graphlets, max permitted value is 6
+</code></pre>
+<p>Output
+counted graphlets (dict)</p>
+<pre><code>all graphlets found (dict)
+
+size of all graphlets (dict), all 0 if edge_attribute = None
+
+motifs (list): list index corresponds to dict keys
+</code></pre></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def iterate_graphlets(G, estimate_on=300, edge_attribute=None, motif_min_size=3, motif_max_size=6):
+
+    &#34;&#34;&#34;
+    function to count over all defined motifs in graph G
+
+    Input
+        networkx graph object
+
+        graphlets are estimated based on a random selection of x nodes which cannot be larger than the number of nodes in G
+            which are specified in estimate_on
+
+        if edge attribute is not None, then based on the provided edge weight the size of the graphlets will be returned as list
+            which can be used to estimate its size distributions
+
+        motif_min_siz: number of nodes in smallest graphlet to be counted, min permitted value is 2
+
+        motif_max_size: number of nodes in largest graphlets, max permitted value is 6
+
+    Output
+        counted graphlets (dict)
+
+        all graphlets found (dict)
+
+        size of all graphlets (dict), all 0 if edge_attribute = None
+
+        motifs (list): list index corresponds to dict keys
+
+    &#34;&#34;&#34;
+    if motif_max_size &lt;= 6 and motif_min_size &gt;= 2:
+
+        #get all motifs
+        H = generate_motifs()
+        motifs = [H.subgraph(c) for c in nx.connected_components(H)]
+
+        graphlet_counter = {}
+        graphlets_found = {}
+        graphlet_size = {}
+
+        for i in range(len(motifs)):
+
+            
+            motif = motifs[i]
+
+            if int(nx.number_of_nodes(motif)) &gt;= motif_min_size and int(nx.number_of_nodes(motif)) &lt;= motif_max_size:
+                print(&#34;counting graphlet&#34;, i)
+                nr_graphlets, graphlets, length_graphlet = count_graphlets(G, motif, estimate_on=estimate_on, edge_attribute=edge_attribute)
+
+                graphlet_counter[i] = nr_graphlets
+                graphlets_found[i] = graphlets
+                graphlet_size[i] = length_graphlet
+
+    else:
+        print(&#34;motif min and/or max value not permitted&#34;)
+        graphlet_counter = {}
+        graphlets_found = {}
+        graphlet_size = {}
+        motifs = None
+
+
+    return graphlet_counter, graphlets_found, graphlet_size, motifs</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="graphAlgorithms.distances" href="index.html">graphAlgorithms.distances</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="graphAlgorithms.distances.local.connected_component_subgraphs" href="#graphAlgorithms.distances.local.connected_component_subgraphs">connected_component_subgraphs</a></code></li>
+<li><code><a title="graphAlgorithms.distances.local.count_graphlets" href="#graphAlgorithms.distances.local.count_graphlets">count_graphlets</a></code></li>
+<li><code><a title="graphAlgorithms.distances.local.find_graphlet" href="#graphAlgorithms.distances.local.find_graphlet">find_graphlet</a></code></li>
+<li><code><a title="graphAlgorithms.distances.local.generate_motifs" href="#graphAlgorithms.distances.local.generate_motifs">generate_motifs</a></code></li>
+<li><code><a title="graphAlgorithms.distances.local.generate_node_specific_graphlets" href="#graphAlgorithms.distances.local.generate_node_specific_graphlets">generate_node_specific_graphlets</a></code></li>
+<li><code><a title="graphAlgorithms.distances.local.get_neighbors" href="#graphAlgorithms.distances.local.get_neighbors">get_neighbors</a></code></li>
+<li><code><a title="graphAlgorithms.distances.local.iso" href="#graphAlgorithms.distances.local.iso">iso</a></code></li>
+<li><code><a title="graphAlgorithms.distances.local.iterate_graphlets" href="#graphAlgorithms.distances.local.iterate_graphlets">iterate_graphlets</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
