@@ -40,7 +40,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 
 setup(name='graphAlgorithms',
-      version='0.1.1',
+      version='0.1.0',
       license='',
       description='Network Analysis for Biological Networks',
       url='https://gitlab.com/alisa-p/graphalgorithms2',
@@ -51,7 +51,7 @@ setup(name='graphAlgorithms',
           #   3 - Alpha
           #   4 - Beta
           #   5 - Production/Stable
-          'Development Status :: 4 - Beta',
+          'Development Status :: 3 - Alpha',
 
           # Indicate who your project is intended for
           'Intended Audience :: Developers',
@@ -61,7 +61,7 @@ setup(name='graphAlgorithms',
           'License :: OSI Approved :: BSD License',
 
           "Operating System :: POSIX :: Other",
-          "Operating System :: MacOS",
+          "Operating System :: Linux",
 
           # Specify the Python versions you support here. In particular, ensure
           # that you indicate whether you support Python 2, Python 3 or both.
@@ -75,6 +75,6 @@ setup(name='graphAlgorithms',
       extras_require={
        
       },
-      dependency_links=['https://github.com/Jacobe2169/GMatch4py.git', 'https://github.com/guyallard/markov_clustering.git'],
+      dependency_links=['https://github.com/Jacobe2169/GMatch4py.git'],
       packages=find_packages(exclude=["*.test", "*.test.*", "test.*", "test"]),
       )
