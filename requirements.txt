@@ -15,6 +15,6 @@ pyclustering >= 0.9.3
 python-louvain >= 0.13
 sklearn >= 0.0
 treelib >= 1.6.*
-GMatch4py >= 0.2.*
+#GMatch4py >= 0.2.*
 dask >= 2.8.*
 pquality >= 0.0.7
