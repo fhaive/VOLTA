@@ -14,16 +14,21 @@
 - Version
 - [Learn Markdown](https://bitbucket.org/tutorials/markdowndemo)
 
-### How do I get set up?
+## How do I get set up?
 
-### din mor
+### Prerequisites
 
-- Summary of set up
-- Configuration
-- Dependencies
-- Database configuration
-- How to run tests
-- Deployment instructions
+- Install https://github.com/Jacobe2169/GMatch4py as instructed
+
+### Install
+
+- download repository (wget ... when public repo)
+- cd graphalgorithms
+- pip3 install .
+
+## Usage
+
+- import graphAlgorithms as ga 
 
 ### Contribution guidelines
 
