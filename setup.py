@@ -75,5 +75,6 @@ setup(name='graphAlgorithms',
       extras_require={
        
       },
+      dependency_links=['https://github.com/Jacobe2169/GMatch4py.git'],
       packages=find_packages(exclude=["*.test", "*.test.*", "test.*", "test"]),
       )
