@@ -75,6 +75,6 @@ setup(name='graphAlgorithms',
       extras_require={
        
       },
-      dependency_links=['https://github.com/Jacobe2169/GMatch4py.git'],
+      dependency_links=['https://github.com/Jacobe2169/GMatch4py.git', 'https://github.com/guyallard/markov_clustering.git'],
       packages=find_packages(exclude=["*.test", "*.test.*", "test.*", "test"]),
       )
