@@ -7,7 +7,7 @@ __license__ = "BSD-2-Clause"
 __email__ = ""
 
 
-def get_requirements(remove_links=True):
+def get_requirements(remove_links=False):
     """
     lists the requirements to install.
     """
@@ -75,6 +75,8 @@ setup(name='graphAlgorithms',
       extras_require={
        
       },
-      dependency_links=['https://github.com/Jacobe2169/GMatch4py.git'],
+      dependency_links=['https://github.com/Jacobe2169/GMatch4py/tarball/master#egg=package-0.2.5b0'],
       packages=find_packages(exclude=["*.test", "*.test.*", "test.*", "test"]),
       )
+
+

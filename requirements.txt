@@ -17,5 +17,6 @@ python-louvain >= 0.13
 sklearn >= 0.0
 treelib >= 1.6.*
 
-dask >= 2.8.*
+dask[bag] >= 2.8.*
 pquality == 0.0.7
+
