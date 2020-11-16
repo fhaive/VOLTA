@@ -916,7 +916,7 @@ def compute_shared_layers(lists, labels, mapping=None, weight=False, is_file=Fal
 
 
     else:
-
+        result = {}
         for edges, label in zip(lists, labels):
 
             if is_file:
@@ -925,7 +925,7 @@ def compute_shared_layers(lists, labels, mapping=None, weight=False, is_file=Fal
                     edges = pickle.load(f)
             
             print(label)
-            result = {}
+            
             for edge in edges:
                 if edge not in result.keys():
                     result[edge] = [label]
