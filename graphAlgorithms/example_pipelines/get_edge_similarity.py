@@ -147,7 +147,7 @@ def preprocess_edge_list(networks, is_file = False, location = None, names= None
 
         return network_lists, m
 
-def sort_list_and_get_shared(networks, m, network_lists, labels, is_file = False):
+def sort_list_and_get_shared(networks, m, network_lists, labels, is_file = False, in_async=True):
     """
     preprocessing function to sort edge list after weight
 
@@ -157,6 +157,7 @@ def sort_list_and_get_shared(networks, m, network_lists, labels, is_file = False
         network_list as returned by preprocess_edge_list
         labels is list of str containing names of each layer for later identification
         if is_file is True then networks is list of paths to pickled networks else contains python objects
+        if in_async then run in async where applicable
 
     Output
         list of networks containing sorted edge list
@@ -177,7 +178,7 @@ def sort_list_and_get_shared(networks, m, network_lists, labels, is_file = False
 
             sorted_networks.append(node_edge_similarities.sort_edge_list(net, m))
 
-    shared_edges = node_edge_similarities.compute_shared_layers(network_lists, labels, mapping = None, weight=False)
+    shared_edges = node_edge_similarities.compute_shared_layers(network_lists, labels, mapping = None, weight=False, in_async=in_async)
 
     binary = node_edge_similarities.compute_binary_layer(shared_edges, layers=labels)
 
