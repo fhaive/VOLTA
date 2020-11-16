@@ -140,7 +140,7 @@ def estimate_vector(networks, edge_attribute="weight", is_file=False):
         temp_vector.append(non_edges)
         temp_vector.append(ex_edges)
 
-        '''
+        
         print("cycles")
 
         cycles = global_distances.cycle_distribution(network)
@@ -174,7 +174,7 @@ def estimate_vector(networks, edge_attribute="weight", is_file=False):
         print("cc")
         cc = global_distances.clustering_coefficient(network)
         temp_vector.append(cc)
-        '''
+        
         print("degree dist")
 
         degree = global_distances.degree_centrality(network)
@@ -189,7 +189,7 @@ def estimate_vector(networks, edge_attribute="weight", is_file=False):
         temp_vector.append(skw_centrality)
         temp_vector.append(kurt_centrality)
 
-        '''
+        
         print("cc dist")
         close = global_distances.closeness_centrality(network, distance=edge_attribute)
         mean_centrality = close["mean_centrality"]
@@ -216,7 +216,7 @@ def estimate_vector(networks, edge_attribute="weight", is_file=False):
         temp_vector.append(std_centrality)
         temp_vector.append(skw_centrality)
         temp_vector.append(kurt_centrality)
-        '''
+        
         '''
         #local
         graphlets, graphlets_counted, g, motifs= graphlet_helper(network)
@@ -229,6 +229,7 @@ def estimate_vector(networks, edge_attribute="weight", is_file=False):
 
 
     return vectors
+
 
 def matrix_from_vector(vectors, normalize=False):
     """
