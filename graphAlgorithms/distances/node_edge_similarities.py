@@ -846,7 +846,7 @@ def mergeDict(dict1, dict2):
     return res
 
 
-def compute_shared_layers(lists, labels, mapping=None, weight=False, is_file=False):
+def compute_shared_layers(lists, labels, mapping=None, weight=False, is_file=False, in_async=True):
     """
     computes in how many and which layers/ networks each edge/nodes occures
 
@@ -863,51 +863,76 @@ def compute_shared_layers(lists, labels, mapping=None, weight=False, is_file=Fal
 
         if is_file then lists is list of network locations
 
+        if in_async run in async
+
+
     Output
         list of shared edgs/nodes
 
     """
 
     #shared_edges = {}
+    if in_async:
+        tasks = []
+        loop = asyncio.new_event_loop()
 
-    tasks = []
-    loop = asyncio.new_event_loop()
+        for edges, label in zip(lists, labels):
 
-    for edges, label in zip(lists, labels):
+            if is_file:
+                #read from file
+                with open(edges, "rb") as f:
+                    edges = pickle.load(f)
+            # construct for each edge dict and later merge into final
+            # so calculation can be parallelized
+            print(label)
 
-        if is_file:
-            #read from file
-            with open(edges, "rb") as f:
-                edges = pickle.load(f)
-        # construct for each edge dict and later merge into final
-        # so calculation can be parallelized
-        print(label)
+            r = tasks.append(loop.create_task(construct_dict(edges, label)))
 
-        r = tasks.append(loop.create_task(construct_dict(edges, label)))
+        loop.run_until_complete(asyncio.wait(tasks))
 
-    loop.run_until_complete(asyncio.wait(tasks))
+        loop.close()
 
-    loop.close()
+    
 
-    # merge all dicts into one
+        # merge all dicts into one
 
-    # edges occuring in multiple layers are merged into list attributes
+        # edges occuring in multiple layers are merged into list attributes
 
-    for i in range(len(tasks)):
-        r = tasks[i]
-        if i == 0:
-            s_edges = r.result()
+        for i in range(len(tasks)):
+            r = tasks[i]
+            if i == 0:
+                s_edges = r.result()
 
-        else:
+            else:
 
-            temp_dict = r.result()
-            #print("shared edges", shared_edges)
-            #print("temp", temp_dict)
-            for key in temp_dict:
-                s_edges.setdefault(key, []).append(temp_dict[key][0])
+                temp_dict = r.result()
+                #print("shared edges", shared_edges)
+                #print("temp", temp_dict)
+                for key in temp_dict:
+                    s_edges.setdefault(key, []).append(temp_dict[key][0])
+                
+                #shared_edges = mergeDict(cur, temp_dict)
+                #print("shared after", s_edges)
+
+
+    else:
+
+        for edges, label in zip(lists, labels):
+
+            if is_file:
+                #read from file
+                with open(edges, "rb") as f:
+                    edges = pickle.load(f)
             
-            #shared_edges = mergeDict(cur, temp_dict)
-            #print("shared after", s_edges)
+            print(label)
+            result = {}
+            for edge in edges:
+                if edge not in result.keys():
+                    result[edge] = [label]
+                else:
+                    result.setdefault(edge, []).append(label)
+
+        s_edges = result
 
     return s_edges
 
