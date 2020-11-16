@@ -152,7 +152,7 @@ def preprocess_node_list(networks, is_file = False, location = None, names= None
         return node_lists, m
 
 
-def sort_list_and_get_shared(node_lists, m, network_graphs, labels, degree=True, degree_centrality=True, closeness_centrality=True, betweenness=True, is_file = False):
+def sort_list_and_get_shared(node_lists, m, network_graphs, labels, degree=True, degree_centrality=True, closeness_centrality=True, betweenness=True, is_file = False, in_async =True):
     """
     preprocessing function to sort edge list after weight
 
@@ -166,6 +166,8 @@ def sort_list_and_get_shared(node_lists, m, network_graphs, labels, degree=True,
             
             network_graphs contains paths to networkx weighted edge lists
 
+        if in async then functions that allow are run in async
+
     Output
         list of networks containing sorted node list after degree, degree centrality, closeness centrality, betweenness, & average of all
         list of shared edges between networks
@@ -173,7 +175,7 @@ def sort_list_and_get_shared(node_lists, m, network_graphs, labels, degree=True,
     """
 
     
-    shared_nodes = node_edge_similarities.compute_shared_layers(node_lists, labels, mapping = None, weight=False)
+    shared_nodes = node_edge_similarities.compute_shared_layers(node_lists, labels, mapping = None, weight=False, in_async=in_async)
 
     binary = node_edge_similarities.compute_binary_layer(shared_nodes, layers=labels)
 
@@ -195,7 +197,6 @@ def sort_list_and_get_shared(node_lists, m, network_graphs, labels, degree=True,
 
 
     return sorted_nodes, shared_nodes, binary, saved_values
-
 
 def estimate_similarities_nodes(node_lists, sorted_nodes, binary,  kendall_x=50):
     """
