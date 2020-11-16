@@ -198,7 +198,7 @@ def sort_list_and_get_shared(node_lists, m, network_graphs, labels, degree=True,
 
     return sorted_nodes, shared_nodes, binary, saved_values
 
-def estimate_similarities_nodes(node_lists, sorted_nodes, binary,  kendall_x=50, is_file=False):
+def estimate_similarities_nodes(node_lists, sorted_nodes, binary,  kendall_x=50, is_file=False, in_async=True):
     """
     function to estimate edge similarities
 
@@ -220,7 +220,7 @@ def estimate_similarities_nodes(node_lists, sorted_nodes, binary,  kendall_x=50,
         kendall correlation for degree centrality, closeness centrality, betweenness, hamming distance
     """
 
-    j, s = node_edge_similarities.shared_elements_multiple(node_lists, labels=None, percentage=True, jaccard=True, jaccard_similarity = True, penalize_percentage=False, is_file=is_file)
+    j, s = node_edge_similarities.shared_elements_multiple(node_lists, labels=None, percentage=True, jaccard=True, jaccard_similarity = True, penalize_percentage=False, is_file=is_file, in_async=in_async)
     jd = node_edge_similarities.to_distance(j)
 
     print("kendall top")
