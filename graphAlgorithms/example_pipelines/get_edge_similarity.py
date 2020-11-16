@@ -248,7 +248,7 @@ def get_shared(network_lists, labels, is_file = False):
     return shared_edges, binary
 
 
-def estimate_similarities_edges(network_lists, sorted_networks, binary,  kendall_x=50, is_file=True):
+def estimate_similarities_edges(network_lists, sorted_networks, binary,  kendall_x=50, is_file=True, in_async=True):
     """
     function to estimate edge similarities
 
@@ -263,6 +263,8 @@ def estimate_similarities_edges(network_lists, sorted_networks, binary,  kendall
 
         if is_file then network_lists is list of file location of pickled network objects
 
+        if in_async then where applicable run in async
+
     Output
         numpy matrices containing
 
@@ -270,7 +272,7 @@ def estimate_similarities_edges(network_lists, sorted_networks, binary,  kendall
         kendall correlation, hamming distance
     """
 
-    j, percentage = node_edge_similarities.shared_elements_multiple(network_lists,  labels=None, percentage=True, jaccard=True, jaccard_similarity = True, penalize_percentage=False, is_file=is_file)
+    j, percentage = node_edge_similarities.shared_elements_multiple(network_lists,  labels=None, percentage=True, jaccard=True, jaccard_similarity = True, penalize_percentage=False, is_file=is_file, in_async=in_async)
     jd = node_edge_similarities.to_distance(j)
 
     kendall_top ,b_top, x = node_edge_similarities.build_similarity_matrix_for_binary_and_ranked(sorted_networks, compute="kendall", kendall_usage="top", kendall_x = kendall_x)
