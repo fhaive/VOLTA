@@ -1,5 +1,5 @@
 '''
-network clustering algorithms for distance matrices as computed by distance section
+Clustering algorithms that take as input a distance matrix.
 '''
 import pandas as pd
 import glob
@@ -39,33 +39,23 @@ from sklearn.utils.validation import check_random_state
 
 def consensus_clustering(clusterings, seed=123, threshold=0.75, per_node=True, rep=10):
     """
-    finds a consensus clustering based on multiple provided clusterings
-    based on netneurotools & bct for whole graph thresholds, per node thresholds are new
-    https://github.com/netneurolab/netneurotools
-    https://github.com/aestrivex/bctpy
+    Finds a consensus clustering based on multiple provided clusterings.
+    Based on netneurotools & bct for whole graph thresholds   https://github.com/netneurolab/netneurotools , https://github.com/aestrivex/bctpy.
+    Builds an agreement graph from different clusterings, removes weak edges & performs community detection rep times (louvain) until convergance.
+    Multiple options on how to identify weak edges are provided.
 
-    build agreement graph from different clusterings, removes weak edges & performs community detection until convergance
+    Parameters:
+        clusterings (list): list of arrays containing numeric class labels
+        seed (int): seed to be used for random processes
+        treshold (float or str): if float needs to be in [0,1]. If float and not per_node all edges with a weight lower than the treshold are removed
+            in the agreement graph. If float and per_node is True then for each node the weakes treshold % of edges are removed, if they are weak for 
+                both nodes making up the edge. If treshold is "matrix" then the teshold is estimated based on a permutation of the clusterings as implemented in netneurotools.
+        per_node (boolean): if True treshold is applied on a per node pasis else it is applied gloablly.
+        rep (int): how often louvain clustering is reapeated on the agreement graph.
 
-    Input
-        clustering list of arrays containing numeric class labels
-
-        seed random seed to be used for random processes
-
-        threshold either float [0,1] or "matrix"
-            if "matrix" an automatic threshold based on permutation of the clusterings is applied on a per node basis
-            if float and not per_node all edges lower threshold are removed in agreement graph during consensus clustering
-            if float and per_node then on a per node basis threshold percentage of edges are removed 
-                but only if they are "weak" for both nodes making the edges
-
-        per_node boolean if True threshold is interpreted as a percentage value and applied on a per node basis
-            else is interpreted as a static edge attribute and applied to the whole graph
-
-        rep int how often louvain clustering is repeated on agreement graph
-
-
-    Output
-       array with consensus class labels
-
+    Returns:
+        consensus class labels (array):
+      
     
     """
     clusterings = np.column_stack(clusterings)
@@ -86,14 +76,14 @@ def consensus_clustering(clusterings, seed=123, threshold=0.75, per_node=True, r
     if threshold == "matrix":
         #do on a per node basis
         print("matrix")
-        cons = get_consensus_node(agreement, null_agree, rs, seed=seed, rep = rep)
+        cons = __get_consensus_node__(agreement, null_agree, rs, seed=seed, rep = rep)
         
             
         cons = np.array(cons)[0]
                 
     else:
         if per_node:
-            cons = get_consensus_node_threshold(agreement, node_threshold=threshold, seed=seed ,rep = rep)
+            cons = __get_consensus_node_threshold__(agreement, node_threshold=threshold, seed=seed ,rep = rep)
             cons = np.array(cons)[0]
         else:
     
@@ -105,7 +95,7 @@ def consensus_clustering(clusterings, seed=123, threshold=0.75, per_node=True, r
     return cons
 
 
-def get_consensus_node_threshold(agreement, node_threshold=0.75, seed=123 ,rep = 10):
+def __get_consensus_node_threshold__(agreement, node_threshold=0.75, seed=123 ,rep = 10):
 
     """
     called by consensus_clustering in a per node case
@@ -214,7 +204,7 @@ def get_consensus_node_threshold(agreement, node_threshold=0.75, seed=123 ,rep =
         
     
         
-def get_consensus_node(agreement, node_threshold, rs, seed=123 ,rep = 10):
+def __get_consensus_node__(agreement, node_threshold, rs, seed=123 ,rep = 10):
 
     """
     called by consensus_clustering in a per node case
@@ -372,42 +362,23 @@ def get_consensus_node(agreement, node_threshold, rs, seed=123 ,rep = 10):
 def multiobjective(X, labels, min_number_clusters=2, max_number_clusters=None, min_cluster_size = 10, max_cluster_size=None, local =True, bet=True, e=0.5, s=0.5, cluster_size_distribution = True):
     
     """
-        multi objective function to evaluate clusterings
+        Multi objective function to evaluate clusterings. 
         
-        Input:
-            X distance matrix, as used for clustering
+        Parameters:
+            X (matrix): distance matrix, as used for clustering.
+            labels (list): list of predicted labels. Needs to be in the same order as X.
+            min_number_clusters (int or None): minimum number of allowed clusters, if less than a penalty is applied. If None will not be taken into account. 
+            max_number_clusters (int or None): maximum number of clusters, if more then penalty is applied. If None will not be taken into account.
+            min_cluster_size (int or None): for each cluster with less than x items a penalty is applied. If None will not be taken into account .
+            max_cluster_size (int or None): for each cluster with more than x items a penalty is applied. If None will not be taken into account.
+            local (boolean): if is True then objective aims at minimizing within cluster similarity based on thr data provided in X. If is False will be ignored.
+            bet (boolean): if True objective aims at maximizing dissimilarity between clusters. If False will be ignored.
+            e (float): in [0,1]. For each cluster with a mean similarity less than e an additional penalty is applied. If None will be ignored.
+            s (float): in [0,1]. Between each cluster pair where thr distance is less than s an additional penalty is applied. If None will be ignored.
+            cluster_size_distribution (boolean): if True mean difference of cluster size for each cluster to "most equal" partitioning is applied. Most equal partitioning is len(labels) / number of clusters. If False will be ignored.
             
-            labels list of predicted labels - needs to be in same order as X
-            
-            min_number_clusters minimum number of allowed clusters, if less than a penalty is applied ,
-                if None will not be taken into account
-                
-            max_number_clusters maximum number of clusters, if more then penalty is applied,
-                if None will not be taken into account
-                
-            min_cluster_size for each cluster with less than x items a penalty is applied, 
-                if None will not be taken into account
-                
-            max_cluster_size for each cluster with more than x items a penalty is applied,
-                if None will not be taken into account
-                
-            local if True then objective aims at minimizing within cluster similarity based on data provided in X
-                if False will be ignored
-                
-            bet if True objective aims at high dissimilarity between clusters, if False will be ignored
-            
-            e [0,1] for each cluster with a mean similarity less than e an additional penalty is applied, if None 
-                will be ignored
-            
-            s [0,1] between each cluster pair were distance is less than s an additional penalty is applied,
-                if None will be ignored
-
-            cluster_size_distribution if True mean difference of cluster size for each cluster to "most equal" partitioning is applied
-                most equal partitioning is len(labels) / number of clusters
-
-        Output
-            clustering score (float), the closer to 0 the better the clustering is in regards to the selected objectives
-            
+        Returns:
+            clustering score (float): the closer to 0 the better the clustering is with regards to the selected objectives.            
             
     """
     
@@ -571,15 +542,14 @@ def multiobjective(X, labels, min_number_clusters=2, max_number_clusters=None, m
     
 def create_mean_distance_matrix(matrices, set_diagonal = True):
     """
-    creates a mean distance matrix out of individual distance matrices
+    Creates a mean distance matrix out of individual distance matrices.
 
-    Input
-        list of numpy matrices, items need to be in the same order in all matrices, assumed all to be distance amtrices
-        set_diagonal if True diagonal values are set to 0 automatically - 
-            this may be helpful if data is not a full distance but should be treated as one
-
-    Output
-        matrix
+    Parameters:
+        matrices (list): of numpy matrices. Items need to be in the same order in all the matrices. Matrices are assumed to be "distance amtrices".
+        set_diagonal (boolean): if True diagonal values are set to 0 automatically - this may be helpful if the distance measures applied do not return 0 distance for the same object.
+        
+    Returns:
+        mean distance matrix (matrix):
     """
 
     if len(matrices) < 2:
@@ -610,15 +580,14 @@ def create_mean_distance_matrix(matrices, set_diagonal = True):
 
 def create_median_distance_matrix(matrices, set_diagonal = True):
     """
-    creates a median distance matrix out of individual distance matrices
+    Creates a median distance matrix out of individual distance matrices.
 
-    Input
-        list of numpy matrices, items need to be in the same order in all matrices, assumed all to be distance matrices
-        set_diagonal if True diagonal values are set to 0 automatically - 
-            this may be helpful if data is not a full distance but should be treated as one
-
-    Output
-        matrix, each cell is median of the same cell provided in matrices
+    Parameters:
+        matrices (list): of numpy matrices. Items need to be in the same order in all the matrices. Matrices are assumed to be "distance amtrices".
+        set_diagonal (boolean): if True diagonal values are set to 0 automatically - this may be helpful if the distance measures applied do not return 0 distance for the same object.
+        
+    Returns:
+        median distance matrix (matrix):
     """
     if len(matrices) < 2:
         print("matrices needs to contain at least two items in order to estimate its median")
@@ -646,21 +615,17 @@ def create_median_distance_matrix(matrices, set_diagonal = True):
         return median_dist
 
 
-def hierarchical_clustering(distance, n_clusters=2, linkage="completed"):
+def hierarchical_clustering(distance, n_clusters=2, linkage="complete"):
     """
-    hierarchical clustering of distance matrix, optimal number of clusters can be tuned with multiobjective
-    based on sklearn
+    Hierarchical clustering of distance matrix. Based on sklearn.
 
-    Input
-        distance distance matrix
-        n_clusters int, number of to be computed clusters (max is number of items in distance, min 2)
-        linkage linkage methods to be used
-            average uses the average distance
-            complete uses the maximum distance
-            single uses the minimum of the distance
-
-        Output
-            array of class labels in same order as items in distance
+    Parameters:
+        distance (matrix): distance matrix to be used for clustering.
+        n_clusters (int): number of to be computed clusters. Maximum allowed value is thr number of items in distance. Minimum allowed value is 2.
+        linkage (str): linkage method to be used. Options are "average", "complete" or "single".
+            
+    Returns:
+        labels (array): 
     """
 
     if n_clusters < 2 or n_clusters > len(distance):
@@ -682,14 +647,13 @@ def hierarchical_clustering(distance, n_clusters=2, linkage="completed"):
 
 def affinityPropagation_clustering(distance):
     """
-    affinity propagation clustering on distance matrix, has no paramter settings
-    based on sklearn
+    Affinity propagation clustering on distance matrix. Based on sklearn
 
-    Input
-        distance distance matrix
-       
-        Output
-            array of class labels in same order as items in distance
+    Parameters:
+        distance (matrix): distance matrix to be used for clustering.
+        
+    Returns:
+        labels (array): 
     """
 
     
@@ -699,7 +663,7 @@ def affinityPropagation_clustering(distance):
 
     return labels
 
-def generate_empty(x):
+def __generate_empty__(x):
     """
     generates empty dict to be used as input for other functions
 
@@ -719,17 +683,20 @@ def generate_empty(x):
 def convert_clusters(clusters, v):
 
     """
-    function to convert list of list of items into array of cluster labels
+    Converts list of sublists into array of cluster labels,
 
-    Input
-        clusters list of lists were each list contains index of item in this cluster
-        v dictionary were keys are all elements in clusters and all values are 0 as returned by generate_empty
+    Parameters:
+        clusters (list): list of sublists where each list contains indices of the items in this cluster and each sublist is a different cluster.
+        v (list): of item IDs as contained in clusters.
 
-    Output
-        array of cluster labels
+    Returns:
+        labels (array): 
     """
+    d = {}
+    for vv in v:
+        d[vv] = 0
 
-    empty = v.copy()
+    empty = d.copy()
     for i in range(len(clusters)):
         for k in clusters[i]:
             empty[k] = i
@@ -738,16 +705,16 @@ def convert_clusters(clusters, v):
 
 def optics_clustering(distance, radius=2, neighbors=2, n_clusters=2):
     """
-    optics clustering of distance matrix, optimal number of clusters, neighbors and radius can be tuned with multiobjective
-    based on pyclustering: https://pyclustering.github.io/docs/0.8.2/html/de/d3b/classpyclustering_1_1cluster_1_1optics_1_1optics.html
-    Input
-        distance distance matrix
-        radius connectivity radius, needs to be larger than real 
-        neighbors int [1, number of samples -1]
-        n_clusters amount of clusters aiming to be found
+    Optics clustering on a provided distance matrix. Based on pyclustering https://pyclustering.github.io/docs/0.8.2/html/de/d3b/classpyclustering_1_1cluster_1_1optics_1_1optics.html
+    
+    Parameters:
+        distance (matrix): distance matrix to be used for clustering.
+        radius (int): connectivity radius. 
+        neighbors (int): in [1, number of samples -1]
+        n_clusters (int): amount of clusters that should be found.
 
-        Output
-            array of class labels in same order as items in distance
+    Returns:
+            labels (array):
     """
 
     if n_clusters < 2 or n_clusters > len(distance):
@@ -767,7 +734,7 @@ def optics_clustering(distance, radius=2, neighbors=2, n_clusters=2):
         clusters = optics_instance.get_clusters()
 
         #converts output into labeled array
-        empty = generate_empty(len(distance))
+        empty = __generate_empty__(len(distance))
         
 
         labels = convert_clusters(clusters, empty)
@@ -778,16 +745,15 @@ def optics_clustering(distance, radius=2, neighbors=2, n_clusters=2):
 
 def kmedoids_clustering(distance, n_clusters=2):
     """
-    kmediods clustering of distance matrix, optimal number of clusters can be tuned with multiobjective
-    based on pyclustering: 
-    Input
-        distance distance matrix
+    Kmediods clustering on a provided distance matrix. Based on pyclustering https://pyclustering.github.io/docs/0.8.2/html/de/d3b/classpyclustering_1_1cluster_1_1optics_1_1optics.html
+    
+    Parameters:
+        distance (matrix): distance matrix to be used for clustering.
+        n_clusters (int): amount of clusters that should be found.
         
-        n_clusters amount of clusters aiming to be found
-
-        Output
-            array of class labels in same order as items in distance
-            list of initial random created mediods
+    Returns:
+        labels (array):
+        created mediods (list): random created mediods used for clustering
     """
 
     if n_clusters < 2 or n_clusters > len(distance):
@@ -809,9 +775,9 @@ def kmedoids_clustering(distance, n_clusters=2):
         kmedoids_instance.process()
         clusters = kmedoids_instance.get_clusters()
 
-        empty = generate_empty(len(distance))
+        empty = __generate_empty__(len(distance))
 
         labels = convert_clusters(clusters, empty)
 
 
-        return labels,  initial_medoids
+        return np.array(labels),  initial_medoids

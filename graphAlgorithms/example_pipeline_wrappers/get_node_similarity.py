@@ -1,6 +1,6 @@
 """
-This is an example pipeline on how to estimate the similarity between multiple networks
-based on their similarity in shared nodes 
+This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
+based on their similarity in nodes.
 """
 
 import networkx as nx
@@ -22,23 +22,16 @@ import scipy
 
 def preprocess_graph(net_temp, attribute="weight", location = None, labels = None):
     """
-    function to convert list of networkx graph objects into list of sublist format as needed by
-    these functions
+    Converts list of networkX graph objects into a list of sublist format, which is used by most functions in this package.
 
-    Input
-        net_temp list of networkx graph objects if location is not None
-            else needs to be list of paths to networkx edgelists (files need to end on .edgelist)
-
-        weight edge attribute to be converted
-
-        location is str of were output should be saved
-            if None then a list of edgelists is returned else their pickled location is returned
-
-        labels is list of network names in same order as in net_temp
-            only needed if location is not None
-
-    Output
-        list of graph objects in edge list format or if location is not None list of path location of saved objects
+    Parameters:
+        net_temp (list): list of networkX graph objects
+        attribute (str): edge weight label to be converted
+        location (str or None): if None the converted object is returned. Else it needs to be file location where the converted objects should be pickled and their locations will be returned instead.
+        labels (list or None): list of network names in same order as net_temp. Only needs to be provided if location is not None.
+        
+    Return:
+        converted objects (list): if location is None list of converted objects is returned else list of pickled locations is returned.
     """
     if location is None:
         networks = []
@@ -76,22 +69,18 @@ def preprocess_graph(net_temp, attribute="weight", location = None, labels = Non
 
 def preprocess_node_list(networks, is_file = False, location = None, names= None):
     """
-    function to map nodes to ids for faster & easier computation
+    Maps nodes to IDs.
 
-    Input
-        networks is list of edgelists as outputed by preprocess_graph()
-            or list of file locations to python pickles of these objects (as saved when using preprocess_graph() with location not None)
+    Parameters:
+        networks (list): list of converted networks or list of pickled file locations as returned by preprocess_graph()
+        is_file (boolean): if False then networks is list converted objects. If True then networks is list of file locations to the pickled objects instead.
+        location (str or None): if is_file is True then output of this function will be pickled to location.
+        names (list or None): list of network names in same order as networks. If is_file is True then names will be used to store pickled objects.
 
-        is_file if False then networks is list of networkx objects
-            if True then networks is list of file locations to python pickles
-                if True converted networks are saved as pickles to location
-        location str to where converted networks should be saved - will only be used if is_file is True
-
-        names list of network names in same order as networks
-
-    Output
-        list of converted networks (or str to saved location)
-        dict of node to id mapping which can be used to reverse mapping
+    Returns:
+        networks with nodes IDs or their pickled location (list):
+        node ID mapping (dict): keys are node IDs and values are assigned ID.
+    
 
     """
     if not is_file:
@@ -107,7 +96,7 @@ def preprocess_node_list(networks, is_file = False, location = None, names= None
         node_lists = []
 
         for net in networks:
-            lst = list(dict.fromkeys(node_edge_similarities.construct_mapped_node(m, net)))
+            lst = list(dict.fromkeys(node_edge_similarities.__construct_mapped_node__(m, net)))
             node_lists.append(lst)
             
 
@@ -137,7 +126,7 @@ def preprocess_node_list(networks, is_file = False, location = None, names= None
             with open(networks[i], "rb") as f:
                 net = pickle.load(f)
 
-            lst = list(dict.fromkeys(node_edge_similarities.construct_mapped_node(m, net)))
+            lst = list(dict.fromkeys(node_edge_similarities.__construct_mapped_node__(m, net)))
             #save
             name = names[i]
 
@@ -154,28 +143,29 @@ def preprocess_node_list(networks, is_file = False, location = None, names= None
 
 def sort_list_and_get_shared(node_lists, m, network_graphs, labels, degree=True, degree_centrality=True, closeness_centrality=True, betweenness=True, is_file = False, in_async =True):
     """
-    preprocessing function to sort edge list after weight
+    Preprocessing function to sort node list after their attributes, convert to a binary format and claculate shared nodes.
 
-    Input
-        output of preprocess_node_list
-        mapping as returned by preprocess_node_list
-        original list of networkx graph objects
-        labels is list of str containing names of each layer for later identification
+    parameters:
+        node_lists (list): list of converted node IDs as returned by  preprocess_node_list()
+        m (dict): edge to ID mapping as returned by preprocess_node_list().
+        network_graphs (list): list of networkX graph objects. This needs to be the original networks before conversion. If is_file is True then it is list locations to the pickled graph objects.
+        labels (list): list of network names in same order as networks.
+        degree (boolean): if True nodes are sorted after degree. If multiple values are set to True a combined ranking is calculated.
+        degree_centrality (boolean): if True nodes are sorted after degree centrality. If multiple values are set to True a combined ranking is calculated.
+        closeness_centrality (boolean): if True nodes are sorted after closeness centrality. If multiple values are set to True a combined ranking is calculated.
+        betweenness (boolean): if True nodes are sorted after betweenness. If multiple values are set to True a combined ranking is calculated.
+        is_file (boolean): if False then network_graphs is list converted objects. If True then network_graphs is list of file locations to the pickled objects instead.
+        in_async (boolean): if True then run in async where applicable.
 
-        if is_file is True then network_graphs contains file location instead of object
-            
-            network_graphs contains paths to networkx weighted edge lists
+    Returns:
+        sorted networks (list): contains dicts where keys are degree, dc, cc, betweenness, average_mean and average_median, values are list of ranked node ids. If key is set to False an empty list is returned.
+        shared nodes (dict): key is node ID as provided in m and value is list of network labels containing this node.
+        binary (list): binary representation of network nodes based on the union of nodes in all provided networks.
 
-        if in async then functions that allow are run in async
-
-    Output
-        list of networks containing sorted node list after degree, degree centrality, closeness centrality, betweenness, & average of all
-        list of shared edges between networks
-        binary representation of networks nodes based on all possible nodes in all networks
     """
 
     
-    shared_nodes = node_edge_similarities.compute_shared_layers(node_lists, labels, mapping = None, weight=False, in_async=in_async)
+    shared_nodes = node_edge_similarities.compute_shared_layers(node_lists, labels, in_async=in_async)
 
     binary = node_edge_similarities.compute_binary_layer(shared_nodes, layers=labels)
 
@@ -200,24 +190,43 @@ def sort_list_and_get_shared(node_lists, m, network_graphs, labels, degree=True,
 
 def estimate_similarities_nodes(node_lists, sorted_nodes, binary,  kendall_x=50, is_file=False, in_async=True):
     """
-    function to estimate edge similarities
+    Wrapper function to estimate similarity between networks based on their nodes.
 
-    Input
-        output of preprocess_node_list
+    Parameters:
+        node_lists (list): list of converted node IDs as returned by preprocess_node_list().
+        sorted_nodes (list): list of node sorted by weight as returned object by sort_list_and_get_shared () or sort_node_list().
+        binary (list): list of binary node representation as returned by sort_list_and_get_shared() or node_edge_similarities.compute_binary_layer().
+        kendall_x (int): top/bottom number of nodes to be considered when estimating kendall rank correlation.
+        is_file (boolean): if False then node_lists is list of converted objects. If True then node_lists is list of file locations to the pickled objects instead.
+        in_async (boolean): if True then run in async where applicable.
 
-        sorted_nodes as returned by sort_list_and_get_shared
+    Returns:
+        jaccard similarity (numpy matrix):
+        jaccard distance (numpy matrix):
+        percentage of shared nodes (numpy matrix):
+        kendall correlation coefficient based on top nodes ranked by degree centrality (numpy matrix):
+        kendall p value based on top nodes ranked by degree centrality (numpy matrix):
+        kendall correlation coefficient based on top nodes ranked by closeness centrality (numpy matrix):
+        kendall p value based on top nodes ranked by closeness centrality (numpy matrix):
+        kendall correlation coefficient based on top nodes ranked by betweenness centrality (numpy matrix):
+        kendall p value based on top nodes ranked by degree betweenness (numpy matrix):
+        kendall correlation coefficient based on top nodes ranked by mean ranking (numpy matrix):
+        kendall p value based on top nodes ranked by mean ranking (numpy matrix):
+        hamming distance (numpy matrix):
+        kendall correlation coefficient based on bottom nodes ranked by degree centrality (numpy matrix):
+        kendall p value based on bottom nodes ranked by degree centrality (numpy matrix):
+        kendall correlation coefficient based on bottom nodes ranked by closeness centrality (numpy matrix):
+        kendall p value based on bottom nodes ranked by closeness centrality (numpy matrix):
+        kendall correlation coefficient based on bottom nodes ranked by betweenness centrality (numpy matrix):
+        kendall p value based on bottom nodes ranked by degree betweenness (numpy matrix):
+        kendall correlation coefficient based on bottom nodes ranked by mean ranking (numpy matrix):
+        kendall p value based on bottom nodes ranked by mean ranking (numpy matrix):
+        SMC (numpy matrix):
+        kendall correlation coefficient based on top nodes ranked by median ranking (numpy matrix):
+        kendall p value based on top nodes ranked by median ranking (numpy matrix):
+        kendall correlation coefficient based on bottom nodes ranked by median ranking (numpy matrix):
+        kendall p value based on bottom nodes ranked by meadianranking (numpy matrix):
 
-        binary as returned by sort_list_and_get_shared
-
-        kendall_x number of edges to be considered in kendall ranking (top)
-
-        if is_file then node_lists is list of pickled network locations instead
-
-    Output
-        numpy matrices containing
-
-        jaccard similarity, jaccard distance, similarity
-        kendall correlation for degree centrality, closeness centrality, betweenness, hamming distance
     """
 
     j, s = node_edge_similarities.shared_elements_multiple(node_lists, labels=None, percentage=True, jaccard=True, jaccard_similarity = True, penalize_percentage=False, is_file=is_file, in_async=in_async)

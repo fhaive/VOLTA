@@ -1,6 +1,6 @@
 """
-This is an example pipeline on how to estimate the similarity between multiple networks
-based on their similarity in shared  edges
+This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
+based on their similarity in edges.
 """
 
 import networkx as nx
@@ -21,22 +21,16 @@ import scipy
 
 def preprocess_graph(net_temp, attribute="weight", location = None, labels = None):
     """
-    function to convert list of networkx graph objects into list of sublist format as needed by
-    these functions
+    Converts list of networkX graph objects into a list of sublist format, which is used by most functions in this package.
 
-    Input
-        net_temp list of networkx graph objects
-
-        weight edge attribute to be converted
-
-        location is str of were output should be saved
-            if None then a list of edgelists is returned else their pickled location is returned
-
-        labels is list of network names in same order as in net_temp
-            only needed if location is not None
-
-    Output
-        list of graph objects in edge list format or if location is not None list of path location of saved objects
+    Parameters:
+        net_temp (list): list of networkX graph objects
+        attribute (str): edge weight label to be converted
+        location (str or None): if None the converted object is returned. Else it needs to be file location where the converted objects should be pickled and their locations will be returned instead.
+        labels (list or None): list of network names in same order as net_temp. Only needs to be provided if location is not None.
+        
+    Return:
+        converted objects (list): if location is None list of converted objects is returned else list of pickled locations is returned.
     """
     
     if location is None:
@@ -75,26 +69,18 @@ def preprocess_graph(net_temp, attribute="weight", location = None, labels = Non
 
 def preprocess_edge_list(networks, is_file = False, location = None, names= None):
     """
-    function to map edges to ids for faster & easier computation
+    Maps edges to IDs.
 
-    Input
-        output of preprocess_graph
-        is_file if False then networks is list of networkx objects
-            if True then networks is list of file locations to python pickles
-                if True converted networks are saved as pickles to location
-        location str to where converted networks should be saved - will only be used if is_file is True
+    Parameters:
+        networks (list): list of converted networks or list of pickled file locations as returned by preprocess_graph()
+        is_file (boolean): if False then networks is list converted objects. If True then networks is list of file locations to the pickled objects instead.
+        location (str or None): if is_file is True then output of this function will be pickled to location.
+        names (list or None): list of network names in same order as networks. If is_file is True then names will be used to store pickled objects.
 
-        names list of network names in same order as networks
-
-    Output
-        list of converted networks (or str to saved location)
-
-        dict of edge to id mapping which can be used to reverse mapping
-            in order to withdraw later information mapping needs to be kept
-            key is str of node ids in format "node1, node2", which can be split into a list
-                both edge directions are stored & the same value is assigned to them
-            value is id assigned to the particular edge
-
+    Returns:
+        networks with edge IDs or their pickled location (list):
+        edge ID mapping (dict): keys are str of node IDs building an edge in format "node1, node2" and values are assigned ID.
+        
     """
 
     if not is_file:
@@ -149,21 +135,21 @@ def preprocess_edge_list(networks, is_file = False, location = None, names= None
 
 def sort_list_and_get_shared(networks, m, network_lists, labels, is_file = False, in_async=True):
     """
-    preprocessing function to sort edge list after weight
+    Preprocessing function to sort edge list after weight, convert to a binary format and claculate shared edges.
 
-    Input
-        output of preprocess_graph
-        mapping as returned by preprocess_edge_list
-        network_list as returned by preprocess_edge_list
-        labels is list of str containing names of each layer for later identification
-        if is_file is True then networks is list of paths to pickled networks else contains python objects
-        if in_async then run in async where applicable
+    parameters:
+        networks (list): list of converted networks or list of pickled file locations as returned by preprocess_graph().
+        m (dict): edge to ID mapping as returned by preprocess_edge_list().
+        is_file (boolean): if False then networks is list converted objects. If True then networks is list of file locations to the pickled objects instead.
+        network_lists (list): list of converted edge IDs as returned by  preprocess_edge_list()
+        labels (list): list of network names in same order as networks. 
+        in_async (boolean): if True then run in async where applicable.
 
-    Output
-        list of networks containing sorted edge list
-        dict of shared edges between networks
-            key is edge id as provided in m & value is list of labels in which this edge occures
-        binary representation of networks edges based on all possible edges in all networks
+    Returns:
+        sorted networks (list): contains sorted edge list.
+        shared edges (dict): key is edge ID as provided in m and value is list of network labels containing this edge.
+        binary (list): binary representation of network edges based on the union of edges in all provided networks.
+        
     """
 
     sorted_networks = []
@@ -178,7 +164,7 @@ def sort_list_and_get_shared(networks, m, network_lists, labels, is_file = False
 
             sorted_networks.append(node_edge_similarities.sort_edge_list(net, m))
 
-    shared_edges = node_edge_similarities.compute_shared_layers(network_lists, labels, mapping = None, weight=False, in_async=in_async)
+    shared_edges = node_edge_similarities.compute_shared_layers(network_lists, labels, in_async=in_async)
 
     binary = node_edge_similarities.compute_binary_layer(shared_edges, layers=labels)
 
@@ -186,16 +172,16 @@ def sort_list_and_get_shared(networks, m, network_lists, labels, is_file = False
 
 def sort_list(networks, m,  is_file = False, location=None):
     """
-    preprocessing function to sort edge list after weight
+    Sorts edge list after weight.
 
-    Input
-        output of preprocess_graph
-        mapping as returned by preprocess_edge_list
+    Parameters:
+        networks (list): networks (list): list of converted networks or list of pickled file locations as returned by preprocess_graph().
+        m (dict): edge to ID mapping as returned by preprocess_edge_list().
+        is_file (boolean): if False then networks is list converted objects. If True then networks is list of file locations to the pickled objects instead and output will be saved to file as well.
+        location (str or None): location where to pickle output to if is_file is True.
         
-        if is_file is True then networks is list of paths to pickled networks else contains python objects
-
-    Output
-        list of networks containing sorted edge list or if_file then contains file location of pickled objects
+    Returns:
+        sorted (list): list of networks containing sorted edge list or if_file is True then contains the file locations of the pickled objects.
         
     """
 
@@ -223,25 +209,20 @@ def sort_list(networks, m,  is_file = False, location=None):
 
 def get_shared(network_lists, labels, is_file = False):
     """
-    preprocessing function to sort edge list after weight
+    Gets shared edges between networks.
 
-    Input
-        
-        
-        network_list as returned by preprocess_edge_list
-        labels is list of str containing names of each layer for later identification
-        if is_file is True then network_lists is list of paths to pickled networks else contains python objects
-
-    Output
-        list of networks containing sorted edge list
-        dict of shared edges between networks
-            key is edge id as provided in m & value is list of labels in which this edge occures
-        binary representation of networks edges based on all possible edges in all networks
+    Parameters:
+        network_lists (list): list of converted edge IDs as returned by  preprocess_edge_list().
+        labels (list): list of network names in same order as networks. 
+        is_file (boolean): if False then network_lists is list of converted objects. If True then networks is list of file locations to the pickled objects instead.
+       
+    Returns:
+        shared edges (dict): key is edge ID as provided in m and value is list of network labels containing this edge.
     """
 
     
 
-    shared_edges = node_edge_similarities.compute_shared_layers(network_lists, labels, mapping = None, weight=False, is_file=is_file)
+    shared_edges = node_edge_similarities.compute_shared_layers(network_lists, labels,  is_file=is_file)
 
     binary = node_edge_similarities.compute_binary_layer(shared_edges, layers=labels)
 
@@ -250,26 +231,27 @@ def get_shared(network_lists, labels, is_file = False):
 
 def estimate_similarities_edges(network_lists, sorted_networks, binary,  kendall_x=50, is_file=True, in_async=True):
     """
-    function to estimate edge similarities
+    Wrapper function to estimate similarity between networks based on their edges.
 
-    Input
-        network_lists as returned by preprocess_edge_list()
+    Parameters:
+        network_lists (list): list of converted edge IDs as returned by preprocess_edge_list().
+        sorted_networks (list): list of edges sorted by weight as returned by sort_list_and_get_shared () or sort_list().
+        binary (list): list of binary edge representation as returned by sort_list_and_get_shared() or node_edge_similarities.compute_binary_layer().
+        kendall_x (int): top/bottom number of edges to be considered when estimating kendall rank correlation.
+        is_file (boolean): if False then network_lists is list of converted objects. If True then network_lists is list of file locations to the pickled objects instead.
+        in_async (boolean): if True then run in async where applicable.
 
-        sorted_networks as returned by sort_list_and_get_shared
+    Returns:
+        jaccard similarity (numpy matrix):
+        jaccard distance (numpy matrix):
+        percentage of shared edges (numpy matrix):
+        kendall correlation coefficient based on top edges (numpy matrix):
+        kendall p value based on top edges (numpy matrix):
+        kendall correlation coefficient based on bottom edges (numpy matrix):
+        kendall p value based on bottom edges (numpy matrix):
+        hamming distance (numpy matrix):
+        SMC (numpy matrix):
 
-        binary as returned by sort_list_and_get_shared
-
-        kendall_x number of edges to be considered in kendall ranking (top)
-
-        if is_file then network_lists is list of file location of pickled network objects
-
-        if in_async then where applicable run in async
-
-    Output
-        numpy matrices containing
-
-        jaccard similarity, jaccard distance, similarity
-        kendall correlation, hamming distance
     """
 
     j, percentage = node_edge_similarities.shared_elements_multiple(network_lists,  labels=None, percentage=True, jaccard=True, jaccard_similarity = True, penalize_percentage=False, is_file=is_file, in_async=in_async)

@@ -1,15 +1,7 @@
 '''
-community detection & evaluation algorithms
-Functionalities are mainly build on top of CDlib - https://github.com/GiulioRossetti/cdlib
+Community detection & evaluation algorithms.
+Many algorithms are imported from CDlib - https://github.com/GiulioRossetti/cdlib. But only a small fraction is exposed here, for more algorithms please refer to the official documentation
 
-only a few community detection algorithms are exposed here, for more algorithms please refer to the official documentation
-
-Node Partitioning
-    node clustering
-    fuzzy clustering
-    attribute node clustering 
-
-edge partitioning
 '''
 
 import pandas as pd
@@ -52,28 +44,25 @@ from sklearn.cluster import AgglomerativeClustering
 
 def async_fluid(G, k=5, return_object=True):
     """
-    based on the idea of fluids (communitites) 
-    propagation-based algorithm, were the desired number of communities needs to be set
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.async_fluid.html#cdlib.algorithms.async_fluid
-
-    Ferran Parés, Dario Garcia-Gasulla, Armand Vilalta, Jonatan Moreno, Eduard Ayguadé, Jesús Labarta, Ulises Cortés, Toyotaro Suzumura T. 
-    Fluid Communities: A Competitive and Highly Scalable Community Detection Algorithm.
     
-    Input
+    Propagation-based algorithm, were the desired number of communities needs to be set.
 
-        a networkx/ igraph object G
+    Reference:
+        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.async_fluid.html#cdlib.algorithms.async_fluid
 
-        number of desired communities k
+        Ferran Parés, Dario Garcia-Gasulla, Armand Vilalta, Jonatan Moreno, Eduard Ayguadé, Jesús Labarta, Ulises Cortés, Toyotaro Suzumura T. 
+        Fluid Communities: A Competitive and Highly Scalable Community Detection Algorithm.
+    
+    Parameters:
+        G (networkX graph object):
+        k (int): number of desired communities.
+        return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
+    Returns:
+        communities (dict): key are node IDs and value is list of communities that node belongs to.
+        fitness parameters (NodeClustering object): if return_object is True.
 
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
+        
 
     """
 
@@ -89,70 +78,26 @@ def async_fluid(G, k=5, return_object=True):
         return m
 
 
-def edmot(G, component_count=2, cutoff=10, return_object=True):
-    """
-    based on the idea of fluids (communitites) 
-    propagation-based algorithm, were the desired number of communities needs to be set
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.edmot.html#cdlib.algorithms.edmot
 
-
-    Li, Pei-Zhen, et al. “EdMot: An Edge Enhancement Approach for Motif-aware Community Detection.” 
-    Proceedings of the 25th ACM SIGKDD International Conference on Knowledge Discovery & Data Mining. 2019.
-    
-    Input
-
-        a networkx/ igraph object G
-
-        component_count  Number of extracted motif hypergraph components
-
-        cutoff  Motif edge cut-off value
-
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
-
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
-
-    """
-
-    communities = cdlib.algorithms.edmot(G,component_count=component_count, cutoff=cutoff )
-
-    m = communities.to_node_community_map()
-    #j = communities.to_json()
-
-    if return_object:
-        return m,  communities
-
-    else:
-        return m
 
 def em(G, k=5, return_object=True):
     """
-    based on a mixture model
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.em.html#cdlib.algorithms.em
+    Based on a mixture model.
 
-    Newman, Mark EJ, and Elizabeth A. Leicht. Mixture community and exploratory analysis in networks. 
-    Proceedings of the National Academy of Sciences 104.23 (2007): 9564-9569.
-    
-    Input
+    References:
+        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.em.html#cdlib.algorithms.em
 
-        a networkx/ igraph object G
+        Newman, Mark EJ, and Elizabeth A. Leicht. Mixture community and exploratory analysis in networks. 
+        Proceedings of the National Academy of Sciences 104.23 (2007): 9564-9569.
+        
+    Parameters:
+        G (networkX graph object):
+        k (int): number of desired communities.
+        return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
-        number of desired communities k
-
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
-
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
+    Returns:
+        communities (dict): key are node IDs and value is list of communities that node belongs to.
+        fitness parameters (NodeClustering object): if return_object is True.
 
     """
 
@@ -170,31 +115,24 @@ def em(G, k=5, return_object=True):
 
 def sbm_dl(G, B_min=None, B_max=None, deg_corr=True, return_object=True):
     """
-    based on mote carlo heuristic
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.sbm_dl.html#cdlib.algorithms.sbm_dl
+    Based on a monte carlo heuristic.
 
-    Tiago P. Peixoto, “Efficient Monte Carlo and greedy heuristic for the inference of stochastic block models”, 
-    Phys. Rev. E 89, 012804 (2014), DOI: 10.1103/PhysRevE.89.012804
+    References:
+        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.sbm_dl.html#cdlib.algorithms.sbm_dl
+
+        Tiago P. Peixoto, “Efficient Monte Carlo and greedy heuristic for the inference of stochastic block models”, 
+        Phys. Rev. E 89, 012804 (2014), DOI: 10.1103/PhysRevE.89.012804
     
-    Input
+     Parameters:
+        G (networkX graph object):
+        B_min (int): minimum number of communities that are allowed
+        B_max (int):  maximum number of communities that are allowed
+        deg_corr (boolean): if is True then uses a degree corrected version
+        return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
-        a networkx/ igraph object G
-
-        B_min  minimum number of communities that are allowed
-
-        B_max  maximum number of communities that are allowed
-
-        if deg_corr  use degree corrected version
-
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
-
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
+    Returns:
+        communities (dict): key are node IDs and value is list of communities that node belongs to.
+        fitness parameters (NodeClustering object): if return_object is True.
 
     """
 
@@ -212,24 +150,20 @@ def sbm_dl(G, B_min=None, B_max=None, deg_corr=True, return_object=True):
 
 def newman_modularity(G, return_object=True):
     """
-    based (maximising) modularity
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.eigenvector.html#cdlib.algorithms.eigenvector
+    Based on (maximising) modularity.
 
-    Newman, Mark EJ. Finding community structure in networks using the eigenvectors of matrices. Physical review E 74.3 (2006): 036104.
-    
-    Input
+    References:
+        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.eigenvector.html#cdlib.algorithms.eigenvector
 
-        a networkx/ igraph object G
+        Newman, Mark EJ. Finding community structure in networks using the eigenvectors of matrices. Physical review E 74.3 (2006): 036104.
+        
+    Parameters:
+        G (networkX graph object):
+        return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
-
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
+    Returns:
+        communities (dict): key are node IDs and value is list of communities that node belongs to.
+        fitness parameters (NodeClustering object): if return_object is True.
 
     """
 
@@ -247,28 +181,23 @@ def newman_modularity(G, return_object=True):
 
 def gdmp2(G, min_threshold=0.75, return_object=True):
     """
-    based on finding dense subgraphs
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.gdmp2.html#cdlib.algorithms.gdmp2
+    Based on finding dense subgraphs.
 
-    Chen, Jie, and Yousef Saad. Dense subgraph extraction with application to community detection. 
-    IEEE Transactions on Knowledge and Data Engineering 24.7 (2012): 1216-1230.
+    References:
+        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.gdmp2.html#cdlib.algorithms.gdmp2
+
+        Chen, Jie, and Yousef Saad. Dense subgraph extraction with application to community detection. 
+        IEEE Transactions on Knowledge and Data Engineering 24.7 (2012): 1216-1230.
     
-    Input
+    Parameters:
+        G (networkX graph object):
+        min_threshold (float): minimum density threshold. This is used to control the density of the detected communities.
+        return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
-        a networkx/ igraph object G
-
-        min_threshold minimum density threshold to control the density of the detected communities
-
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
-
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
-
+    Returns:
+        communities (dict): key are node IDs and value is list of communities that node belongs to.
+        fitness parameters (NodeClustering object): if return_object is True.
+    
     """
 
     communities = cdlib.algorithms.gdmp2(G, min_threshold=min_threshold)
@@ -285,25 +214,22 @@ def gdmp2(G, min_threshold=0.75, return_object=True):
 
 def infomap(G, return_object=True):
     """
-    based on random walks
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.infomap.html#cdlib.algorithms.infomap
+    Based on random walks.
 
-    Rosvall M, Bergstrom CT (2008) Maps of random walks on complex networks reveal community structure. 
-    Proc Natl Acad SciUSA 105(4):1118–1123
+    References:
+        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.infomap.html#cdlib.algorithms.infomap
+
+        Rosvall M, Bergstrom CT (2008) Maps of random walks on complex networks reveal community structure. 
+        Proc Natl Acad SciUSA 105(4):1118–1123
     
-    Input
+    Parameters:
+        G (networkX graph object):
+        return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
-        a networkx/ igraph object G
-
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
-
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
+    Returns:
+        communities (dict): key are node IDs and value is list of communities that node belongs to.
+        fitness parameters (NodeClustering object): if return_object is True.
+    
 
     
     """
@@ -321,25 +247,21 @@ def infomap(G, return_object=True):
 
 def label_propagation(G, return_object=True):
     """
-    based network structure based community detection
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.label_propagation.html#cdlib.algorithms.label_propagation
+    Based on network structure.
 
-    Raghavan, U. N., Albert, R., & Kumara, S. (2007). 
-    Near linear time algorithm to detect community structures in large-scale networks. Physical review E, 76(3), 036106.
+    References:
+        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.label_propagation.html#cdlib.algorithms.label_propagation
+
+        Raghavan, U. N., Albert, R., & Kumara, S. (2007). 
+        Near linear time algorithm to detect community structures in large-scale networks. Physical review E, 76(3), 036106.
     
-    Input
+    Parameters:
+        G (networkX graph object):
+        return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
-        a networkx/ igraph object G
-
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
-
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
+    Returns:
+        communities (dict): key are node IDs and value is list of communities that node belongs to.
+        fitness parameters (NodeClustering object): if return_object is True.
 
     
     """
@@ -357,25 +279,21 @@ def label_propagation(G, return_object=True):
 
 def walktrap(G, return_object=True):
     """
-    based on random walks
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.walktrap.html#cdlib.algorithms.walktrap
+    Based on random walks.
 
-    Pons, Pascal, and Matthieu Latapy. Computing communities in large networks using random walks. 
-    J. Graph Algorithms Appl. 10.2 (2006): 191-218.
+    References:
+        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.walktrap.html#cdlib.algorithms.walktrap
+
+        Pons, Pascal, and Matthieu Latapy. Computing communities in large networks using random walks. 
+        J. Graph Algorithms Appl. 10.2 (2006): 191-218.
     
-    Input
+    Parameters:
+        G (networkX graph object):
+        return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
-        a networkx/ igraph object G
-
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
-
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
+    Returns:
+        communities (dict): key are node IDs and value is list of communities that node belongs to.
+        fitness parameters (NodeClustering object): if return_object is True.
 
     
     """
@@ -400,43 +318,29 @@ def walktrap(G, return_object=True):
 #the algorithms prefer putting nodes with strong weights into the same communities
 #weighted
 
-def cpm(G, initial_membership=None, weights="weight", node_sizes=None, resolution_parameter=1, return_object=True):
+def cpm(G, initial_membership=None, weights="weight", resolution_parameter=1, return_object=True):
     """
-    finds communities of a particular density,
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.cpm.html#cdlib.algorithms.cpm
+    Finds communities of a particular density.
 
-    Traag, V. A., Van Dooren, P., & Nesterov, Y. (2011). 
-    Narrow scope for resolution-limit-free community detection. Physical Review E, 84(1), 016114. 10.1103/PhysRevE.84.016114
+    References:
+        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.cpm.html#cdlib.algorithms.cpm
+
+        Traag, V. A., Van Dooren, P., & Nesterov, Y. (2011). 
+        Narrow scope for resolution-limit-free community detection. Physical Review E, 84(1), 016114. 10.1103/PhysRevE.84.016114
     
-    Input
+    Parameters:
+        G (networkX graph object):
+        initial_membership (list or None):  list of iInitial membership for the partition. If None then defaults to a singleton partition.
+        weights (str): edge attribute to be used.
+        resolution_parameter (float):  > 0. Controls the community resolution. Higher values lead to more communities, while lower values lead to fewer communities.
+        return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
-        a networkx/ igraph object G
-
-        initial_membership  list of int Initial membership for the partition.
-            If None then defaults to a singleton partition.
-
-        weights list of double, or edge attribute Weights of edges. 
-            Can be either an iterable or an edge attribute.
-
-        node_sizes list of int, or vertex attribute Sizes of nodes are necessary to know the size of communities in aggregate graphs. 
-            Usually this is set to 1 for all nodes, but in specific cases this could be changed. 
-
-        resolution_parameter double >0 A parameter value controlling the coarseness of the clustering. 
-            Higher resolutions lead to more communities, while lower resolutions lead to fewer communities.
-
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
-
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
-
+    Returns:
+        communities (dict): key are node IDs and value is list of communities that node belongs to.
+        fitness parameters (NodeClustering object): if return_object is True.
     """
 
-    communities = cdlib.algorithms.cpm(G, initial_membership=initial_membership, weights=weights, node_sizes=node_sizes, resolution_parameter=resolution_parameter)
+    communities = cdlib.algorithms.cpm(G, initial_membership=initial_membership, weights=weights, node_sizes=None, resolution_parameter=resolution_parameter)
 
     m = communities.to_node_community_map()
     #j = communities.to_json()
@@ -449,28 +353,22 @@ def cpm(G, initial_membership=None, weights="weight", node_sizes=None, resolutio
 
 def greedy_modularity(G, weights="weight", return_object=True):
     """
-    based on modularity
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.greedy_modularity.html#cdlib.algorithms.greedy_modularity
+    Based on modularity.
 
-    Clauset, A., Newman, M. E., & Moore, C. 
-    Finding community structure in very large networks. Physical Review E 70(6), 2004
+    References:
+        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.greedy_modularity.html#cdlib.algorithms.greedy_modularity
+
+        Clauset, A., Newman, M. E., & Moore, C. 
+        Finding community structure in very large networks. Physical Review E 70(6), 2004
     
-    Input
+    Parameters:
+        G (networkX graph object):
+        weights (str): edge attribute to be used.
+        return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
-        a networkx/ igraph object G
-
-        weights list of double, or edge attribute Weights of edges. 
-            Can be either an iterable or an edge attribute.
-
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
-
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
+    Returns:
+        communities (dict): key are node IDs and value is list of communities that node belongs to.
+        fitness parameters (NodeClustering object): if return_object is True.
 
     """
 
@@ -486,37 +384,28 @@ def greedy_modularity(G, weights="weight", return_object=True):
         return m
 
 
-def leiden(G, initial_membership=None, weights="weight", return_object=True):
+def leiden(G,  weights="weight", return_object=True):
     """
-    based on the louvain algorithm
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.leiden.html#cdlib.algorithms.leiden
+    Based on the louvain algorithm.
 
-    Traag, Vincent, Ludo Waltman, and Nees Jan van Eck. 
-    From Louvain to Leiden: guaranteeing well-connected communities. arXiv preprint arXiv:1810.08473 (2018).
+    References:
+        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.leiden.html#cdlib.algorithms.leiden
+
+        Traag, Vincent, Ludo Waltman, and Nees Jan van Eck. 
+        From Louvain to Leiden: guaranteeing well-connected communities. arXiv preprint arXiv:1810.08473 (2018).
     
-    Input
+    Parameters:
+        G (networkX graph object):
+        weights (str): edge attribute to be used.
+        return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
-        a networkx/ igraph object G
-
-        weights list of double, or edge attribute Weights of edges. 
-            Can be either an iterable or an edge attribute.
-
-        initial_membership list of int Initial memberships.
-            If None then defaults to a singleton partition.
-
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
-
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
+    Returns:
+        communities (dict): key are node IDs and value is list of communities that node belongs to.
+        fitness parameters (NodeClustering object): if return_object is True.
 
     """
 
-    communities = cdlib.algorithms.leiden(G, weights=weights, initial_membership=initial_membership)
+    communities = cdlib.algorithms.leiden(G, weights=weights, initial_membership=None)
 
     m = communities.to_node_community_map()
     #j = communities.to_json()
@@ -528,39 +417,29 @@ def leiden(G, initial_membership=None, weights="weight", return_object=True):
         return m
 
 
-def louvain(G, weights="weight", resolution=1.0, randomize=False, return_object=True):
+def louvain(G, weights="weight", resolution=1.0,  return_object=True):
     """
-    based on modularity
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.louvain.html#cdlib.algorithms.louvain
+    Based on modularity.
 
-    Blondel, Vincent D., et al. Fast unfolding of communities in large networks.
-    Journal of statistical mechanics: theory and experiment 2008.10 (2008): P10008.
+    References:
+        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.louvain.html#cdlib.algorithms.louvain
+
+        Blondel, Vincent D., et al. Fast unfolding of communities in large networks.
+        Journal of statistical mechanics: theory and experiment 2008.10 (2008): P10008.
     
-    Input
+    Parameters:
+        G (networkX graph object):
+        weights (str): edge attribute to be used.
+        resolution (float): controls community size.
+        return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
-        a networkx/ igraph object G
-
-        weight list of double, or edge attribute Weights of edges. 
-            Can be either an iterable or an edge attribute.
-
-        resolution float, changes the size of the communities, default to 1.
-
-        randomize boolean, randomizes the node evaluation order and the community evaluation order 
-            to get different partitions at each call, default False
-        
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
-
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
+    Returns:
+        communities (dict): key are node IDs and value is list of communities that node belongs to.
+        fitness parameters (NodeClustering object): if return_object is True.
 
     """
 
-    communities = cdlib.algorithms.louvain(G, weight=weights, resolution=resolution, randomize=randomize)
+    communities = cdlib.algorithms.louvain(G, weight=weights, resolution=resolution, randomize=False)
 
     m = communities.to_node_community_map()
     #j = communities.to_json()
@@ -571,14 +450,16 @@ def louvain(G, weights="weight", resolution=1.0, randomize=False, return_object=
     else:
         return m
 
-
+'''
 def rber_pots(G, initial_membership=None, weights="weight", node_sizes=None, resolution_parameter=1, return_object=True):
     """
-    optimizes a quality function
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.rber_pots.html#cdlib.algorithms.rber_pots
+    Optimizes a quality function.
 
-    Reichardt, J., & Bornholdt, S. (2006). Statistical mechanics of community detection. 
-    Physical Review E, 74(1), 016110. 10.1103/PhysRevE.74.016110
+    References:
+        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.rber_pots.html#cdlib.algorithms.rber_pots
+
+        Reichardt, J., & Bornholdt, S. (2006). Statistical mechanics of community detection. 
+        Physical Review E, 74(1), 016110. 10.1103/PhysRevE.74.016110
     
     Input
 
@@ -663,61 +544,34 @@ def surprise(G, initial_membership=None, weights="weight", node_sizes=None, retu
 
     else:
         return m
+'''
 
 
-
-def alisas_communities(H, weights="weight", t=0.2, max_iter=1000, by_degree=True, r=5, std=0.2, min_community=10, graph=False):
+def weak_link_communities(H, weights="weight", t=0.2, max_iter=1000, by_degree=True, r=5, std=0.2, min_community=10, graph=False):
     """
-    algorithm that tries to find weak links between node groups, while ensuring that no new isolates occure
-
-    for each node a probabilistic selection of neighbors is run for r rounds based on their edge weights
-        neigbors with less than t occurenses will be disconnected but only if this link is selected as a weak link
-            in both directions
-        based on this it is ensured that a small nodegroup/ single node connected to a high degree node via a weak link is NOT
-            disconnected, since this is the only community it belongs to
-
-    this algorithm is tuned to similarity graphs, especially where edge weights encode aa strong association between nodes and where it
-        is preferred that weak links are kept in the same community if there is no "better option" to assign them
-
-    the algorithm will stop when max_iter is reached or no edges can be removed anymore
+    Tries to find weak links between node groups, while ensuring that no new isolates occure.
+    For each node a probabilistic selection of neighbors is run for r rounds based on their edge weights.
+    Neigbors with less than t occurenses will be disconnected but only if this link is selected as a weak link in both directions.
+    The algorithm will stop when max_iter is reached or no edges can be removed anymore.
     
-    Input
+    Parameters:
 
-        a networkx/ igraph object G
+        G (networkX graph object):
+        weights (str): edge attribute to be used.
+        t (float): in [0,1]. Treshold on which edges are "selected as weak" and to be removed if they occure <= in of samples neighbors.
+        max_iter (int): maximum number of iterations. 
+        by_degree (boolean): if True then the number of samplings for each node is based on its degree. Each node will sample from its neighbors r*node_degree times.
+            If is false then each nodes neighbors will be sampled r times.
+        r (int) how often a nodes neighbors are sampled.  
+        std (float): treshold of a nodes neighboring sampling distribution standardiviationf. If it is above std then edge removal will be performed.
+        min_community (int or None): minimum community size allowed. If already disconnected components of size < min_community exist, smaller communities can still occure. 
+                If None will be ignored.
+        graph (boolean): if is true then the paritioned graph object will be returned as well.
 
-        weights edge attribute. 
-            
-        t treshold on which edges are "selected as weak" and to be removed if they occure <= in fraction
-            of selected neighbors 
-
-        max_iter max number of iterations if a convergence is not reached beforehand
-
-        by_degree if true number of samplings for each node is based on its degree
-            each node will samper from its neighbor list r*node_degree times
-
-            if false then each nodes neighbors will be sampled r times
-
-        r how often a nodes neighbors are sampled, based on by_degree
-            
-        std based on which standard deviation in the neighboring edges selection (after sampling)
-            removal should be performed
-            this avoides that weak edges are removed when all edges are counted equal
-
-        min_community number of nodes of min community size
-            if pre existing communities of that size exist some communities still may be smaller than min_community
-            but no new ones of that size will be created
-            if None not taken into account
-
-        graph if true new graph object is also returned
-
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-        if graph
-            dict, networkx graph object
-
-        
+    Returns:
+        communities (dict): key are node IDs and value is list of communities that node belongs to.
+        graph (networkX graph object): if graph is True.
+                
 
     """
     G = H.copy()
@@ -820,14 +674,14 @@ def alisas_communities(H, weights="weight", t=0.2, max_iter=1000, by_degree=True
     #create partition dict based on all subgraphs within the current graph
     com_temp = list(nx.connected_component_subgraphs(G))
 
-    communities = convert_graph_to_community_dict(com_temp)
+    communities = __convert_graph_to_community_dict__(com_temp)
 
     if graph:
         return communities, G
     else:
         return communities
 
-def disconnect_high_degree(G, nodes=10, percentage=None, weight="weight"):
+def __disconnect_high_degree__(G, nodes=10, percentage=None, weight="weight"):
     """
     function that takes the x highest degree nodes in the graph and removes all edges to disconnect them
     this can be used as an input for a community detection function
@@ -885,13 +739,12 @@ def disconnect_high_degree(G, nodes=10, percentage=None, weight="weight"):
     return G
 
 
-
+'''
 def disconnect_high_degree_nodes(H, nodes=10, percentage=None, weight="weight", graph = False):
     """
-    function that takes the x highest degree nodes in the graph and removes all edges to disconnect them
-    
+    Builds communities around hub nodes, be disconnecting hub nodes to create disconnected components.
 
-    Input
+    Parameters:
         networkx graph H
 
         number of high degree nodes that should be disconnected
@@ -911,81 +764,64 @@ def disconnect_high_degree_nodes(H, nodes=10, percentage=None, weight="weight", 
             dict, networkx graph object
     """
 
-    H = disconnect_high_degree(H, nodes=nodes, percentage=percentage, weight=weight)
+    H = __disconnect_high_degree__(H, nodes=nodes, percentage=percentage, weight=weight)
 
     com_temp = list(nx.connected_component_subgraphs(H))
 
-    communities = convert_graph_to_community_dict(com_temp)
+    communities = __convert_graph_to_community_dict__(com_temp)
 
     if graph:
         return communities, H
     else:
         return communities
-
+'''
 
 def girvan_newman(G, valuable_edge="max_weight", k=1, is_leve=False, attribute="weight", w_max=True):
     """
-    Networkx girvan newman implementation
-    removes "most valuable edge" from the graph to partition it
-    https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.community.centrality.girvan_newman.html
+    NetworkX girvan newman implementation. Removes "most valuable edge" from the graph to partition it.
 
-    Input
+    References:
+        https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.community.centrality.girvan_newman.html
 
-        networkx graph G
+    Parameters:
+        G (networkX graph object):
+        valuable_edge (str): determines how the most valuable edge is selected. If "max_weight" then the edge with the highest weight is removed.
+            If "min_weight" the edge with the lowest weight is removed. If "betweenness"  the edge with the highest/ lowest betweenness centrality is removed first.
+            If is "current_flow_betweenness" the edge with the highest/ lowest current flow betweenness centrality is removed first. If is "load" the edge with the highest/lowest load centrality is removed.
+        k (int or None): which level(s) of the algorithms should be returned. If None all levels are returned.
+        is_level (boolean): if is True then k is assumed to be the level index and only that level is returned. If it is False the the k top levels are returned. 
+        attribute (str): name of the edge attribute to be used.
+        w_max (boolean): only applies if valuable_edge is not "max_weight" or "min_weight. If True then the edge with the heigest value is remvoed. If False the edge with the lowest value is removed.     
+        
+    Returns:
+        communities (dict): key are node IDs and value is list of communities that the node belongs to. First value is the top most level and last value is the most granular level.
 
-        valuable_edge  Function that takes a graph as input and outputs an edge. 
-            options are:
-                max_weight : based on max edge weight
-                min_weight : based on min edge weight
-                betweenness : based on betweenness centrality
-                current_flow_betweenness :  based on current flow betweenness centrality
-                load : based on load centrality
-
-        attribute 
-            edge attribute to be used for max_weight/ min_weight
-
-        w_max
-            if True the highest scoring edge is returned else the lowest scoring edge
-            only relevant if valuable_edge is betweenness, current_flow_betweenness or load
-
-        k int, levels of the algorithm it should return results to
-            i.e. 1 - top most level, 3 - 3 top most levels or exactly the specified level
-            if None then all levels are returned
-
-        if is level this indicates that k is level index & that specific level is returned
-            if false then k is seen to be a "range" and k top levels are returned
-            level index starts at 0
-
-    Output
-
-        dict, were each node ID is key and value is list of communities it belongs to at each level of the algorithm
-        first value is top most level & last value is most granular level
     """
 
     if valuable_edge == "max_weight":
         #this is a very shitty implementation but networkx does not allow to provide the edge function with parameters
         def temp(G, attribute=attribute):
-            return by_weight(G, w_max=True, attribute=attribute)
+            return __by_weight__(G, w_max=True, attribute=attribute)
 
 
     elif valuable_edge == "min_weight":
         def temp(G, attribute=attribute):
-            return by_weight(G, w_max=False, attribute=attribute)
+            return __by_weight__(G, w_max=False, attribute=attribute)
 
     elif valuable_edge == "betweenness":
         def temp(G, attribute=attribute, w_max=w_max):
 
-            return by_centrality(G, w_max=w_max, attribute=attribute, type="betweenness")
+            return __by_centrality__(G, w_max=w_max, attribute=attribute, type="betweenness")
 
     elif valuable_edge == "current_flow_betweenness":
         def temp(G, attribute=attribute, w_max=w_max):
 
-            return by_centrality(G, w_max=w_max, attribute=attribute, type="current_flow_betweenness")
+            return __by_centrality__(G, w_max=w_max, attribute=attribute, type="current_flow_betweenness")
 
     elif valuable_edge == "load":
         def temp(G, attribute=attribute, w_max=w_max):
 
-            return by_centrality(G, w_max=w_max, attribute=attribute, type="load")
+            return __by_centrality__(G, w_max=w_max, attribute=attribute, type="load")
 
     else:
         print("not implemented, will set to default of betweenness centrality")
@@ -1040,21 +876,16 @@ def girvan_newman(G, valuable_edge="max_weight", k=1, is_leve=False, attribute="
 
 def agglomerative_clustering(G, is_distance=True, linkage="ward", distance_threshold=0.2):
     """
-    clusters the adjacency matrix (which needs to contain similarity or distance weights between nodes)
+    Clusters on the adjacency matrix of a graph. Cells need to contain distance or similarity values. Based on sklearn.
 
-    Input
-        networkx graph G
-
-        if is distance values are used direct
-        else its assumed to be a similarity matrix and values are converted into distance values
-
-        linkage input to sklearn agglomerativeClustering
-            “ward”, “complete”, “average”, “single”
-
-
-
-    Output
-        community dict
+    Parameters:
+        G (networkX graph object)
+        is_distance (boolean): if True the values contained in the adjacency matrix are used for clustering. If False they are converted into a distance first with 1-x.
+        linkage (str): method to be used. Options are "ward", "complete", "average", "single".
+        distance_treshold (float): treshold above which clusters will be merged.
+       
+    Returns:
+        communities (dict): key are node IDs and value is list of communities that the node belongs to.
     """
     nodes = list(G.nodes())
     
@@ -1087,15 +918,14 @@ def agglomerative_clustering(G, is_distance=True, linkage="ward", distance_thres
 
 def markov_clustering(G, inflation=1.1):
     """
-    creates markov clustering on adjacency matrix
+    Markov clustering on adjacency matrix. Based on the markovclustering package.
 
-    Input 
-        networkx graph object G
-
-        inflation - clustering parameter
-
-    Output
-        clustering dict
+    Parameters:
+        G (networkX graph object)
+        inflation (float): clustering parameter.
+        
+   Returns:
+        communities (dict): key are node IDs and value is list of communities that the node belongs to.
     """
     nodes = list(G.nodes())
     print("creating adjacency matrix")
@@ -1131,33 +961,21 @@ def markov_clustering(G, inflation=1.1):
 
 def angel(G, treshold=0.5, min_community_size=3, return_object=True):
     """
-    node centrinc bottom-up
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.angel.html#cdlib.algorithms.angel
+    References:
+        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.angel.html#cdlib.algorithms.angel
 
-    Rossetti, Giulio. “Exorcising the Demon: Angel, Efficient Node-Centric Community Discovery.”
-     International Conference on Complex Networks and Their Applications. Springer, Cham, 2019.
-    
-    Input
-
-        a networkx/ igraph object G
-
-        treshold merging treshold, float between 0 & 1
-
-        min_community_size int 
-
-        node_sizes list of int, or vertex attribute Sizes of nodes 
-            Usually set to 1 for all nodes, but in specific cases this could be changed.
-            
+        Rossetti, Giulio. “Exorcising the Demon: Angel, Efficient Node-Centric Community Discovery.”
+        International Conference on Complex Networks and Their Applications. Springer, Cham, 2019.
         
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
+    Parameters:
+        G (networkX graph object):
+        treshold (float): in  [0,1]. Merging treshold.
+        min_community_size (int): minimum community size.
+        return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
+    Returns:
+        communities (dict): key are node IDs and value is list of communities that node belongs to.
+        fitness parameters (NodeClustering object): if return_object is True.
 
     """
 
@@ -1172,23 +990,26 @@ def angel(G, treshold=0.5, min_community_size=3, return_object=True):
     else:
         return m
 
-
+'''
 def lemon(G,  min_com_size=20, max_com_size=50, expand_step=6, subspace_dim=3, walk_steps=3, biased=False, return_object=True):
     """
-    based on local expansion
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.lemon.html#cdlib.algorithms.lemon
+    Based on local expansion.
 
-    Yixuan Li, Kun He, David Bindel, John Hopcroft Uncovering the small community structure in large networks: A local spectral approach. 
-    Proceedings of the 24th international conference on world wide web. International World Wide Web Conferences Steering Committee, 2015.
+    References:
+        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.lemon.html#cdlib.algorithms.lemon
+
+        Yixuan Li, Kun He, David Bindel, John Hopcroft Uncovering the small community structure in large networks: A local spectral approach. 
+        Proceedings of the 24th international conference on world wide web. International World Wide Web Conferences Steering Committee, 2015.
     
-    Input
-
-        a networkx/ igraph object G
-
+    Parameters:
+        G (networkX graph object):
        
-        min_com_size the minimum size of a single community in the network
+        min_com_size (int): minimum community size.
 
-        max_com_size the maximum size of a single community in the network
+        max_com_size (int): maximum community size.
+        expand_step (int): expansion used.
+        subspace_dim (int): dimension of the subspace. Large values can increase computational cost.
+        walk_steps:
 
         expand_step the step of seed set increasement during expansion process
 
@@ -1222,8 +1043,8 @@ def lemon(G,  min_com_size=20, max_com_size=50, expand_step=6, subspace_dim=3, w
     else:
         return m
 
-
-
+'''
+'''
 def congo(G, number_communities=3, height=2, return_object=True):
     """
     optimization of conga, which is based on girvan newman
@@ -1264,28 +1085,24 @@ def congo(G, number_communities=3, height=2, return_object=True):
 
     else:
         return m
-
+'''
 def ego_networks(G, level=1, return_object=True):
     """
-    ego network based
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.ego_networks.html#cdlib.algorithms.ego_networks
+    Based on ego networks.
+
+    References:
+        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.ego_networks.html#cdlib.algorithms.ego_networks
 
     
-    Input
+    Parameters:
+        G (networkX graph object):
+        level (int): from a node its neighbors within a community have distance <= level.
+        return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
-        a networkx/ igraph object G
+    Returns:
+        communities (dict): key are node IDs and value is list of communities that node belongs to.
+        fitness parameters (NodeClustering object): if return_object is True.
 
-        level communities with neighbors of distance <= level
-            
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
-
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
 
     """
 
@@ -1303,7 +1120,7 @@ def ego_networks(G, level=1, return_object=True):
 
 #########################################################
 ##weighted
-
+'''
 def lais2(G, edge_weight="weight"):
     """
     adjusted implementation of the lais2 algorithm, where node importance is based on edge weights
@@ -1332,7 +1149,7 @@ def lais2(G, edge_weight="weight"):
 
     """
 
-    initalClusters = LA(G)
+    initalClusters = __LA__(G)
     #Get final clusters using Improved Iterative Scan Algorithm
     finalClusters = []
     initalClustersWithoutDuplicates = []
@@ -1340,7 +1157,7 @@ def lais2(G, edge_weight="weight"):
         cluster = sorted(cluster)
         if cluster not in initalClustersWithoutDuplicates:
             initalClustersWithoutDuplicates.append(cluster)
-            updatedCluster = IS2(cluster,G)
+            updatedCluster = __IS2__(cluster,G)
             finalClusters.append(updatedCluster.nodes())
     d = {}
     #finalClustersWithoutDuplicates = []
@@ -1355,14 +1172,14 @@ def lais2(G, edge_weight="weight"):
 
     return d
 
-
+'''
 
 #########################################################33
 ###########################################################
 
 #fuzzy communities
 
-
+'''
 def fuzzy_rough(G, theta= 1, eps=0.5, r=2, return_object=True):
     """
     nodes are assigend to each community based on their probability
@@ -1455,7 +1272,7 @@ def agdl(G, number_communities=3, number_neighbors=3, kc=3, a=1, return_object=T
 #evaluate partion quality based on pquality package
 
 
-
+'''
 
 ###########################################################3
 #############################################################3
@@ -1464,22 +1281,25 @@ def agdl(G, number_communities=3, number_neighbors=3, kc=3, a=1, return_object=T
 
 def create_initial_consensus(graph, communities, thresh = 0.2):
     """
-    creates initial consensus graph out of provided community detection algorithms
-    can be used as input of fast_consensus
+    Creates initial consensus graph out of provided community detection algorithms.
+    Can be used as input of fast_consensus().
 
-    networkx graph graph, provide copy of graph if needed
-
-        communities list of initial clustering based on x community detection algorithms
-            values of list are assumed to be dict in format as returned by the community detection algorithms
-
-    thresh if a node pair occures less than tresh in a fraction of the communities they will not be added to the same community
+    Parameters:
+        graph (networkX graph object):
+        communities (list): list of initial clusterings. Items are assumed to be dicts as returned by the community detection algorithms.
+        tresh (float): threshold on if to add a node pair to the same community or not.
+    
+    Returns:
+        initial communities (dict): merged communities detected. Keys are node IDs and value is list of communities that node belongs to.
+        consensus communities (dict): key is edge ID and value is how often the edge is in the same community
+        consensus graph (networkX graph object): graph object of consensus communities. Edge weights indicate how often the 2 nodes are in the same community.
 
     """
 
     for u,v in graph.edges():
             graph[u][v]['weight'] = 0.0
 
-    consensus_com, consensus_graph = create_consensus_graph_dict(graph, communities)
+    consensus_com, consensus_graph = __create_consensus_graph_dict__(graph, communities)
 
     
 
@@ -1493,50 +1313,34 @@ def create_initial_consensus(graph, communities, thresh = 0.2):
 
     com_temp = list(nx.connected_component_subgraphs(consensus_graph))
 
-    initial_communities = convert_graph_to_community_dict(com_temp)
+    initial_communities = __convert_graph_to_community_dict__(com_temp)
 
     return initial_communities, consensus_com, consensus_graph
 
 
 def fast_consensus(graph, communities, algorithms = [], parameters=[], thresh = 0.2, delta = 0.02, max_iter=100, initial=None):
     """
-    this is an adapted implementation of the fast_consensus algorithm
-    https://github.com/adityat/fastconsensus/blob/master/fast_consensus.py
-    https://arxiv.org/pdf/1902.04014.pdf
+    This is an adapted implementation of the fast_consensus algorithm.
 
+    References:
+        https://github.com/adityat/fastconsensus/blob/master/fast_consensus.py
+        https://arxiv.org/pdf/1902.04014.pdf
+
+    Parameters:
+        graph (networkX graph object):
+        communities (list): list of initial clusterings. Items are assumed to be dicts as returned by the community detection algorithms.
+        algorithms (list): list of algorithms to be used during the consensus estimation. If an algorithm needs to be run multiple times it needs to be added multiple times.
+        parameters (list): items are dicts containing the parameters of the algorithms listed in algorithms. Needs to be in the same order as algorithms.
+        tresh (float): threshold on if to add a node pair to the same community or not.
+        delta (float): in [0.02, 0.1].
+        max_iter (int): maximum number of iterations allowed if consensus is not reached beforehand.
+        initial (None or networkX graph object): instead of using predicted communities provided in communities algorithm can be started on a consensus graph.
     
+    Returns:
+        communities (dict): key are node IDs and value is list of communities that node belongs to.
+        consensus communities (dict): key is edge ID and value is how often the edge is in the same community. This is the consensus communities infered from the provided communities only. After one round of the algorithm.
+        consensus graph (networkX graph object): graph object of consensus communities. Edge weights indicate how often the 2 nodes are in the same community. This is the consensus graph infered from the provided communities only. After one round of the algorithm.
 
-    Input
-        networkx graph graph, provide copy of graph if needed
-
-        communities list of initial clustering based on x community detection algorithms
-            values of list are assumed to be dict in format as returned by the community detection algorithms
-
-        algorithms list of algorithms to be used during the consensus estimation
-            this do not need to be the same algorithms/ or same number of algorithms used to compute the initial clustering
-            if an algorithm should be run multiple times, then add it multiple times to the list
-
-        parameters list dicts of parameters as to be used in algorithms
-            needs to be in same order as algorithms
-
-        thresh if a node pair occures less than tresh in a fraction of the communities they will not be added to the same community
-
-        delta between 0.02 & 0.1
-            end condition -  defines how granular the final clustering should be
-
-        max_iter max number of iterations if consensus is not reached
-
-        if initial is not None 
-            provide initial consensus graph to be used instead of the communities contained in communities
-            in that case communities can be set to None
-
-    Output
-        returns disconected components as communities
-        dict were each key is a node ID and its value is a list contianing the communities the node is part of
-
-        returns dict of initial consensus communities where weight is number of community algorithms support this clustering
-
-        returns community dict of initial consensus as community dict, where weak edges have been removed based on the initial treshold
 
     
     """
@@ -1551,7 +1355,7 @@ def fast_consensus(graph, communities, algorithms = [], parameters=[], thresh = 
         for u,v in graph.edges():
             graph[u][v]['weight'] = 0.0
 
-        consensus_com, consensus_graph = create_consensus_graph_dict(graph, communities)
+        consensus_com, consensus_graph = __create_consensus_graph_dict__(graph, communities)
 
         
 
@@ -1565,7 +1369,7 @@ def fast_consensus(graph, communities, algorithms = [], parameters=[], thresh = 
 
         com_temp = list(nx.connected_component_subgraphs(consensus_graph))
 
-        initial_communities = convert_graph_to_community_dict(com_temp)
+        initial_communities = __convert_graph_to_community_dict__(com_temp)
 
         graph = consensus_graph.copy()
 
@@ -1607,7 +1411,7 @@ def fast_consensus(graph, communities, algorithms = [], parameters=[], thresh = 
         
 
         #this updates the graph object of the consensus clustering
-        tmp , nextgraph = create_consensus_graph_dict(graph, communities)
+        tmp , nextgraph = __create_consensus_graph_dict__(graph, communities)
                     
         tmp = None
         print("before removal", len(nextgraph.edges()))
@@ -1646,7 +1450,7 @@ def fast_consensus(graph, communities, algorithms = [], parameters=[], thresh = 
 
         graph = nextgraph.copy()
 
-        if check_consensus_graph(nextgraph, n_p = len(communities), delta = delta):
+        if __check_consensus_graph__(nextgraph, n_p = len(communities), delta = delta):
             converged = True
             break
         if cnt >= max_iter:
@@ -1659,7 +1463,7 @@ def fast_consensus(graph, communities, algorithms = [], parameters=[], thresh = 
     #i think it would be best to convert the consensus graph into its communities based on its connected components
     com_temp = list(nx.connected_component_subgraphs(graph))
 
-    communities = convert_graph_to_community_dict(com_temp)
+    communities = __convert_graph_to_community_dict__(com_temp)
 
     return communities, consensus_com, initial_communities
 
@@ -1674,13 +1478,13 @@ def fast_consensus(graph, communities, algorithms = [], parameters=[], thresh = 
 
 def get_number_of_communities(communities):
     """
-    function to estimate the number of detected communities
+    Returns the number of detected communities.
 
-    Input
-        dict as returned by the community functions
+    Parameters:
+        communities(dict): as returned by the community functions.
+    Returns:
+        number of communities (int):
 
-    Output
-        int, number of detected communities
     """
 
     c = list(communities.values())
@@ -1688,7 +1492,7 @@ def get_number_of_communities(communities):
 
     return max(c_flat) + 1 #return plus 1 since community indexing starts with 0
 
-def convert_communities(communities):
+def __convert_communities__(communities):
     """
     helper function to convert community dict as returned by functions
     into dict, with community id as list and nodes as values
@@ -1721,21 +1525,19 @@ def convert_communities(communities):
 
 def get_number_of_nodes_community(communities, in_detail = False):
     """
-    function to estimate the distribution of nodes per community
+    Estimate the distribution of nodes between the communities.
 
-    Input 
-        dict as returned by the community functions
-
-        if in_detail then for each community its number of nodes is reported
-
-    Output
-        dict containing distribution parameters of number of nodes in communities
-
-        if in_detail then a dict containing number of nodes per community is returned as well
+    Parameters:
+        communities(dict): as returned by the community functions.
+        in_detail (boolean): if True then for each community its number of nodes is reported. If False only distributional parameters are returned.
+        
+    Returns:
+        distribution (dict): returns mean and median number of nodes, the standard deviation, kurtoisis and skewness. Keys are mean, median, std, kurt, skewness.
+        individual nodes (dict): if in_detail is True. key is community ID and value is number of nodes in that community.
 
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     number_of_nodes = []
     dict_nodes = {}
@@ -1762,26 +1564,25 @@ def get_number_of_nodes_community(communities, in_detail = False):
 
 def average_internal_degree(communities, G):
     """
-    estimates average internal degree of a communities member nodes
-    community specific & reports an average score
-    degree within a community should be high, indicating a thight connectivity between members
+    Estimates the average internal degree of a communities member nodes. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+    A high within community degree is prefered, indicating a strong connectivity within its members. Based on pquality.
 
-    Radicchi, F., Castellano, C., Cecconi, F., Loreto, V., & Parisi, D. (2004). 
-    Defining and identifying communities in networks. Proceedings of the National Academy of Sciences, 101(9), 2658-2663.
+    References:
+        Radicchi, F., Castellano, C., Cecconi, F., Loreto, V., & Parisi, D. (2004). 
+        Defining and identifying communities in networks. Proceedings of the National Academy of Sciences, 101(9), 2658-2663.
 
-    Input 
-        community dict as returned by community functions
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
 
-        networkx graph object that community was detected on
+    Returns:
+        individaul scores (dict): key is community ID and value is its average internal degree
+        mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+        dict containing score for each community. If there are less than 2 communities None is returned.
 
-    Output
-        dict containing score for each community
-
-        dict containing mean distributional scores
-            if graph contains less than 2 communities distributional parameters of None are returned
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     quality = []
     quality_dict = {}
@@ -1817,28 +1618,25 @@ def average_internal_degree(communities, G):
 def internal_edge_density(communities, G):
     
     """
-    estimates internal edge density (existing edges out of possible edges)
-    community specific & reports an average score
-    within a community the score should be high, indicating thight connectivity
-
-    Radicchi, F., Castellano, C., Cecconi, F., Loreto, V., & Parisi, D. (2004).
-    Defining and identifying communities in networks. Proceedings of the National Academy of Sciences, 101(9), 2658-2663.
+    Estimates thr internal edge density. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+    A high within community score is prefered. Based on pquality.
     
+    References:
+        Radicchi, F., Castellano, C., Cecconi, F., Loreto, V., & Parisi, D. (2004).
+        Defining and identifying communities in networks. Proceedings of the National Academy of Sciences, 101(9), 2658-2663.
+    
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
 
+    Returns:
+        individaul scores (dict): key is community ID and value its score.
+        mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+        dict containing score for each community. If there are less than 2 communities None is returned.
 
-    Input 
-        community dict as returned by community functions
-
-        networkx graph object that community was detected on
-
-    Output
-        dict containing score for each community
-
-        dict containing mean distributional scores
-            if graph contains less than 2 communities distributional parameters of None are returned
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     quality = []
     quality_dict = {}
@@ -1873,27 +1671,24 @@ def internal_edge_density(communities, G):
 def triangle_ratio(communities, G):
     
     """
-    estimates triangle participation ratio - fraction of nodes within a community that belong to a triangle - 
-    community specific & reports an average score
-    a high score indicates thighly connected nodes within a community
+    Estimates thr triangle participation ratio. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+    A high within community score is prefered. Based on pquality.
+   
+    References:
+        Yang, J., Leskovec, J.: Defining and evaluating network communities based on ground-truth. 
+        Knowledge and Information Systems 42(1), 181–213 (2015)
 
-    Yang, J., Leskovec, J.: Defining and evaluating network communities based on ground-truth. 
-    Knowledge and Information Systems 42(1), 181–213 (2015)
-    
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
 
-    Input 
-        community dict as returned by community functions
-
-        networkx graph object that community was detected on
-
-    Output
-        dict containing score for each community
-
-        dict containing mean distributional scores
-            if graph contains less than 2 communities distributional parameters of None are returned
+    Returns:
+        individaul scores (dict): key is community ID and value its score.
+        mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+        dict containing score for each community. If there are less than 2 communities None is returned.
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     quality = []
     quality_dict = {}
@@ -1928,25 +1723,24 @@ def triangle_ratio(communities, G):
 def internal_edge_count(communities, G):
     
     """
-    estimates number of edges inside the community
-    community specific & reports an average score
+    Estimates the number of edges inside the community.This measurement is community specific and an average score + distributional parameters over all communities is reported.
+    A high within community score is prefered. Based on pquality.
 
-    Radicchi, F., Castellano, C., Cecconi, F., Loreto, V., & Parisi, D. (2004). Defining and identifying communities in networks. 
-    Proceedings of the National Academy of Sciences, 101(9), 2658-2663.
+    References:
+        Radicchi, F., Castellano, C., Cecconi, F., Loreto, V., & Parisi, D. (2004). Defining and identifying communities in networks. 
+        Proceedings of the National Academy of Sciences, 101(9), 2658-2663.
 
-    Input 
-        community dict as returned by community functions
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
 
-        networkx graph object that community was detected on
-
-    Output
-        dict containing score for each community
-
-        dict containing mean distributional scores
-            if graph contains less than 2 communities distributional parameters of None are returned
+    Returns:
+        individaul scores (dict): key is community ID and value its score.
+        mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+        dict containing score for each community. If there are less than 2 communities None is returned.
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     quality = []
     quality_dict = {}
@@ -1981,25 +1775,23 @@ def internal_edge_count(communities, G):
 def conductance(communities, G):
     
     """
-    estimates conductance, which is the fraction of edges leaving the community
-    community specific & reports an average score
-    a small fraction indicates a "more closed up " community
+    Estimates conductance, which is the fraction of edges leaving the community. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+    A small within community score is prefered. Based on pquality.
 
-    Shi, J., Malik, J.: Normalized cuts and image segmentation. Departmental Papers (CIS), 107 (2000)
+    References:
+        Shi, J., Malik, J.: Normalized cuts and image segmentation. Departmental Papers (CIS), 107 (2000)
 
-    Input 
-        community dict as returned by community functions
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
 
-        networkx graph object that community was detected on
-
-    Output
-        dict containing score for each community
-
-        dict containing mean distributional scores
-            if graph contains less than 2 communities distributional parameters of None are returned
+    Returns:
+        individaul scores (dict): key is community ID and value its score.
+        mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+        dict containing score for each community. If there are less than 2 communities None is returned.
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     quality = []
     quality_dict = {}
@@ -2034,26 +1826,24 @@ def conductance(communities, G):
 def max_outgoing_edge_fraction(communities, G):
     
     """
-    estimates fraction of a nodes's edges that leave the community
-    community specific & reports an average score
-    a small value indicates a "closed" community
+    Estimates fraction of a nodes's edges that leave the community.This measurement is community specific and an average score + distributional parameters over all communities is reported.
+    A small within community score is prefered. Based on pquality.
 
-    1. Flake, G.W., Lawrence, S., Giles, C.L., et al.: 
-    Efficient identification of web communities. In: KDD, vol. 2000, pp. 150–160 (2000)
+    References:
+        1. Flake, G.W., Lawrence, S., Giles, C.L., et al.: 
+        Efficient identification of web communities. In: KDD, vol. 2000, pp. 150–160 (2000)
 
-    Input 
-        community dict as returned by community functions
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
 
-        networkx graph object that community was detected on
-
-    Output
-        dict containing score for each community
-
-        dict containing mean distributional scores
-            if graph contains less than 2 communities distributional parameters of None are returned
+    Returns:
+        individaul scores (dict): key is community ID and value its score.
+        mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+        dict containing score for each community. If there are less than 2 communities None is returned.
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     quality = []
     quality_dict = {}
@@ -2088,26 +1878,24 @@ def max_outgoing_edge_fraction(communities, G):
 def mean_outgoing_edge_fraction(communities, G):
     
     """
-    estimates average of a nodes's edges that leave the community
-    community specific & reports an average score
-    a small value indicates that most nodes only have "internal edges" and are weakly connected to the outside
+    Estimates average fraction of a nodes's edges that leave the community.This measurement is community specific and an average score + distributional parameters over all communities is reported.
+    A small within community score is prefered. Based on pquality.
 
-    1. Flake, G.W., Lawrence, S., Giles, C.L., et al.: 
-    Efficient identification of web communities. In: KDD, vol. 2000, pp. 150–160 (2000)
+    References:
+        1. Flake, G.W., Lawrence, S., Giles, C.L., et al.: 
+        Efficient identification of web communities. In: KDD, vol. 2000, pp. 150–160 (2000)
 
-    Input 
-        community dict as returned by community functions
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
 
-        networkx graph object that community was detected on
-
-    Output
-        dict containing score for each community
-
-        dict containing mean distributional scores
-            if graph contains less than 2 communities distributional parameters of None are returned
+    Returns:
+        individaul scores (dict): key is community ID and value its score.
+        mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+        dict containing score for each community. If there are less than 2 communities None is returned.
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     quality = []
     quality_dict = {}
@@ -2142,27 +1930,24 @@ def mean_outgoing_edge_fraction(communities, G):
 def fraction_of_weak_members(communities, G):
     
     """
-    estimates fraction of nodes within a community that have fewer edges inwards than outwards
-    community specific & reports an average score
-    a low score indicates that the community mainly consists out of "strong members", while a low value indicates
-        that a large amount of members are more tightly connected to the "outside" than the inside
+    Estimates fraction of nodes within a community that have fewer edges going inwards than outwards. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+    A small within community score is prefered. Based on pquality.
+    
+    References:
+        1. Flake, G.W., Lawrence, S., Giles, C.L., et al.: 
+        Efficient identification of web communities. In: KDD, vol. 2000, pp. 150–160 (2000)
 
-    1. Flake, G.W., Lawrence, S., Giles, C.L., et al.: 
-    Efficient identification of web communities. In: KDD, vol. 2000, pp. 150–160 (2000)
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
 
-    Input 
-        community dict as returned by community functions
-
-        networkx graph object that community was detected on
-
-    Output
-        dict containing score for each community
-
-        dict containing mean distributional scores
-            if graph contains less than 2 communities distributional parameters of None are returned
+    Returns:
+        individaul scores (dict): key is community ID and value its score.
+        mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+        dict containing score for each community. If there are less than 2 communities None is returned.
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     quality = []
     quality_dict = {}
@@ -2197,21 +1982,18 @@ def fraction_of_weak_members(communities, G):
 def community_modularity(communities, G):
     
     """
-    estimates a communities modularity - fraction of edges within a community w.r.t to the expected number of such edges based on a null model - 
-    community specific & reports an average score
-    a high score indicates that the communiy structure "is higher than changes suggests" & therefore more likely to have arisen due 
-        to external factors
+    Estimates a communities modularity. A high score is prefered. Based on pquality.
 
-    1. Newman, M.E.J. & Girvan, M. `Finding and evaluating community structure in networks. 
-    Physical Review E 69, 26113(2004).
+    References:
+        1. Newman, M.E.J. & Girvan, M. `Finding and evaluating community structure in networks. 
+        Physical Review E 69, 26113(2004).
 
-    Input 
-        community dict as returned by community functions
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
 
-        networkx graph object that community was detected on        
-
-    Output
-        modularity score of partition
+    Returns:
+        score (float): 
     """
     com = {}
     for key in communities:
@@ -2226,28 +2008,24 @@ def community_modularity(communities, G):
 def modular_density(communities, G):
     
     """
-    estimates modularity while considering community size
-    community specific & reports an average score
-
-    Li, Z., Zhang, S., Wang, R. S., Zhang, X. S., & Chen, L. (2008). Quantitative function for community detection. 
-    Physical review E, 77(3), 036109.
+    Estimates modularity while considering community size. Based on pquality.
     
+    References:
+        Li, Z., Zhang, S., Wang, R. S., Zhang, X. S., & Chen, L. (2008). Quantitative function for community detection. 
+        Physical review E, 77(3), 036109.
+    
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
 
-    Input 
-        community dict as returned by community functions
-
-        networkx graph object that community was detected on
-
-    Output
-        density modularity score for whole partitioning
-
-        dict containing score for each community
-
-        dict containing mean distributional scores
-            if graph contains less than 2 communities distributional parameters of None are returned
+    Returns:
+        density (float): modularity score for whole partitioning.
+        individual scores (dict): key is community ID and value is modularity score.
+        mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+        dict containing score for each community. If there are less than 2 communities None is returned.
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     quality = []
     quality_dict = {}
@@ -2295,26 +2073,24 @@ def modular_density(communities, G):
 def fraction_of_median_degree(communities, G):
     
     """
-    estimates fraction of nodes that have a higher degree than the median degree within the community
-    community specific & reports an average score
-    a high score indicates that the community contains hub nodes
+    Estimates thr fraction of nodes that have a higher degree than the median degree within the community. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+    A high score indicates that the community contains hub nodes. Based on pquality.
 
-    Yang, J., Leskovec, J.: Defining and evaluating network communities based on ground-truth. 
-    Knowledge and Information Systems 42(1), 181–213 (2015)
+    References:
+        Yang, J., Leskovec, J.: Defining and evaluating network communities based on ground-truth. 
+        Knowledge and Information Systems 42(1), 181–213 (2015)
 
-    Input 
-        community dict as returned by community functions
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
 
-        networkx graph object that community was detected on
-
-    Output
-        dict containing score for each community
-
-        dict containing mean distributional scores
-            if graph contains less than 2 communities distributional parameters of None are returned
+    Returns:
+        individaul scores (dict): key is community ID and value its score.
+        mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+        dict containing score for each community. If there are less than 2 communities None is returned.
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     quality = []
     quality_dict = {}
@@ -2349,27 +2125,24 @@ def fraction_of_median_degree(communities, G):
 def outgoing_edges(communities, G):
     
     """
-    estimates fraction of edges leaving the community (expansion)
-    community specific & reports an average score
-    a small score indicates a "closed up community"
-
-    Radicchi, F., Castellano, C., Cecconi, F., Loreto, V., & Parisi, D. (2004). 
-    Defining and identifying communities in networks. Proceedings of the National Academy of Sciences, 101(9), 2658-2663.
+    Estimates fraction of edges leaving the community (expansion). This measurement is community specific and an average score + distributional parameters over all communities is reported.
+    A small score indicates closed up communities. Based on pquality.
     
+    References:
+        Radicchi, F., Castellano, C., Cecconi, F., Loreto, V., & Parisi, D. (2004). 
+        Defining and identifying communities in networks. Proceedings of the National Academy of Sciences, 101(9), 2658-2663.
+    
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
 
-    Input 
-        community dict as returned by community functions
-
-        networkx graph object that community was detected on
-
-    Output
-        dict containing score for each community
-
-        dict containing mean distributional scores
-            if graph contains less than 2 communities distributional parameters of None are returned
+    Returns:
+        individaul scores (dict): key is community ID and value its score.
+        mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+        dict containing score for each community. If there are less than 2 communities None is returned.
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     quality = []
     quality_dict = {}
@@ -2404,27 +2177,24 @@ def outgoing_edges(communities, G):
 def cut_ratio(communities, G, normalized=True):
     
     """
-    estimates the (normalized) cut ratio - fraction of edges (of all possible edges) that leave the community
-    community specific & reports an average score
-    a small value is prefered
+    Estimates the (normalized) cut ratio. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+    A small score is preferred. Based on pquality.
+    
+    References:
+        1. Fortunato, S.: Community detection in graphs. Physics reports 486(3-5), 75–174 (2010)
 
-    1. Fortunato, S.: Community detection in graphs. Physics reports 486(3-5), 75–174 (2010)
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
+        normalized (boolean): if True the normalized cut ratio is returned.
 
-    Input 
-        community dict as returned by community functions
-
-        networkx graph object that community was detected on
-
-        if normalized return normalized cut ratio else cut ratio is estimated
-
-    Output
-        dict containing score for each community
-
-        dict containing mean distributional scores
-            if graph contains less than 2 communities distributional parameters of None are returned
+     Returns:
+        individaul scores (dict): key is community ID and value its score.
+        mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+        dict containing score for each community. If there are less than 2 communities None is returned.
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     quality = []
     quality_dict = {}
@@ -2460,23 +2230,20 @@ def cut_ratio(communities, G, normalized=True):
 
 def community_density_to_graph(communities, G):
     """
-    estimates the community density with respect to the complete graph density
-    community specific & reports an average score
-    a high value indicates a "strongly connected" community w.r.t. the whole graph
-
-    Input 
-        community dict as returned by community functions
-
-        networkx graph object that community was detected on
-
-    Output
-        dict containing score for each community
-
-        dict containing mean distributional scores
-            if graph contains less than 2 communities distributional parameters of None are returned
+    Estimates the community density with respect to the complete graph density. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+    A high score is preferred.
+    
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
+        
+     Returns:
+        individaul scores (dict): key is community ID and value its score.
+        mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+        dict containing score for each community. If there are less than 2 communities None is returned.
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     quality = []
     quality_dict = {}
@@ -2513,26 +2280,21 @@ def community_density_to_graph(communities, G):
 def community_average_shortest_path(communities, G, weight="weight"):
     
     """
-    estimates average shortest path within a community
-    community specific & reports an average score
-    a low value indicates a strongly connected community
+    Estimates thr average shortest path within a community. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+    A small score is preferred.
+    
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
+        weight (str or None): edge attribute to be considered for shortest paths. If is None all edges are considered equal.
 
-    Input 
-        community dict as returned by community functions
-
-        networkx graph object that community was detected on
-
-        weight name of edge attribute to be considered
-            if None all edges are considered to be equal
-
-    Output
-        dict containing score for each community
-
-        dict containing mean distributional scores
-            if graph contains less than 2 communities distributional parameters of None are returned
+    Returns:
+        individaul scores (dict): key is community ID and value its score.
+        mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+        dict containing score for each community. If there are less than 2 communities None is returned.
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     quality = []
     quality_dict = {}
@@ -2567,26 +2329,21 @@ def community_average_shortest_path(communities, G, weight="weight"):
 def community_average_shortest_path_fraction(communities, G, weight="weight"):
     
     """
-    estimates average shortest path within a community w.r.t avg shortest path in the whole graph
-    community specific & reports an average score
-    a low value indicates that nodes within a community are stronger connected that "the main graph"
+    Estimates the average shortest path within a community w.r.t avgerage shortest path in the whole graph.This measurement is community specific and an average score + distributional parameters over all communities is reported.
+    A small score is preferred.
+    
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
+        weight (str or None): edge attribute to be considered for shortest paths. If is None all edges are considered equal.
 
-    Input 
-        community dict as returned by community functions
-
-        networkx graph object that community was detected on
-
-        weight name of edge attribute to be considered
-            if None all edges are considered to be equal
-
-    Output
-        dict containing score for each community
-
-        dict containing mean distributional scores
-            if graph contains less than 2 communities distributional parameters of None are returned
+    Returns:
+        individaul scores (dict): key is community ID and value its score.
+        mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+        dict containing score for each community. If there are less than 2 communities None is returned.
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     quality = []
     quality_dict = {}
@@ -2642,26 +2399,21 @@ def community_average_shortest_path_fraction(communities, G, weight="weight"):
 def mean_edge_weight_fraction(communities, G, weight="weight"):
     
     """
-    estimates average edge weight within a community w.r.t edge weight in the whole graph
-    community specific & reports an average score
-    a low value indicates that nodes within a community are stronger connected that "the main graph"
+    Estimates average edge weight within a community w.r.t thr edge weights in the whole graph. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+    Depending on of edge weights are distances or similarities a small or high score may be prefered.
+    
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
+        weight (str or None): edge attribute to be considered. If is None all edges are considered equal.
 
-    Input 
-        community dict as returned by community functions
-
-        networkx graph object that community was detected on
-
-        weight name of edge attribute to be considered
-            if None all edges are considered to be equal
-
-    Output
-        dict containing score for each community
-
-        dict containing mean distributional scores
-            if graph contains less than 2 communities distributional parameters of None are returned
+    Returns:
+        individaul scores (dict): key is community ID and value its score.
+        mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+        dict containing score for each community. If there are less than 2 communities None is returned.
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     quality = []
     quality_dict = {}
@@ -2716,26 +2468,21 @@ def mean_edge_weight_fraction(communities, G, weight="weight"):
 def mean_edge_weight(communities, G, weight="weight"):
     
     """
-    estimates average edge weight within a community 
-    community specific & reports an average score
-    a low value indicates that nodes within a community are stronger connected that "the main graph"
+    Estimates thr average edge weight within a community. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+    Depending on of edge weights are distances or similarities a small or high score may be prefered.
+   
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
+        weight (str or None): edge attribute to be considered. If is None all edges are considered equal.
 
-    Input 
-        community dict as returned by community functions
-
-        networkx graph object that community was detected on
-
-        weight name of edge attribute to be considered
-            if None all edges are considered to be equal
-
-    Output
-        dict containing score for each community
-
-        dict containing mean distributional scores
-            if graph contains less than 2 communities distributional parameters of None are returned
+    Returns:
+        individaul scores (dict): key is community ID and value its score.
+        mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+        dict containing score for each community. If there are less than 2 communities None is returned.
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     quality = []
     quality_dict = {}
@@ -2784,26 +2531,20 @@ def mean_edge_weight(communities, G, weight="weight"):
 def hub_dominace(communities, G):
     
     """
-    estimates hub dominace
-        which is the ratio of the communities most connected node w.r.t. to the theoretically highest possible degree within a community
-    community specific & reports an average score
-    a high value indicates that the community is at least tightly connected around a hub node
-
-    Input 
-        community dict as returned by community functions
-
-        networkx graph object that community was detected on
-
+    Estimates hub dominace. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+    A high value is preferred.
+    
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
         
-
-    Output
-        dict containing score for each community
-
-        dict containing mean distributional scores
-            if graph contains less than 2 communities distributional parameters of None are returned
+    Returns:
+        individaul scores (dict): key is community ID and value its score.
+        mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+        dict containing score for each community. If there are less than 2 communities None is returned.
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     quality = []
     quality_dict = {}
@@ -2845,26 +2586,20 @@ def hub_dominace(communities, G):
 def clustering_coefficient(communities, G):
     
     """
-    estimates average clustering coefficient of the communities
-    community specific & reports an average score
-    a high value indicates a strong connectivity
-        a comple graph has a CC of 1
+    Estimates thr average clustering coefficient of the different communities. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+    A high value is preferred.
 
-    Input 
-        community dict as returned by community functions
-
-        networkx graph object that community was detected on
-
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
         
-
-    Output
-        dict containing score for each community
-
-        dict containing mean distributional scores
-            if graph contains less than 2 communities distributional parameters of None are returned
+    Returns:
+        individaul scores (dict): key is community ID and value its score.
+        mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+        dict containing score for each community. If there are less than 2 communities None is returned.
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     quality = []
     quality_dict = {}
@@ -2902,27 +2637,20 @@ def clustering_coefficient(communities, G):
 def node_embeddedness(communities, G):
     
     """
-    estimates community embeddedness 
-        which is a nodes  mean degree within the community with respect to its overall degree in the graph
-    a high value indicates that a node has most of its edges within the community instead of outside
-
-    community specific & reports an average score
-
-    Input 
-        community dict as returned by community functions
-
-        networkx graph object that community was detected on
-
+    Estimates community embeddedness. This is a nodes mean degree within the community w.r.t. its overall degree in the graph.This measurement is community specific and an average score + distributional parameters over all communities is reported.
+    A high value is preferred.
+   
+    Parameters:
+        communities(dict): as returned by the community functions.
+        G (networkX graph object): the graph the communities where detected on.
         
-
-    Output
-        dict containing score for each community
-
-        dict containing mean distributional scores
-            if graph contains less than 2 communities distributional parameters of None are returned
+    Returns:
+        individaul scores (dict): key is community ID and value its score.
+        mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+        dict containing score for each community. If there are less than 2 communities None is returned.
     """
 
-    dict_communities = convert_communities(communities)
+    dict_communities = __convert_communities__(communities)
 
     quality = []
     quality_dict = {}
@@ -2964,7 +2692,7 @@ def node_embeddedness(communities, G):
 
 
 
-def by_weight(G, w_max=True, attribute="weight"):
+def __by_weight__(G, w_max=True, attribute="weight"):
     """
     helper function to find the most valuable edge for girvan newman based partitioning
 
@@ -2988,7 +2716,7 @@ def by_weight(G, w_max=True, attribute="weight"):
     return (u, v)
 
 
-def by_centrality(G, w_max=True, attribute="weight", type="betweenness"):
+def __by_centrality__(G, w_max=True, attribute="weight", type="betweenness"):
     """
     helper function to find the most valuable edge for girvan newman based partitioning
     returns the edge with the highest/ lowest betweenness score
@@ -3035,7 +2763,7 @@ def by_centrality(G, w_max=True, attribute="weight", type="betweenness"):
 
 ###this are the helper functions of the lais2 algorithm with an adaption to use edge weights
 
-def weight(community):
+def __weight__(community):
     #Input: a subgraph/community in the graph
     #Output: weight of the community (using the formula mentioned in the paper)
 
@@ -3047,7 +2775,7 @@ def weight(community):
         return float(2*nx.number_of_edges(community)/nx.number_of_nodes(community))
 
 
-def orderNodes(graph, edge_weight="weight"):
+def __orderNodes__(graph, edge_weight="weight"):
     #Input: a networkx graph
     #Output: list of nodes sorted in the decreasing order of their page rank
     dictOfNodes = nx.pagerank(graph, weight=edge_weight)
@@ -3060,11 +2788,11 @@ def get_key(node):
     #Output: return rank of the node
     return node[1]
 
-def LA(graph, edge_weight="weight"):
+def __LA__(graph, edge_weight="weight"):
     #Input: a networkx graph
     #Output: a group of clusters (initial guesses to be fed into the second algorithm)
     #Order the vertices using page rank
-    orderedNodes = orderNodes(graph, edge_weight=edge_weight)
+    orderedNodes = __orderNodes__(graph, edge_weight=edge_weight)
     C = []
     for i in orderedNodes:
         added = False
@@ -3075,18 +2803,18 @@ def LA(graph, edge_weight="weight"):
             cc.append(i[0])
             temp2 = graph.subgraph(cc)
             #If weight increases, add the node to the cluster
-            if weight(temp2) > weight(temp1):
+            if __weight__(temp2) > __weight__(temp1):
                 added = True
                 c.append(i[0])
         if added == False:
             C.append([i[0]])
     return C
 
-def IS2(cluster, graph):
+def __IS2__(cluster, graph):
     #Input: cluster to be improved and the networkx graph
     #Output: improved cluster
     C = graph.subgraph(cluster)
-    intialWeight = weight(C)
+    intialWeight = __weight__(C)
     increased = True
     while increased:
         listOfNodes = cluster
@@ -3106,9 +2834,9 @@ def IS2(cluster, graph):
                 #Add vertex to the cluster
                 listOfNodes.append(vertex)
             CDash = graph.subgraph(listOfNodes)
-            if weight(CDash) > weight(C):
+            if __weight__(CDash) > __weight__(C):
                 C = CDash.copy()
-        newWeight = weight(C)
+        newWeight = __weight__(C)
         if newWeight == intialWeight:
             increased = False
         else:
@@ -3120,8 +2848,8 @@ def IS2(cluster, graph):
 
 def refactor_communities(community):
     """
-    function to refactor the resulting community dicts into a list of sublists
-    this format is needed when used with the fastconsensus option
+    Refactors the community dicts into a list of sublists. This format is needed when using the fastconsensus function.
+    
 
     Input
         community dict in the format as provided by the community detection algorithms, except fuzzy and agdl
@@ -3147,7 +2875,7 @@ def refactor_communities(community):
 
 
 
-async def estimate_consensus_async(graph, n_p, node, nbr, communities):
+async def __estimate_consensus_async__(graph, n_p, node, nbr, communities):
     edges_to_add = []
     for i in range(n_p):
         for c in communities[i]:
@@ -3160,7 +2888,7 @@ async def estimate_consensus_async(graph, n_p, node, nbr, communities):
     return edges_to_add
 
 
-def create_consensus_graph_dict(graph, communities):
+def __create_consensus_graph_dict__(graph, communities):
     """
     assume that communities is list of dicts as returned by the community detection algorithms
 
@@ -3196,7 +2924,7 @@ def create_consensus_graph_dict(graph, communities):
 
     return res, G
 
-
+'''
 def create_consensus_graph(graph, communities, n_p, nextgraph=None, in_async=False):
     """
     helper function of fast_consensus which creates a consensus graph based on the clustering provided in communities
@@ -3232,7 +2960,7 @@ def create_consensus_graph(graph, communities, n_p, nextgraph=None, in_async=Fal
                 if cnt % 10000 == 0:
                     print("computing", cnt, "out of", E)
 
-                re = tasks.append(loop.create_task(estimate_consensus_async(graph, n_p, node, nbr, communities)))
+                re = tasks.append(loop.create_task(__estimate_consensus_async__(graph, n_p, node, nbr, communities)))
 
             loop.run_until_complete(asyncio.wait(tasks))
 
@@ -3260,7 +2988,7 @@ def create_consensus_graph(graph, communities, n_p, nextgraph=None, in_async=Fal
                 if cnt % 10000 == 0:
                     print("computing", cnt, "out of", E)
 
-                re = tasks.append(loop.create_task(estimate_consensus_async(nextgraph, n_p, node, nbr, communities)))
+                re = tasks.append(loop.create_task(__estimate_consensus_async__(nextgraph, n_p, node, nbr, communities)))
 
             loop.run_until_complete(asyncio.wait(tasks))
 
@@ -3313,11 +3041,11 @@ def create_consensus_graph(graph, communities, n_p, nextgraph=None, in_async=Fal
 
             return nextgraph
 
+'''
 
 
 
-
-def convert_graph_to_community_dict(communities):
+def __convert_graph_to_community_dict__(communities):
     """
     helper function of fast_consensus, which converts the final community structure (disconnected components)
     into the dict structure of communities 
@@ -3338,7 +3066,7 @@ def convert_graph_to_community_dict(communities):
 
     return d
 
-def check_consensus_graph(G, n_p, delta):
+def __check_consensus_graph__(G, n_p, delta):
     '''
     This function checks if the networkx graph has converged. 
     helper function of fast_consensus

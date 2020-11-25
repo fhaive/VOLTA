@@ -5,8 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.7.5" />
 <title>graphAlgorithms.multiplex.scaling API documentation</title>
-<meta name="description" content="multiplex.scaling contains possible scaling options to adjust layers &amp; how they should be merged.
-It allows users to select data driven scaling …" />
+<meta name="description" content="Estimates different scaling factors, that can be used when mergin multiple same node networks." />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -21,17 +20,13 @@ It allows users to select data driven scaling …" />
 <h1 class="title">Module <code>graphAlgorithms.multiplex.scaling</code></h1>
 </header>
 <section id="section-intro">
-<p>multiplex.scaling contains possible scaling options to adjust layers &amp; how they should be merged.
-It allows users to select data driven scaling options when creating flat multilayer networks.
-It can be used as input for multiplex.build_network.construct_multilayer_network_matrix.</p>
+<p>Estimates different scaling factors, that can be used when mergin multiple same node networks.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">&#34;&#34;&#34;
-multiplex.scaling contains possible scaling options to adjust layers &amp; how they should be merged.
-It allows users to select data driven scaling options when creating flat multilayer networks.
-It can be used as input for multiplex.build_network.construct_multilayer_network_matrix.
+Estimates different scaling factors, that can be used when mergin multiple same node networks.
 &#34;&#34;&#34;
 
 import networkx as nx
@@ -58,15 +53,14 @@ from .build_network import *
 def get_median_weight(edge_list, reformat = False):
 
     &#34;&#34;&#34;
-    gets median of each layer, which can be used to estimate appropriate scaling values
+    Estimates median weight from a weighted edge list.
 
-    Input:
-        edge_list needs to be either list of sublists or list of weights
-
-        if it is list of sublists set reformat to True (default: False)
-
-    Output:
-        returns float
+    Parameters:
+        edge_list (list): is either weighted edge list or list of weights.
+        reformat (boolean): if True assumes edge_list is edge list. If False assumes edge_list is list of weights.
+        
+    Returns::
+        median (float):
     &#34;&#34;&#34;
     
     if reformat:
@@ -84,16 +78,13 @@ def get_median_weight(edge_list, reformat = False):
 def estimate_scaling_factor(weights):
     
     &#34;&#34;&#34;
-    helper function that estimates scaling values based on provided input weights
-        it estimates the scaling factor to be applied to set all weights to the same value
-
-    possible input is result of  get_median_weight for all layers, formatted as list
-        scales all layers to the same value as min(weights)
-
-    Input:
-        list of float
-    Output:
-        list of float in same order as Input
+    Estimates scaling factor for networks based on some weight parameter. 
+    It is possible to provide a list of median (get_median_weight()) weights and scall all networks to have the same median.
+    
+    Parameters:
+        weights (list): list of int/ floats to be scaled to the same value.
+    Returns::
+        scaling factors (list):
     &#34;&#34;&#34;
 
     scale_to = min(weights)
@@ -119,15 +110,15 @@ def estimate_scaling_factor(weights):
 <span>def <span class="ident">estimate_scaling_factor</span></span>(<span>weights)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>helper function that estimates scaling values based on provided input weights
-it estimates the scaling factor to be applied to set all weights to the same value</p>
-<p>possible input is result of
-get_median_weight for all layers, formatted as list
-scales all layers to the same value as min(weights)</p>
-<h2 id="input">Input</h2>
-<p>list of float</p>
-<h2 id="output">Output</h2>
-<p>list of float in same order as Input</p></section>
+<section class="desc"><p>Estimates scaling factor for networks based on some weight parameter.
+It is possible to provide a list of median (get_median_weight()) weights and scall all networks to have the same median.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>weights</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of int/ floats to be scaled to the same value.</dd>
+</dl>
+<p>Returns::
+scaling factors (list):</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -135,16 +126,13 @@ scales all layers to the same value as min(weights)</p>
 <pre><code class="python">def estimate_scaling_factor(weights):
     
     &#34;&#34;&#34;
-    helper function that estimates scaling values based on provided input weights
-        it estimates the scaling factor to be applied to set all weights to the same value
-
-    possible input is result of  get_median_weight for all layers, formatted as list
-        scales all layers to the same value as min(weights)
-
-    Input:
-        list of float
-    Output:
-        list of float in same order as Input
+    Estimates scaling factor for networks based on some weight parameter. 
+    It is possible to provide a list of median (get_median_weight()) weights and scall all networks to have the same median.
+    
+    Parameters:
+        weights (list): list of int/ floats to be scaled to the same value.
+    Returns::
+        scaling factors (list):
     &#34;&#34;&#34;
 
     scale_to = min(weights)
@@ -163,12 +151,16 @@ scales all layers to the same value as min(weights)</p>
 <span>def <span class="ident">get_median_weight</span></span>(<span>edge_list, reformat=False)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>gets median of each layer, which can be used to estimate appropriate scaling values</p>
-<h2 id="input">Input</h2>
-<p>edge_list needs to be either list of sublists or list of weights</p>
-<p>if it is list of sublists set reformat to True (default: False)</p>
-<h2 id="output">Output</h2>
-<p>returns float</p></section>
+<section class="desc"><p>Estimates median weight from a weighted edge list.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>edge_list</code></strong> :&ensp;<code>list</code></dt>
+<dd>is either weighted edge list or list of weights.</dd>
+<dt><strong><code>reformat</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True assumes edge_list is edge list. If False assumes edge_list is list of weights.</dd>
+</dl>
+<p>Returns::
+median (float):</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -176,15 +168,14 @@ scales all layers to the same value as min(weights)</p>
 <pre><code class="python">def get_median_weight(edge_list, reformat = False):
 
     &#34;&#34;&#34;
-    gets median of each layer, which can be used to estimate appropriate scaling values
+    Estimates median weight from a weighted edge list.
 
-    Input:
-        edge_list needs to be either list of sublists or list of weights
-
-        if it is list of sublists set reformat to True (default: False)
-
-    Output:
-        returns float
+    Parameters:
+        edge_list (list): is either weighted edge list or list of weights.
+        reformat (boolean): if True assumes edge_list is edge list. If False assumes edge_list is list of weights.
+        
+    Returns::
+        median (float):
     &#34;&#34;&#34;
     
     if reformat:

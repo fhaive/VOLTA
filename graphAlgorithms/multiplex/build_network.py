@@ -1,7 +1,5 @@
 """
-contains functions to create single and flat multilayer networks build on networkx
-
-as well as functions to estimate missing edges in order to construct complete networks
+Functions to merge multiple networks into a single one.
 """
 
 import networkx as nx
@@ -22,17 +20,14 @@ import multiprocessing as mp
 
 def construct_single_layer_network(edge_list, isolated_nodes=None):
     """
-    builds weighted networkx graph out of edge list. 
-    duplicate nodes/ edges are not added, your list can containe duplicate nodes & edges (last given value will overwrite all previous ones)
+    builds a weighted networkX graph object from an ege list.
 
-    Input
-        edge lists needs to be list of lists were each sublists is in format [node 1, node 2, weight, distance]
-            distance value is optional
-        isolated_nodes (optional): list of node ids
-            if isolated_nodes is given nodes without edges are added to graph, as provided in isolated_nodes
-
-    Output
-        return networkx graph object
+    Parameters:
+        edge_list (list): list of sublists containing edge data in format [node 1, node 2, weight, distance], where distance is optional.
+        isolated_nodes (None or list): if provided isolated nodes are added to the graph object.
+       
+    Returns:
+        graph (networkX graph object):
     
     """
 
@@ -66,45 +61,31 @@ def construct_single_layer_network(edge_list, isolated_nodes=None):
 
 def build_complete_network(H, take_weight=None, edge_attribute="weight", method="dijkstra", in_async=True, in_multi=False, max_step = 10, max_weight=1, penalize_automatic=False, nr_chunks=10, nr_processes=10, infer=True, manual_distance=1, manual_sim=0):
     """
-    takes a graph and estimates weight of all missing edges based on shortest path & normalizes edges
+    Infers a complete graph from a non complete network. Adds weights based on (weighted) shortest paths. Remove isolate nodes. Weights are assumed to be distances.
 
-    if network contains isolated nodes they are removed
+    Parameters:
+        H (networkX graph object):
+        take_weight (None or str): if not None edge weight is considered during shortest path estimation. Needs to be name of edge attribute.
+        edge_attribute (str): attribute used to estimate new edges.
+        method (str): how shortest path is estimated. Either is "dijkstra" or "bellman-ford".
+        in_async (boolean): if True runs in asynchronous where applicable.
+        in_multi (boolean): if True is run as multiple processes. Then nr_chunks and nr_processes need to be set as well.
+        max_step (int): value to be set if no shortest path is possible. Value is estimated as max_step * max_weight.
+        max_weight (int): value to be set if no shortest path is possible. Value is estimated as max_step * max_weight.
+        penalize_automatic (boolean): if False edges between nodes without an existing shortest path are set to max_step * max_weight. 
+                    If is True then it is set to max_step*longest_shortest_path_in_graph*max_weight.
+        nr_chunks (int): if in_multi is True, sets how many subsets need to be run in one batch.
+        nr_processes (int): if in_multi is True, sets how many processes can be run in parallel.
+        infer (boolean): if True then edge weights withouth shortest paths are set to as defined in penalize-automatic. 
+                If is False then the value is set after normalization to manual_distance/ manual_sim.
+        manual_distance (int): if infer is False what edge value is set for edges without existing shortest paths.
+        manual_sim (int): if infer is False what edge value is set for edges without existing shortest paths.
 
-    Input
-        H, networkx object: assumes weights to be distances
-        
-        take weight (optional) states if shortest path is based on weight of edge or not
-            if none all edges are treated equal and only steps are counted 
-            else take_weight needs to be str of name of edge weight
-
-        edge_attribute
-            str, name of graph edge weight attribute which is used to estimate new edge weights based on shortest paths
-        
-        method (optional) method how shortest path is calculated, options are
-            dijkstra or "bellman-ford"
-
-        
-
-        in async (optional)
-            if code is run asyncronous
-        
-        in_multi (optional)
-            if code is run as multiprocess
-
-            if true
-                nr_chunks & nr_processes set as how many tasks & on how many cores code is run
-
-        if infer
-            if not penalize_automatic: if path does not exist between 2 nodes distance is set to max_step*max weight
-            if penalize_automatic = True it is set max_step*longest_shortest_path_in_graph*max_weight
-        else value is set after normalization to manual_distance/ manual_sim
-        
-    Output
-        returns three networkx graphs
-            graph containing distance & similarity edge weights
-            distance graph
-            similarity graph
-        
+    Returns:
+        graph with distance and similarity edge weights (networkX graph object):
+        graph with distance edge weights (networkX graph object):
+        graph with similarity edge weights (networkX graph object):
+                
     """
 
     G = H.copy()
@@ -138,7 +119,7 @@ def build_complete_network(H, take_weight=None, edge_attribute="weight", method=
 
         
         
-        func = partial(estimate_shortest_path, G, method=method, edge_attribute=edge_attribute, in_async=in_async, max_step = max_step, max_weight=max_weight, penalize_automatic=penalize_automatic, infer=infer)
+        func = partial(__estimate_shortest_path__, G, method=method, edge_attribute=edge_attribute, in_async=in_async, max_step = max_step, max_weight=max_weight, penalize_automatic=penalize_automatic, infer=infer)
 
         pool = Pool(processes=nr_processes)
     
@@ -185,7 +166,7 @@ def build_complete_network(H, take_weight=None, edge_attribute="weight", method=
     else:
 
         print("running on one core")
-        result = estimate_shortest_path(G, non_edges, edge_attribute=edge_attribute, method=method, in_async=in_async, max_step = max_step, max_weight=max_weight, penalize_automatic=penalize_automatic, infer=infer)
+        result = __estimate_shortest_path__(G, non_edges, edge_attribute=edge_attribute, method=method, in_async=in_async, max_step = max_step, max_weight=max_weight, penalize_automatic=penalize_automatic, infer=infer)
         new_edges = result["edges"]
         no_edges_temp = result["no_path"]
         pen_weight = result["longest_path"]
@@ -229,7 +210,7 @@ def build_complete_network(H, take_weight=None, edge_attribute="weight", method=
         
     #normalize 
     
-    distance_edges, similarity_edges, combined_edges = create_normalized_edge_list_and_similarity_list(temp_edge_list) 
+    distance_edges, similarity_edges, combined_edges = __create_normalized_edge_list_and_similarity_list__(temp_edge_list) 
         
     C =  construct_single_layer_network(combined_edges)
 
@@ -292,7 +273,7 @@ def estimate_shortest_path(G, non_edges, edge_attribute="weight", take_weight=No
             
             edge=non_edges[i]
 
-            r = tasks.append(loop.create_task(calc_estimate_shortest_path(G, edge, edge_attribute=edge_attribute, take_weight=take_weight, method=method, max_step = max_step, max_weight=max_weight, penalize_automatic=penalize_automatic, infer=infer)))
+            r = tasks.append(loop.create_task(__calc_estimate_shortest_path__(G, edge, edge_attribute=edge_attribute, take_weight=take_weight, method=method, max_step = max_step, max_weight=max_weight, penalize_automatic=penalize_automatic, infer=infer)))
 
         loop.run_until_complete(asyncio.wait(tasks))
 
@@ -389,7 +370,7 @@ def estimate_shortest_path(G, non_edges, edge_attribute="weight", take_weight=No
 
     return {"edges": new_edges, "no_path": temp_edges, "longest_path":longest_path}
 
-async def calc_estimate_shortest_path(G, edge, edge_attribute="weight", take_weight=None, method="dijkstra", max_step = 10, max_weight=1, penalize_automatic=False, infer=True):
+async def __calc_estimate_shortest_path__(G, edge, edge_attribute="weight", take_weight=None, method="dijkstra", max_step = 10, max_weight=1, penalize_automatic=False, infer=True):
 
     """
     async version to estimate shortest path between two nodes
@@ -471,7 +452,7 @@ async def calc_estimate_shortest_path(G, edge, edge_attribute="weight", take_wei
     return (new_edge, temp_edge, path_length)
 
 
-def create_normalized_edge_list_and_similarity_list(edge_list, normalized=True, distance=True, combined=True):
+def __create_normalized_edge_list_and_similarity_list__(edge_list, normalized=True, distance=True, combined=True):
     """
     helper function of build_complete_network() to normalize edge scores
     
@@ -531,17 +512,15 @@ def create_normalized_edge_list_and_similarity_list(edge_list, normalized=True, 
 
 def normalize(a, offset=0.0001):
     """
-    normalization function
+    Normalizes a list of items and allows to set a small offset to avoid direct 0 and 1 values.
 
-    Input
-        a is list of floats
+    Parameters:
+        a (list): values to be normalized.
+        offset (float): offset to be added.
 
-        offset offset to be added to values to avoid 1 & 0 values after normalization
-
-    Output
-        list of floats in same order as a
-
-    
+    Returns:
+        normalized values (list):
+       
     """
 
     # add small offset to not fully reach value 1
@@ -556,26 +535,16 @@ def normalize(a, offset=0.0001):
 
 def construct_multilayer_network_matrix(layers, weights):
     """
-    function to create a flat multilayer network, while propagating each layers edge weight
-        merges layers based on adjacency matrices
-        matrices need to have same dimensions for all layers and need to be ordered the same way
+    Merges multiple same node networks, while propagating edge weights.
 
-    Input
-        layers
-            list of adjacency matrices, one for each layer
-            numpy matrices
-
-            use reformat_G_to_adj_matrix to convert graph object into adjacency matrix
-        weights
-            list of float
-            weights are used to scale layers, need to be in same order as layers
-
-            weights can be set manually or estimated based on functions provided in scaling.py
-                this allows to individually weight and estimate the "importance"/ "quality" of individual layers
-
-    
-    Output
-        two adjacency matrices, with normalized and unnormalized edge weights
+    Parameters:
+        layers (list): of network adjacency matrices (as numpy matrices) to be merged.
+        weights (list): list of floats to be used to scale layer weights.
+            
+    Returns:
+        unnormalized merged matrix (numpy matrix):
+        normalized merged matrix (numpy matrix):
+       
     """
 
     if len(layers) != len(weights):
@@ -596,20 +565,14 @@ def construct_multilayer_network_matrix(layers, weights):
 
 def reformat_G_to_adj_matrix(G, gene_list=None):
     """
-    converts a graph object into an adjacency matrix
-    based on networkx 
+    Converts a graph object into an adjacency matrix. Based on networkx 
 
-    Input
-        G
-            networkx graph object
-
-        gene_list (optional)
-            in order to keep all layers consistent provide gene_list, which is list of node ids for all layers
-                need to be same list for all layers!! even if it contains missing nodes
-
-            if None then ouput of G.nodes() will be used
-    Output
-        numpy matrix
+    Parameters:
+        G (networkX graph object):
+        gene_list (list or None): list of node IDs after which matrix will be ordered. If None uses networkX G.nodes()
+       
+    Returns:
+        adjacency matrix (numpy matrix):
     
     """
 
@@ -628,14 +591,14 @@ def reformat_G_to_adj_matrix(G, gene_list=None):
 
 def reformat_edge_list(edge_list):
     """
-    helper function to separate edges from their corresponding weight values
+    Separates edges from their scores in the used edge list format.
 
-    Input
-        edge_list
-            list of sublists [n1, n2, weight]
-
-    Output
-        two lists containing edges and scores in same order as edge_list
+    Parameters:
+        edge_list (list): of sublists containing [node 1, node2, weight]
+    
+    Returns:
+        edges (list):
+        scores (list):
     
     """
 
@@ -651,7 +614,7 @@ def reformat_edge_list(edge_list):
 
     return edge_list_edge, edge_list_score
 
-
+'''
 def relable_nodes(H):
     """
     function needed when converting networkx object to igraph 
@@ -706,3 +669,4 @@ def reverse_relable_nodes(H, mapping):
     G = nx.relabel_nodes(G, mapping, copy=False)
 
     return G
+'''

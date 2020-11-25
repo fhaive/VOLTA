@@ -1,9 +1,5 @@
 """
-LOCAL GRAPH METRICS
-
-RIGHT NOW ONLY CONTAINS NON NODE SPECIFIC GRAPHLET COUNT OPTIONS
-MULTIPLE OPTIONS AND NODE SPECIFIC OPTION NEED TO BE INTEGRATED 
-NEED TO BE ADJUSTED TO ASYNC AND MULTIPROCESSES
+Local network measures. Focuses mainly on the computaion of graphlets.
 """
 
 
@@ -30,7 +26,7 @@ from networkx.generators.atlas import graph_atlas_g
 
 
 
-def connected_component_subgraphs(G):
+def __connected_component_subgraphs__(G):
     """
     replaces deprecated networkx function, which is still used in networkx generate_motifs code
     """
@@ -43,15 +39,12 @@ def connected_component_subgraphs(G):
 def generate_motifs(x=208):
     """ 
     Return the atlas of all connected graphs of 5 nodes or less.
-        Attempt to check for isomorphisms and remove.
+    Uses networkx graph atlas, which returns all possible graphs with up to 7 nodes, based on https://networkx.github.io/documentation/stable/auto_examples/drawing/plot_atlas.html
 
-    uses networkx graph atlas, which returns all possible graphs with up to 7 nodes
-    based on https://networkx.github.io/documentation/stable/auto_examples/drawing/plot_atlas.html
-
-    Input
-        x: which motifs of graph atlas are returned
-    Output
-        graph atlas
+    Parameters:
+        x (int): which motifs of thr graph atlas are returned
+    Returns:
+        graph atlas:
     """
 
     #uses networkx graph atlas, which returns all possible graphs with up to 6 nodes
@@ -75,13 +68,13 @@ def generate_motifs(x=208):
         # check against all nonisomorphic graphs so far
         
         
-            if not iso(G, nlist):
+            if not __iso__(G, nlist):
                 nlist.append(G)
                 UU = nx.disjoint_union(UU, G)  # union the nonisomorphic graphs
     return UU
 
 
-def iso(G1, glist):
+def __iso__(G1, glist):
     """
     helper function of generate motifs
     """
@@ -92,7 +85,7 @@ def iso(G1, glist):
 	
 	
 	
-def get_neighbors(nodes, G):
+def __get_neighbors__(nodes, G):
     """
     get all neighbors of a node in G
 
@@ -119,24 +112,19 @@ def get_neighbors(nodes, G):
 def count_graphlets(G, H, estimate_on=300, edge_attribute=None):
     
     """
-    counts graphlets occuring in G
-        iterate over network graph G and get all possible subgraphs of size k
-    
-    Input
-        G is networkx graph
-        H (networkx graph) is graphlet (generated with generate motifs to cmpare graph with)
-
-        graphlets are estimated based on a random selection of x nodes which cannot be larger than the number of nodes in G
-            which are specified in estimate_on
-
-        if edge attribute is not None, then based on the provided edge weight the size of the graphlets will be returned as list
+    Counts graphlets occuring in G. 
+            
+    Parameters:
+        G (NetworkX graph object):
+        H (NetworkX graph object): the graphlet to be counted (generated with generate_motifs())
+        estimate_on (int): graphlets are estimated based on a random selection of estimate_on nodes which cannot be larger than the number of nodes in G
+        edge_attribute (str or None): if not None, then based on the provided edge attribute the size of the graphlets will be returned as list
             which can be used to estimate its size distributions
 
-    Output
-        count of graphlets
-        list of the found graphlets in G
-        list of size of the estimated graphlets
-            if edge_attribute = None list only contains 0s
+    Returns:
+        count of graphlets (int):
+        graphlets (list): list of the found graphlets in G
+        size (list): list of size of the estimated graphlets. If edge_attribute = None it only contains 0s.
 
 
     """
@@ -157,7 +145,7 @@ def count_graphlets(G, H, estimate_on=300, edge_attribute=None):
         for k in range(nx.number_of_nodes(H)):
             for neighbor in neighbors:
                 subgraph_list.append(neighbor)
-            neighbors = get_neighbors(neighbors, G)
+            neighbors = __get_neighbors__(neighbors, G)
 
         #build subgraph to investigate all possible structures
         motif_neighborhood = G.subgraph(subgraph_list)
@@ -186,28 +174,19 @@ def count_graphlets(G, H, estimate_on=300, edge_attribute=None):
 def iterate_graphlets(G, estimate_on=300, edge_attribute=None, motif_min_size=3, motif_max_size=6):
 
     """
-    function to count over all defined motifs in graph G
+    Function to count over all defined motifs in graph G.
 
-    Input
-        networkx graph object
+    Parameters:
+        G (NetworkX graph object):
+        estimate_on (int): graphlets are estimated based on a random selection of estimate_on nodes which cannot be larger than the number of nodes in G
+        edge_attribute (str or None): if not None, then based on the provided edge attribute the size of the graphlets will be returned as list, which can be used to estimate its size distributions
+        motif_min_siz (int): nodes size of smallest graphlet to be counted. Minimum permitted value is 2.
+        motif_max_size (int): node size of largest graphlets. Maximum permitted value is 6.
 
-        graphlets are estimated based on a random selection of x nodes which cannot be larger than the number of nodes in G
-            which are specified in estimate_on
-
-        if edge attribute is not None, then based on the provided edge weight the size of the graphlets will be returned as list
-            which can be used to estimate its size distributions
-
-        motif_min_siz: number of nodes in smallest graphlet to be counted, min permitted value is 2
-
-        motif_max_size: number of nodes in largest graphlets, max permitted value is 6
-
-    Output
-        counted graphlets (dict)
-
-        all graphlets found (dict)
-
-        size of all graphlets (dict), all 0 if edge_attribute = None
-
+    Returns:
+        counted graphlets (dict):
+        all graphlets found (dict):
+        size of all graphlets (dict): it is all 0 if edge_attribute = None
         motifs (list): list index corresponds to dict keys
 
     """
@@ -248,15 +227,14 @@ def iterate_graphlets(G, estimate_on=300, edge_attribute=None, motif_min_size=3,
 
 def generate_node_specific_graphlets(nodes, graphlet_size=3):
     """
-    function to generate all node specific graphlets of given size between all given nodes
+    Function to generate all node specific graphlets of given size between all given nodes.
 
-    Input
-        nodes is list of all possible nodes
+    Parameters:
+        nodes (list): list of all possible nodes
+        graphlet_size (int): node size of the to be generated graphlets
 
-        graphlet size is number of nodes of to be generated graphlets
-
-    Output
-        dict of graphlet id and values is edge list of graphlet
+    Returns:
+        graphlets (dict): keys is graphlet id and values is edge list of graphlet
     """
     
     pos_graphlets = {}
@@ -299,15 +277,14 @@ def generate_node_specific_graphlets(nodes, graphlet_size=3):
 
 def find_graphlet(G, graphlets):
     """
-    function that checks if graphlets (node/edge specific) are in graph G
+    Function that checks if graphlets (node/edge specific) are in graph G.
 
-    Input
-        networkx graph G
+    Parameters:
+        G (NetworkX graph object):
+        graphlets (dict): key is graphlet id and value is edge list
 
-        dict of graphlets where key is graphlet id and value is edge list
-
-    Output
-        dict containing graphlet id and value of 0 (False) or 1 (True) if graphlet is in Graph
+    Returns:
+        graphlet (dict): key is graphlet id and value of 0 (False) or 1 (True) if graphlet is in G or not
     """
     in_graph = {}
 

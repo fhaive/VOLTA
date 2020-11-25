@@ -1,8 +1,6 @@
 """
-computes tree metrics on binary trees
-!!TREE METRICS ARE BASED ON A treelib OBJECT
-requires network to be converted into a binary tree in advance
-
+Converts a graph object into a (binary) tree, which can be used to compare networks structural makeup based on known tree distance measures.
+This module is build upon treelib https://treelib.readthedocs.io/en/latest/treelib.html.
 
 """
 
@@ -27,52 +25,28 @@ from operator import itemgetter
 
 def construct_tree(H,  root=None, nr_trees=1, type="level", edge_attribute="weight", cycle_weight = "max", initial_cycle_weight=True):
 	'''
-	function to construct binary tree from graph object (to reduce complexity (most edges will be removed))
-	Input
-		networkx graph object
+	Function to construct a binary tree from a graph object. This can reduce complexity since number of edges is reduced.
 
-		root node can be specified, if is None then random node is selected from G
+	Parameters:
+		H (networkX graph object):
+		root (None, int or str): provide node ID which should be selected as root of the tree. If None then a random node is selected.
+		nr_trees (int): specifies how many trees are constructed. If root is None then multiple random trees can be created.
+		type (str): if is "level" then a hierarchical tree is created. Paths from the root indicate how far each nodes are from the root node. Edge weights are not considered.
+					if is "cycle" then a hierarchical tree is created where each node represents a cycle in the graph. 
+						Tree leaves are the original cycles in the graph and are merged into larger cycles through edge removal until all have been merged into a single cycle.
+						This method can be helpful to categorize cyclic graphs. The root parameter is not considered when this option is selected and only cyclic structures in the graph are considered.
+		edge_attribute (str): name of the edge weights to be considered if type = "cycle".
+		cycle_weight (str): sets how cycles are merged i.e. which edges are removed to merge cycles into larger ones.
+							if is "max" then the edge with the highest weight is removed first. if is "min" then the edge with the smalles weight is removed first.
+							if is "betweenness_max" the the edge with the highest betweenness value is removed first.
+							if is "betweenness_min" the edge with the lowest betweenness value is removed first.
+		initial_cycle_weight (boolean): if True the initial cycle basis is estimated based on edge weights with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.minimum_cycle_basis.html#networkx.algorithms.cycles.minimum_cycle_basis
+										if False the initial cycles are estimated based on steps only with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.cycle_basis.html#networkx.algorithms.cycles.cycle_basis
 
-		nr_trees
-			multiple random seeded trees can be constructed to investigate impact of root selection
-
-		if type = level
-			a hierarichal tree is created, that has a specified root and paths indicate how far each other node
-				in the network is away from the selected root node 
-				edge weights are not considered during tree creation
-
-		if type == cycle
-			then a hierarchical tree is constructed, where each node represents a cycle in the graph
-			tree leaves correspond to the original cycles in the graph
-			in each round a edge with the lowest/ higest edge weight is removed and the two cycles resulting from this 
-				are merged into a parent cycle until all cycles are merged
-			here root is automatically None & not considered
-
-			CAREFUL this function is only applicable for cyclic build graphs
-				if your graph does not contains such structures or only a few only the nodes building these structures are considered
-					this may result in a small tree containing only a few nodes
-
-		edge_attribute str, the name of the edge weight to be considered for type cycle
-
-		cycle_weight
-			the weight based on which edge are removed
-			max: edge with the highest edge weight
-			min: edge with the lowest edge weight
-			betweenness_max: edge with the highest betweenness value
-			betweenness_min: edge with the lowest betweenness value
-
-		initial_cycle_weight
-			if true then the initial cycle basis is estimated based on edge weight 
-				with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.minimum_cycle_basis.html#networkx.algorithms.cycles.minimum_cycle_basis
-			else the initial cycles are estimated based on steps only
-				with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.cycle_basis.html#networkx.algorithms.cycles.cycle_basis
-
+	Returns:
+		trees (list): list of treelib objects
+		cycles (list): if level = "cycle" then additional a list of cycle IDs to edge mappings is returned
 		
-
-	Output
-		returns list of treelib objects
-
-		if level is cycles then list of treelib objects and list of cycle ids to edge mappings is returned
 
 	'''
 	G = H.copy()
@@ -126,10 +100,10 @@ def construct_tree(H,  root=None, nr_trees=1, type="level", edge_attribute="weig
 		for i in range(nr_trees):
 			#get all initial cycles in the graph
 			X = G.copy()
-			loops, relationship, all_loops = create_loop_relationships(X, initial_cycle_weight, cycle_weight, edge_attribute)
+			loops, relationship, all_loops = __create_loop_relationships__(X, initial_cycle_weight, cycle_weight, edge_attribute)
 
 			if loops is not None:
-				tree = build_tree_hierarchical(loops, relationship)
+				tree = __build_tree_hierarchical__(loops, relationship)
 			else:
 				tree = None
 
@@ -144,7 +118,7 @@ def construct_tree(H,  root=None, nr_trees=1, type="level", edge_attribute="weig
 
 		return trees
 
-def build_tree_hierarchical(loops, relationship):
+def __build_tree_hierarchical__(loops, relationship):
 	"""
 	helper function to create a hierarchical tree based on return values of create_loop_relationships()
 	Input
@@ -201,7 +175,7 @@ def build_tree_hierarchical(loops, relationship):
 	print("tree built")
 	return tree
 
-def create_loop_relationships(G,initial_cycle_weight, cycle_weight, edge_attribute):
+def __create_loop_relationships__(G,initial_cycle_weight, cycle_weight, edge_attribute):
 	"""
 	helper function to determine child parent relationship for loops (or any other structural components)
 
@@ -237,7 +211,7 @@ def create_loop_relationships(G,initial_cycle_weight, cycle_weight, edge_attribu
 		cycles = nx.cycle_basis(G)
 	#print("cycles", cycles)
 	#convert cycles into dict & edge list
-	cycles_dict = convert_cycles(cycles)
+	cycles_dict = __convert_cycles__(cycles)
 	#print("cycles", cycles_dict)
 
 	#construct dict to save cycles and give them id which is saved in tree
@@ -264,16 +238,16 @@ def create_loop_relationships(G,initial_cycle_weight, cycle_weight, edge_attribu
 		#community weight functions are used to find the most valuable edge
 
 		if cycle_weight == "max":
-			to_remove = by_weight(G, w_max=True, attribute=edge_attribute)
+			to_remove = __by_weight__(G, w_max=True, attribute=edge_attribute)
 		
 		elif cycle_weight =="min":
-			to_remove = by_weight(G, w_max=False, attribute=edge_attribute)
+			to_remove = __by_weight__(G, w_max=False, attribute=edge_attribute)
 
 		elif cycle_weight =="betweenness_max":
-			to_remove = by_centrality(G, w_max=True, attribute=edge_attribute, type="betweenness")
+			to_remove = __by_centrality__(G, w_max=True, attribute=edge_attribute, type="betweenness")
 
 		elif cycle_weight == "betweenness_min":
-			to_remove = by_centrality(G, w_max=False, attribute=edge_attribute, type="betweenness")
+			to_remove = __by_centrality__(G, w_max=False, attribute=edge_attribute, type="betweenness")
 
 		else:
 			print("cycle weight not known, please select another one")
@@ -318,7 +292,7 @@ def create_loop_relationships(G,initial_cycle_weight, cycle_weight, edge_attribu
 
 	return all_loops, relationship, save_loops
 
-def by_weight(G, w_max=True, attribute="weight"):
+def __by_weight__(G, w_max=True, attribute="weight"):
     """
     helper function to find the most valuable edge 
     Input
@@ -341,7 +315,7 @@ def by_weight(G, w_max=True, attribute="weight"):
     return (u, v)
 
 
-def by_centrality(G, w_max=True, attribute="weight", type="betweenness"):
+def __by_centrality__(G, w_max=True, attribute="weight", type="betweenness"):
     """
     helper function to find the most valuable edge 
     returns the edge with the highest/ lowest  score
@@ -387,7 +361,7 @@ def by_centrality(G, w_max=True, attribute="weight", type="betweenness"):
 
 
 				
-def convert_cycles(cycles):
+def __convert_cycles__(cycles):
 	"""
 	helper function of construct_binary_tree() when tree is constructed based on cycles
 	it takes the output of nx.minimum_cycle_basis(G) or nx.cycle_basis(G)
@@ -429,31 +403,21 @@ def convert_cycles(cycles):
 
 def tree_node_level_similarity(t1, t2, type="percentage"):
 	"""
-	computes similarity of nodes (based on their level in a rooted tree)
-	between tree 1 and tree2
+	Computes the similarity of nodes (based on their level in two rooted trees t1 and t2).
 
-	Input
-		t1 & t2 are treelib objects as returned by construct_binary_tree()
-
-		if type is percentage
-			then for each level the percentage of shared nodes based on max possible shared nodes is estimated
-
-		if type is correlation
-			then the ranked correlation is estimated, based on kendall
-			each node is ranked based on its level in the bianry tree
-			if unequal number of nodes between the trees per level, the same amount of nodes from each level are selected
-
-		if type is smc
-			smc distance for each level is estimated
-
-		if type is jaccard
-			jaccard similarity is estimated for each level
-
-	Output
-		returns list of mean similarity scores for each level and list of all scores
-		for correlation kendall_tau and its p-value are returned
-		based on this the most similar levels can be determined
-			providing an estimate of the similarity of a nodes surrounding
+	Parameters:
+		t1 (treelib tree object):
+		t2 (treelib tree object)
+		type (str): defines comparison method. If type = "percentage" then for each level the percentage of shared nodes based on the max possible (length of smaller) shared nodes is estimated.
+					If type = "correlation" then Kendall rank correlation is estimated. Node rankings are estimated based on their level in the trees. If there are unequal number of nodes a subset of the larger one is selected.
+					If type = "smc" then the smc distance for each level is estimated.
+					If type ) "jaccard" then the jaccard similarity for each level is estimated.
+		
+	Returns:
+		mean similarity (list): mean similarity scores for each level
+		all scores (list):
+		if type = "correlation" then kendall tau (float) and its corresponding p-val (float) are returned instead.
+		
 	"""
 
 	t1_nodes = t1.all_nodes()
@@ -549,7 +513,7 @@ def tree_node_level_similarity(t1, t2, type="percentage"):
 			else:
 				
 
-				s = compute_smc_level(temp1, temp2)
+				s = __compute_smc_level__(temp1, temp2)
 
 			smc.append(s)
 
@@ -588,7 +552,7 @@ def tree_node_level_similarity(t1, t2, type="percentage"):
 
 
 
-def compute_smc_level(list1, list2):
+def __compute_smc_level__(list1, list2):
 	"""
 	helper function of tree_node_level_similarity()
 		smc adapted to tree levels
@@ -632,39 +596,39 @@ def compute_smc_level(list1, list2):
 
 def tree_depth(t):
 	"""
-	returns dept of tree
+	Returns depth of a tree
 
-	Input
-		treelib object
+	Parameters:
+		t (treelib tree object):
 
-	Output
-		tree depth
+	Returns:
+		tree depth (int):
 	"""
 	return t.depth()
 
 def number_of_leaves(t):
 
 	"""
-	returns number of leaves
+	Returns the number of leaves in t.
 
-	Input
-		treelib object
+	Parameters:
+		t (treelib tree object):
 
-	Output
-		number of leaves
+	Returns:
+		leaves (int):
 	"""
 
 	return (len(t.leaves()))
 
 def leave_path_metrics(t):
 	'''
-	estimates root - leave pathlength distribution 
+	Estimates the root - leave pathlength distribution.
 
-	Input
-		treelib object
+	Parameters:
+		t (treelib tree object):
 
-	Output
-		dict containing distribution parameters
+	Returns:
+		distribution (dict): keys are mean path length, median path length, std path length, skw path length, kurtosis path length, altitude, altitude magnitude, total exterior path length, total exterior magnitude
 	'''
 	path_to_leaves = t.paths_to_leaves()
 	nr_leaves=number_of_leaves(t)
@@ -697,9 +661,9 @@ def leave_path_metrics(t):
 
 	return {"mean path length":avg_path, "median path length": median_path, "std path length":std_path, "skw path length":skw_path, "kurtosis path length":kurt_path, "altitude":altitude, "altitude magnitude":altitude_mag, "total exterior path length":total_exterior_path_length, "total exterior magnitude":total_exterior_mag}
 
-def partition_symmetry(subtree):
+def __partition_symmetry__(subtree):
 	"""
-	estimates tree asymmetry of a tree based on all possible subtrees
+	Estimates tree asymmetry based on all possible subtrees.
 	helper function of tree_asymmetry
 
 	Input
@@ -758,15 +722,15 @@ def partition_symmetry(subtree):
 
 def tree_asymmetry(t, nr_leaves):
 	"""
-	estimates tree asymmetry of a tree based on asymmetry of all possible subtrees
+	Estimates tree asymmetry of a tree based on asymmetry of all possible subtrees
 	
 
-	Input
-		treelib object
-		number of leaves contained in t
+	Parameters:
+		t (treelib tree object):
+		nr_leaves (int): number of leave nodes contained in t.
 
-	Output
-		dict containing asymmetry, degree asymmetry
+	Returns:
+		asymmetry (dict): keys are asymmetry, degree asymmetry (for each subtree)
 	"""
 
 	#weighted average of degree of all subpartitions (number of leaves)
@@ -783,7 +747,7 @@ def tree_asymmetry(t, nr_leaves):
 		#if not a leave node
 
 		if node not in leaves:
-			asymmetry, weight = partition_symmetry(bt.Tree(t.subtree(node), deep = True))
+			asymmetry, weight = __partition_symmetry__(bt.Tree(t.subtree(node), deep = True))
 			total_asymmetry = total_asymmetry + asymmetry
 			total_weight = total_weight + weight
 			degree_asymmetry[weight] = (1/weight)*asymmetry
@@ -794,7 +758,7 @@ def tree_asymmetry(t, nr_leaves):
 
 	return {"asymmetry":asymmetry, "degree asymmetry":degree_asymmetry}
 
-def set_strahler_number(b_tree):
+def __set_strahler_number__(b_tree):
 	"""
 	helper function of strahler_branching_ratio(t) by initializing strahler numbers for each edge
 
@@ -870,16 +834,16 @@ def set_strahler_number(b_tree):
 
 def strahler_branching_ratio(t):
 	"""
-	calculates strahler branching ratio
+	Calculates the strahler branching ratio of a tree t.
 
-	Input
-		treelib object
+	Parameters:
+		t (treelib tree object):
 
-	Output
-		dict containing distributional parameters of branching ratio
+	Returns:
+		barnching distribution (dict): keys are mean branching ratio, median branching ratio, std branching ratio, skw branching ratio, kurtosis branching ratio
 	"""
 
-	branching, new_tree = set_strahler_number(t)
+	branching, new_tree = __set_strahler_number__(t)
 	ratio = []
 	key = list(branching.keys())
 	for i in range(len(branching.keys())-1):
@@ -902,9 +866,9 @@ def strahler_branching_ratio(t):
 
 	return {"mean branching ratio":avg_ratio, "median branching ratio":median_ratio, "std branching ratio":std_ratio, "skw branching ratio":skw_ratio, "kurtosis branching ratio":kurt_ratio}
 
-def exterior_interior(t):
+def __exterior_interior__(t):
 	"""
-	calculates number of external & internal edges
+	Calculates the number of external & internal edges
 	helper function of exterior_interior_edges()
 
 	Input
@@ -920,7 +884,7 @@ def exterior_interior(t):
 	EE = 0
 	EI = 0
 
-	branching, b_tree = set_strahler_number(t)
+	branching, b_tree = __set_strahler_number__(t)
 
 	visited = []
 	for node in b_tree.leaves():
@@ -949,15 +913,15 @@ def exterior_interior(t):
 
 def exterior_interior_edges(t):
 	"""
-	estimates number of exterior & interior edges and their magnitude
+	Estimates the number of exterior (EE) & interior (IE) edges and their magnitude
 
-	Input
-		treelib object
+	Parameters:
+		t (treelib tree object):
 
-	Output
-		dict containing number of ee/ei edges and their corresponding magnitudes
+	Returns:
+		exterior / interior edges (dict): keys are EE, EI, EE magnitude, EI magnitude
 	"""
-	ee, ei = exterior_interior(t)
+	ee, ei = __exterior_interior__(t)
 
 	nr_leaves = number_of_leaves(t)
 	ee_mag = ee/nr_leaves

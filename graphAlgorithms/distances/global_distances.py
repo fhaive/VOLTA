@@ -1,5 +1,5 @@
 """
-functions to estimate multiple global measurements of a graph object
+Functions to estimate global measurements of a graph object, mainly based on overal node & centrality distributions as well as random walks.
 
 """
 
@@ -26,25 +26,18 @@ from collections import Counter
 
 def perform_random_walks(G, steps=10, number_of_walks=100, start=None, probabilistic=True, weight="weight"):
     """
-    performs x random walks of size n
+    Performs x random walks of size n
 
-    Input
-        G is networkx graph, steps is size of random walk
-
-        number of walks is number of how many random walks are performed on G
-
-        if start is None start node is selected at random from G
-            else start needs to be node ID contained in G
-
-        if probabilisitc edge weights are taken into account 
-            else all edges are considered equal
-            start node is always evaluated at random without taking any properties into account
-
-    if probabilistic weight & nodelist need to be set
-    weight indicates edge weight attribute, weights need to be similarities
-
-    Output
-        returns list of lists containing random walk sequence
+    Parameters:
+        G (networkx graph): 
+        steps (int): is size of random walk
+        number_of_walks (int): how many random walks are performed on G
+        start (node ID): if is None start node is selected at random from G else start needs to be node ID as contained in G
+        probabilisitc (boolean): if True edge weights are taken into account else all edges are considered equal.  If true then weight needs to be set
+        weight (str): edge attribute name as contained in G. Weight is evaluated as a similarity
+            
+    Returns:
+        walks (list): list of lists containing random walk sequence
 
     
     """
@@ -56,16 +49,16 @@ def perform_random_walks(G, steps=10, number_of_walks=100, start=None, probabili
         if start is None:
             start = random.choice(list(G.nodes()))
         
-        visited = perform_walk(G, start, steps, probabilistic=probabilistic, weight=weight)
+        visited = __perform_walk__(G, start, steps, probabilistic=probabilistic, weight=weight)
         walks.append(visited)
         
     return walks
 
 
 	
-def perform_walk(G, start, length, probabilistic=True, weight="weight"):
+def __perform_walk__(G, start, length, probabilistic=True, weight="weight"):
     """
-    helper function of perform_random_walk()
+    helper function of perform_random_walks()
     for parameters refer to parent function
 
     
@@ -92,20 +85,19 @@ def perform_walk(G, start, length, probabilistic=True, weight="weight"):
         visited.append(current)
     return visited
 
-def rank_walks(G, walks, undirected=True):
+def __rank_walks__(G, walks, undirected=True):
     """
-    takes list of random walks and computes counts of appearing nodes & edges 
+    Takes list of random walks and computes counts of appearing nodes & edges 
     
 
-    Input
-        G is networkx graph that random walks have been performed on
-        walks needs to be list of sublists, where each sublists contains node sequence of a single random walk
-            as returned by perform random walk
-        if undirected then edges are counted disregarding direction
+    Parameters:
+        G (networkX graph object): is networkx graph that random walks have been performed on
+        walks (list): as returned by perform random walk
+        undirected (boolean): if True then edges are counted disregarding direction of performed random walk
 
-    Output
-        dict of ranked nodes, sorted after dict values
-        dict of ranked edges
+    Returns:
+        ranked_nodes (dict): ranked nodes, sorted after dict values
+        ranked_edges (dict): ranked edges
     
     """
 
@@ -160,16 +152,16 @@ def rank_walks(G, walks, undirected=True):
             
 def get_walk_consensus(walks, G):
     """
-    estimate for one network a consensus walk based on all performed walks
-    this is only possible if the walks have been performed with the same start node
+    Estimate for one network a consensus walk based on all performed walks
+    This is only possible if the walks have been performed with the same start node
 
-    Input
-        walks are list of sublists including node ids in order performed for each single walk
+    Parameters:
+        walks (list): list of sublists (individual walks) including node ids in order performed for each single walk
 
-        G is networkx graph object walks have been computed on 
+        G (NetworkX graph object): the graph object walks have been computed on 
 
-    Output
-        returns list, containing node ids of consensus random walk or None if start node is not the same
+    Returns:
+        consensus walk (list): containing node ids of consensus random walk or None if start node is not the same
     """
     consensus = []
     for i in range(len(walks[0])):
@@ -214,35 +206,28 @@ def get_walk_consensus(walks, G):
 
 def compare_walks(G, walk1, walk2=None, G2=None, comparison="ranked", undirected=True, top=100):
     """
-    compare list of random walks (for same and multiple graphs)
-    s. perform_random_walks()
+    Compares list of random walks (for same and multiple graphs)
+    
 
-    Input
-        walk1 and walk2 need to be list of sublists containing node lists orderd as walks
-            if walks performed on the same graph should be compared set walk1 & walk2 to the same values  & their similarity between each other 
+    Parameters:
+        walk1 (list): list of sublists containing node lists orderd as walks
+        walk2 (list): list of sublists containing node lists orderd as walks. If walks performed on the same graph should be compared set walk1 & walk2 to the same values  & their similarity between each other 
                 will be estimated
+        G (NetworkX graph object): graph walk1 has been performed on
+        G2 (NetworkX graph object): graph walk2 has been performed on
+        comparison (str): states what comparison should be performed - currently only "ranked" is implemented. Nodes & edges are ranked (for each subwalk after usage) and kendall rank correlation between rankings is estimated
+        top (int): top x nodes & edges are considered when calculating the correlation 
+        undirected (boolean): if True then edge traversal is not taken into account
 
-        G and G2 are networkx graph random walks are performed on
-
-        comparison states what comparison is performed
-            if comaprison ranked and walk1 & walk2 are provided, nodes & edges are ranked (for each subwalk after usage)
-                and correlation between rankings is estimated
-                    based on kendall tau, top value needs to be set max to number of nodes/edges in smaller graph
-                this requires that walk1 and walk2 are of same lenght
-
-            
-
-            undirected states if edge direction needs to be taken into account or not
-
-    Output
-        dict
+    Returns:
+        correlation (dict): containing 4 keys where values are correlation value and corresponding p-value. Keys are nodes_tau, nodes_p, edges_tau, edges_p
 
     """
 
     if comparison == "ranked":
         if walk2 is not None and G2 is not None:
-            nodes1, edges1 = rank_walks(G, walk1, undirected=undirected)
-            nodes2, edges2 = rank_walks(G2, walk2, undirected=undirected)
+            nodes1, edges1 = __rank_walks__(G, walk1, undirected=undirected)
+            nodes2, edges2 = __rank_walks__(G2, walk2, undirected=undirected)
 
             #rank_walks already returns sorteddicts
             nodes1 = list(nodes1.keys())
@@ -301,11 +286,17 @@ def compare_walks(G, walk1, walk2=None, G2=None, comparison="ranked", undirected
 def node_degree_distribution(G):
 
     """
-    Input
-        G is networkx object
+    Estimates a graphs node degree distribution.
 
-    Output
-        returns different mesures to describe node degree distribution
+    Parameters:
+        G (NetworkX graph object): 
+
+    Returns:
+        mean node degree (float):
+        median node degree(float):
+        stdev node degree (float):
+        skewness node degree (float):
+        kurtosis node degree (float):
     """
 
     degrees = list(dict(G.degree()).values())
@@ -321,25 +312,27 @@ def node_degree_distribution(G):
     return mean_degree, median_degree, std_degree, skw_degree, kurt_degree
 
 def is_connected(G):
+    
     """
-    Input
-        networkx graph object
+    Checks if a graph is connected.
 
-    Output
-        boolean
+    Parameters:
+        G (NetworkX graph object):
+
+    Returns:
+        connected (boolean):
     """
     return nx.is_connected(G)
 
 def graph_size(G):
     """
-    estimates graph radius, diameter, number of nodes, number of edges
-    only works for connected graph
+    Estimates graph radius, diameter, number of nodes & number of edges. Graph needs to be connected.
 
-    Input
-        networkx graph object
+    Parameters:
+        G (NetworkX graph object):
 
-    Output
-        dict
+    Returns:
+        size (dict): dict keys are radius, diameter, diameter, nodes, edges
     """
 
     if is_connected(G):
@@ -361,33 +354,40 @@ def graph_size(G):
 
 def density(G):
     """
-    Input
-        networkx graph object
+    Estimates graph density.
 
-    Output
-        graph density
+    Parameters:
+        G (NetworkX graph object):
+
+    Returns:
+        density (float):
     """
     return nx.density(G)
 
 def average_clustering(G):
     """
-    Input
-        networkx graph object
+    Estimates a graphs average clustering.
 
-    Output
-        average clustering
+    Parameters:
+        G (NetworkX graph object):
+
+    Returns:
+        average clustering (float):
     """
     return nx.average_clustering(G)
 
 def graph_edges(G):
     """
-    provides estimate on how many of all posible edges exist in G (100% implies that G is a complete graph)
+    Provides estimate on how many of all posible edges exist in G (100% implies that G is a complete graph).
 
-    Input
-        networkx graph object
+    Parameters:
+        G (NetworkX graph object):
 
-    Output
-        dict
+    Returns :
+        edge estimate (dict): dict keys are missing_edges (how many possible edges do not exist)
+                                            max_edges (number of possible edges)
+                                            missing_edges_percentage (percentage of missing edges)
+                                            existing_edges_percentage (percentage of existing edges)
     """
 
     nr_nodes = nx.number_of_nodes(G)
@@ -403,9 +403,9 @@ def graph_edges(G):
 
     return {"missing_edges": non_edges, "max_edges":expected_number_of_edges, "missing_edges_percentage": non_edges_percentage, "existing_edges_percentage": existing_edges_percentage}
 
-def cycle_attributes(G):
+def __cycle_attributes__(G):
     """
-    helper function of cycle_attributes()
+    helper function of cycle_distribution()
     """
     cycle_length=[]
 
@@ -417,17 +417,18 @@ def cycle_attributes(G):
 
 def cycle_distribution(G):
     """
-    estimates size distributions of cycles (how many steps to form a cycle) in G
-    gives insight in how "structured" graph is - and what biological elements it contains, i.e. multiple feedback loops
+    Estimates size distributions of cycles (how many steps to form a cycle) in a graph.
+    This can provide insight in how "structured" a graph is - and what biological elements it contains, i.e. multiple feedback loops
 
-    Input
-        networkx graph object
+    Parameters:
+        G (NetworkX graph object):
 
-    Output
-        returns distribution parameters in dict
+    Returns:
+        cycle distribution (dict): keys are number_of_cycles, median_cycle_length, mean_cycle_length, std_cycle_length, skw_sycle_length, kurtosis_cycle_length
+        
     """
 
-    cycles_lengths = cycle_attributes(G)	
+    cycles_lengths = __cycle_attributes__(G)	
 
     nr_cycles = len(cycles_lengths)
     if nr_cycles >= 2:
@@ -450,14 +451,14 @@ def cycle_distribution(G):
 def path_length_distribution(H):
 
     """
-    estimates pathlength distribution between all node pairs
-        if graph is not connected uses giant component
+    Estimates shortest path length distribution between all node pairs. If the graph is not connected it uses the giant component instead.
 
-    Input
-        networkx graph object
+    Parameters:
+        G (NetworkX graph object):
 
-    Output
-        dict contianing distirubtion parameters
+    Returns:
+        shortest path distribution (dict): keys are mean path length, median path length, std path length, skw path length, kurtosis path length
+        
     """
     G = H.copy()
 
@@ -493,35 +494,32 @@ def path_length_distribution(H):
 
 def clustering_coefficient(G, nodes=None, weight=None, count_zeros=True):
     """
-    computes clustering coefficient for networkx graph
-    a complete graph has CC of 1
+    Computes the clustering coefficient (CC) for a graph. A complete graph has CC of 1.
 
-    Input
-        networkx graph object
+    Parameters:
+        G (NetworkX graph object):
+        nodes (list or None): optional. Compute average clustering for nodes in this container or if None computes for all nodes of G.
+        weight (str or None): optional The edge attribute that holds the numerical value used as a weight. If None, then each edge has weight 1.
+        count_zeros (boolean): If False include only the nodes with nonzero clustering in the average.
 
-        nodes (container of nodes, optional (default=all nodes in G)) – Compute average clustering for nodes in this container.
-
-        weight (string or None, optional (default=None)) – The edge attribute that holds the numerical value used as a weight. If None, then each edge has weight 1.
-
-        count_zeros (bool) – If False include only the nodes with nonzero clustering in the average.
-
-    Output
-        float
+    Returns:
+        clustering (float):
+        
     """
 
     return nx.average_clustering(G, nodes=nodes, weight=weight, count_zeros=count_zeros)
 
 def contains_triangles(G, nodes=None):
     """
-    computes number of triangles contained in networkx G
+    Computes number of triangles contained in networkx G
 
-    Input
-        networkx graph object
+    Parameters:
+        G (NetworkX graph object):
+        nodes (list or None): optional. Compute number of triangles for nodes in this container or if None computes for all nodes of G.
 
-        optional specific nodes can be set in nodes as list
-
-    Output
-        dict
+    Returns:
+        number of triangles (dict):
+        
     """
 
     return nx.triangles(G, nodes=nodes)
@@ -529,19 +527,14 @@ def contains_triangles(G, nodes=None):
 
 def degree_centrality(G, distribution=True):
     """
-    Compute the degree centrality for nodes.
-        The degree centrality for a node v is the fraction of nodes it is connected to.
+    Compute the degree centrality for nodes. The degree centrality for a node v is the fraction of nodes it is connected to.
 
-    Input
-
-        G (graph)
-            A networkx graph
-        distribution (optional)
-            if distributional parameters should be returned
-
-    Output
-
-        Dictionary 
+    Parameters:
+        G (NetworkX graph object):
+        distribution (boolean): optional. If True distributional parameters are calculated. If False corresponding return values are None.
+            
+    Returns:
+        degree centrality (dict): keys are centrality, mean_centrality, median_centrality, std_centrality, skw_centrality, kurtosis_centrality
 
     """
 
@@ -569,31 +562,20 @@ def degree_centrality(G, distribution=True):
 
 
 
-def eigenvector_centrality(G, distribution=True, max_iter=100, tol=1e-06, nstart=None, weight=None):
+def eigenvector_centrality(G, distribution=True, weight=None):
     """
-    Compute the degree centrality for nodes.
-        The degree centrality for a node v is the fraction of nodes it is connected to.
+    Computes the eigenvector centrality. Importet from NetworkX, including their parameter settings.
 
-    Input
+    Parameters:
+        G (NetworkX graph object):
+        weight (str or None):  If None, all edge weights are considered equal. Otherwise name of the edge attribute to be used as weight.
+        distribution (boolean): optional. If True distributional parameters are calculated. If False corresponding return values are None.
 
-        G (graph) – A networkx graph
-        max_iter (integer, optional (default=100)) – Maximum number of iterations in power method.
-
-        tol (float, optional (default=1.0e-6)) – Error tolerance used to check convergence in power method iteration.
-
-        nstart (dictionary, optional (default=None)) – Starting value of eigenvector iteration for each node.
-
-        weight (None or string, optional (default=None)) – If None, all edge weights are considered equal. Otherwise holds the name of the edge attribute used as weight.
-
-        distribution (optional, default = True)
-            if distributional parameters should be returned
-
-    Output
-
-        dict
+    Returns:
+        centrality (dict): keys are centrality, mean_centrality, median_centrality, std_centrality, skew_centrality, kurtosis_centrality
     """
 
-    eigenvector_centrality = nx.eigenvector_centrality(G, max_iter=max_iter, tol=tol, nstart=nstart, weight=weight)
+    eigenvector_centrality = nx.eigenvector_centrality(G, max_iter=100, tol=1e-06, nstart=None, weight=weight)
 
     centralities = list(eigenvector_centrality.values())
 
@@ -617,31 +599,19 @@ def eigenvector_centrality(G, distribution=True, max_iter=100, tol=1e-06, nstart
 
 
 
-def closeness_centrality(G, distribution=True, u=None, distance=None, wf_improved=True):
+def closeness_centrality(G, distribution=True):
     """
-    Compute the degree centrality for nodes.
+    Compute the closeness centrality. Imported froom NetworkX, including parameter settings.
 
-    The degree centrality for a node v is the fraction of nodes it is connected to.
+    Parameters:
+        G (NetworkX graph object):
+        distribution (boolean): optional. If True distributional parameters are calculated. If False corresponding return values are None.
 
-    Input
-
-        G (graph) – A networkx graph
-        max_iter (integer, optional (default=100)) – Maximum number of iterations in power method.
-
-        u (node, optional) – Return only the value for node u
-
-        distance (edge attribute key, optional (default=None)) – Use the specified edge attribute as the edge distance in shortest path calculations
-
-        wf_improved (bool, optional (default=True)) – If True, scale by the fraction of nodes reachable. This gives the Wasserman and Faust improved formula. For single component graphs it is the same as the original formula.
-    
-        distribution (optional, default = True)
-            if distributional parameters should be returned
-
-    Output
-        dict
+    Returns:
+        centrality (dict): keys are centrality, mean_centrality, median_centrality, std_centrality, skew_centrality, kurtosis_centrality
     """
 
-    closeness_centrality = nx.closeness_centrality(G, u=u, distance=distance, wf_improved=wf_improved)
+    closeness_centrality = nx.closeness_centrality(G, u=None, distance=None, wf_improved=True)
 
     centralities = list(closeness_centrality.values())
 
@@ -665,35 +635,21 @@ def closeness_centrality(G, distribution=True, u=None, distance=None, wf_improve
 
 
 
-def betweeness_centrality(G, distribution=True, k=None, normalized=True, weight=None, endpoints=False, seed=None):
+def betweeness_centrality(G, distribution=True,  weight=None):
     """
-    Compute the degree centrality for nodes.
+    Compute the betweenness centrality. Imported froom NetworkX, including parameter settings.
 
-    The degree centrality for a node v is the fraction of nodes it is connected to.
+    Parameters:
+        G (NetworkX graph object):
+        distribution (boolean): optional. If True distributional parameters are calculated. If False corresponding return values are None.
+        weight (str or None):  If None, all edge weights are considered equal. Otherwise name of the edge attribute to be used as weight.
 
-    Input
-
-        G (graph) – A networkx graph
-
-        k (int, optional (default=None)) – If k is not None use k node samples to estimate betweenness. The value of k <= n where n is the number of nodes in the graph. Higher values give better approximation.
-
-        normalized (bool, optional) – If True the betweenness values are normalized by 2/((n-1)(n-2)) for graphs, and 1/((n-1)(n-2)) for directed graphs where n is the number of nodes in G.
-
-        weight (None or string, optional (default=None)) – If None, all edge weights are considered equal. Otherwise holds the name of the edge attribute used as weight.
-
-        endpoints (bool, optional) – If True include the endpoints in the shortest path counts.
-
-        seed (integer, random_state, or None (default)) – Indicator of random number generation state. See Randomness. Note that this is only used if k is not None.
-
-        distribution (optional, default = True)
-            if distributional parameters should be returned
-
-    Output
-        dict
+    Returns:
+        centrality (dict): keys are centrality, mean_centrality, median_centrality, std_centrality, skew_centrality, kurtosis_centrality
 
     """
 
-    betweenness_centrality = nx.betweenness_centrality(G,k=k, normalized=normalized, weight=weight, endpoints=endpoints, seed=seed)
+    betweenness_centrality = nx.betweenness_centrality(G,k=None, normalized=True, weight=weight, endpoints=False, seed=None)
 
     centralities = list(betweenness_centrality.values())
 

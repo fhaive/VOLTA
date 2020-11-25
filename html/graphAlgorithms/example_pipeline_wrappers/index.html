@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.7.5" />
-<title>graphAlgorithms.multiplex API documentation</title>
+<title>graphAlgorithms.example_pipeline_wrappers API documentation</title>
 <meta name="description" content="" />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
@@ -17,27 +17,53 @@
 <main>
 <article id="content">
 <header>
-<h1 class="title">Module <code>graphAlgorithms.multiplex</code></h1>
+<h1 class="title">Module <code>graphAlgorithms.example_pipeline_wrappers</code></h1>
 </header>
 <section id="section-intro">
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">from .build_network import *
-from .scaling import *</code></pre>
+<pre><code class="python">from .get_edge_similarity import *
+from .get_network_structural_vector import *
+from .get_node_similarity import *
+from .get_node_specific_graphlets import *
+from .get_tree_distances import *
+from .get_walk_distances import *</code></pre>
 </details>
 </section>
 <section>
 <h2 class="section-title" id="header-submodules">Sub-modules</h2>
 <dl>
-<dt><code class="name"><a title="graphAlgorithms.multiplex.build_network" href="build_network.html">graphAlgorithms.multiplex.build_network</a></code></dt>
+<dt><code class="name"><a title="graphAlgorithms.example_pipeline_wrappers.get_edge_similarity" href="get_edge_similarity.html">graphAlgorithms.example_pipeline_wrappers.get_edge_similarity</a></code></dt>
 <dd>
-<section class="desc"><p>Functions to merge multiple networks into a single one.</p></section>
+<section class="desc"><p>This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
+based on their similarity in edges.</p></section>
 </dd>
-<dt><code class="name"><a title="graphAlgorithms.multiplex.scaling" href="scaling.html">graphAlgorithms.multiplex.scaling</a></code></dt>
+<dt><code class="name"><a title="graphAlgorithms.example_pipeline_wrappers.get_network_structural_vector" href="get_network_structural_vector.html">graphAlgorithms.example_pipeline_wrappers.get_network_structural_vector</a></code></dt>
 <dd>
-<section class="desc"><p>Estimates different scaling factors, that can be used when mergin multiple same node networks.</p></section>
+<section class="desc"><p>This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
+based on their similarity in structural …</p></section>
+</dd>
+<dt><code class="name"><a title="graphAlgorithms.example_pipeline_wrappers.get_node_similarity" href="get_node_similarity.html">graphAlgorithms.example_pipeline_wrappers.get_node_similarity</a></code></dt>
+<dd>
+<section class="desc"><p>This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
+based on their similarity in nodes.</p></section>
+</dd>
+<dt><code class="name"><a title="graphAlgorithms.example_pipeline_wrappers.get_node_specific_graphlets" href="get_node_specific_graphlets.html">graphAlgorithms.example_pipeline_wrappers.get_node_specific_graphlets</a></code></dt>
+<dd>
+<section class="desc"><p>This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
+based on their graphlet distribution.</p></section>
+</dd>
+<dt><code class="name"><a title="graphAlgorithms.example_pipeline_wrappers.get_tree_distances" href="get_tree_distances.html">graphAlgorithms.example_pipeline_wrappers.get_tree_distances</a></code></dt>
+<dd>
+<section class="desc"><p>This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
+based on their (structural) …</p></section>
+</dd>
+<dt><code class="name"><a title="graphAlgorithms.example_pipeline_wrappers.get_walk_distances" href="get_walk_distances.html">graphAlgorithms.example_pipeline_wrappers.get_walk_distances</a></code></dt>
+<dd>
+<section class="desc"><p>This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
+based on random walks.</p></section>
 </dd>
 </dl>
 </section>
@@ -61,8 +87,12 @@ from .scaling import *</code></pre>
 </li>
 <li><h3><a href="#header-submodules">Sub-modules</a></h3>
 <ul>
-<li><code><a title="graphAlgorithms.multiplex.build_network" href="build_network.html">graphAlgorithms.multiplex.build_network</a></code></li>
-<li><code><a title="graphAlgorithms.multiplex.scaling" href="scaling.html">graphAlgorithms.multiplex.scaling</a></code></li>
+<li><code><a title="graphAlgorithms.example_pipeline_wrappers.get_edge_similarity" href="get_edge_similarity.html">graphAlgorithms.example_pipeline_wrappers.get_edge_similarity</a></code></li>
+<li><code><a title="graphAlgorithms.example_pipeline_wrappers.get_network_structural_vector" href="get_network_structural_vector.html">graphAlgorithms.example_pipeline_wrappers.get_network_structural_vector</a></code></li>
+<li><code><a title="graphAlgorithms.example_pipeline_wrappers.get_node_similarity" href="get_node_similarity.html">graphAlgorithms.example_pipeline_wrappers.get_node_similarity</a></code></li>
+<li><code><a title="graphAlgorithms.example_pipeline_wrappers.get_node_specific_graphlets" href="get_node_specific_graphlets.html">graphAlgorithms.example_pipeline_wrappers.get_node_specific_graphlets</a></code></li>
+<li><code><a title="graphAlgorithms.example_pipeline_wrappers.get_tree_distances" href="get_tree_distances.html">graphAlgorithms.example_pipeline_wrappers.get_tree_distances</a></code></li>
+<li><code><a title="graphAlgorithms.example_pipeline_wrappers.get_walk_distances" href="get_walk_distances.html">graphAlgorithms.example_pipeline_wrappers.get_walk_distances</a></code></li>
 </ul>
 </li>
 </ul>

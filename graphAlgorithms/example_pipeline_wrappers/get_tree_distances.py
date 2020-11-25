@@ -1,6 +1,6 @@
 """
-This is an example pipeline on how to estimate the similarity between multiple networks
-based on mapping it to a tree & estimating similarities based on a tree
+This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
+based on their (structural) similarities when converted into a binary tree.
 """
 
 import networkx as nx
@@ -21,18 +21,28 @@ import scipy
 
 def helper_tree_vector(networks, nodes, tree_type="level", edge_attribute="weight", cycle_weight = "max", initial_cycle_weight=True):
     """
-    Helper function to estimate for each network a vector based on its tree properties
+    Estimate for each network a vector based on its tree properties. Computes a binary tree representation, where each specified node is selected as root.
+    Compares same root trees between each other. 
 
-    Input
-        networks list of networkx graph objects
+    Parameters:
+        networks (list): of networkX graph objects
+        nodes (list): list of nodes that should be compared between the networks. Nodes need to be present in all networks.
+        tree_type (str): if is "level" then a hierarchical tree is created. Paths from the root indicate how far each nodes are from the root node. Edge weights are not considered.
+					if is "cycle" then a hierarchical tree is created where each node represents a cycle in the graph. 
+						Tree leaves are the original cycles in the graph and are merged into larger cycles through edge removal until all have been merged into a single cycle.
+						This method can be helpful to categorize cyclic graphs. The root parameter is not considered when this option is selected and only cyclic structures in the graph are considered.
+		edge_attribute (str): name of the edge weights to be considered if type = "cycle".
+		cycle_weight (str): sets how cycles are merged i.e. which edges are removed to merge cycles into larger ones.
+							if is "max" then the edge with the highest weight is removed first. if is "min" then the edge with the smalles weight is removed first.
+							if is "betweenness_max" the the edge with the highest betweenness value is removed first.
+							if is "betweenness_min" the edge with the lowest betweenness value is removed first.
+		initial_cycle_weight (boolean): if True the initial cycle basis is estimated based on edge weights with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.minimum_cycle_basis.html#networkx.algorithms.cycles.minimum_cycle_basis
+										if False the initial cycles are estimated based on steps only with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.cycle_basis.html#networkx.algorithms.cycles.cycle_basis
 
-        nodes list of all nodes in all networks / or nodes to be investigated/ compared between networks
-
-        the other parameters describe how the tree should be constructed, for a reference refer to its function declaration
-
-    Output
-        list of lists, were each lists contains "a network specific vector"
-            network distances can be estimated by calcualting distances between these vectors
+    Returns:
+        tree properties vector (list): each sublist contains a network specific vector, ordered as provided in networks.
+        trees (dict): compared tree objects. Key is network ID and value is dict where key is node ID and value is tree object.
+        
     """
     tree_vector = []
     trees_save = {}
@@ -111,41 +121,34 @@ def helper_tree_vector(networks, nodes, tree_type="level", edge_attribute="weigh
 
 def helper_tree_sim(networks, nodes, tree_type="level", edge_attribute="weight", cycle_weight = "max", initial_cycle_weight=True, return_all=False):
     """
-    Helper function that shows on how to create a similarity matrix between networks by comparing
-    tree structures directly
+    Estimates a similarity matrix between networks by comparing their tree structures node specific - are the same nodes the same distance apart from the root node?
 
-    Input
-        networks list of networkx graph objects
 
-        nodes list of all nodes in all networks / or nodes to be investigated/ compared between networks
-
-        if return all then for each network pair, its full similarity list are returned
-            this can be used to estimate the node pairs with the highest similarity between each other
-
-        the other parameters describe how the tree should be constructed, for a reference refer to its function declaration
-
-    Output
-        numpy matrix containing similarity scores between networks
-            matrix index is index of network as provided in networks
-
-        matrix pf percentage score
-        matrix of smc score
-        matrix of correlation score
-        matrix of jaccard score
-
-        if return_all
-            then additional 4 dicts are returned, containing the node specific values
-                key is tuple of networks ids as ordered in networks
-                value is list of scores ordered in order of nodes
-                    if node does not occure in one of the networks value is set to None
-
-            dict of percentage scores
-            dict of smc scores
-            dict of correlation scores
-            dict of jaccard scores
-            
-            these values can be used to find the "most similar node sub-areas" between two networks
-
+    Parameters:
+        networks (list): of networkX graph objects
+        nodes (list): list of nodes that should be compared between the networks. Nodes need to be present in all networks.
+        tree_type (str): if is "level" then a hierarchical tree is created. Paths from the root indicate how far each nodes are from the root node. Edge weights are not considered.
+					if is "cycle" then a hierarchical tree is created where each node represents a cycle in the graph. 
+						Tree leaves are the original cycles in the graph and are merged into larger cycles through edge removal until all have been merged into a single cycle.
+						This method can be helpful to categorize cyclic graphs. The root parameter is not considered when this option is selected and only cyclic structures in the graph are considered.
+		edge_attribute (str): name of the edge weights to be considered if type = "cycle".
+		cycle_weight (str): sets how cycles are merged i.e. which edges are removed to merge cycles into larger ones.
+							if is "max" then the edge with the highest weight is removed first. if is "min" then the edge with the smalles weight is removed first.
+							if is "betweenness_max" the the edge with the highest betweenness value is removed first.
+							if is "betweenness_min" the edge with the lowest betweenness value is removed first.
+		initial_cycle_weight (boolean): if True the initial cycle basis is estimated based on edge weights with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.minimum_cycle_basis.html#networkx.algorithms.cycles.minimum_cycle_basis
+										if False the initial cycles are estimated based on steps only with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.cycle_basis.html#networkx.algorithms.cycles.cycle_basis
+        return_all (boolean): if True intermediate similarity results are returned as well else only the similarity matrices between the networks are returned.
+    Returns:
+        average node level overlap percentage (numpy matrix): 
+        average node level SMC (numpy matrix):
+        average node level Kendall Rank Correlation (numpy matrix):
+        average node level jaccard index (numpy matrix):
+        intermediate percentage scores (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
+        intermediate SMC scores (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
+        intermediate Kendall Rank correlation (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
+        intermediate jaccard indices (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
+    
     """
 
     results_percentage =  np.zeros((len(networks), len(networks)))
@@ -257,116 +260,20 @@ def helper_tree_sim(networks, nodes, tree_type="level", edge_attribute="weight",
         return results_percentage, results_smc, results_correlation, results_jaccard
 
 
-def matrix_from_vector(tree_vector, normalize=False):
-    """
-    this is an example function on how to estimate similarity/ distance matrices based on computed vectors
-    careful distances are only calculated one-sided (only half of matrix is calculated, other half is assumed to be the same)
-    None values in vector are replaced with 0
-    based on the vector parameters distance between the same networks may not be 0
-        if this is necessary matrix diagonal needs to be set manually to 0
 
-    this function provides eclidean, canberra, correlation, cosine & jaccard distance
-        others can be added if needed
-
-    Input
-        list of vectors as returned by helper_tree_vector()
-
-        if normalize then euclidean & canberra distance matrices are normalized
-
-    Output
-        returns numpy matrixes containing the similarity/ distance scores 
-            matrix indices are ordered as provided in tree_vector
-
-        euclidean distance #careful the distance may not be normalized!
-        canberra #careful distance may not be normalized!
-        correaltion
-        cosine
-        jaccard
-
-
-
-    """
-
-    results_euclidean =  np.zeros((len(tree_vector), len(tree_vector)))
-    results_canberra =  np.zeros((len(tree_vector), len(tree_vector)))
-    results_correlation =  np.zeros((len(tree_vector), len(tree_vector)))
-    results_cosine =  np.zeros((len(tree_vector), len(tree_vector)))
-    results_jaccard =  np.zeros((len(tree_vector), len(tree_vector)))
-
-    results =  np.zeros((len(tree_vector), len(tree_vector)))
-
-    index_list = []
-    for index, x in np.ndenumerate(results):
-        temp = (index[1], index[0])
-        if temp not in index_list and index not in index_list:
-            index_list.append(index)
-
-    for i in index_list:
-        print(i)
-        v1 = tree_vector[i[0]]
-        v2 = tree_vector[i[1]]
-        
-        while None in v1:
-            ii = v1.index(None)
-            v1[ii] = 0
-            
-        while None in v2:
-            ii = v2.index(None)
-            v2[ii] = 0
-        
-        
-        e = scipy.spatial.distance.euclidean(v1, v2)
-        
-        results_euclidean[i[0]][i[1]] = e
-        results_euclidean[i[1]][i[0]] = e
-        
-        
-        e = scipy.spatial.distance.canberra(v1, v2)
-        
-        results_canberra[i[0]][i[1]] = e
-        results_canberra[i[1]][i[0]] = e
-        
-        e = scipy.spatial.distance.correlation(v1, v2)
-        
-        results_correlation[i[0]][i[1]] = e
-        results_correlation[i[1]][i[0]] = e
-        
-        e = scipy.spatial.distance.cosine(v1, v2)
-        
-        results_cosine[i[0]][i[1]] = e
-        results_cosine[i[1]][i[0]] = e
-        
-        e = scipy.spatial.distance.jaccard(v1, v2)
-        
-        results_jaccard[i[0]][i[1]] = e
-        results_jaccard[i[1]][i[0]] = e
-
-    if normalize:
-        xmax, xmin = results_canberra.max(), results_canberra.min()
-        results_canberra = (results_canberra - xmin)/(xmax - xmin)
-
-        xmax, xmin = results_euclidean.max(), results_euclidean.min()
-        results_euclidean = (results_euclidean - xmin)/(xmax - xmin)
-
-
-    return results_euclidean, results_canberra, results_correlation, results_cosine, results_jaccard
 
 
 
 def get_node_levels(trees):
     """
-    function that estimates level of each node in the tree for each networks and each starting node
+    Estimates level of each node in a list of trees.
 
-    Input
-        trees is outptut of helper_tree vector
+    Parameters:
+        trees (dict): Key is network ID and value is dict where key is node ID and value is tree object. As returned as second item by helper_tree_vector().
 
-
-    Output
-        dict where key is network id and value is dict
-            were key is node id of root node of tree
-                value is dict were each key is node id and value is its level in the tree
-
-
+    Returns:
+        levels (dict): key is network ID  and value is dict where key is node ID of the root and value is dict where keys are node IDs of the tree and values are their level in the tree.
+        
     """
     node_levels = {}
     for i in trees.keys(): #this is network id

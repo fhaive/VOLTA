@@ -1,6 +1,5 @@
 '''
-functions to find common structures / communities between a group of graphs
-or statistical overrepresented structures / communities
+Functions to find common structures / communities between a group of graphs or statistical overrepresented structures / communities.
 '''
 
 import pandas as pd
@@ -46,16 +45,15 @@ from itertools import combinations
 
 def get_common_subgraph(matrices, p=0.5):
     """
-    retrieve subgraph structure based on edges that are common in the provided graphs
+    Retrieve subgraph structure based on edges that are common in at least p fraction of the provided graphs.
     
-    Input
-        matrices list of adj.-matrices, all need to be in the same order and of same size
-            1 indicates that edge exists, 0 indicates that edge does not exist
+    Parameters:
+        matrices (list): list of adjacency matrices. Nodes need to be ordered the same in all matrices. 1 indicates that the edge exists and 0 that the edge does not exist.
+        p (float): in [0,1]: fraction in how many networks an edge should be present to be kept.
         
-        p [0,1] percentage cutoff to be used, edge needs to be present in at least p % of networks to be kept
-        
-    Output
-        adj matrix where 1 indicates an edge is present in at least p% of networks
+    Returns:
+        common subgraph (matrix): An adjacency matrix where a 1 indicates that this edge is present in at least p fraction networks.
+       
     """
     
     m = len(matrices)
@@ -78,17 +76,15 @@ def get_common_subgraph(matrices, p=0.5):
 
 def get_statistical_overrepresented_edges(clusters):
     """
-    finds substructures (edges) that are overrepresented in a cluster
+    Finds substructures (edges) that are statistically overrepresented in a cluster (group of networks) based on a hypergeometric function and Benjamin-Hochberg correction.
     
-    Input
-        clusters dict, where key is cluster id and value is list of adj.-matrices (containing only 0s and 1s)
-            and all matrices need to be in the same order
+    Parameters:
+        clusters (dict): key is cluster id and value is list of adjacency matrices (containing only 0s and 1s). Nodes need to be in the same order in the matrices.
+ 
+    Returns:
+        p values (dict): non corrected p-values as estimated by the hypergeometric function. Keys are cluster IDs and values are adjacency matrices where cell values are p-values.
+        corrected p values (dict): p-values corrected with a Benjamin-Hochberg correction. Keys are cluster IDs and values are adjacency matrices where cell values are p-values.
         
-        
-        
-    Output
-        tuple of dicts, were keys are cluster ids and values are adj matrices were values are p-values
-            first dict contains pvalues, 2nd contains adjusted pvalues, adjusted with bejmain - hochberg 
     """
     
     pval_matrices = {}
@@ -174,13 +170,14 @@ def get_statistical_overrepresented_edges(clusters):
 
 def build_graph_remove_isolates(mat):
     """
-    constructs a networkx graph from an adj matrix and removes isolated nodes
+    Constructs a networkx graph from an adj matrix and removes isolated nodes.
     
-    Input
-        mat adjacency matrix
+    Parameters:
+        mat (matrix): adjacency matrix
     
-    Output
-        networkx graph object
+    Returns:
+        graph (networkX graph object):
+        
     """
     
     G = nx.from_numpy_matrix(mat)
@@ -193,37 +190,23 @@ def build_graph_remove_isolates(mat):
 
 def get_consensus_community(networks, nodes, rep_network=10, seed=123, threshold=0.75, per_node=True, rep=10):
     """
-    finds a consensus community distribution between all provided clusters
+    Finds a consensus community distribution between all provided networks. For each network communities are identified based on the Louvain algorithm.
+    A consensus is constructed from these based on clustering.consensus_clustering(). All networks need to contain the same nodes.
     
-    each networks communities are identified with louvain & a consensus is constructed from these
-    based on clustering.consensus_clustering()
-    
-    requires that all networks contain the same nodes
-    
-    Input
-        networks list of networkx graphs
+    Parameters:
+        networks (list): list of networkX graph objects.
+        nodes (list): of all nodes. Ordering will be used in the output.
+        rep_network (int): how often the Louvain algorithm should be applied to each network during the community detection stage.
+        seed (int): random seed to be used for any random processes in clustering.consensus_clustering()
+        treshold (float or str): if float needs to be in [0,1]. If float and not per_node all edges with a weight lower than the treshold are removed
+            in the agreement graph. If float and per_node is True then for each node the weakes treshold % of edges are removed, if they are weak for 
+                both nodes making up the edge. If treshold is "matrix" then the teshold is estimated based on a permutation of the clusterings as implemented in netneurotools.
+        per_node (boolean): if True treshold is applied on a per node pasis else it is applied gloablly.
+        rep (int): how often louvain clustering is reapeated on the agreement graph.
+                
+    Returns:
+        communities (list): of community IDs ordered as in nodes
         
-        nodes list of nodes, ordering is used during consensus community identification and for output generation
-        
-        rep_network how often louvain should be applied to each network during the initial community detection stage
-        
-        parameters used in clustering.consensus_clustering()
-        
-            seed random seed to be used for random processes
-
-            threshold either float [0,1] or "matrix"
-                if "matrix" an automatic threshold based on permutation of the clusterings is applied on a per node basis
-                if float and not per_node all edges lower threshold are removed in agreement graph during consensus clustering
-                if float and per_node then on a per node basis threshold percentage of edges are removed 
-                    but only if they are "weak" for both nodes making the edges
-
-            per_node boolean if True threshold is interpreted as a percentage value and applied on a per node basis
-                else is interpreted as a static edge attribute and applied to the whole graph
-
-            rep int how often louvain clustering is repeated on agreement graph
-        
-    Output
-        list of community labels orderd as in nodes
     """
     node_dict = {}
     for n in nodes:
@@ -254,21 +237,15 @@ def get_consensus_community(networks, nodes, rep_network=10, seed=123, threshold
 
 def get_statistical_overrepresented_communities(clusters_networks, nodes):
     """
-    a background distribution is estimated on how likely it is for each node pair to fall in the same community
-    and based on this if specific communities are overrepresented within a cluster
+    Estimates a background distribution on how likely it is for each node pair to fall in the same community.
+    Based on this it can be calculated if specific communities are overrepresented within a cluster (group of networks).
 
-    makes use of get_statistical_overrepresented_edges()
-
-    Input
-        cluster_networks is dict were key is cluster id of pre-clustered networks 
-            and value is list of networkx graph objects
-            all networks need to have the same nodes
-
-        nodes is list of node ids
-
-    Output
-        dict were key is cluster id and value is community id list, in same order as nodes
-            if two nodes have the same id they are assigned to the same cluster
+    Parameters:
+        cluster_networks (dict): key is cluster ID and value is list of networkX graph objects. All networks need to have the same nodes
+        nodes (list): of node IDs. 
+        
+    Returns:
+        communities (dict): key is cluster ID and value is the overrepresented community. Ordered the same way as nodes.
     """
 
     statistical_communities_back = {}
@@ -352,21 +329,17 @@ def get_statistical_overrepresented_communities(clusters_networks, nodes):
 
 def generate_community_overlap_background_distribution(communities, runs=1000, steps=5):
     """
-    estimates how likely it is that two graphs have communities with x% overlapping nodes 
-        (graphs need to have the same nodes)
+    Estimates how likely it is that two graphs have communities with x% overlapping nodes. All graphs need ot have the same nodes.     
+    Runs times, two communities are selected at random and their node % overlap is estimated.
     
-    runs times two communities are selected at random and they node % overlap is estimated
-    
-    Input
-        communities is list of dicts were keys are node ids and values are community ids
+    Parameters:
+        communities (list): of dicts were keys are node IDs and values are community IDs.
+        runs (int): how often random sampling should be performed to estimate the background distribution.
+        steps (int): in [1,100]. Results are summarized into sections. For example steps = 5 would return results for sections 1-5%; 6-10%; 11-15% ... .
         
-        runs how often random sampling should be performed
-        
-        steps int [1-100] if results should be summerized into sections, i.e. steps=5 would 
-            return results for sections 1-5%; 6-10%; 11-15% ...
-        
-    Output
-        dict were key is % overlap (rounded to int) and value is how often this value has been scored
+    Returns:
+        background (dict): key is % overlap (rounded and summaized to steps) and value is how often this value has been scored.
+       
     """
     
     s = int(100 / steps)
@@ -436,31 +409,23 @@ def generate_community_overlap_background_distribution(communities, runs=1000, s
     
 def significantly_similar_partitionings(all_networks, back, is_file=False, steps=5):
     """
-    compares networks pairwise, based on if their community-node-overlap is statistically significant
-    => networks are similar
+    Compares networks pairwise, based on if their community-node-overlap is statistically significant.
+    For each network community detection based on louvain is perforemd. Statistical significant overlap is determained based on a provided background distribution as computed by
+        generate_community_overlap_background_distribution().
+    For each network pair a mean & median p-value (and adjusted p-value based on a benjamin hochberg correction) is estimated based on the p-value overlap score of each community pair between these networks.
 
-    for each network community detection based on louvain is estimated
-    statistical significant overlap is determained based on a provided background distribution as computed by
-        generate_community_overlap_background_distribution()
+    Parameters:
+        all_networks (list): of networkX graph objects or file locations if is_file is True.
+        back (dict): background community overlap distribution as computed by generate_community_overlap_background_distribution().
+        is_file (boolean): if True all_networks should contain file locations to pickled graph objects. If False should contain the networkX graph objects.
+        steps (int): in [1,100]. Results are summarized into sections. Needs to be the same value as used to generate the background distribution.
 
-    for each network pair a mean & median p-val (and adjusted p-value based on a benjamin hochberg correction) is estimated
-        based on the p-value overlap score of each community pair between these networks
-
-    Input
-        all_networks list of path locations to netowrkx edgelists (if is_file) or list of networkx graph objects (if not is_file)
-
-        back background community overlap distribution as returned by generate_community_overlap_background_distribution()
-
-        is file determains if all_networks contains graph objects or only their file location
-
-        steps int [1-100] if results should be summerized into sections, i.e. steps=5 would 
-            return results for sections 1-5%; 6-10%; 11-15% ...
-            needs tp be the same value as provided to generate the background with generate_community_overlap_background_distribution()
-
-    Output
-        4 numpy matrices: mean p-val, median p-val, mean adjusted p-val & median adjusted-pval
-            matrix items are in same order as all_networks
-
+    Returns:
+        mean p value (matrix): ordered as in all_networks.
+        median p value (matrix): ordered as in all_networks.
+        mean corrected p value (matrix): correction performed based on a Benjamin Hochberg correction. Ordered as in all_networks.
+        median corrected p value (matrix): correction performed based on a Benjamin Hochberg correction. Ordered as in all_networks.
+        
     """
 
     s = int(100 / steps)

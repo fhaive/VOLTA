@@ -1,6 +1,6 @@
 """
-This is an example pipeline on how to estimate the similarity between multiple networks
-based on a multitude of random walks
+This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
+based on random walks.
 """
 
 import networkx as nx
@@ -24,36 +24,32 @@ from multiprocessing import Pool
 from functools import partial
 
 
-def helper_walks(networks, nodes, network_ids, steps=10, number_of_walks=10, degree=True, start=None, probabilistic=True, weight="weight"):
+def helper_walks(networks, nodes, network_ids, steps=10, number_of_walks=10, degree=True,  probabilistic=True, weight="weight"):
 
     """
-    Helper function to estimate for each node per network x random walks of size r
+    Estimates for networks number_of_walks walks of size steps.
 
-    Input
-        networks list of networkx graph objects
+    Parameters:
+        networks (list): of networkX graph objects
+        nodes (list): of nodes (areas) to be compared.
+        network_ids (list): list of network IDs.
+        steps (int): is size of random walk
+        number_of_walks (int): how many random walks are performed on G
+        degree (boolean): if True then the number of random walks performed for each starting node is dependent on its degree and is estimated as degree*number_of_walks.
+        probabilisitc (boolean): if True edge weights are taken into account else all edges are considered equal.  If true then weight needs to be set
+        weight (str): edge attribute name as contained in G. Weight is evaluated as a similarity
 
-        nodes list of all nodes in all networks / or nodes to be investigated/ compared between networks
-
-        if degree then number of walks is dependen on a nodes degree and is estimated as degree*number_of_walks
-
-        the other parameters describe how the random walks should be performed, for a reference refer to its function declaration
-
-    Output
-        dict where key is network id as contained in nodes
-            each node dict contains dict where key is node as provided in networks
-            which value is list of performed walks 
-                each walk is a sublist containing the node ids in order as visited by the random walk
-
-        returns dict in same orders for node and edge counts
+    Returns:
+        walks (dict): key is network IDs and value is dict where key is starting node and value is list of performed walks.
+                    Each walk is a sublist and contains the node IDs in order of their visit by the random walk.
+        
     """
 
     performed_walks = {}
-    node_counts = {}
-    edge_counts = {}
+   
     for net_id in network_ids:
         performed_walks[net_id] = {}
-        node_counts[net_id] = {}
-        edge_counts[net_id] = {}
+        
         
     cn = 0
     for node in nodes:
@@ -63,8 +59,7 @@ def helper_walks(networks, nodes, network_ids, steps=10, number_of_walks=10, deg
         cn = cn + 1
 
         walks = []
-        nodes_cnt = {}
-        edges_cnt = {}
+        
 
         for i in range(len(networks)):
             net = networks[i]
@@ -81,37 +76,29 @@ def helper_walks(networks, nodes, network_ids, steps=10, number_of_walks=10, deg
 
                         
                     walks  = global_distances.perform_random_walks(net, steps=steps, number_of_walks=nw, start=node, probabilistic=probabilistic, weight=weight)
-                    #print("count nodes / edges in walk")
-                    #nodes_cnt, edges_cnt = global_distances.rank_walks(net, walks)
+                    
 
 
 
             #save
             performed_walks[network_id][node] = walks
-            #node_counts[network_id][node] = nodes_cnt
-            #edge_counts[network_id][node] = edges_cnt
+            
 
 
-    return performed_walks, node_counts, edge_counts
-
+    return performed_walks
 
 def helper_get_counts(networks, performed_walks):
     """
-    helper function to count number of appearenses of nodes & edges in walks performed on the same starting nodes
+    Count number of appearenses of nodes & edges in walks performed on the same starting nodes.
 
+    Parameters:
+        networks (list): of networkX graph objects
+        performed_walks (dict): as returned by helper_walks().
+     
+    Returns:
+        node counts (dict): key is network ID order as in networks. Value is dict where key is start node and value is dict where key is Node ID and value is its counts.
+        edge counts (dict): key is network ID order as in networks. Value is dict where key is start node and value is dict where key is Edge ID and value is its counts.
 
-    Input
-        list of networks
-
-        dict of walks as returned by helper_walks
-
-        
-
-    Output
-        edge & node dict containing counts 
-        key is network id as ordered in networks
-            contains dict where key is starting node to identify walk
-                contains dict where either node or edge id is key and value is its counts
     """
 
 
@@ -127,7 +114,7 @@ def helper_get_counts(networks, performed_walks):
     for i in range(len(networks)):
         for s in performed_walks.keys():
             walk_list = performed_walks[s][i]
-            nodes_cnt, edges_cnt = global_distances.rank_walks(networks[i], walk_list)
+            nodes_cnt, edges_cnt = global_distances.__rank_walks__(networks[i], walk_list)
             edges[i][s] = edges_cnt
             nodes[i][s] = nodes_cnt
 
@@ -139,44 +126,30 @@ def helper_get_counts(networks, performed_walks):
 def helper_walk_sim(networks, performed_walks, nodes, network_ids, undirected=True, top=10, return_all=False, ranked=False, nodes_ranked=None, edges_ranked=None):
 
     """
-    helper function to compare random walks based on their similarity of visited nodes/ edges
-    estimates for each network pair a correlation score based on the mean of each node pairs x walks
+    Compares random walks based on their similarity of visited nodes/ edges. Estimates for each networ pair a correlation score based on the mean of each node pairs ransom walks.
+    
+    Parameters:
+        networks (list): of networkX graph objects
+        performed_walks (dict): as returned by helper_walks().
+        nodes (list): of nodes (areas) to be compared.
+        network_ids (list): list of network IDs as contained in performed_walks().
+        top (int): top x nodes & edges are considered when calculating the correlation 
+        undirected (boolean): if True then edge traversal is not taken into account
+        return_all (boolean): if True then for each network pair its full correlation list is returned as well.
+        ranked (boolean): if True then it is assumed that node and edge ranks are already estimated and are provided in nodes_ranked and edges_ranked.
+        nodes_ranked (None or dict): as returned by helper_get_counts()
+        edges_ranked (None or dict): as returned by helper_get_counts())
 
-    Input
-        list of networks
+    Returns:
+        correlation edges (numpy matrix):
+        correlation nodes (numpy matrix):
+        correlation edges p-value (numpy matrix):
+        correlation nodes p-value (numpy matrix):
+        intermediate correaltion scores edges (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes.
+        intermediate correaltion scores nodes (dict):  if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes.
+        intermediate p-values edges (dict): if return_all is True. Key is tuple of network IDs and value is list of p-values ordered as in nodes.
+        intermediate p-values edges (dict):  if return_all is True. Key is tuple of network IDs and value is list of p-values ordered as in nodes.
 
-        dict of walks as returned by helper_walks
-
-        nodes list of all nodes in all networks / or nodes to be investigated/ compared between networks
-
-        network_ids is list of ids as used to create walks
-
-        if return all then for each network pair, its full correlation list are returned
-            this can be used to estimate the node pairs with the highest similarity between each other
-
-        other parameters are description parameters of compare_walks()
-            please refer to its declaration for more information
-
-        if ranked then it is assumed that ranks are already provided
-            provide ranked dicts in nodes_ranked and edges_ranked
-
-    Output
-        correlation matrix for ranked nodes & edges
-            ranked after their occurenc in random walks (based on specific start nodes)
-        and separate matrices for their p values
-
-        if return_all
-            then additional 4 dicts are returned, containing the node specific values
-                key is tuple of networks ids as ordered in networks
-                value is list of scores ordered in order of nodes
-                    if node does not occure in one of the networks value is set to None
-
-            dict of edges tau
-            dict of nodes tau
-            dict of edges p val
-            dict of nodes p val
-            
-            these values can be used to find the "most similar node sub-areas" between two networks
     """
                 
     results_nodes =  np.zeros((len(networks), len(networks)))
@@ -304,7 +277,7 @@ def helper_walk_sim(networks, performed_walks, nodes, network_ids, undirected=Tr
         return results_edges, results_nodes, results_edges_p, results_nodes_p
 
 
-def walks_multi(nodes, net=None, network_id=None, steps=10, number_of_walks=10, degree=True, start=None, probabilistic=True, weight="weight"):
+def __walks_multi__(nodes, net=None, network_id=None, steps=10, number_of_walks=10, degree=True, start=None, probabilistic=True, weight="weight"):
 
     performed_walks = {}
     cn = 0
@@ -315,8 +288,7 @@ def walks_multi(nodes, net=None, network_id=None, steps=10, number_of_walks=10, 
         cn = cn + 1
 
         walks = []
-        nodes_cnt = {}
-        edges_cnt = {}
+        
 
         
             
@@ -341,29 +313,26 @@ def walks_multi(nodes, net=None, network_id=None, steps=10, number_of_walks=10, 
 
 
 
-def helper_walks_multi(net, nodes, network_id, steps=10, number_of_walks=10, degree=True, start=None, probabilistic=True, weight="weight", nr_processes=20):
+def helper_walks_multi(net, nodes, network_id=0, steps=10, number_of_walks=10, degree=True, start=None, probabilistic=True, weight="weight", nr_processes=20):
 
     """
-    Helper function to estimate for each node per network x random walks of size r
+    Estimates random walks for specific or random select starting node on multiple cores.
 
-    Input
-        network single networkx graph object
+    Parameters:
+        net (NetworkX graph object):
+        nodes (list): nodes to be investigated.
+        network_id (str or int): name of network that can be set custom.
+        steps (int): is size of random walk
+        number_of_walks (int): how many random walks are performed on net
+        degree (boolean): if True then the number of random walks performed for each starting node is dependent on its degree and is estimated as degree*number_of_walks.
+        start (node ID): if is None start node is selected at random from nodes else start needs to be node ID as contained in net
+        probabilisitc (boolean): if True edge weights are taken into account else all edges are considered equal.  If true then weight needs to be set
+        weight (str): edge attribute name as contained in G. Weight is evaluated as a similarity
+        nr_processes (int): how many processes should be created.
 
-        nodes list of all nodes in all networks / or nodes to be investigated/ compared between networks
+    Returns:
+        walks (dict): where key is Network ID and value is dict where key is starting node and value is list of performed walks.
 
-        if degree then number of walks is dependen on a nodes degree and is estimated as degree*number_of_walks
-
-        nr_processes how many processes should be used
-
-        the other parameters describe how the random walks should be performed, for a reference refer to its function declaration
-
-    Output
-        dict where key is network id as contained in nodes
-            each node dict contains dict where key is node as provided in networks
-            which value is list of performed walks 
-                each walk is a sublist containing the node ids in order as visited by the random walk
-
-        returns dict in same orders for node and edge counts
     """
 
     performed_walks = {}
@@ -374,7 +343,7 @@ def helper_walks_multi(net, nodes, network_id, steps=10, number_of_walks=10, deg
     #split into chunks and initialize multiprocessing
     chunks = list(np.array_split(np.array(nodes), nr_processes))
 
-    func = partial(walks_multi, net=net, network_id=network_id, steps=steps, number_of_walks=number_of_walks, degree=degree, start=start, probabilistic=probabilistic, weight=weight)
+    func = partial(__walks_multi__, net=net, network_id=network_id, steps=steps, number_of_walks=number_of_walks, degree=degree, start=start, probabilistic=probabilistic, weight=weight)
 
     pool = Pool(processes=nr_processes)
 

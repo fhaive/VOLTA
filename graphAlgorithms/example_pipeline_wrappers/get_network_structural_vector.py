@@ -1,6 +1,6 @@
 """
-This is an example pipeline on how to estimate the similarity between multiple networks
-based computing a vector for each networks based on structural similarities
+This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
+based on their similarity in structural descriptors.
 """
 
 import networkx as nx
@@ -21,20 +21,19 @@ import scipy
 
 def graphlet_helper(network, estimate_on=50, edge_attribute="weight", motif_min_size=2, motif_max_size=4):
     """
-    helper function on how to estimate graphlets of different sizes  on a networks based on a random selection of nodes
+    Estimates graphlets of different sizes  on a networks based on a random selection of nodes.
 
-    Input
-        network is a networkx graph object
+    Parameters:
+        network (networkX graph object)
+        estimate_on (int): graphlets are estimated based on a random selection of estimate_on nodes which cannot be larger than the number of nodes in G
+        edge_attribute (str or None): if not None, then based on the provided edge attribute the size of the graphlets will be returned as list, which can be used to estimate its size distributions
+        motif_min_siz (int): nodes size of smallest graphlet to be counted. Minimum permitted value is 2.
+        motif_max_size (int): node size of largest graphlets. Maximum permitted value is 6.
 
-        other parameters are iterate_graphlets() parameters, please refer to function declaration for their description
-
-    Output
-        list of sublists
-            for each estimated graphlet a separate sublist, containing its count and size distribution metrics
-            graphlets are orderd after their id (s. graph atlas for their order)
-
-        list of dicts containing counts for each graphlet where key is graphlet id
-
+    Returns:
+        graphlets (list): list of sublists where each sublist contains counts and size distribution of a specific graphlet. Graphlets are orderd by ID as stated in the graph atlas.
+        counts (dict): key is graphlet ID and value is counts.
+        
     """
 
     temp = []
@@ -85,17 +84,16 @@ def graphlet_helper(network, estimate_on=50, edge_attribute="weight", motif_min_
 
 def estimate_vector(networks, edge_attribute="weight", is_file=False):
     """
-    helper function to estimate a feature vector for a network
-
-    Input
-        list of networkx graph objects or paths of their networkx weighted edgelist (if_file is True)
-
-        edge_attribute to be used for parameters taking edge weight into account
-
-        if is_file then networks is interpreted as list of paths else as list of networks graph objects
-
-    Output
-        list of vectors ordered as networks
+    Wrapper that estimates a feature vector on different structural descriptors.
+    Includes graph size parameters, density, clustering, cycles, degree/ closeness/ betweenness and shortest path distributions.
+    
+    Parameters:
+        networks (list): list of networkX graph objects or their pickled locations if is_file is True.
+        edge_attribute (str): name of the edge attribute to be taken into account.
+        is_file (boolean): if True then networks contains locations to pickled graph objects, else contains graph objects directly.
+        
+    Returns:
+        structural description vector (list): list of sublists. Each sublists contains a feature vector order as in networks.
     """
 
 
@@ -108,19 +106,18 @@ def estimate_vector(networks, edge_attribute="weight", is_file=False):
         else:
             network = nn
         temp_vector = []
-        #mean_degree, median_degree, std_degree, skw_degree, kurt_degree = global_distances.node_degree_distribution(network)
+       
         print("global")
 
 
-        #size = global_distances.graph_size(network)
-        #radius = size["radius"]
-        #diameter = size["diameter"]
+        size = global_distances.graph_size(network)
+        radius = size["radius"]
+        diameter = size["diameter"]
         nodes = len(list(network.nodes()))
         edges = len(list(network.edges()))
-        print("nodes", nodes)
-        print("edges", edges)
-        #temp_vector.append(radius)
-        #temp_vector.append(diameter)
+        temp_vector.append(size)
+        temp_vector.append(radius)
+        temp_vector.append(diameter)
         temp_vector.append(nodes)
         temp_vector.append(edges)
 
@@ -128,9 +125,10 @@ def estimate_vector(networks, edge_attribute="weight", is_file=False):
 
         density = global_distances.density(network)
         temp_vector.append(density)
-        #print("clustering")
-        #clustering = global_distances.average_clustering(network)
-        #temp_vector.append(clustering)
+
+        print("clustering")
+        clustering = global_distances.average_clustering(network)
+        temp_vector.append(clustering)
 
         print("graph edges")
 
@@ -233,29 +231,21 @@ def estimate_vector(networks, edge_attribute="weight", is_file=False):
 
 def matrix_from_vector(vectors, normalize=False):
     """
-    this is an example function on how to estimate similarity/ distance matrices based on computed vectors
-    careful distances are only calculated one-sided (only half of matrix is calculated, other half is assumed to be the same)
-    None values in vector are replaced with 0
-    based on the vector parameters distance between the same networks may not be 0
-        if this is necessary matrix diagonal needs to be set manually to 0
+    Wrapper function that estimates a similarity/ distance matrices based on computed vectors. 
+    It assumes distances are bidirectional and therefore only estimates one triangle of the matrix and infers the other one.
+    If the vector contains None values they are replaced with 0. 
+    Currently this wrapper computes the euclidean, canberra, correlation, cosine and jaccard distance.
+    
+    Parameters:
+        vectors (list): list of sublist, each sublist containing the feature vectore of a network.
+        normalize (boolean): if True euclidean and canberra distance are normalized to be in [0,1].
 
-    this function provides eclidean, canberra, correlation, cosine & jaccard distance
-        others can be added if needed
-
-    Input
-        list of vectors as returned by estimate_vector()
-
-        if normalize then euclidean & canberra distance matrices are normalized
-
-    Output
-        returns numpy matrixes containing the similarity/ distance scores 
-            matrix indices are ordered as provided in vectors
-
-        euclidean distance #careful the distance may not be normalized!
-        canberra #careful distance may not be normalized!
-        correaltion
-        cosine
-        jaccard
+    Returns:
+        euclidean (numpy matrix): the matrix indices are in the same order as the networks provided in vectors.
+        canberra (numpy matrix): the matrix indices are in the same order as the networks provided in vectors.
+        correlation (numpy matrix): the matrix indices are in the same order as the networks provided in vectors.
+        cosine (numpy matrix): the matrix indices are in the same order as the networks provided in vectors.
+        jaccard (numpy matrix): the matrix indices are in the same order as the networks provided in vectors.
 
 
 
