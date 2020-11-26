@@ -146,15 +146,15 @@ def helper_get_counts(labels, networks, performed_walks):
             
 
 
-    return nodes, edges, nodes_frc, edges_frc
+    return nodes, edges, nodes_percentage, edges_percentage
 
 
 
 
-def helper_walk_sim(networks, performed_walks, nodes, network_ids, undirected=True, top=10, return_all=False, ranked=False, nodes_ranked=None, edges_ranked=None):
+def helper_walk_sim(networks, performed_walks, nodes, network_ids, undirected=True, top=10, return_all=False, nodes_ranked=None, edges_ranked=None):
 
     """
-    Compares random walks based on their similarity of visited nodes/ edges. Estimates for each networ pair a correlation score based on the mean of each node pairs ransom walks.
+    Compares random walks based on their similarity of visited nodes/ edges. Estimates for each network pair a correlation score based on the mean of each node pairs random walks.
     
     Parameters:
         networks (list): of networkX graph objects
@@ -164,9 +164,8 @@ def helper_walk_sim(networks, performed_walks, nodes, network_ids, undirected=Tr
         top (int): top x nodes & edges are considered when calculating the correlation 
         undirected (boolean): if True then edge traversal is not taken into account
         return_all (boolean): if True then for each network pair its full correlation list is returned as well.
-        ranked (boolean): if True then it is assumed that node and edge ranks are already estimated and are provided in nodes_ranked and edges_ranked.
-        nodes_ranked (None or dict): as returned by helper_get_counts()
-        edges_ranked (None or dict): as returned by helper_get_counts())
+        nodes_ranked (dict): as returned by helper_get_counts()
+        edges_ranked (dict): as returned by helper_get_counts())
 
     Returns:
         correlation edges (numpy matrix):
@@ -227,14 +226,9 @@ def helper_walk_sim(networks, performed_walks, nodes, network_ids, undirected=Tr
 
             if len(c1) > 0 and len(c2) > 0:
 
-                if not ranked:
-                    #compare the 2 walks
-                    kendall = global_distances.compare_walks(networks[index[0]], c1, walk2=c2, G2=networks[index[1]], comparison="ranked", undirected=undirected, top=top)
-                else:
-                    kendall = global_distances.compare_walks(networks[index[0]], [nodes_ranked[index[0]][n1], edges_ranked[index[0]][n1]], walk2=[nodes_ranked[index[1]][n2], edges_ranked[index[1]][n2]], G2=networks[index[1]], comparison="ranked", undirected=undirected, top=top)
-                    if n1 != n2:
-                        print("1", [nodes_ranked[index[0]][n1][21].keys()])
-                        print("2", [nodes_ranked[index[1]][n2][21].keys()])
+               
+                kendall = global_distances.compare_walks(networks[index[0]], [nodes_ranked[n1][index[0]], edges_ranked[n1][index[0]]], walk2=[nodes_ranked[n2][index[1]], edges_ranked[n2][index[1]]], G2=networks[index[1]], comparison="ranked", undirected=undirected, top=top)
+                
                 e_t = kendall["edges_tau"]
                 n_t = kendall["nodes_tau"]
                 e_p = kendall["edges_p"]
