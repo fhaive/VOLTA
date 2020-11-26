@@ -113,9 +113,9 @@ def estimate_vector(networks, edge_attribute="weight", is_file=False):
         size = global_distances.graph_size(network)
         radius = size["radius"]
         diameter = size["diameter"]
-        nodes = len(list(network.nodes()))
-        edges = len(list(network.edges()))
-        temp_vector.append(size)
+        nodes = size["nodes"]
+        edges = size["edges"]
+        
         temp_vector.append(radius)
         temp_vector.append(diameter)
         temp_vector.append(nodes)
@@ -155,7 +155,7 @@ def estimate_vector(networks, edge_attribute="weight", is_file=False):
         temp_vector.append(skw_cycles)
         temp_vector.append(kurt_cycles)
 
-        
+        print("shortest path distribution")
         paths = global_distances.path_length_distribution(network)
         path_mean = paths["mean path length"]
         path_median = paths["median path length"]
