@@ -87,19 +87,20 @@ def helper_walks(networks, nodes, network_ids, steps=10, number_of_walks=10, deg
 
     return performed_walks
 
-def helper_get_counts(networks, performed_walks):
+def helper_get_counts(labels, networks, performed_walks):
     """
     Count number of appearenses of nodes & edges in walks performed on the same starting nodes. Also estimates the fraction of appearens w.r.t. to all nodes/ edges visited from the same strating node.
 
     Parameters:
-        networks (list): of networkX graph objects
+        labels (list): network labels as provided to helper_walks().
+        networks (list): of networkX graph objects on which the random walks have been performed. Needs to be in same order as labels.
         performed_walks (dict): as returned by helper_walks().
      
     Returns:
-        node counts (dict): key is network ID order as in networks. Value is dict where key is start node and value is dict where key is Node ID and value is its counts.
-        edge counts (dict): key is network ID order as in networks. Value is dict where key is start node and value is dict where key is Edge ID and value is its counts.
-        node fraction (dict): key is network ID order as in networks. Value is dict where key is start node and value is dict where key is Node ID and value is its fraction w.r.t to all visited nodes from that start node.
-        edge fraction (dict): key is network ID order as in networks. Value is dict where key is start node and value is dict where key is Edge ID and value is its fraction w.r.t to all visited edges from that start node..
+        node counts (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Node ID and value is its counts.
+        edge counts (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Edge ID and value is its counts.
+        node fraction (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Node ID and value is its fraction w.r.t to all visited nodes from that start node.
+        edge fraction (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Edge ID and value is its fraction w.r.t to all visited edges from that start node..
     """
 
 
@@ -107,21 +108,22 @@ def helper_get_counts(networks, performed_walks):
     nodes = {}
     edges_percentage = {}
     nodes_percentage = {}
-    for i in range(len(networks)):
+    for i in labels:
         edges[i] = {}
         nodes[i]= {}
         edges_percentage[i] = {}
         nodes_percentage[i]= {}
-        for s in performed_walks.keys():
+        for s in performed_walks[i].keys():
             edges[i][s] = []
             nodes[i][s] = []
             edges_percentage[i][s] = []
             nodes_percentage[i][s] = []
 
 
-    for i in range(len(networks)):
-        for s in performed_walks.keys():
-            walk_list = performed_walks[s][i]
+    for ii in range(len(labels)):
+        i = labels[ii]
+        for s in performed_walks[i].keys():
+            walk_list = performed_walks[i][s]
             nodes_cnt, edges_cnt = global_distances.__rank_walks__(networks[i], walk_list)
             edges[i][s] = edges_cnt
             nodes[i][s] = nodes_cnt
