@@ -227,7 +227,7 @@ def helper_walk_sim(networks, performed_walks, nodes, network_ids, undirected=Tr
             if len(c1) > 0 and len(c2) > 0:
 
                
-                kendall = global_distances.compare_walks(networks[index[0]], [nodes_ranked[n1][index[0]], edges_ranked[n1][index[0]]], walk2=[nodes_ranked[n2][index[1]], edges_ranked[n2][index[1]]], G2=networks[index[1]], comparison="ranked", undirected=undirected, top=top)
+                kendall = global_distances.compare_walks(networks[index[0]], [nodes_ranked[n1][node], edges_ranked[n1][node]], walk2=[nodes_ranked[n2][node], edges_ranked[n2][node]], G2=networks[index[1]],undirected=undirected, comparison="ranked", top=top)
                 
                 e_t = kendall["edges_tau"]
                 n_t = kendall["nodes_tau"]

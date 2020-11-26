@@ -133,15 +133,13 @@ def __rank_walks__(G, walks, undirected=True):
                     elif edge2 in edges.keys():
                         current = edges[edge2]
                         edges[edge2] = current + 1
-                    else :
-                        print("edges not found in graph", edge1, edge2)
+                    
                 else:
                     if edge1 in edges.keys():
                         current = edges[edge1]
                         edges[edge1] = current + 1
                     
-                    else :
-                        print("edges not found in graph", edge1)
+                    
                 #set current node to start
                 start = node
 
@@ -226,15 +224,15 @@ def compare_walks(G, walk1, walk2=None, G2=None, comparison="ranked", undirected
 
     if comparison == "ranked":
         if walk2 is not None and G2 is not None:
-            nodes1, edges1 = __rank_walks__(G, walk1, undirected=undirected)
-            nodes2, edges2 = __rank_walks__(G2, walk2, undirected=undirected)
+            #nodes1, edges1 = __rank_walks__(G, walk1, undirected=undirected)
+            #nodes2, edges2 = __rank_walks__(G2, walk2, undirected=undirected)
 
             #rank_walks already returns sorteddicts
-            nodes1 = list(nodes1.keys())
-            nodes2 = list(nodes2.keys())
+            nodes1 = list(walk1[0].keys())
+            nodes2 = list(walk2[0].keys())
             
-            edges1 = list(edges1.keys())
-            edges2 = list(edges2.keys())
+            edges1 = list(walk1[1].keys())
+            edges2 = list(walk2[1].keys())
 
             
             if undirected:
@@ -269,14 +267,14 @@ def compare_walks(G, walk1, walk2=None, G2=None, comparison="ranked", undirected
                 edges_tau=None
                 edges_p = None
         else:
-            print("comparison for one walk currently not implemented")
+            print("comparison for one walk not implemented")
             return None
 
         return {"nodes_tau":nodes_tau, "nodes_p":nodes_p, "edges_tau":edges_tau, "edges_p":edges_p}
 
 
     else:
-        print("currently not implemented")
+        print("not implemented")
 
         return None
 
