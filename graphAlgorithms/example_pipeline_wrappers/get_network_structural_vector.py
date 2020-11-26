@@ -189,7 +189,7 @@ def estimate_vector(networks, edge_attribute="weight", is_file=False):
 
         
         print("cc dist")
-        close = global_distances.closeness_centrality(network, distance=edge_attribute)
+        close = global_distances.closeness_centrality(network)
         mean_centrality = close["mean_centrality"]
         median_centrality = close["median_centrality"]
         std_centrality = close["std_centrality"]
