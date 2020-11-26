@@ -105,6 +105,8 @@ def helper_get_counts(networks, performed_walks):
 
     edges = {}
     nodes = {}
+    edges_percentage = {}
+    nodes_percentage = {}
     for i in range(len(networks)):
         edges[i] = {}
         nodes[i]= {}
