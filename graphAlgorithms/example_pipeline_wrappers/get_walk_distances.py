@@ -124,7 +124,7 @@ def helper_get_counts(labels, networks, performed_walks):
         i = labels[ii]
         for s in performed_walks[i].keys():
             walk_list = performed_walks[i][s]
-            nodes_cnt, edges_cnt = global_distances.__rank_walks__(networks[i], walk_list)
+            nodes_cnt, edges_cnt = global_distances.__rank_walks__(networks[ii], walk_list)
             edges[i][s] = edges_cnt
             nodes[i][s] = nodes_cnt
 
