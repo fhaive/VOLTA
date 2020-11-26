@@ -89,7 +89,7 @@ def helper_walks(networks, nodes, network_ids, steps=10, number_of_walks=10, deg
 
 def helper_get_counts(networks, performed_walks):
     """
-    Count number of appearenses of nodes & edges in walks performed on the same starting nodes.
+    Count number of appearenses of nodes & edges in walks performed on the same starting nodes. Also estimates the fraction of appearens w.r.t. to all nodes/ edges visited from the same strating node.
 
     Parameters:
         networks (list): of networkX graph objects
@@ -98,7 +98,8 @@ def helper_get_counts(networks, performed_walks):
     Returns:
         node counts (dict): key is network ID order as in networks. Value is dict where key is start node and value is dict where key is Node ID and value is its counts.
         edge counts (dict): key is network ID order as in networks. Value is dict where key is start node and value is dict where key is Edge ID and value is its counts.
-
+        node fraction (dict): key is network ID order as in networks. Value is dict where key is start node and value is dict where key is Node ID and value is its fraction w.r.t to all visited nodes from that start node.
+        edge fraction (dict): key is network ID order as in networks. Value is dict where key is start node and value is dict where key is Edge ID and value is its fraction w.r.t to all visited edges from that start node..
     """
 
 
@@ -107,9 +108,14 @@ def helper_get_counts(networks, performed_walks):
     for i in range(len(networks)):
         edges[i] = {}
         nodes[i]= {}
+        edges_percentage[i] = {}
+        nodes_percentage[i]= {}
         for s in performed_walks.keys():
             edges[i][s] = []
             nodes[i][s] = []
+            edges_percentage[i][s] = []
+            nodes_percentage[i][s] = []
+
 
     for i in range(len(networks)):
         for s in performed_walks.keys():
@@ -118,7 +124,25 @@ def helper_get_counts(networks, performed_walks):
             edges[i][s] = edges_cnt
             nodes[i][s] = nodes_cnt
 
-    return nodes, edges
+            #compute fraction values
+            nodes_frc = {}
+            for key in nodes_cnt.keys():
+                nodes_frc[key] = nodes_cnt[key] / len(nodes_cnt.keys())
+
+            edges_frc = {}
+            for key in edges_cnt.keys():
+                edges_frc[key] = edges_cnt[key] / len(edges_cnt.keys())
+
+
+            edges_percentage[i][s] = edges_frc
+            nodes_percentage[i][s] = nodes_frc
+
+
+
+            
+
+
+    return nodes, edges, nodes_frc, edges_frc
 
 
 
