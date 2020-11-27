@@ -142,9 +142,9 @@ def estimate_vector(networks, edge_attribute=&#34;weight&#34;, is_file=False):
         size = global_distances.graph_size(network)
         radius = size[&#34;radius&#34;]
         diameter = size[&#34;diameter&#34;]
-        nodes = len(list(network.nodes()))
-        edges = len(list(network.edges()))
-        temp_vector.append(size)
+        nodes = size[&#34;nodes&#34;]
+        edges = size[&#34;edges&#34;]
+        
         temp_vector.append(radius)
         temp_vector.append(diameter)
         temp_vector.append(nodes)
@@ -184,7 +184,7 @@ def estimate_vector(networks, edge_attribute=&#34;weight&#34;, is_file=False):
         temp_vector.append(skw_cycles)
         temp_vector.append(kurt_cycles)
 
-        
+        print(&#34;shortest path distribution&#34;)
         paths = global_distances.path_length_distribution(network)
         path_mean = paths[&#34;mean path length&#34;]
         path_median = paths[&#34;median path length&#34;]
@@ -218,7 +218,7 @@ def estimate_vector(networks, edge_attribute=&#34;weight&#34;, is_file=False):
 
         
         print(&#34;cc dist&#34;)
-        close = global_distances.closeness_centrality(network, distance=edge_attribute)
+        close = global_distances.closeness_centrality(network)
         mean_centrality = close[&#34;mean_centrality&#34;]
         median_centrality = close[&#34;median_centrality&#34;]
         std_centrality = close[&#34;std_centrality&#34;]
@@ -404,9 +404,9 @@ Includes graph size parameters, density, clustering, cycles, degree/ closeness/ 
         size = global_distances.graph_size(network)
         radius = size[&#34;radius&#34;]
         diameter = size[&#34;diameter&#34;]
-        nodes = len(list(network.nodes()))
-        edges = len(list(network.edges()))
-        temp_vector.append(size)
+        nodes = size[&#34;nodes&#34;]
+        edges = size[&#34;edges&#34;]
+        
         temp_vector.append(radius)
         temp_vector.append(diameter)
         temp_vector.append(nodes)
@@ -446,7 +446,7 @@ Includes graph size parameters, density, clustering, cycles, degree/ closeness/ 
         temp_vector.append(skw_cycles)
         temp_vector.append(kurt_cycles)
 
-        
+        print(&#34;shortest path distribution&#34;)
         paths = global_distances.path_length_distribution(network)
         path_mean = paths[&#34;mean path length&#34;]
         path_median = paths[&#34;median path length&#34;]
@@ -480,7 +480,7 @@ Includes graph size parameters, density, clustering, cycles, degree/ closeness/ 
 
         
         print(&#34;cc dist&#34;)
-        close = global_distances.closeness_centrality(network, distance=edge_attribute)
+        close = global_distances.closeness_centrality(network)
         mean_centrality = close[&#34;mean_centrality&#34;]
         median_centrality = close[&#34;median_centrality&#34;]
         std_centrality = close[&#34;std_centrality&#34;]

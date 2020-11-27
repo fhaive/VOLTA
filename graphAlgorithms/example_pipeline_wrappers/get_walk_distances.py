@@ -203,8 +203,8 @@ def helper_walk_sim(networks, performed_walks, nodes, network_ids, undirected=Tr
     for index in index_list:
         n1 = network_ids[index[0]]
         n2 = network_ids[index[1]]
-        print("n1", n1)
-        print("n2", n2)
+        #print("n1", n1)
+        #print("n2", n2)
 
         nodes_sim = []
         edges_sim = []

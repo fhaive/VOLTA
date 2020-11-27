@@ -470,6 +470,18 @@ def map_edge_to_id(edges, mapping={}, next_value=0):
 
     return mapping, next_value
 
+def reverse_node_edge_mapping(mapping):
+    """
+    Reverses the mapping object. Switches keys and values of the mapping object. This allows easier retrival of original node IDs from the mapping ID.
+
+    Parameters:
+        mapping (dict): node/ edge to ID mapping as returned by map_node_to_id()/ map_edge_to_id().
+    
+    Returns:
+        reversed mapping (dict): keys are mapped IDs and values are original node/ edge IDs.
+    """
+
+    return {value:key for key, value in mapping.items()}
 
 def construct_mapped_edge(mapping, edges):
 
@@ -1198,6 +1210,7 @@ def sort_node_list(Graph, mapping, degree=False, degree_centrality=False, closen
         If multiple values are set to True a combined ranking is calculated
         k (float [0,1] or None): approximation of betweenness, if float then k percentage of nodes are used to approximate the betweenness values. If None all nodes are used.
         xx (int): state how often random sampling is performed if k is not None
+        as_str (boolean): if True keys in mapping are assumed to be str (are the same as graph node IDs). If False they are assumed to be int.
         
     Returns:
         sorted (dict): keys are degree, dc, cc, betweenness, average_mean and average_median, values are list of ranked node ids. If key is set to False an empty list is returned.
