@@ -60,6 +60,7 @@ import asyncio
 import markov_clustering as mc
 import sklearn
 from sklearn.cluster import AgglomerativeClustering
+import pyintergraph
 
 
 
@@ -108,7 +109,7 @@ def async_fluid(G, k=5, return_object=True):
 
 
 
-
+&#39;&#39;&#39;
 def em(G, k=5, return_object=True):
     &#34;&#34;&#34;
     Based on a mixture model.
@@ -140,8 +141,8 @@ def em(G, k=5, return_object=True):
 
     else:
         return m
-
-
+&#39;&#39;&#39;
+&#39;&#39;&#39;
 def sbm_dl(G, B_min=None, B_max=None, deg_corr=True, return_object=True):
     &#34;&#34;&#34;
     Based on a monte carlo heuristic.
@@ -175,8 +176,8 @@ def sbm_dl(G, B_min=None, B_max=None, deg_corr=True, return_object=True):
 
     else:
         return m
-
-
+&#39;&#39;&#39;
+&#39;&#39;&#39;
 def newman_modularity(G, return_object=True):
     &#34;&#34;&#34;
     Based on (maximising) modularity.
@@ -207,7 +208,7 @@ def newman_modularity(G, return_object=True):
     else:
         return m
 
-
+&#39;&#39;&#39;
 def gdmp2(G, min_threshold=0.75, return_object=True):
     &#34;&#34;&#34;
     Based on finding dense subgraphs.
@@ -228,8 +229,9 @@ def gdmp2(G, min_threshold=0.75, return_object=True):
         fitness parameters (NodeClustering object): if return_object is True.
     
     &#34;&#34;&#34;
+    
 
-    communities = cdlib.algorithms.gdmp2(G, min_threshold=min_threshold)
+    communities = cdlib.algorithms.gdmp2(pyintergraph.nx2igraph(G), min_threshold=min_threshold)
 
     m = communities.to_node_community_map()
     #j = communities.to_json()
@@ -326,8 +328,10 @@ def walktrap(G, return_object=True):
 
     
     &#34;&#34;&#34;
+    #convert to an igraph object
+    
 
-    communities = cdlib.algorithms.walktrap(G)
+    communities = cdlib.algorithms.walktrap(pyintergraph.nx2igraph(G))
 
     m = communities.to_node_community_map()
     #j = communities.to_json()
@@ -369,7 +373,7 @@ def cpm(G, initial_membership=None, weights=&#34;weight&#34;, resolution_paramet
         fitness parameters (NodeClustering object): if return_object is True.
     &#34;&#34;&#34;
 
-    communities = cdlib.algorithms.cpm(G, initial_membership=initial_membership, weights=weights, node_sizes=None, resolution_parameter=resolution_parameter)
+    communities = cdlib.algorithms.cpm(pyintergraph.nx2igraph(G), initial_membership=initial_membership, weights=weights, node_sizes=None, resolution_parameter=resolution_parameter)
 
     m = communities.to_node_community_map()
     #j = communities.to_json()
@@ -434,7 +438,7 @@ def leiden(G,  weights=&#34;weight&#34;, return_object=True):
 
     &#34;&#34;&#34;
 
-    communities = cdlib.algorithms.leiden(G, weights=weights, initial_membership=None)
+    communities = cdlib.algorithms.leiden(pyintergraph.nx2igraph(G), weights=weights, initial_membership=None)
 
     m = communities.to_node_community_map()
     #j = communities.to_json()
@@ -903,14 +907,14 @@ def girvan_newman(G, valuable_edge=&#34;max_weight&#34;, k=1, is_leve=False, att
                 counter = counter + 1
         return d
 
-def agglomerative_clustering(G, is_distance=True, linkage=&#34;ward&#34;, distance_threshold=0.2):
+def agglomerative_clustering(G, is_distance=True, linkage=&#34;complete&#34;, distance_threshold=0.2):
     &#34;&#34;&#34;
     Clusters on the adjacency matrix of a graph. Cells need to contain distance or similarity values. Based on sklearn.
 
     Parameters:
         G (networkX graph object)
         is_distance (boolean): if True the values contained in the adjacency matrix are used for clustering. If False they are converted into a distance first with 1-x.
-        linkage (str): method to be used. Options are &#34;ward&#34;, &#34;complete&#34;, &#34;average&#34;, &#34;single&#34;.
+        linkage (str): method to be used. Options are  &#34;complete&#34;, &#34;average&#34;, &#34;single&#34;.
         distance_treshold (float): treshold above which clusters will be merged.
        
     Returns:
@@ -1008,7 +1012,7 @@ def angel(G, treshold=0.5, min_community_size=3, return_object=True):
 
     &#34;&#34;&#34;
 
-    communities = cdlib.algorithms.angel(G, treshold, min_community_size=min_community_size)
+    communities = cdlib.algorithms.angel(pyintergraph.nx2igraph(G), treshold, min_community_size=min_community_size)
 
     m = communities.to_node_community_map()
     #j = communities.to_json()
@@ -3131,7 +3135,7 @@ def __check_consensus_graph__(G, n_p, delta):
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="graphAlgorithms.communities.agglomerative_clustering"><code class="name flex">
-<span>def <span class="ident">agglomerative_clustering</span></span>(<span>G, is_distance=True, linkage='ward', distance_threshold=0.2)</span>
+<span>def <span class="ident">agglomerative_clustering</span></span>(<span>G, is_distance=True, linkage='complete', distance_threshold=0.2)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Clusters on the adjacency matrix of a graph. Cells need to contain distance or similarity values. Based on sklearn.</p>
@@ -3141,7 +3145,8 @@ def __check_consensus_graph__(G, n_p, delta):
 <dt><strong><code>is_distance</code></strong> :&ensp;<code>boolean</code></dt>
 <dd>if True the values contained in the adjacency matrix are used for clustering. If False they are converted into a distance first with 1-x.</dd>
 <dt><strong><code>linkage</code></strong> :&ensp;<code>str</code></dt>
-<dd>method to be used. Options are "ward", "complete", "average", "single".</dd>
+<dd>method to be used. Options are
+"complete", "average", "single".</dd>
 <dt><strong><code>distance_treshold</code></strong> :&ensp;<code>float</code></dt>
 <dd>treshold above which clusters will be merged.</dd>
 </dl>
@@ -3154,14 +3159,14 @@ def __check_consensus_graph__(G, n_p, delta):
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def agglomerative_clustering(G, is_distance=True, linkage=&#34;ward&#34;, distance_threshold=0.2):
+<pre><code class="python">def agglomerative_clustering(G, is_distance=True, linkage=&#34;complete&#34;, distance_threshold=0.2):
     &#34;&#34;&#34;
     Clusters on the adjacency matrix of a graph. Cells need to contain distance or similarity values. Based on sklearn.
 
     Parameters:
         G (networkX graph object)
         is_distance (boolean): if True the values contained in the adjacency matrix are used for clustering. If False they are converted into a distance first with 1-x.
-        linkage (str): method to be used. Options are &#34;ward&#34;, &#34;complete&#34;, &#34;average&#34;, &#34;single&#34;.
+        linkage (str): method to be used. Options are  &#34;complete&#34;, &#34;average&#34;, &#34;single&#34;.
         distance_treshold (float): treshold above which clusters will be merged.
        
     Returns:
@@ -3242,7 +3247,7 @@ International Conference on Complex Networks and Their Applications. Springer, C
 
     &#34;&#34;&#34;
 
-    communities = cdlib.algorithms.angel(G, treshold, min_community_size=min_community_size)
+    communities = cdlib.algorithms.angel(pyintergraph.nx2igraph(G), treshold, min_community_size=min_community_size)
 
     m = communities.to_node_community_map()
     #j = communities.to_json()
@@ -3886,7 +3891,7 @@ Narrow scope for resolution-limit-free community detection. Physical Review E, 8
         fitness parameters (NodeClustering object): if return_object is True.
     &#34;&#34;&#34;
 
-    communities = cdlib.algorithms.cpm(G, initial_membership=initial_membership, weights=weights, node_sizes=None, resolution_parameter=resolution_parameter)
+    communities = cdlib.algorithms.cpm(pyintergraph.nx2igraph(G), initial_membership=initial_membership, weights=weights, node_sizes=None, resolution_parameter=resolution_parameter)
 
     m = communities.to_node_community_map()
     #j = communities.to_json()
@@ -4089,66 +4094,6 @@ dict containing score for each community. If there are less than 2 communities N
     &#34;&#34;&#34;
 
     communities = cdlib.algorithms.ego_networks(G, level=level)
-
-    m = communities.to_node_community_map()
-    #j = communities.to_json()
-
-    if return_object:
-        return m,  communities
-
-    else:
-        return m</code></pre>
-</details>
-</dd>
-<dt id="graphAlgorithms.communities.em"><code class="name flex">
-<span>def <span class="ident">em</span></span>(<span>G, k=5, return_object=True)</span>
-</code></dt>
-<dd>
-<section class="desc"><p>Based on a mixture model.</p>
-<h2 id="references">References</h2>
-<p><a href="https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.em.html#cdlib.algorithms.em">https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.em.html#cdlib.algorithms.em</a></p>
-<p>Newman, Mark EJ, and Elizabeth A. Leicht. Mixture community and exploratory analysis in networks.
-Proceedings of the National Academy of Sciences 104.23 (2007): 9564-9569.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt>G (networkX graph object):</dt>
-<dt><strong><code>k</code></strong> :&ensp;<code>int</code></dt>
-<dd>number of desired communities.</dd>
-<dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key are node IDs and value is list of communities that node belongs to.</dd>
-</dl>
-<p>fitness parameters (NodeClustering object): if return_object is True.</p></section>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def em(G, k=5, return_object=True):
-    &#34;&#34;&#34;
-    Based on a mixture model.
-
-    References:
-        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.em.html#cdlib.algorithms.em
-
-        Newman, Mark EJ, and Elizabeth A. Leicht. Mixture community and exploratory analysis in networks. 
-        Proceedings of the National Academy of Sciences 104.23 (2007): 9564-9569.
-        
-    Parameters:
-        G (networkX graph object):
-        k (int): number of desired communities.
-        return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-
-    Returns:
-        communities (dict): key are node IDs and value is list of communities that node belongs to.
-        fitness parameters (NodeClustering object): if return_object is True.
-
-    &#34;&#34;&#34;
-
-    communities = cdlib.algorithms.em(G,k)
 
     m = communities.to_node_community_map()
     #j = communities.to_json()
@@ -4548,8 +4493,9 @@ IEEE Transactions on Knowledge and Data Engineering 24.7 (2012): 1216-1230.</p>
         fitness parameters (NodeClustering object): if return_object is True.
     
     &#34;&#34;&#34;
+    
 
-    communities = cdlib.algorithms.gdmp2(G, min_threshold=min_threshold)
+    communities = cdlib.algorithms.gdmp2(pyintergraph.nx2igraph(G), min_threshold=min_threshold)
 
     m = communities.to_node_community_map()
     #j = communities.to_json()
@@ -5255,7 +5201,7 @@ From Louvain to Leiden: guaranteeing well-connected communities. arXiv preprint 
 
     &#34;&#34;&#34;
 
-    communities = cdlib.algorithms.leiden(G, weights=weights, initial_membership=None)
+    communities = cdlib.algorithms.leiden(pyintergraph.nx2igraph(G), weights=weights, initial_membership=None)
 
     m = communities.to_node_community_map()
     #j = communities.to_json()
@@ -5805,61 +5751,6 @@ dict containing score for each community. If there are less than 2 communities N
     return val, quality_dict, {&#34;mean&#34;:mean, &#34;median&#34;:median, &#34;std&#34;:std, &#34;kurt&#34;:kur, &#34;skewness&#34;:sk}</code></pre>
 </details>
 </dd>
-<dt id="graphAlgorithms.communities.newman_modularity"><code class="name flex">
-<span>def <span class="ident">newman_modularity</span></span>(<span>G, return_object=True)</span>
-</code></dt>
-<dd>
-<section class="desc"><p>Based on (maximising) modularity.</p>
-<h2 id="references">References</h2>
-<p><a href="https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.eigenvector.html#cdlib.algorithms.eigenvector">https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.eigenvector.html#cdlib.algorithms.eigenvector</a></p>
-<p>Newman, Mark EJ. Finding community structure in networks using the eigenvectors of matrices. Physical review E 74.3 (2006): 036104.</p>
-<h2 id="parameters">Parameters</h2>
-<dl>
-<dt>G (networkX graph object):</dt>
-<dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></dd>
-</dl>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key are node IDs and value is list of communities that node belongs to.</dd>
-</dl>
-<p>fitness parameters (NodeClustering object): if return_object is True.</p></section>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def newman_modularity(G, return_object=True):
-    &#34;&#34;&#34;
-    Based on (maximising) modularity.
-
-    References:
-        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.eigenvector.html#cdlib.algorithms.eigenvector
-
-        Newman, Mark EJ. Finding community structure in networks using the eigenvectors of matrices. Physical review E 74.3 (2006): 036104.
-        
-    Parameters:
-        G (networkX graph object):
-        return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-
-    Returns:
-        communities (dict): key are node IDs and value is list of communities that node belongs to.
-        fitness parameters (NodeClustering object): if return_object is True.
-
-    &#34;&#34;&#34;
-
-    communities = cdlib.algorithms.eigenvector(G)
-
-    m = communities.to_node_community_map()
-    #j = communities.to_json()
-
-    if return_object:
-        return m,  communities
-
-    else:
-        return m</code></pre>
-</details>
-</dd>
 <dt id="graphAlgorithms.communities.node_embeddedness"><code class="name flex">
 <span>def <span class="ident">node_embeddedness</span></span>(<span>communities, G)</span>
 </code></dt>
@@ -6047,67 +5938,6 @@ list of sublists [[community] [community]], where each community list contains n
     return result</code></pre>
 </details>
 </dd>
-<dt id="graphAlgorithms.communities.sbm_dl"><code class="name flex">
-<span>def <span class="ident">sbm_dl</span></span>(<span>G, B_min=None, B_max=None, deg_corr=True, return_object=True)</span>
-</code></dt>
-<dd>
-<section class="desc"><p>Based on a monte carlo heuristic.</p>
-<h2 id="references">References</h2>
-<p><a href="https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.sbm_dl.html#cdlib.algorithms.sbm_dl">https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.sbm_dl.html#cdlib.algorithms.sbm_dl</a></p>
-<p>Tiago P. Peixoto, “Efficient Monte Carlo and greedy heuristic for the inference of stochastic block models”,
-Phys. Rev. E 89, 012804 (2014), DOI: 10.1103/PhysRevE.89.012804
-Parameters:
-G (networkX graph object):
-B_min (int): minimum number of communities that are allowed
-B_max (int):
-maximum number of communities that are allowed
-deg_corr (boolean): if is True then uses a degree corrected version
-return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></p>
-<h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key are node IDs and value is list of communities that node belongs to.</dd>
-</dl>
-<p>fitness parameters (NodeClustering object): if return_object is True.</p></section>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def sbm_dl(G, B_min=None, B_max=None, deg_corr=True, return_object=True):
-    &#34;&#34;&#34;
-    Based on a monte carlo heuristic.
-
-    References:
-        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.sbm_dl.html#cdlib.algorithms.sbm_dl
-
-        Tiago P. Peixoto, “Efficient Monte Carlo and greedy heuristic for the inference of stochastic block models”, 
-        Phys. Rev. E 89, 012804 (2014), DOI: 10.1103/PhysRevE.89.012804
-    
-     Parameters:
-        G (networkX graph object):
-        B_min (int): minimum number of communities that are allowed
-        B_max (int):  maximum number of communities that are allowed
-        deg_corr (boolean): if is True then uses a degree corrected version
-        return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-
-    Returns:
-        communities (dict): key are node IDs and value is list of communities that node belongs to.
-        fitness parameters (NodeClustering object): if return_object is True.
-
-    &#34;&#34;&#34;
-
-    communities = cdlib.algorithms.sbm_dl(G,B_min= B_min, B_max=B_max, deg_corr=deg_corr)
-
-    m = communities.to_node_community_map()
-    #j = communities.to_json()
-
-    if return_object:
-        return m,  communities
-
-    else:
-        return m</code></pre>
-</details>
-</dd>
 <dt id="graphAlgorithms.communities.triangle_ratio"><code class="name flex">
 <span>def <span class="ident">triangle_ratio</span></span>(<span>communities, G)</span>
 </code></dt>
@@ -6229,8 +6059,10 @@ J. Graph Algorithms Appl. 10.2 (2006): 191-218.</p>
 
     
     &#34;&#34;&#34;
+    #convert to an igraph object
+    
 
-    communities = cdlib.algorithms.walktrap(G)
+    communities = cdlib.algorithms.walktrap(pyintergraph.nx2igraph(G))
 
     m = communities.to_node_community_map()
     #j = communities.to_json()
@@ -6449,7 +6281,6 @@ If None will be ignored.</dd>
 <li><code><a title="graphAlgorithms.communities.create_initial_consensus" href="#graphAlgorithms.communities.create_initial_consensus">create_initial_consensus</a></code></li>
 <li><code><a title="graphAlgorithms.communities.cut_ratio" href="#graphAlgorithms.communities.cut_ratio">cut_ratio</a></code></li>
 <li><code><a title="graphAlgorithms.communities.ego_networks" href="#graphAlgorithms.communities.ego_networks">ego_networks</a></code></li>
-<li><code><a title="graphAlgorithms.communities.em" href="#graphAlgorithms.communities.em">em</a></code></li>
 <li><code><a title="graphAlgorithms.communities.fast_consensus" href="#graphAlgorithms.communities.fast_consensus">fast_consensus</a></code></li>
 <li><code><a title="graphAlgorithms.communities.fraction_of_median_degree" href="#graphAlgorithms.communities.fraction_of_median_degree">fraction_of_median_degree</a></code></li>
 <li><code><a title="graphAlgorithms.communities.fraction_of_weak_members" href="#graphAlgorithms.communities.fraction_of_weak_members">fraction_of_weak_members</a></code></li>
@@ -6472,11 +6303,9 @@ If None will be ignored.</dd>
 <li><code><a title="graphAlgorithms.communities.mean_edge_weight_fraction" href="#graphAlgorithms.communities.mean_edge_weight_fraction">mean_edge_weight_fraction</a></code></li>
 <li><code><a title="graphAlgorithms.communities.mean_outgoing_edge_fraction" href="#graphAlgorithms.communities.mean_outgoing_edge_fraction">mean_outgoing_edge_fraction</a></code></li>
 <li><code><a title="graphAlgorithms.communities.modular_density" href="#graphAlgorithms.communities.modular_density">modular_density</a></code></li>
-<li><code><a title="graphAlgorithms.communities.newman_modularity" href="#graphAlgorithms.communities.newman_modularity">newman_modularity</a></code></li>
 <li><code><a title="graphAlgorithms.communities.node_embeddedness" href="#graphAlgorithms.communities.node_embeddedness">node_embeddedness</a></code></li>
 <li><code><a title="graphAlgorithms.communities.outgoing_edges" href="#graphAlgorithms.communities.outgoing_edges">outgoing_edges</a></code></li>
 <li><code><a title="graphAlgorithms.communities.refactor_communities" href="#graphAlgorithms.communities.refactor_communities">refactor_communities</a></code></li>
-<li><code><a title="graphAlgorithms.communities.sbm_dl" href="#graphAlgorithms.communities.sbm_dl">sbm_dl</a></code></li>
 <li><code><a title="graphAlgorithms.communities.triangle_ratio" href="#graphAlgorithms.communities.triangle_ratio">triangle_ratio</a></code></li>
 <li><code><a title="graphAlgorithms.communities.walktrap" href="#graphAlgorithms.communities.walktrap">walktrap</a></code></li>
 <li><code><a title="graphAlgorithms.communities.weak_link_communities" href="#graphAlgorithms.communities.weak_link_communities">weak_link_communities</a></code></li>

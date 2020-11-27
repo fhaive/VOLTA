@@ -497,6 +497,18 @@ def map_edge_to_id(edges, mapping={}, next_value=0):
 
     return mapping, next_value
 
+def reverse_node_edge_mapping(mapping):
+    &#34;&#34;&#34;
+    Reverses the mapping object. Switches keys and values of the mapping object. This allows easier retrival of original node IDs from the mapping ID.
+
+    Parameters:
+        mapping (dict): node/ edge to ID mapping as returned by map_node_to_id()/ map_edge_to_id().
+    
+    Returns:
+        reversed mapping (dict): keys are mapped IDs and values are original node/ edge IDs.
+    &#34;&#34;&#34;
+
+    return {value:key for key, value in mapping.items()}
 
 def construct_mapped_edge(mapping, edges):
 
@@ -1225,6 +1237,7 @@ def sort_node_list(Graph, mapping, degree=False, degree_centrality=False, closen
         If multiple values are set to True a combined ranking is calculated
         k (float [0,1] or None): approximation of betweenness, if float then k percentage of nodes are used to approximate the betweenness values. If None all nodes are used.
         xx (int): state how often random sampling is performed if k is not None
+        as_str (boolean): if True keys in mapping are assumed to be str (are the same as graph node IDs). If False they are assumed to be int.
         
     Returns:
         sorted (dict): keys are degree, dc, cc, betweenness, average_mean and average_median, values are list of ranked node ids. If key is set to False an empty list is returned.
@@ -2544,6 +2557,36 @@ Percentage score p (of shared edges) is penalized based on p * (1 / weight * (ab
     return result</code></pre>
 </details>
 </dd>
+<dt id="graphAlgorithms.distances.node_edge_similarities.reverse_node_edge_mapping"><code class="name flex">
+<span>def <span class="ident">reverse_node_edge_mapping</span></span>(<span>mapping)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Reverses the mapping object. Switches keys and values of the mapping object. This allows easier retrival of original node IDs from the mapping ID.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code></dt>
+<dd>node/ edge to ID mapping as returned by map_node_to_id()/ map_edge_to_id().</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>reversed mapping (dict): keys are mapped IDs and values are original node/ edge IDs.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reverse_node_edge_mapping(mapping):
+    &#34;&#34;&#34;
+    Reverses the mapping object. Switches keys and values of the mapping object. This allows easier retrival of original node IDs from the mapping ID.
+
+    Parameters:
+        mapping (dict): node/ edge to ID mapping as returned by map_node_to_id()/ map_edge_to_id().
+    
+    Returns:
+        reversed mapping (dict): keys are mapped IDs and values are original node/ edge IDs.
+    &#34;&#34;&#34;
+
+    return {value:key for key, value in mapping.items()}</code></pre>
+</details>
+</dd>
 <dt id="graphAlgorithms.distances.node_edge_similarities.shared_edges"><code class="name flex">
 <span>def <span class="ident">shared_edges</span></span>(<span>list1, list2)</span>
 </code></dt>
@@ -2893,6 +2936,8 @@ If both parameters are estimated returns jaccard matrix, percentage matrix</dd>
 <dd>approximation of betweenness, if float then k percentage of nodes are used to approximate the betweenness values. If None all nodes are used.</dd>
 <dt><strong><code>xx</code></strong> :&ensp;<code>int</code></dt>
 <dd>state how often random sampling is performed if k is not None</dd>
+<dt><strong><code>as_str</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True keys in mapping are assumed to be str (are the same as graph node IDs). If False they are assumed to be int.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
@@ -2918,6 +2963,7 @@ If both parameters are estimated returns jaccard matrix, percentage matrix</dd>
         If multiple values are set to True a combined ranking is calculated
         k (float [0,1] or None): approximation of betweenness, if float then k percentage of nodes are used to approximate the betweenness values. If None all nodes are used.
         xx (int): state how often random sampling is performed if k is not None
+        as_str (boolean): if True keys in mapping are assumed to be str (are the same as graph node IDs). If False they are assumed to be int.
         
     Returns:
         sorted (dict): keys are degree, dc, cc, betweenness, average_mean and average_median, values are list of ranked node ids. If key is set to False an empty list is returned.
@@ -3147,6 +3193,7 @@ If both parameters are estimated returns jaccard matrix, percentage matrix</dd>
 <li><code><a title="graphAlgorithms.distances.node_edge_similarities.percentage_shared" href="#graphAlgorithms.distances.node_edge_similarities.percentage_shared">percentage_shared</a></code></li>
 <li><code><a title="graphAlgorithms.distances.node_edge_similarities.return_layer_from_id" href="#graphAlgorithms.distances.node_edge_similarities.return_layer_from_id">return_layer_from_id</a></code></li>
 <li><code><a title="graphAlgorithms.distances.node_edge_similarities.return_top_layers" href="#graphAlgorithms.distances.node_edge_similarities.return_top_layers">return_top_layers</a></code></li>
+<li><code><a title="graphAlgorithms.distances.node_edge_similarities.reverse_node_edge_mapping" href="#graphAlgorithms.distances.node_edge_similarities.reverse_node_edge_mapping">reverse_node_edge_mapping</a></code></li>
 <li><code><a title="graphAlgorithms.distances.node_edge_similarities.shared_edges" href="#graphAlgorithms.distances.node_edge_similarities.shared_edges">shared_edges</a></code></li>
 <li><code><a title="graphAlgorithms.distances.node_edge_similarities.shared_elements_multiple" href="#graphAlgorithms.distances.node_edge_similarities.shared_elements_multiple">shared_elements_multiple</a></code></li>
 <li><code><a title="graphAlgorithms.distances.node_edge_similarities.sort_edge_list" href="#graphAlgorithms.distances.node_edge_similarities.sort_edge_list">sort_edge_list</a></code></li>
