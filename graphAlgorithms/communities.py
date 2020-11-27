@@ -31,6 +31,7 @@ import asyncio
 import markov_clustering as mc
 import sklearn
 from sklearn.cluster import AgglomerativeClustering
+import pyintergraph
 
 
 
@@ -79,7 +80,7 @@ def async_fluid(G, k=5, return_object=True):
 
 
 
-
+'''
 def em(G, k=5, return_object=True):
     """
     Based on a mixture model.
@@ -111,8 +112,8 @@ def em(G, k=5, return_object=True):
 
     else:
         return m
-
-
+'''
+'''
 def sbm_dl(G, B_min=None, B_max=None, deg_corr=True, return_object=True):
     """
     Based on a monte carlo heuristic.
@@ -146,8 +147,8 @@ def sbm_dl(G, B_min=None, B_max=None, deg_corr=True, return_object=True):
 
     else:
         return m
-
-
+'''
+'''
 def newman_modularity(G, return_object=True):
     """
     Based on (maximising) modularity.
@@ -178,7 +179,7 @@ def newman_modularity(G, return_object=True):
     else:
         return m
 
-
+'''
 def gdmp2(G, min_threshold=0.75, return_object=True):
     """
     Based on finding dense subgraphs.
@@ -199,8 +200,9 @@ def gdmp2(G, min_threshold=0.75, return_object=True):
         fitness parameters (NodeClustering object): if return_object is True.
     
     """
+    
 
-    communities = cdlib.algorithms.gdmp2(G, min_threshold=min_threshold)
+    communities = cdlib.algorithms.gdmp2(pyintergraph.nx2igraph(G), min_threshold=min_threshold)
 
     m = communities.to_node_community_map()
     #j = communities.to_json()
@@ -297,8 +299,10 @@ def walktrap(G, return_object=True):
 
     
     """
+    #convert to an igraph object
+    
 
-    communities = cdlib.algorithms.walktrap(G)
+    communities = cdlib.algorithms.walktrap(pyintergraph.nx2igraph(G))
 
     m = communities.to_node_community_map()
     #j = communities.to_json()
@@ -340,7 +344,7 @@ def cpm(G, initial_membership=None, weights="weight", resolution_parameter=1, re
         fitness parameters (NodeClustering object): if return_object is True.
     """
 
-    communities = cdlib.algorithms.cpm(G, initial_membership=initial_membership, weights=weights, node_sizes=None, resolution_parameter=resolution_parameter)
+    communities = cdlib.algorithms.cpm(pyintergraph.nx2igraph(G), initial_membership=initial_membership, weights=weights, node_sizes=None, resolution_parameter=resolution_parameter)
 
     m = communities.to_node_community_map()
     #j = communities.to_json()
@@ -405,7 +409,7 @@ def leiden(G,  weights="weight", return_object=True):
 
     """
 
-    communities = cdlib.algorithms.leiden(G, weights=weights, initial_membership=None)
+    communities = cdlib.algorithms.leiden(pyintergraph.nx2igraph(G), weights=weights, initial_membership=None)
 
     m = communities.to_node_community_map()
     #j = communities.to_json()
@@ -874,14 +878,14 @@ def girvan_newman(G, valuable_edge="max_weight", k=1, is_leve=False, attribute="
                 counter = counter + 1
         return d
 
-def agglomerative_clustering(G, is_distance=True, linkage="ward", distance_threshold=0.2):
+def agglomerative_clustering(G, is_distance=True, linkage="complete", distance_threshold=0.2):
     """
     Clusters on the adjacency matrix of a graph. Cells need to contain distance or similarity values. Based on sklearn.
 
     Parameters:
         G (networkX graph object)
         is_distance (boolean): if True the values contained in the adjacency matrix are used for clustering. If False they are converted into a distance first with 1-x.
-        linkage (str): method to be used. Options are "ward", "complete", "average", "single".
+        linkage (str): method to be used. Options are  "complete", "average", "single".
         distance_treshold (float): treshold above which clusters will be merged.
        
     Returns:
@@ -979,7 +983,7 @@ def angel(G, treshold=0.5, min_community_size=3, return_object=True):
 
     """
 
-    communities = cdlib.algorithms.angel(G, treshold, min_community_size=min_community_size)
+    communities = cdlib.algorithms.angel(pyintergraph.nx2igraph(G), treshold, min_community_size=min_community_size)
 
     m = communities.to_node_community_map()
     #j = communities.to_json()
