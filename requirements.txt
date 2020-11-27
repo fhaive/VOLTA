@@ -16,7 +16,7 @@ pyclustering == 0.9.3
 python-louvain >= 0.13
 sklearn >= 0.0
 treelib >= 1.6.*
-python-igraph >= 0.8.*
+
 dask[bag] >= 2.8.*
 pquality == 0.0.7
 
