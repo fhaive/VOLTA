@@ -19,6 +19,7 @@
 ### Prerequisites
 
 - Install https://github.com/Jacobe2169/GMatch4py as instructed
+- Install python-igraph . Based on your system there may be specific Prerequisites to fulfill. Refer to the igraph instructions for these.
 
 ### Install
 
