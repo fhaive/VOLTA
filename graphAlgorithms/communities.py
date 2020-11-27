@@ -1496,6 +1496,21 @@ def get_number_of_communities(communities):
 
     return max(c_flat) + 1 #return plus 1 since community indexing starts with 0
 
+def convert_communities(communities):
+    """
+    Converts the community object returned by the community detection algorithms into another dict format. 
+    Where keys are community IDs and values are lists of nodes in that community.
+
+    Parameters:
+        communities (dict): as returned by the community detection algorithms.
+
+    Returns:
+        communities (dict): transformed object.
+    """
+
+    return __convert_communities__(communities)
+
+
 def __convert_communities__(communities):
     """
     helper function to convert community dict as returned by functions

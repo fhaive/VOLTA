@@ -1525,6 +1525,21 @@ def get_number_of_communities(communities):
 
     return max(c_flat) + 1 #return plus 1 since community indexing starts with 0
 
+def convert_communities(communities):
+    &#34;&#34;&#34;
+    Converts the community object returned by the community detection algorithms into another dict format. 
+    Where keys are community IDs and values are lists of nodes in that community.
+
+    Parameters:
+        communities (dict): as returned by the community detection algorithms.
+
+    Returns:
+        communities (dict): transformed object.
+    &#34;&#34;&#34;
+
+    return __convert_communities__(communities)
+
+
 def __convert_communities__(communities):
     &#34;&#34;&#34;
     helper function to convert community dict as returned by functions
@@ -3830,6 +3845,41 @@ dict containing score for each community. If there are less than 2 communities N
         sk = None
 
     return quality_dict, {&#34;mean&#34;:mean, &#34;median&#34;:median, &#34;std&#34;:std, &#34;kurt&#34;:kur, &#34;skewness&#34;:sk}</code></pre>
+</details>
+</dd>
+<dt id="graphAlgorithms.communities.convert_communities"><code class="name flex">
+<span>def <span class="ident">convert_communities</span></span>(<span>communities)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Converts the community object returned by the community detection algorithms into another dict format.
+Where keys are community IDs and values are lists of nodes in that community.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
+<dd>as returned by the community detection algorithms.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
+<dd>transformed object.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def convert_communities(communities):
+    &#34;&#34;&#34;
+    Converts the community object returned by the community detection algorithms into another dict format. 
+    Where keys are community IDs and values are lists of nodes in that community.
+
+    Parameters:
+        communities (dict): as returned by the community detection algorithms.
+
+    Returns:
+        communities (dict): transformed object.
+    &#34;&#34;&#34;
+
+    return __convert_communities__(communities)</code></pre>
 </details>
 </dd>
 <dt id="graphAlgorithms.communities.cpm"><code class="name flex">
@@ -6277,6 +6327,7 @@ If None will be ignored.</dd>
 <li><code><a title="graphAlgorithms.communities.community_density_to_graph" href="#graphAlgorithms.communities.community_density_to_graph">community_density_to_graph</a></code></li>
 <li><code><a title="graphAlgorithms.communities.community_modularity" href="#graphAlgorithms.communities.community_modularity">community_modularity</a></code></li>
 <li><code><a title="graphAlgorithms.communities.conductance" href="#graphAlgorithms.communities.conductance">conductance</a></code></li>
+<li><code><a title="graphAlgorithms.communities.convert_communities" href="#graphAlgorithms.communities.convert_communities">convert_communities</a></code></li>
 <li><code><a title="graphAlgorithms.communities.cpm" href="#graphAlgorithms.communities.cpm">cpm</a></code></li>
 <li><code><a title="graphAlgorithms.communities.create_initial_consensus" href="#graphAlgorithms.communities.create_initial_consensus">create_initial_consensus</a></code></li>
 <li><code><a title="graphAlgorithms.communities.cut_ratio" href="#graphAlgorithms.communities.cut_ratio">cut_ratio</a></code></li>
