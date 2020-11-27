@@ -378,7 +378,7 @@ def shared_elements_multiple(lists, in_async=True, labels=None, percentage=False
                     computed.append(index)
                     computed.append((index[1], index[0]))
 
-                    value = re[0]
+                    value = re
 
                     result[index[0]][index[1]] = value
                     result[index[1]][index[0]] = value
