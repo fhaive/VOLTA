@@ -248,7 +248,7 @@ def get_consensus_community(networks, nodes, partitionings=None, rep_network=10,
     
             
     #call consensus algorithm
-    cons = clustering.consensus_clustering(np.column_stack(clusterings), seed=seed, threshold=threshold, per_node=per_node, rep=rep)
+    cons = clustering.consensus_clustering(clusterings, seed=seed, threshold=threshold, per_node=per_node, rep=rep)
     
     
     return cons
