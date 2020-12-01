@@ -145,7 +145,7 @@ def remove_edges_per_node(G, treshold=None, percentage=None, direction="bottom",
                         
                         #print(remove)
                         
-                    print("possible removing ", len(remove), "edges for ", node)
+                    #print("possible removing ", len(remove), "edges for ", node)
                     #G.remove_edges_from(remove)
                     for e in remove:
                         e1 = e[0]
