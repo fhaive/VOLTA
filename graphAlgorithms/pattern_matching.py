@@ -77,7 +77,8 @@ def get_common_subgraph(matrices, p=0.5):
 def get_statistical_overrepresented_edges(clusters):
     """
     Finds substructures (edges) that are statistically overrepresented in a cluster (group of networks) based on a hypergeometric function and Benjamin-Hochberg correction.
-    
+    All networks need to have the same nodes.
+
     Parameters:
         clusters (dict): key is cluster id and value is list of adjacency matrices (containing only 0s and 1s). Nodes need to be in the same order in the matrices.
  
@@ -235,7 +236,7 @@ def get_consensus_community(networks, nodes, rep_network=10, seed=123, threshold
     return cons
     
 
-def get_statistical_overrepresented_communities(clusters_networks, nodes, p=0.05):
+def get_statistical_overrepresented_communities(clusters_networks, nodes, pval=0.05, partions = None):
     """
     Estimates a background distribution on how likely it is for each node pair to fall in the same community.
     Based on this it can be calculated if specific communities are overrepresented within a cluster (group of networks). 
@@ -245,28 +246,35 @@ def get_statistical_overrepresented_communities(clusters_networks, nodes, p=0.05
         cluster_networks (dict): key is cluster ID and value is list of networkX graph objects. All networks need to have the same nodes
         nodes (list): of node IDs. 
         p (float): [0,1]. P value cutoff applied, which estimates if a node pair is statistically enriched.
+        partions (dict or None): if None the community detection based on Louvain is performed on each network provided in clusters_networks.
+            If it is not None a custom partioning can be provided. Key needs to be cluster ID same as in clusters_networks. 
+            Value needs to be list of dicts where key is node ID and value is Community ID of performed partitionings order as the networks provided in clusters_networks.
         
     Returns:
-        communities (dict): key is cluster ID and value is the overrepresented community. Ordered the same way as nodes.
+        communities (dict): key is cluster ID and value is the community ID. Ordered the same way as nodes. 
+        Communities with a single node, indicates that that node was not statistically significant connectet to any other node.
     """
 
     statistical_communities_back = {}
 
-    node_dict = {}
-    for n in nodes:
-        node_dict[n] = 0
+    
         
     A = np.zeros((len(nodes), len(nodes)))
 
 
         
     for cl in clusters_networks.keys():
+        node_dict = {}
+        for n in nodes:
+            node_dict[n] = 0
         print(cl)
         communities = []
-        for net in clusters_networks[cl]:
-                
-    
-                partion = community_louvain.best_partition(net, weight="weight")
+        for ii in range(len(clusters_networks[cl])):
+                net = clusters_networks[cl][ii]
+                if partions is None:
+                    partion = community_louvain.best_partition(net, weight="weight")
+                else:
+                    partion = partions[cl][ii]
                 
                 #sort to be in same order as nodes
                 temp_dict = node_dict.copy()
@@ -299,12 +307,11 @@ def get_statistical_overrepresented_communities(clusters_networks, nodes, p=0.05
 
         for cl in adj_pval_matrix_back.keys():
             node_dict = {}
-            for n in nodes:
-                node_dict[n] = 0
-            print("cluster statistical overrepresented", cl)
+            
+            #print("cluster statistical overrepresented", cl)
             
             M = adj_pval_matrix_back[cl].copy()
-            M[M >= p] = 0
+            M[M >= pval] = 0
             #M[M < 0.05] = 1
             
             #build graph
