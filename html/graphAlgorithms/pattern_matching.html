@@ -104,7 +104,8 @@ def get_common_subgraph(matrices, p=0.5):
 def get_statistical_overrepresented_edges(clusters):
     &#34;&#34;&#34;
     Finds substructures (edges) that are statistically overrepresented in a cluster (group of networks) based on a hypergeometric function and Benjamin-Hochberg correction.
-    
+    All networks need to have the same nodes.
+
     Parameters:
         clusters (dict): key is cluster id and value is list of adjacency matrices (containing only 0s and 1s). Nodes need to be in the same order in the matrices.
  
@@ -215,7 +216,7 @@ def build_graph_remove_isolates(mat):
     return G
 
 
-def get_consensus_community(networks, nodes, rep_network=10, seed=123, threshold=0.75, per_node=True, rep=10):
+def get_consensus_community(networks, nodes, partitionings=None, rep_network=10, seed=123, threshold=0.75, per_node=True, rep=10):
     &#34;&#34;&#34;
     Finds a consensus community distribution between all provided networks. For each network communities are identified based on the Louvain algorithm.
     A consensus is constructed from these based on clustering.consensus_clustering(). All networks need to contain the same nodes.
@@ -223,7 +224,10 @@ def get_consensus_community(networks, nodes, rep_network=10, seed=123, threshold
     Parameters:
         networks (list): list of networkX graph objects.
         nodes (list): of all nodes. Ordering will be used in the output.
-        rep_network (int): how often the Louvain algorithm should be applied to each network during the community detection stage.
+        partitionings (list or None): if None partitionings are estimated based on the Louvain algorithm for each provided network.
+                If list then partitionings need to be provided for each network. Lists need to be lists of sublists where each item represents the partitionings of a network
+                , needs to be in the same order as networks. Each item is a list of sublists where each item is a dict, where keys are node IDs and values are community IDs.
+        rep_network (int): how often the Louvain algorithm should be applied to each network during the community detection stage. If partitionings is not None then this value is ignored.
         seed (int): random seed to be used for any random processes in clustering.consensus_clustering()
         treshold (float or str): if float needs to be in [0,1]. If float and not per_node all edges with a weight lower than the treshold are removed
             in the agreement graph. If float and per_node is True then for each node the weakes treshold % of edges are removed, if they are weak for 
@@ -242,16 +246,31 @@ def get_consensus_community(networks, nodes, rep_network=10, seed=123, threshold
     
     clusterings = []
     
-    for net in networks:
-        for i in range(rep_network):
-            partion = community_louvain.best_partition(net, weight=&#34;weight&#34;)
-            
-            #sort to be in same order as nodes
-            temp_dict = node_dict.copy()
-            for key in partion.keys():
-                temp_dict[key] = partion[key]
+    for ii in range(len(networks)):
+        net = networks[ii]
+        if partitionings is None:
+            for i in range(rep_network):
                 
-            clusterings.append(np.array(list(temp_dict.values())))
+                partion = community_louvain.best_partition(net, weight=&#34;weight&#34;)
+                
+                
+                #sort to be in same order as nodes
+                temp_dict = node_dict.copy()
+                for key in partion.keys():
+                    temp_dict[key] = partion[key]
+                    
+                clusterings.append(np.array(list(temp_dict.values())))
+        else:
+            part = partitionings[ii]
+            for partion in part:
+                #sort to be in same order as nodes
+                temp_dict = node_dict.copy()
+                for key in partion.keys():
+                    temp_dict[key] = partion[key]
+                    
+                clusterings.append(np.array(list(temp_dict.values())))
+
+
             
     
             
@@ -262,36 +281,45 @@ def get_consensus_community(networks, nodes, rep_network=10, seed=123, threshold
     return cons
     
 
-def get_statistical_overrepresented_communities(clusters_networks, nodes):
+def get_statistical_overrepresented_communities(clusters_networks, nodes, pval=0.05, partions = None):
     &#34;&#34;&#34;
     Estimates a background distribution on how likely it is for each node pair to fall in the same community.
-    Based on this it can be calculated if specific communities are overrepresented within a cluster (group of networks).
+    Based on this it can be calculated if specific communities are overrepresented within a cluster (group of networks). 
+    P values are estimated based on a hypergeometric function + a Benjamin Hochberg correction. Communities are estimated on a louvain parition.
 
     Parameters:
         cluster_networks (dict): key is cluster ID and value is list of networkX graph objects. All networks need to have the same nodes
         nodes (list): of node IDs. 
+        p (float): [0,1]. P value cutoff applied, which estimates if a node pair is statistically enriched.
+        partions (dict or None): if None the community detection based on Louvain is performed on each network provided in clusters_networks.
+            If it is not None a custom partioning can be provided. Key needs to be cluster ID same as in clusters_networks. 
+            Value needs to be list of dicts where key is node ID and value is Community ID of performed partitionings order as the networks provided in clusters_networks.
         
     Returns:
-        communities (dict): key is cluster ID and value is the overrepresented community. Ordered the same way as nodes.
+        communities (dict): key is cluster ID and value is the community ID. Ordered the same way as nodes. 
+        Communities with a single node, indicates that that node was not statistically significant connectet to any other node.
     &#34;&#34;&#34;
 
     statistical_communities_back = {}
 
-    node_dict = {}
-    for n in nodes:
-        node_dict[n] = 0
+    
         
     A = np.zeros((len(nodes), len(nodes)))
 
 
         
     for cl in clusters_networks.keys():
+        node_dict = {}
+        for n in nodes:
+            node_dict[n] = 0
         print(cl)
         communities = []
-        for net in clusters_networks[cl]:
-                
-    
-                partion = community_louvain.best_partition(net, weight=&#34;weight&#34;)
+        for ii in range(len(clusters_networks[cl])):
+                net = clusters_networks[cl][ii]
+                if partions is None:
+                    partion = community_louvain.best_partition(net, weight=&#34;weight&#34;)
+                else:
+                    partion = partions[cl][ii]
                 
                 #sort to be in same order as nodes
                 temp_dict = node_dict.copy()
@@ -324,12 +352,11 @@ def get_statistical_overrepresented_communities(clusters_networks, nodes):
 
         for cl in adj_pval_matrix_back.keys():
             node_dict = {}
-            for n in nodes:
-                node_dict[n] = 0
-            print(&#34;cluster statistical overrepresented&#34;, cl)
+            
+            #print(&#34;cluster statistical overrepresented&#34;, cl)
             
             M = adj_pval_matrix_back[cl].copy()
-            M[M &gt;= 0.05] = 0
+            M[M &gt;= pval] = 0
             #M[M &lt; 0.05] = 1
             
             #build graph
@@ -761,7 +788,7 @@ Runs times, two communities are selected at random and their node % overlap is e
 </details>
 </dd>
 <dt id="graphAlgorithms.pattern_matching.get_consensus_community"><code class="name flex">
-<span>def <span class="ident">get_consensus_community</span></span>(<span>networks, nodes, rep_network=10, seed=123, threshold=0.75, per_node=True, rep=10)</span>
+<span>def <span class="ident">get_consensus_community</span></span>(<span>networks, nodes, partitionings=None, rep_network=10, seed=123, threshold=0.75, per_node=True, rep=10)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Finds a consensus community distribution between all provided networks. For each network communities are identified based on the Louvain algorithm.
@@ -772,8 +799,12 @@ A consensus is constructed from these based on clustering.consensus_clustering()
 <dd>list of networkX graph objects.</dd>
 <dt><strong><code>nodes</code></strong> :&ensp;<code>list</code></dt>
 <dd>of all nodes. Ordering will be used in the output.</dd>
+<dt><strong><code>partitionings</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
+<dd>if None partitionings are estimated based on the Louvain algorithm for each provided network.
+If list then partitionings need to be provided for each network. Lists need to be lists of sublists where each item represents the partitionings of a network
+, needs to be in the same order as networks. Each item is a list of sublists where each item is a dict, where keys are node IDs and values are community IDs.</dd>
 <dt><strong><code>rep_network</code></strong> :&ensp;<code>int</code></dt>
-<dd>how often the Louvain algorithm should be applied to each network during the community detection stage.</dd>
+<dd>how often the Louvain algorithm should be applied to each network during the community detection stage. If partitionings is not None then this value is ignored.</dd>
 <dt><strong><code>seed</code></strong> :&ensp;<code>int</code></dt>
 <dd>random seed to be used for any random processes in clustering.consensus_clustering()</dd>
 <dt><strong><code>treshold</code></strong> :&ensp;<code>float</code> or <code>str</code></dt>
@@ -794,7 +825,7 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_consensus_community(networks, nodes, rep_network=10, seed=123, threshold=0.75, per_node=True, rep=10):
+<pre><code class="python">def get_consensus_community(networks, nodes, partitionings=None, rep_network=10, seed=123, threshold=0.75, per_node=True, rep=10):
     &#34;&#34;&#34;
     Finds a consensus community distribution between all provided networks. For each network communities are identified based on the Louvain algorithm.
     A consensus is constructed from these based on clustering.consensus_clustering(). All networks need to contain the same nodes.
@@ -802,7 +833,10 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
     Parameters:
         networks (list): list of networkX graph objects.
         nodes (list): of all nodes. Ordering will be used in the output.
-        rep_network (int): how often the Louvain algorithm should be applied to each network during the community detection stage.
+        partitionings (list or None): if None partitionings are estimated based on the Louvain algorithm for each provided network.
+                If list then partitionings need to be provided for each network. Lists need to be lists of sublists where each item represents the partitionings of a network
+                , needs to be in the same order as networks. Each item is a list of sublists where each item is a dict, where keys are node IDs and values are community IDs.
+        rep_network (int): how often the Louvain algorithm should be applied to each network during the community detection stage. If partitionings is not None then this value is ignored.
         seed (int): random seed to be used for any random processes in clustering.consensus_clustering()
         treshold (float or str): if float needs to be in [0,1]. If float and not per_node all edges with a weight lower than the treshold are removed
             in the agreement graph. If float and per_node is True then for each node the weakes treshold % of edges are removed, if they are weak for 
@@ -821,16 +855,31 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
     
     clusterings = []
     
-    for net in networks:
-        for i in range(rep_network):
-            partion = community_louvain.best_partition(net, weight=&#34;weight&#34;)
-            
-            #sort to be in same order as nodes
-            temp_dict = node_dict.copy()
-            for key in partion.keys():
-                temp_dict[key] = partion[key]
+    for ii in range(len(networks)):
+        net = networks[ii]
+        if partitionings is None:
+            for i in range(rep_network):
                 
-            clusterings.append(np.array(list(temp_dict.values())))
+                partion = community_louvain.best_partition(net, weight=&#34;weight&#34;)
+                
+                
+                #sort to be in same order as nodes
+                temp_dict = node_dict.copy()
+                for key in partion.keys():
+                    temp_dict[key] = partion[key]
+                    
+                clusterings.append(np.array(list(temp_dict.values())))
+        else:
+            part = partitionings[ii]
+            for partion in part:
+                #sort to be in same order as nodes
+                temp_dict = node_dict.copy()
+                for key in partion.keys():
+                    temp_dict[key] = partion[key]
+                    
+                clusterings.append(np.array(list(temp_dict.values())))
+
+
             
     
             
@@ -842,57 +891,74 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
 </details>
 </dd>
 <dt id="graphAlgorithms.pattern_matching.get_statistical_overrepresented_communities"><code class="name flex">
-<span>def <span class="ident">get_statistical_overrepresented_communities</span></span>(<span>clusters_networks, nodes)</span>
+<span>def <span class="ident">get_statistical_overrepresented_communities</span></span>(<span>clusters_networks, nodes, pval=0.05, partions=None)</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Estimates a background distribution on how likely it is for each node pair to fall in the same community.
-Based on this it can be calculated if specific communities are overrepresented within a cluster (group of networks).</p>
+Based on this it can be calculated if specific communities are overrepresented within a cluster (group of networks).
+P values are estimated based on a hypergeometric function + a Benjamin Hochberg correction. Communities are estimated on a louvain parition.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>cluster_networks</code></strong> :&ensp;<code>dict</code></dt>
 <dd>key is cluster ID and value is list of networkX graph objects. All networks need to have the same nodes</dd>
 <dt><strong><code>nodes</code></strong> :&ensp;<code>list</code></dt>
 <dd>of node IDs. </dd>
+<dt><strong><code>p</code></strong> :&ensp;<code>float</code></dt>
+<dd>[0,1]. P value cutoff applied, which estimates if a node pair is statistically enriched.</dd>
+<dt><strong><code>partions</code></strong> :&ensp;<code>dict</code> or <code>None</code></dt>
+<dd>if None the community detection based on Louvain is performed on each network provided in clusters_networks.
+If it is not None a custom partioning can be provided. Key needs to be cluster ID same as in clusters_networks.
+Value needs to be list of dicts where key is node ID and value is Community ID of performed partitionings order as the networks provided in clusters_networks.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key is cluster ID and value is the overrepresented community. Ordered the same way as nodes.</dd>
-</dl></section>
+<dd>key is cluster ID and value is the community ID. Ordered the same way as nodes. </dd>
+</dl>
+<p>Communities with a single node, indicates that that node was not statistically significant connectet to any other node.</p></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def get_statistical_overrepresented_communities(clusters_networks, nodes):
+<pre><code class="python">def get_statistical_overrepresented_communities(clusters_networks, nodes, pval=0.05, partions = None):
     &#34;&#34;&#34;
     Estimates a background distribution on how likely it is for each node pair to fall in the same community.
-    Based on this it can be calculated if specific communities are overrepresented within a cluster (group of networks).
+    Based on this it can be calculated if specific communities are overrepresented within a cluster (group of networks). 
+    P values are estimated based on a hypergeometric function + a Benjamin Hochberg correction. Communities are estimated on a louvain parition.
 
     Parameters:
         cluster_networks (dict): key is cluster ID and value is list of networkX graph objects. All networks need to have the same nodes
         nodes (list): of node IDs. 
+        p (float): [0,1]. P value cutoff applied, which estimates if a node pair is statistically enriched.
+        partions (dict or None): if None the community detection based on Louvain is performed on each network provided in clusters_networks.
+            If it is not None a custom partioning can be provided. Key needs to be cluster ID same as in clusters_networks. 
+            Value needs to be list of dicts where key is node ID and value is Community ID of performed partitionings order as the networks provided in clusters_networks.
         
     Returns:
-        communities (dict): key is cluster ID and value is the overrepresented community. Ordered the same way as nodes.
+        communities (dict): key is cluster ID and value is the community ID. Ordered the same way as nodes. 
+        Communities with a single node, indicates that that node was not statistically significant connectet to any other node.
     &#34;&#34;&#34;
 
     statistical_communities_back = {}
 
-    node_dict = {}
-    for n in nodes:
-        node_dict[n] = 0
+    
         
     A = np.zeros((len(nodes), len(nodes)))
 
 
         
     for cl in clusters_networks.keys():
+        node_dict = {}
+        for n in nodes:
+            node_dict[n] = 0
         print(cl)
         communities = []
-        for net in clusters_networks[cl]:
-                
-    
-                partion = community_louvain.best_partition(net, weight=&#34;weight&#34;)
+        for ii in range(len(clusters_networks[cl])):
+                net = clusters_networks[cl][ii]
+                if partions is None:
+                    partion = community_louvain.best_partition(net, weight=&#34;weight&#34;)
+                else:
+                    partion = partions[cl][ii]
                 
                 #sort to be in same order as nodes
                 temp_dict = node_dict.copy()
@@ -925,12 +991,11 @@ Based on this it can be calculated if specific communities are overrepresented w
 
         for cl in adj_pval_matrix_back.keys():
             node_dict = {}
-            for n in nodes:
-                node_dict[n] = 0
-            print(&#34;cluster statistical overrepresented&#34;, cl)
+            
+            #print(&#34;cluster statistical overrepresented&#34;, cl)
             
             M = adj_pval_matrix_back[cl].copy()
-            M[M &gt;= 0.05] = 0
+            M[M &gt;= pval] = 0
             #M[M &lt; 0.05] = 1
             
             #build graph
@@ -958,7 +1023,8 @@ Based on this it can be calculated if specific communities are overrepresented w
 <span>def <span class="ident">get_statistical_overrepresented_edges</span></span>(<span>clusters)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Finds substructures (edges) that are statistically overrepresented in a cluster (group of networks) based on a hypergeometric function and Benjamin-Hochberg correction.</p>
+<section class="desc"><p>Finds substructures (edges) that are statistically overrepresented in a cluster (group of networks) based on a hypergeometric function and Benjamin-Hochberg correction.
+All networks need to have the same nodes.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>clusters</code></strong> :&ensp;<code>dict</code></dt>
@@ -974,7 +1040,8 @@ corrected p values (dict): p-values corrected with a Benjamin-Hochberg correctio
 <pre><code class="python">def get_statistical_overrepresented_edges(clusters):
     &#34;&#34;&#34;
     Finds substructures (edges) that are statistically overrepresented in a cluster (group of networks) based on a hypergeometric function and Benjamin-Hochberg correction.
-    
+    All networks need to have the same nodes.
+
     Parameters:
         clusters (dict): key is cluster id and value is list of adjacency matrices (containing only 0s and 1s). Nodes need to be in the same order in the matrices.
  
