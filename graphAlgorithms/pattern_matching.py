@@ -189,7 +189,7 @@ def build_graph_remove_isolates(mat):
     return G
 
 
-def get_consensus_community(networks, nodes, rep_network=10, seed=123, threshold=0.75, per_node=True, rep=10):
+def get_consensus_community(networks, nodes, partitionings=None, rep_network=10, seed=123, threshold=0.75, per_node=True, rep=10):
     """
     Finds a consensus community distribution between all provided networks. For each network communities are identified based on the Louvain algorithm.
     A consensus is constructed from these based on clustering.consensus_clustering(). All networks need to contain the same nodes.
@@ -197,6 +197,9 @@ def get_consensus_community(networks, nodes, rep_network=10, seed=123, threshold
     Parameters:
         networks (list): list of networkX graph objects.
         nodes (list): of all nodes. Ordering will be used in the output.
+        partitionings (list or None): if None partitionings are estimated based on the Louvain algorithm for each provided network.
+                If list then partitionings need to be provided for each network. Lists need to be lists of sublists where each item represents the partitionings of a network
+                , needs to be in the same order as networks. Each item is a list of sublists where each item is a dict, where keys are node IDs and values are community IDs.
         rep_network (int): how often the Louvain algorithm should be applied to each network during the community detection stage.
         seed (int): random seed to be used for any random processes in clustering.consensus_clustering()
         treshold (float or str): if float needs to be in [0,1]. If float and not per_node all edges with a weight lower than the treshold are removed
@@ -216,16 +219,31 @@ def get_consensus_community(networks, nodes, rep_network=10, seed=123, threshold
     
     clusterings = []
     
-    for net in networks:
-        for i in range(rep_network):
-            partion = community_louvain.best_partition(net, weight="weight")
-            
-            #sort to be in same order as nodes
-            temp_dict = node_dict.copy()
-            for key in partion.keys():
-                temp_dict[key] = partion[key]
+    for ii in range(len(networks)):
+        net = networks[ii]
+        if partitionings is None:
+            for i in range(rep_network):
                 
-            clusterings.append(np.array(list(temp_dict.values())))
+                partion = community_louvain.best_partition(net, weight="weight")
+                
+                
+                #sort to be in same order as nodes
+                temp_dict = node_dict.copy()
+                for key in partion.keys():
+                    temp_dict[key] = partion[key]
+                    
+                clusterings.append(np.array(list(temp_dict.values())))
+        else:
+            part = partitionings[ii]
+            for partion in part:
+                #sort to be in same order as nodes
+                temp_dict = node_dict.copy()
+                for key in partion.keys():
+                    temp_dict[key] = partion[key]
+                    
+                clusterings.append(np.array(list(temp_dict.values())))
+
+
             
     
             
