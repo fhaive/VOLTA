@@ -200,7 +200,7 @@ def get_consensus_community(networks, nodes, partitionings=None, rep_network=10,
         partitionings (list or None): if None partitionings are estimated based on the Louvain algorithm for each provided network.
                 If list then partitionings need to be provided for each network. Lists need to be lists of sublists where each item represents the partitionings of a network
                 , needs to be in the same order as networks. Each item is a list of sublists where each item is a dict, where keys are node IDs and values are community IDs.
-        rep_network (int): how often the Louvain algorithm should be applied to each network during the community detection stage.
+        rep_network (int): how often the Louvain algorithm should be applied to each network during the community detection stage. If partitionings is not None then this value is ignored.
         seed (int): random seed to be used for any random processes in clustering.consensus_clustering()
         treshold (float or str): if float needs to be in [0,1]. If float and not per_node all edges with a weight lower than the treshold are removed
             in the agreement graph. If float and per_node is True then for each node the weakes treshold % of edges are removed, if they are weak for 
