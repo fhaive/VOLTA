@@ -239,7 +239,7 @@ def get_statistical_overrepresented_communities(clusters_networks, nodes, p=0.05
     """
     Estimates a background distribution on how likely it is for each node pair to fall in the same community.
     Based on this it can be calculated if specific communities are overrepresented within a cluster (group of networks). 
-    P values are estimated based on a hypergeometric function + a Benjamin Hochberg correction. 
+    P values are estimated based on a hypergeometric function + a Benjamin Hochberg correction. Communities are estimated on a louvain parition.
 
     Parameters:
         cluster_networks (dict): key is cluster ID and value is list of networkX graph objects. All networks need to have the same nodes
@@ -304,7 +304,7 @@ def get_statistical_overrepresented_communities(clusters_networks, nodes, p=0.05
             print("cluster statistical overrepresented", cl)
             
             M = adj_pval_matrix_back[cl].copy()
-            M[M >= 0.05] = 0
+            M[M >= p] = 0
             #M[M < 0.05] = 1
             
             #build graph
