@@ -235,14 +235,16 @@ def get_consensus_community(networks, nodes, rep_network=10, seed=123, threshold
     return cons
     
 
-def get_statistical_overrepresented_communities(clusters_networks, nodes):
+def get_statistical_overrepresented_communities(clusters_networks, nodes, p=0.05):
     """
     Estimates a background distribution on how likely it is for each node pair to fall in the same community.
-    Based on this it can be calculated if specific communities are overrepresented within a cluster (group of networks).
+    Based on this it can be calculated if specific communities are overrepresented within a cluster (group of networks). 
+    P values are estimated based on a hypergeometric function + a Benjamin Hochberg correction. 
 
     Parameters:
         cluster_networks (dict): key is cluster ID and value is list of networkX graph objects. All networks need to have the same nodes
         nodes (list): of node IDs. 
+        p (float): [0,1]. P value cutoff applied, which estimates if a node pair is statistically enriched.
         
     Returns:
         communities (dict): key is cluster ID and value is the overrepresented community. Ordered the same way as nodes.
