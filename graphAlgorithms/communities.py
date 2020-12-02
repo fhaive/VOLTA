@@ -1322,7 +1322,7 @@ def create_initial_consensus(graph, communities, thresh = 0.2):
     return initial_communities, consensus_com, consensus_graph
 
 
-def fast_consensus(graph, communities, algorithms = [], parameters=[], thresh = 0.2, delta = 0.02, max_iter=100, initial=None):
+def fast_consensus(G, communities, algorithms = [], parameters=[], thresh = 0.2, delta = 0.02, max_iter=100, initial=None):
     """
     This is an adapted implementation of the fast_consensus algorithm.
 
@@ -1331,7 +1331,7 @@ def fast_consensus(graph, communities, algorithms = [], parameters=[], thresh = 
         https://arxiv.org/pdf/1902.04014.pdf
 
     Parameters:
-        graph (networkX graph object):
+        G (networkX graph object):
         communities (list): list of initial clusterings. Items are assumed to be dicts as returned by the community detection algorithms.
         algorithms (list): list of algorithms to be used during the consensus estimation. If an algorithm needs to be run multiple times it needs to be added multiple times.
         parameters (list): items are dicts containing the parameters of the algorithms listed in algorithms. Needs to be in the same order as algorithms.
@@ -1349,7 +1349,7 @@ def fast_consensus(graph, communities, algorithms = [], parameters=[], thresh = 
 
     
     """
-    #graph = G.copy()
+    graph = G.copy()
     L = graph.number_of_edges()
     #N = G.number_of_nodes()
 
@@ -1419,7 +1419,7 @@ def fast_consensus(graph, communities, algorithms = [], parameters=[], thresh = 
         tmp , nextgraph = __create_consensus_graph_dict__(graph, communities)
                     
         tmp = None
-        print("before removal", len(nextgraph.edges()))
+        #print("before removal", len(nextgraph.edges()))
         L = nextgraph.number_of_edges()
 
         remove_edges = []
@@ -1427,17 +1427,17 @@ def fast_consensus(graph, communities, algorithms = [], parameters=[], thresh = 
             if nextgraph[u][v]['weight'] / len(communities) < thresh:
                 remove_edges.append((u, v))
         nextgraph.remove_edges_from(remove_edges)
-        print("after removal", len(nextgraph.edges()))
+        #print("after removal", len(nextgraph.edges()))
 
         
         #this now randomly adds some new edges, for edges that are not existing in the consensus graph anymore
         #this provides triadic closure
         #helps to improve the consensus clustering
-        print("adding random edges for", L/4)
+        #print("adding random edges for", L/4)
         cntx = 0
         for _ in range(int(L/4)):
-            if cntx % 10000 == 0:
-                print("checking random", cntx)
+            #if cntx % 10000 == 0:
+            #    print("checking random", cntx)
             cntx = cntx + 1
             node = np.random.choice(nextgraph.nodes())
             neighbors = [a[1] for a in nextgraph.edges(node)]
@@ -2920,8 +2920,8 @@ def __create_consensus_graph_dict__(graph, communities):
     counter = 0
     for edge in itertools.combinations(list(graph.nodes()), 2):
         #count how often the nodes in edge are in the same community
-        if counter % 10000 == 0:
-            print("evaluating edge", counter)
+        #if counter % 10000 == 0:
+        #    print("evaluating edge", counter)
         counter = counter+1
 
         cnt = 0
