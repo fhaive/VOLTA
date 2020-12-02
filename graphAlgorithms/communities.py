@@ -1846,7 +1846,7 @@ def conductance(communities, G):
 def max_outgoing_edge_fraction(communities, G):
     
     """
-    Estimates fraction of a nodes's edges that leave the community.This measurement is community specific and an average score + distributional parameters over all communities is reported.
+    Maximum fraction of a nodes's edges that leave the community.This measurement is community specific and an average score + distributional parameters over all communities is reported.
     A small within community score is prefered. Based on pquality.
 
     References:
