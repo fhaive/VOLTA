@@ -1334,6 +1334,7 @@ def fast_consensus(G, communities, algorithms = [], parameters=[], thresh = 0.2,
         G (networkX graph object):
         communities (list): list of initial clusterings. Items are assumed to be dicts as returned by the community detection algorithms.
         algorithms (list): list of algorithms to be used during the consensus estimation. If an algorithm needs to be run multiple times it needs to be added multiple times.
+            Algorithms that need a connected graph to work (such as async_fluid) cannot be provided as input.
         parameters (list): items are dicts containing the parameters of the algorithms listed in algorithms. Needs to be in the same order as algorithms.
             Make sure that for the algorithms where applicable return_object is set to False.
         tresh (float): threshold on if to add a node pair to the same community or not.
@@ -1598,8 +1599,7 @@ def average_internal_degree(communities, G):
     Returns:
         individaul scores (dict): key is community ID and value is its average internal degree
         mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-        dict containing score for each community. If there are less than 2 communities None is returned.
-
+            If there are less than 2 communities None is returned.
     """
 
     dict_communities = __convert_communities__(communities)
@@ -1652,7 +1652,7 @@ def internal_edge_density(communities, G):
     Returns:
         individaul scores (dict): key is community ID and value its score.
         mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-        dict containing score for each community. If there are less than 2 communities None is returned.
+            If there are less than 2 communities None is returned.
 
     """
 
@@ -1705,7 +1705,7 @@ def triangle_ratio(communities, G):
     Returns:
         individaul scores (dict): key is community ID and value its score.
         mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-        dict containing score for each community. If there are less than 2 communities None is returned.
+            If there are less than 2 communities None is returned.
     """
 
     dict_communities = __convert_communities__(communities)
@@ -1757,7 +1757,7 @@ def internal_edge_count(communities, G):
     Returns:
         individaul scores (dict): key is community ID and value its score.
         mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-        dict containing score for each community. If there are less than 2 communities None is returned.
+            If there are less than 2 communities None is returned.
     """
 
     dict_communities = __convert_communities__(communities)
@@ -1808,7 +1808,7 @@ def conductance(communities, G):
     Returns:
         individaul scores (dict): key is community ID and value its score.
         mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-        dict containing score for each community. If there are less than 2 communities None is returned.
+            If there are less than 2 communities None is returned.
     """
 
     dict_communities = __convert_communities__(communities)
@@ -1860,7 +1860,7 @@ def max_outgoing_edge_fraction(communities, G):
     Returns:
         individaul scores (dict): key is community ID and value its score.
         mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-        dict containing score for each community. If there are less than 2 communities None is returned.
+            If there are less than 2 communities None is returned.
     """
 
     dict_communities = __convert_communities__(communities)
@@ -1912,7 +1912,7 @@ def mean_outgoing_edge_fraction(communities, G):
     Returns:
         individaul scores (dict): key is community ID and value its score.
         mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-        dict containing score for each community. If there are less than 2 communities None is returned.
+            If there are less than 2 communities None is returned.
     """
 
     dict_communities = __convert_communities__(communities)
@@ -1964,7 +1964,7 @@ def fraction_of_weak_members(communities, G):
     Returns:
         individaul scores (dict): key is community ID and value its score.
         mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-        dict containing score for each community. If there are less than 2 communities None is returned.
+            If there are less than 2 communities None is returned.
     """
 
     dict_communities = __convert_communities__(communities)
@@ -2042,7 +2042,7 @@ def modular_density(communities, G):
         density (float): modularity score for whole partitioning.
         individual scores (dict): key is community ID and value is modularity score.
         mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-        dict containing score for each community. If there are less than 2 communities None is returned.
+            If there are less than 2 communities None is returned.
     """
 
     dict_communities = __convert_communities__(communities)
@@ -2107,7 +2107,7 @@ def fraction_of_median_degree(communities, G):
     Returns:
         individaul scores (dict): key is community ID and value its score.
         mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-        dict containing score for each community. If there are less than 2 communities None is returned.
+            If there are less than 2 communities None is returned.
     """
 
     dict_communities = __convert_communities__(communities)
@@ -2159,7 +2159,7 @@ def outgoing_edges(communities, G):
     Returns:
         individaul scores (dict): key is community ID and value its score.
         mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-        dict containing score for each community. If there are less than 2 communities None is returned.
+            If there are less than 2 communities None is returned.
     """
 
     dict_communities = __convert_communities__(communities)
@@ -2211,7 +2211,7 @@ def cut_ratio(communities, G, normalized=True):
      Returns:
         individaul scores (dict): key is community ID and value its score.
         mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-        dict containing score for each community. If there are less than 2 communities None is returned.
+            If there are less than 2 communities None is returned.
     """
 
     dict_communities = __convert_communities__(communities)
@@ -2260,7 +2260,7 @@ def community_density_to_graph(communities, G):
      Returns:
         individaul scores (dict): key is community ID and value its score.
         mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-        dict containing score for each community. If there are less than 2 communities None is returned.
+            If there are less than 2 communities None is returned.
     """
 
     dict_communities = __convert_communities__(communities)
@@ -2311,7 +2311,7 @@ def community_average_shortest_path(communities, G, weight="weight"):
     Returns:
         individaul scores (dict): key is community ID and value its score.
         mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-        dict containing score for each community. If there are less than 2 communities None is returned.
+            If there are less than 2 communities None is returned.
     """
 
     dict_communities = __convert_communities__(communities)
@@ -2360,7 +2360,7 @@ def community_average_shortest_path_fraction(communities, G, weight="weight"):
     Returns:
         individaul scores (dict): key is community ID and value its score.
         mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-        dict containing score for each community. If there are less than 2 communities None is returned.
+            If there are less than 2 communities None is returned.
     """
 
     dict_communities = __convert_communities__(communities)
@@ -2430,7 +2430,7 @@ def mean_edge_weight_fraction(communities, G, weight="weight"):
     Returns:
         individaul scores (dict): key is community ID and value its score.
         mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-        dict containing score for each community. If there are less than 2 communities None is returned.
+            If there are less than 2 communities None is returned.
     """
 
     dict_communities = __convert_communities__(communities)
@@ -2499,7 +2499,7 @@ def mean_edge_weight(communities, G, weight="weight"):
     Returns:
         individaul scores (dict): key is community ID and value its score.
         mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-        dict containing score for each community. If there are less than 2 communities None is returned.
+            If there are less than 2 communities None is returned.
     """
 
     dict_communities = __convert_communities__(communities)
@@ -2561,7 +2561,7 @@ def hub_dominace(communities, G):
     Returns:
         individaul scores (dict): key is community ID and value its score.
         mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-        dict containing score for each community. If there are less than 2 communities None is returned.
+            If there are less than 2 communities None is returned.
     """
 
     dict_communities = __convert_communities__(communities)
@@ -2616,7 +2616,7 @@ def clustering_coefficient(communities, G):
     Returns:
         individaul scores (dict): key is community ID and value its score.
         mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-        dict containing score for each community. If there are less than 2 communities None is returned.
+            If there are less than 2 communities None is returned.
     """
 
     dict_communities = __convert_communities__(communities)
@@ -2667,7 +2667,7 @@ def node_embeddedness(communities, G):
     Returns:
         individaul scores (dict): key is community ID and value its score.
         mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-        dict containing score for each community. If there are less than 2 communities None is returned.
+            If there are less than 2 communities None is returned.
     """
 
     dict_communities = __convert_communities__(communities)
