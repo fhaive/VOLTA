@@ -1335,6 +1335,7 @@ def fast_consensus(graph, communities, algorithms = [], parameters=[], thresh = 
         communities (list): list of initial clusterings. Items are assumed to be dicts as returned by the community detection algorithms.
         algorithms (list): list of algorithms to be used during the consensus estimation. If an algorithm needs to be run multiple times it needs to be added multiple times.
         parameters (list): items are dicts containing the parameters of the algorithms listed in algorithms. Needs to be in the same order as algorithms.
+            Make sure that for the algorithms where applicable return_object is set to False.
         tresh (float): threshold on if to add a node pair to the same community or not.
         delta (float): in [0.02, 0.1].
         max_iter (int): maximum number of iterations allowed if consensus is not reached beforehand.
