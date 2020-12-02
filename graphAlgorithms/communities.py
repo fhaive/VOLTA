@@ -2926,8 +2926,9 @@ def __create_consensus_graph_dict__(graph, communities):
 
         cnt = 0
         for com in communities:
-            if com[edge[0]][0] == com[edge[1]][0]:
-                cnt = cnt + 1
+            if (len(com[edge[0]])>0 and len(com[edge[1]])>0):
+                if com[edge[0]][0] == com[edge[1]][0]:
+                    cnt = cnt + 1
         
         res[edge] = cnt
 
