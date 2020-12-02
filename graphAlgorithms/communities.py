@@ -639,8 +639,8 @@ def weak_link_communities(H, weights="weight", t=0.2, max_iter=1000, by_degree=T
         to_remove = []
         cntk = 0
         for key in weak_edges:
-            if cntk % 100 == 0:
-                print("removing edge with min community", cntk, "out of", len(weak_edges))
+            #if cntk % 100 == 0:
+            #   print("removing edge with min community", cntk, "out of", len(weak_edges))
             cntk = cntk + 1
             if weak_edges[key] > 1:
                 #only remove if removal would not create too small communities
@@ -660,7 +660,7 @@ def weak_link_communities(H, weights="weight", t=0.2, max_iter=1000, by_degree=T
 
         #remove edges
         if min_community is None:
-            print("removing weak edges", len(to_remove), "in iteration", cnt)
+            #print("removing weak edges", len(to_remove), "in iteration", cnt)
             G.remove_edges_from(to_remove)
         cnt = cnt +1
         if len(to_remove) == 0:
