@@ -1166,7 +1166,7 @@ def convert_to_dict(l):
     return new_dict
 
 
-def __sort_dict__(d):
+def __sort_dict__(d, reverse=True):
     """
     sorts dict d by value.
 
@@ -1176,7 +1176,7 @@ def __sort_dict__(d):
     Returns:
         sorted (dict):
     """
-    return {k: v for k, v in sorted(d.items(), key=lambda item: item[1], reverse=True)}
+    return {k: v for k, v in sorted(d.items(), key=lambda item: item[1], reverse=reverse)}
 
 
 def __list_to_mapping__(d, mapping, as_str=True):
@@ -1213,7 +1213,7 @@ def sort_node_list(Graph, mapping, degree=False, degree_centrality=False, closen
         as_str (boolean): if True keys in mapping are assumed to be str (are the same as graph node IDs). If False they are assumed to be int.
         
     Returns:
-        sorted (dict): keys are degree, dc, cc, betweenness, average_mean and average_median, values are list of ranked node ids. If key is set to False an empty list is returned.
+        sorted (dict): keys are degree, dc, cc, betweenness, average_mean and average_median, values are list of ranked node ids (index of list is rank and value is Node ID as provided in mapping). If key is set to False an empty list is returned.
         
     
     """
@@ -1348,8 +1348,8 @@ def sort_node_list(Graph, mapping, degree=False, degree_centrality=False, closen
 
 
         # convert to sorted list
-        sorted_mean = list(__sort_dict__(mean_position).keys())
-        sorted_median = list(__sort_dict__(median_position).keys())
+        sorted_mean = list(__sort_dict__(mean_position, reverse=False).keys())
+        sorted_median = list(__sort_dict__(median_position, reverse=False).keys())
         # print(sorted_average)
     else:
         sorted_mean = []
