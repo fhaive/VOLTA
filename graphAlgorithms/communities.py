@@ -2005,7 +2005,7 @@ def community_modularity(communities, G):
     Estimates a communities modularity. A high score is prefered. Based on pquality.
 
     References:
-        1. Newman, M.E.J. & Girvan, M. `Finding and evaluating community structure in networks. 
+        Newman, M.E.J. & Girvan, M. `Finding and evaluating community structure in networks. 
         Physical Review E 69, 26113(2004).
 
     Parameters:
@@ -2201,7 +2201,7 @@ def cut_ratio(communities, G, normalized=True):
     A small score is preferred. Based on pquality.
     
     References:
-        1. Fortunato, S.: Community detection in graphs. Physics reports 486(3-5), 75–174 (2010)
+        Fortunato, S.: Community detection in graphs. Physics reports 486(3-5), 75–174 (2010)
 
     Parameters:
         communities(dict): as returned by the community functions.
