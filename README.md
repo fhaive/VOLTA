@@ -27,6 +27,9 @@
 - cd graphalgorithms
 - pip3 install .
 
+Depending on your system you may receive an "invalid command bdist_wheel" error. You can fix this by installing the wheel package.
+pip3 install wheel
+
 ## Usage
 
 - import graphAlgorithms as ga 
