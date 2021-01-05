@@ -141,7 +141,7 @@ def preprocess_node_list(networks, is_file = False, location = None, names= None
         return node_lists, m
 
 
-def sort_list_and_get_shared(node_lists, m, network_graphs, labels, degree=True, degree_centrality=True, closeness_centrality=True, betweenness=True, is_file = False, in_async =True):
+def sort_list_and_get_shared(node_lists, m, network_graphs, labels, degree=True, degree_centrality=True, closeness_centrality=True, betweenness=True, is_file = False, in_async =True, k=None):
     """
     Preprocessing function to sort node list after their attributes, convert to a binary format and claculate shared nodes.
 
@@ -156,6 +156,7 @@ def sort_list_and_get_shared(node_lists, m, network_graphs, labels, degree=True,
         betweenness (boolean): if True nodes are sorted after betweenness. If multiple values are set to True a combined ranking is calculated.
         is_file (boolean): if False then network_graphs is list converted objects. If True then network_graphs is list of file locations to the pickled objects instead.
         in_async (boolean): if True then run in async where applicable.
+        k (float [0,1] or None): approximation of betweenness, if float then k percentage of nodes are used to approximate the betweenness values. If None all nodes are used.
 
     Returns:
         sorted networks (list): contains dicts where keys are degree, dc, cc, betweenness, average_mean and average_median, values are list of ranked node ids. If key is set to False an empty list is returned.
@@ -174,14 +175,14 @@ def sort_list_and_get_shared(node_lists, m, network_graphs, labels, degree=True,
     
     if not is_file:
         for net in network_graphs:
-            s, v = node_edge_similarities.sort_node_list(net, m, degree=degree, degree_centrality=degree_centrality, closeness_centrality=closeness_centrality, betweenness=betweenness,as_str=False)
+            s, v = node_edge_similarities.sort_node_list(net, m, degree=degree, degree_centrality=degree_centrality, closeness_centrality=closeness_centrality, betweenness=betweenness,as_str=False, k=k)
             sorted_nodes.append(s)
             saved_values.append(v)
 
     else:
         for path in network_graphs:
             net = nx.read_weighted_edgelist(path)
-            s, v = node_edge_similarities.sort_node_list(net, m, degree=degree, degree_centrality=degree_centrality, closeness_centrality=closeness_centrality, betweenness=betweenness,as_str=False)
+            s, v = node_edge_similarities.sort_node_list(net, m, degree=degree, degree_centrality=degree_centrality, closeness_centrality=closeness_centrality, betweenness=betweenness,as_str=False, k=k)
             sorted_nodes.append(s)
             saved_values.append(v)
 
