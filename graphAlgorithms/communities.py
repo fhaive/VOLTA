@@ -1570,11 +1570,20 @@ def get_number_of_nodes_community(communities, in_detail = False):
         number_of_nodes.append(nr_nodes)
 
     #get distributional values
-    mean = statistics.mean(number_of_nodes)
-    median = statistics.median(number_of_nodes)
-    std = statistics.stdev(number_of_nodes)
-    kurt = kurtosis(number_of_nodes)
-    sk = skew(number_of_nodes)
+    try:
+        mean = statistics.mean(number_of_nodes)
+        median = statistics.median(number_of_nodes)
+        std = statistics.stdev(number_of_nodes)
+        kurt = kurtosis(number_of_nodes)
+        sk = skew(number_of_nodes)
+    except:
+        mean = None
+        median = None
+        std=None
+        kurt = None
+        sk = None
+        
+
 
     if in_detail:
 
