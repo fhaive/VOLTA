@@ -1358,6 +1358,7 @@ def fast_consensus(G, communities, algorithms = [], parameters=[], thresh = 0.2,
     References:
         https://github.com/adityat/fastconsensus/blob/master/fast_consensus.py
         https://arxiv.org/pdf/1902.04014.pdf
+        https://doi.org/10.1103/PhysRevE.99.042301
 
     Parameters:
         G (networkX graph object):
@@ -2034,7 +2035,7 @@ def community_modularity(communities, G):
     Estimates a communities modularity. A high score is prefered. Based on pquality.
 
     References:
-        1. Newman, M.E.J. &amp; Girvan, M. `Finding and evaluating community structure in networks. 
+        Newman, M.E.J. &amp; Girvan, M. `Finding and evaluating community structure in networks. 
         Physical Review E 69, 26113(2004).
 
     Parameters:
@@ -2230,7 +2231,7 @@ def cut_ratio(communities, G, normalized=True):
     A small score is preferred. Based on pquality.
     
     References:
-        1. Fortunato, S.: Community detection in graphs. Physics reports 486(3-5), 75–174 (2010)
+        Fortunato, S.: Community detection in graphs. Physics reports 486(3-5), 75–174 (2010)
 
     Parameters:
         communities(dict): as returned by the community functions.
@@ -2955,8 +2956,9 @@ def __create_consensus_graph_dict__(graph, communities):
 
         cnt = 0
         for com in communities:
-            if com[edge[0]][0] == com[edge[1]][0]:
-                cnt = cnt + 1
+            if (len(com[edge[0]])&gt;0 and len(com[edge[1]])&gt;0):
+                if com[edge[0]][0] == com[edge[1]][0]:
+                    cnt = cnt + 1
         
         res[edge] = cnt
 
@@ -3727,10 +3729,8 @@ If there are less than 2 communities None is returned.</p></section>
 <dd>
 <section class="desc"><p>Estimates a communities modularity. A high score is prefered. Based on pquality.</p>
 <h2 id="references">References</h2>
-<ol>
-<li>Newman, M.E.J. &amp; Girvan, M. `Finding and evaluating community structure in networks.
-Physical Review E 69, 26113(2004).</li>
-</ol>
+<p>Newman, M.E.J. &amp; Girvan, M. `Finding and evaluating community structure in networks.
+Physical Review E 69, 26113(2004).</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt>communities(dict): as returned by the community functions.</dt>
@@ -3752,7 +3752,7 @@ Physical Review E 69, 26113(2004).</li>
     Estimates a communities modularity. A high score is prefered. Based on pquality.
 
     References:
-        1. Newman, M.E.J. &amp; Girvan, M. `Finding and evaluating community structure in networks. 
+        Newman, M.E.J. &amp; Girvan, M. `Finding and evaluating community structure in networks. 
         Physical Review E 69, 26113(2004).
 
     Parameters:
@@ -4024,9 +4024,7 @@ Can be used as input of fast_consensus().</p>
 <section class="desc"><p>Estimates the (normalized) cut ratio. This measurement is community specific and an average score + distributional parameters over all communities is reported.
 A small score is preferred. Based on pquality.</p>
 <h2 id="references">References</h2>
-<ol>
-<li>Fortunato, S.: Community detection in graphs. Physics reports 486(3-5), 75–174 (2010)</li>
-</ol>
+<p>Fortunato, S.: Community detection in graphs. Physics reports 486(3-5), 75–174 (2010)</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt>communities(dict): as returned by the community functions.</dt>
@@ -4050,7 +4048,7 @@ If there are less than 2 communities None is returned.</p></section>
     A small score is preferred. Based on pquality.
     
     References:
-        1. Fortunato, S.: Community detection in graphs. Physics reports 486(3-5), 75–174 (2010)
+        Fortunato, S.: Community detection in graphs. Physics reports 486(3-5), 75–174 (2010)
 
     Parameters:
         communities(dict): as returned by the community functions.
@@ -4162,7 +4160,8 @@ If there are less than 2 communities None is returned.</p></section>
 <section class="desc"><p>This is an adapted implementation of the fast_consensus algorithm.</p>
 <h2 id="references">References</h2>
 <p><a href="https://github.com/adityat/fastconsensus/blob/master/fast_consensus.py">https://github.com/adityat/fastconsensus/blob/master/fast_consensus.py</a>
-<a href="https://arxiv.org/pdf/1902.04014.pdf">https://arxiv.org/pdf/1902.04014.pdf</a></p>
+<a href="https://arxiv.org/pdf/1902.04014.pdf">https://arxiv.org/pdf/1902.04014.pdf</a>
+<a href="https://doi.org/10.1103/PhysRevE.99.042301">https://doi.org/10.1103/PhysRevE.99.042301</a></p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt>G (networkX graph object):</dt>
@@ -4201,6 +4200,7 @@ consensus graph (networkX graph object): graph object of consensus communities. 
     References:
         https://github.com/adityat/fastconsensus/blob/master/fast_consensus.py
         https://arxiv.org/pdf/1902.04014.pdf
+        https://doi.org/10.1103/PhysRevE.99.042301
 
     Parameters:
         G (networkX graph object):
