@@ -1329,6 +1329,7 @@ def fast_consensus(G, communities, algorithms = [], parameters=[], thresh = 0.2,
     References:
         https://github.com/adityat/fastconsensus/blob/master/fast_consensus.py
         https://arxiv.org/pdf/1902.04014.pdf
+        https://doi.org/10.1103/PhysRevE.99.042301
 
     Parameters:
         G (networkX graph object):
