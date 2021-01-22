@@ -10,25 +10,25 @@ import datetime
 import math
 import networkx as nx
 import collections
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import random
-import treelib as bt
+#import treelib as bt
 import pickle
 import itertools
 from scipy.stats import kurtosis, skew, kendalltau
 import statistics
 import numpy as np
 from collections import Counter
-import markov_clustering as mc
+#import markov_clustering as mc
 import pickle
-from netneurotools import cluster
-from netneurotools import plotting
-from sklearn.cluster import AgglomerativeClustering
+#from netneurotools import cluster
+#from netneurotools import plotting
+#from sklearn.cluster import AgglomerativeClustering
 import sklearn
-from pyclustering.cluster.optics import optics, ordering_analyser, ordering_visualizer
-import pyclustering
+#from pyclustering.cluster.optics import optics, ordering_analyser, ordering_visualizer
+#import pyclustering
 from random import randrange
-from pyclustering.cluster.kmedoids import kmedoids
+#from pyclustering.cluster.kmedoids import kmedoids
 import itertools
 #sys.path.insert(1, 'distances/')
 import graphAlgorithms.simplification as simplification

@@ -13,7 +13,7 @@ import networkx as nx
 import collections
 import matplotlib.pyplot as plt
 import random
-import treelib as bt
+#import treelib as bt
 import pickle
 
 import itertools

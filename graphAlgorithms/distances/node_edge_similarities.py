@@ -9,8 +9,8 @@ import ast
 import sys
 import matplotlib.pyplot as plt
 import pandas as pd
-import gmatch4py as gm
-import seaborn as sns
+#import gmatch4py as gm
+#import seaborn as sns
 
 import dask.bag as db
 import asyncio
@@ -821,30 +821,7 @@ def to_distance(m):
     return matrix
 
 
-def calculate_ged(graphs, edge_attribute=None, node_attribute=None, delete_node=1, delete_edge=1, add_node=1, add_edge=1):
-    """
-    Calculates the Graph Edit Distance based on networkX and GMatch4py.
 
-    Parameters:
-        graphs (list): list of networkX graph objects.
-        edge_attribute (str or None): if not None the the edge attribute will be calculated in the ged score
-        node_attribute (str or None): if not None the the node attribute will be calculated in the ged score
-        delete_node (float): weight for performing a node delete
-        delete_edge (float): weight for performing an edge delete
-        add_node (float): weight for performing a node adding
-        add_edge (float): weight for performing an edge adding.
-
-    Returns:
-        unnormalized distance matrix (matrix):
-        similarity matrix (matrix):
-        distance matrix (matrix):
-    """
-
-    ged = gm.GraphEditDistance(delete_node, add_node, delete_edge, add_edge)
-    ged.set_attr_graph_used(node_attribute, edge_attribute)
-    result = ged.compare(graphs, None)
-
-    return result, ged.similarity(result), ged.distance(result)
 
 
 async def __construct_dict__(edges, label):

@@ -12,9 +12,9 @@ import datetime
 import math
 import networkx as nx
 import collections
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import random
-import treelib as bt
+#import treelib as bt
 import pickle
 import cdlib
 from cdlib import algorithms
