@@ -98,7 +98,8 @@ def get_min_spanning_tree(G, weight="weight", is_distance=True, new_weight="dist
 
 def remove_edges_per_node(G, treshold=None, percentage=None, direction="bottom", attribute="weight"):
     """
-    Removes for each node its weakest or strongest edges, while keeping at least 1 edge per node. If all are below thr treshold then none are removed.
+    Removes for each node its weakest or strongest edges, while keeping at least 1 edge per node. 
+    If all are below thr treshold then none are removed.
 
     Parameters:
         G (networkX graph object):
