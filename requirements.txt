@@ -19,4 +19,4 @@ treelib >= 1.6.*
 pyintergraph
 dask[bag] >= 2.8.*
 pquality == 0.0.7
-
+angel-cd
