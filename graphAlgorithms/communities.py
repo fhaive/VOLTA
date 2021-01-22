@@ -481,7 +481,9 @@ def weak_link_communities(H, weights="weight", t=0.2, max_iter=1000, by_degree=T
     print("new number of edges", len(G.edges()), "our of originally ", init_edges)
 
     #create partition dict based on all subgraphs within the current graph
-    com_temp = list(nx.connected_component_subgraphs(G))
+    #com_temp = list(nx.connected_component_subgraphs(G))
+    com_temp = [G.subgraph(c).copy() for c in nx.connected_components(G)]
+
 
     communities = __convert_graph_to_community_dict__(com_temp)
 
@@ -840,7 +842,8 @@ def create_initial_consensus(graph, communities, thresh = 0.2):
     consensus_graph.remove_edges_from(remove_edges)
     print("initial removed edges", len(remove_edges))
 
-    com_temp = list(nx.connected_component_subgraphs(consensus_graph))
+    #com_temp = list(nx.connected_component_subgraphs(consensus_graph))
+    com_temp = [consensus_graph.subgraph(c).copy() for c in nx.connected_components(consensus_graph)]
 
     initial_communities = __convert_graph_to_community_dict__(com_temp)
 
@@ -899,7 +902,8 @@ def fast_consensus(G, communities, algorithms = [], parameters=[], thresh = 0.2,
         consensus_graph.remove_edges_from(remove_edges)
         print("initial removed edges", len(remove_edges))
 
-        com_temp = list(nx.connected_component_subgraphs(consensus_graph))
+        #com_temp = list(nx.connected_component_subgraphs(consensus_graph))
+        com_temp = [consensus_graph.subgraph(c).copy() for c in nx.connected_components(consensus_graph)]
 
         initial_communities = __convert_graph_to_community_dict__(com_temp)
 
@@ -993,7 +997,8 @@ def fast_consensus(G, communities, algorithms = [], parameters=[], thresh = 0.2,
         print("max iter has been reached but consensus graph has not converged")
 
     #i think it would be best to convert the consensus graph into its communities based on its connected components
-    com_temp = list(nx.connected_component_subgraphs(graph))
+    #com_temp = list(nx.connected_component_subgraphs(graph))
+    com_temp = [graph.subgraph(c).copy() for c in nx.connected_components(graph)]
 
     communities = __convert_graph_to_community_dict__(com_temp)
 
