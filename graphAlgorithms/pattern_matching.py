@@ -337,7 +337,8 @@ def get_statistical_overrepresented_communities(clusters_networks, nodes, pval=0
             
             #disconnected components are communities
             
-            graphs = list(nx.connected_component_subgraphs(G))
+            #graphs = list(nx.connected_component_subgraphs(G))
+            graphs = [G.subgraph(c).copy() for c in nx.connected_components(G)]
             
             for i in range(len(graphs)):
                 T = graphs[i]
