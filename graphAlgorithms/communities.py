@@ -32,7 +32,12 @@ import markov_clustering as mc
 import sklearn
 from sklearn.cluster import AgglomerativeClustering
 import pyintergraph
+from itertools import chain
 
+from networkx.utils import pairwise, not_implemented_for
+import scipy
+import statsmodels.stats.multitest as multi
+from scipy.stats import hypergeom
 
 
 
@@ -2653,3 +2658,284 @@ def __check_consensus_graph__(G, n_p, delta):
         return False
 
     return True
+
+
+def __metric_closure__(G, weight="weight"):
+    
+    """
+    Helper function of steiner tree, taken from Networkx:
+    https://networkx.org/documentation/stable/_modules/networkx/algorithms/approximation/steinertree.html#steiner_tree
+    """
+    
+    M = nx.Graph()
+
+    Gnodes = set(G)
+
+    # check for connected graph while processing first node
+    all_paths_iter = nx.all_pairs_dijkstra(G, weight=weight)
+    u, (distance, path) = next(all_paths_iter)
+    if Gnodes - set(distance):
+        msg = "G is not a connected graph. metric_closure is not defined."
+        raise nx.NetworkXError(msg)
+    Gnodes.remove(u)
+    for v in Gnodes:
+        M.add_edge(u, v, distance=distance[v], path=path[v])
+
+    # first node done -- now process the rest
+    for u, (distance, path) in all_paths_iter:
+        Gnodes.remove(u)
+        for v in Gnodes:
+            M.add_edge(u, v, distance=distance[v], path=path[v])
+
+    return M
+
+################## active module detection 
+
+def __steiner_tree__(G, terminal_nodes, weight="weight"):
+    """ 
+    This function has been taken from NetworkX: 
+    https://networkx.org/documentation/stable/_modules/networkx/algorithms/approximation/steinertree.html#steiner_tree
+    
+    Return an approximation to the minimum Steiner tree of a graph.
+
+    The minimum Steiner tree of `G` w.r.t a set of `terminal_nodes`
+    is a tree within `G` that spans those nodes and has minimum size
+    (sum of edge weights) among all such trees.
+
+    The minimum Steiner tree can be approximated by computing the minimum
+    spanning tree of the subgraph of the metric closure of *G* induced by the
+    terminal nodes, where the metric closure of *G* is the complete graph in
+    which each edge is weighted by the shortest path distance between the
+    nodes in *G* .
+    This algorithm produces a tree whose weight is within a (2 - (2 / t))
+    factor of the weight of the optimal Steiner tree where *t* is number of
+    terminal nodes.
+
+    Parameters
+    ----------
+    G : NetworkX graph
+
+    terminal_nodes : list
+         A list of terminal nodes for which minimum steiner tree is
+         to be found.
+
+    Returns
+    -------
+    NetworkX graph
+        Approximation to the minimum steiner tree of `G` induced by
+        `terminal_nodes` .
+
+    
+    """
+    # H is the subgraph induced by terminal_nodes in the metric closure M of G.
+    M = metric_closure(G, weight=weight)
+    H = M.subgraph(terminal_nodes)
+    # Use the 'distance' attribute of each edge provided by M.
+    mst_edges = nx.minimum_spanning_edges(H, weight="distance", data=True)
+    # Create an iterator over each edge in each shortest path; repeats are okay
+    edges = chain.from_iterable(pairwise(d["path"]) for u, v, d in mst_edges)
+    # For multigraph we should add the minimal weight edge keys
+    if G.is_multigraph():
+        edges = (
+            (u, v, min(G[u][v], key=lambda k: G[u][v][k][weight])) for u, v in edges
+        )
+    T = G.edge_subgraph(edges)
+    return T
+
+
+
+def active_modules(G, active_nodes, algorithms=[[ga.communities.louvain],[ga.communities.girvan_newman]], algorithm_parameters=[[{"weights":"weight","return_object": False}],[{"valuable_edge":"betweenness"}]], pval1 = 0.3, pval2=0.05):
+    """
+    Adjusted implementation of the DOMINO algorithm.
+
+    Levi, Hagai, Ran Elkon, and Ron Shamir. 
+    "DOMINO: a network‐based active module identification algorithm with reduced rate of false calls." 
+    Molecular Systems Biology 17.1 (2021): e9593.
+    
+    Parameters:
+        G (NetworkX Graph): Graph object active modules are identified of
+        active_nodes (list): list of node IDs that are classified as "active"
+        algorithms (list): list of sublists, where first list contains the community detection algorithms
+            used in the first module detection round and the second list contains the algorithms to be used for
+            the second round. If more than one algorithm is provided in each sublist a consensus partitioning
+            is calculated.
+        algorithm_parameters(list): list of sublists, corresponding to the algorithms stated in algorithms.
+            parameters need to be provided as dict.
+        pval1 (float): in [0,1] pval cutoff to be applied in the first round of module selection
+        pval2 (float): in [0,1] pval cutoff to be applied in the secondround of module selection
+            
+        Output:
+            active_modules (list): list of sublists. Each sublists represents an active module and its items represents
+                the nodes contained in it.
+            active_pval (list): contains the corresponding corrected pvalues to active_modules. 
+                list is in same order as active_modules.
+            all_modules (list): list of sublists. Each sublists represents a module (active or not active)
+                and its items represents the nodes contained in it.
+            pvals (list): contains the corresponding corrected pvalues to all_modules. 
+                list is in same order as all_modules.
+            
+    """
+    
+    
+    #do first round of module detection
+    
+    if len(algorithms[0]) > 1:
+        #consensus
+        print("A consensus partitioning is calculated")
+        #calculate initial partitionings
+        community_list = []
+        for a in range(len(algorithms[0])):
+            algo = algorithms[0][a]
+            param = algorithm_parameters[0][a]
+            
+            print("estimating communities ", algo.__name__)
+            community_list.append(algo(G, **param))
+        #TODO expose parameters
+        partitioning, cons1, consgraph  = ga.communities.fast_consensus(G, communities = community_list, algorithms=algorithms[0], parameters=algorithm_parameters[0], thresh=0.5, max_iter=50)
+        
+        
+    else:
+        #do single partitioning
+        community_list = []
+        for a in range(len(algorithms[0])):
+            algo = algorithms[0][a]
+            param = algorithm_parameters[0][a]
+
+            print("estimating communities ", algo.__name__)
+            community_list.append(algo(G, **param))
+        partitioning = community_list[0]
+
+    
+    #convert partitioning into list of lists format
+    temp = ga.communities.convert_communities(partitioning)
+    partitioning = []
+    for key in temp:
+        partitioning.append(temp[key])
+        
+        
+    print("find enriched modules")
+    temp_pvals = []
+
+    for par in partitioning:
+        M = len(G.nodes()) #number of nodes
+        n = len(active_nodes) #nuber of active nodes
+        N = len(par) #cluster size
+
+        x = 0
+        for no in par:
+            if no in active_nodes:
+                x = x+1
+        #number of active nodes in this partitioning
+
+        v = hypergeom.sf(x-1, M, n, N)
+        temp_pvals.append(v)
+
+
+
+    #do correction
+    #TODO expose parameters
+    adj_pval = multi.multipletests(temp_pvals, method="fdr_bh")[1]
+
+    subgraphs = []
+    #if below pval treshold create subgraphs of module
+
+    for i in range(len(adj_pval)):
+        if adj_pval[i] <= pval1:
+            subgraphs.append(G.subgraph(partitioning[i]))
+
+    
+    
+    #TODO add node treshold as parameter
+    
+    #apply prize steiner tree
+    print("calculating Prize Steiner Tree")
+
+    trees = []
+    for H in subgraphs:
+        #get active nodes
+        terminal = []
+        for no in H.nodes():
+            if no in active_nodes:
+                terminal.append(no)
+        #TODO expose weight parameter
+        trees.append(steiner_tree(H, terminal, weight='weight'))
+    
+    
+    all_modules = []
+    all_pval = []
+    enriched_active_modules=[]
+    enriched_pval = []
+
+
+    for tree in trees:
+
+        if len(algorithms[1]) > 1:
+            #consensus
+            print("A consensus partitioning is calculated")
+            #calculate initial partitionings
+            community_list = []
+            for a in range(len(algorithms[1])):
+                algo = algorithms[1][a]
+                param = algorithm_parameters[1][a]
+
+                print("estimating communities ", algo.__name__)
+                community_list.append(algo(tree, **param))
+            #TODO expose parameters
+            partitioning, cons1, consgraph  = ga.communities.fast_consensus(tree, communities = community_list, algorithms=algorithms[0], parameters=algorithm_parameters[0], thresh=0.5, max_iter=50)
+
+
+        else:
+            #do single partitioning
+            community_list = []
+            for a in range(len(algorithms[1])):
+                algo = algorithms[1][a]
+                param = algorithm_parameters[1][a]
+
+                print("estimating communities ", algo.__name__)
+                community_list.append(algo(tree, **param))
+            partitioning = community_list[0]
+
+        #convert partitioning into list of lists format
+        temp = ga.communities.convert_communities(partitioning)
+        partitioning = []
+        for key in temp:
+            partitioning.append(temp[key])
+
+        #TODO add community size treshold as parameter
+        print("find enriched modules")
+        temp_pvals = []
+
+        #DISCUSS against all nodes or only in the tree??
+        for par in partitioning:
+            M = len(G.nodes()) #number of nodes
+            n = len(active_nodes) #nuber of active nodes
+            N = len(par) #cluster size
+
+            x = 0
+            for no in par:
+                if no in active_nodes:
+                    x = x+1
+            #number of active nodes in this partitioning
+
+            v = hypergeom.sf(x-1, M, n, N)
+            temp_pvals.append(v)
+
+
+
+        #do correction
+        #TODO expose method parameter 
+        adj_pval = multi.multipletests(temp_pvals, method="bonferroni")[1]
+
+
+
+        for i in range(len(adj_pval)):
+            if adj_pval[i] <= pval2:
+                enriched_active_modules.append(partitioning[i])
+                enriched_pval.append(adj_pval[i])
+
+            all_modules.append(partitioning[i])
+            all_pval.append(adj_pval[i])
+
+    
+    
+    return enriched_active_modules, enriched_pval, all_modules, all_pval
