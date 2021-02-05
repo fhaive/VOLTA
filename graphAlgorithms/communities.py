@@ -2848,7 +2848,11 @@ def active_modules(G, active_nodes, algorithms=[[louvain],[girvan_newman]], algo
     #TODO add node treshold as parameter
     
     #apply prize steiner tree
-    print("calculating Prize Steiner Tree")
+    print(len(subgraphs), "modules are enriched")
+    if len(subgraphs) < 1:
+        print("no enriched modules have been detected in the first partitioning")
+    else:
+        print("calculating Prize Steiner Tree")
 
     trees = []
     for H in subgraphs:
@@ -2936,6 +2940,7 @@ def active_modules(G, active_nodes, algorithms=[[louvain],[girvan_newman]], algo
             all_modules.append(partitioning[i])
             all_pval.append(adj_pval[i])
 
-    
+    print(len(enriched_active_modules), "active modules have been detected")
+    print("returning enriched and all modules")
     
     return enriched_active_modules, enriched_pval, all_modules, all_pval
