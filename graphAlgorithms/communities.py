@@ -2728,7 +2728,7 @@ def __steiner_tree__(G, terminal_nodes, weight="weight"):
     
     """
     # H is the subgraph induced by terminal_nodes in the metric closure M of G.
-    M = metric_closure(G, weight=weight)
+    M = __metric_closure__(G, weight=weight)
     H = M.subgraph(terminal_nodes)
     # Use the 'distance' attribute of each edge provided by M.
     mst_edges = nx.minimum_spanning_edges(H, weight="distance", data=True)
@@ -2744,7 +2744,7 @@ def __steiner_tree__(G, terminal_nodes, weight="weight"):
 
 
 
-def active_modules(G, active_nodes, algorithms=[[ga.communities.louvain],[ga.communities.girvan_newman]], algorithm_parameters=[[{"weights":"weight","return_object": False}],[{"valuable_edge":"betweenness"}]], pval1 = 0.3, pval2=0.05):
+def active_modules(G, active_nodes, algorithms=[[louvain],[girvan_newman]], algorithm_parameters=[[{"weights":"weight","return_object": False}],[{"valuable_edge":"betweenness"}]], pval1 = 0.3, pval2=0.05):
     """
     Adjusted implementation of the DOMINO algorithm.
 
@@ -2791,7 +2791,7 @@ def active_modules(G, active_nodes, algorithms=[[ga.communities.louvain],[ga.com
             print("estimating communities ", algo.__name__)
             community_list.append(algo(G, **param))
         #TODO expose parameters
-        partitioning, cons1, consgraph  = ga.communities.fast_consensus(G, communities = community_list, algorithms=algorithms[0], parameters=algorithm_parameters[0], thresh=0.5, max_iter=50)
+        partitioning, cons1, consgraph  = fast_consensus(G, communities = community_list, algorithms=algorithms[0], parameters=algorithm_parameters[0], thresh=0.5, max_iter=50)
         
         
     else:
@@ -2807,7 +2807,7 @@ def active_modules(G, active_nodes, algorithms=[[ga.communities.louvain],[ga.com
 
     
     #convert partitioning into list of lists format
-    temp = ga.communities.convert_communities(partitioning)
+    temp = convert_communities(partitioning)
     partitioning = []
     for key in temp:
         partitioning.append(temp[key])
@@ -2858,7 +2858,7 @@ def active_modules(G, active_nodes, algorithms=[[ga.communities.louvain],[ga.com
             if no in active_nodes:
                 terminal.append(no)
         #TODO expose weight parameter
-        trees.append(steiner_tree(H, terminal, weight='weight'))
+        trees.append(__steiner_tree__(H, terminal, weight='weight'))
     
     
     all_modules = []
@@ -2881,7 +2881,7 @@ def active_modules(G, active_nodes, algorithms=[[ga.communities.louvain],[ga.com
                 print("estimating communities ", algo.__name__)
                 community_list.append(algo(tree, **param))
             #TODO expose parameters
-            partitioning, cons1, consgraph  = ga.communities.fast_consensus(tree, communities = community_list, algorithms=algorithms[0], parameters=algorithm_parameters[0], thresh=0.5, max_iter=50)
+            partitioning, cons1, consgraph  = fast_consensus(tree, communities = community_list, algorithms=algorithms[0], parameters=algorithm_parameters[0], thresh=0.5, max_iter=50)
 
 
         else:
@@ -2896,7 +2896,7 @@ def active_modules(G, active_nodes, algorithms=[[ga.communities.louvain],[ga.com
             partitioning = community_list[0]
 
         #convert partitioning into list of lists format
-        temp = ga.communities.convert_communities(partitioning)
+        temp = convert_communities(partitioning)
         partitioning = []
         for key in temp:
             partitioning.append(temp[key])
