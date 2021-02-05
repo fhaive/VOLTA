@@ -1,0 +1,470 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.5" />
+<title>graphAlgorithms.plotting API documentation</title>
+<meta name="description" content="Contains some simple plotting functions." />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>graphAlgorithms.plotting</code></h1>
+</header>
+<section id="section-intro">
+<p>Contains some simple plotting functions.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#39;&#39;&#39;
+Contains some simple plotting functions.
+&#39;&#39;&#39;
+
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+from collections import Counter
+import matplotlib.patches
+import numpy as np
+
+
+def plot_heatmap(matrix, xlabels=None, ylabels=None, size=(10,8), cmap=&#34;bone&#34;):
+
+    &#34;&#34;&#34;
+    Plots a heatmap. Return figure fig can be saved with fig.savefig(). For parameters refer to the matplotlib documentation.
+
+    Parameters:
+        matrix (numpy matrix): matrix containing the values to be plotted
+        xlabels (list or None): list of tick labels to be used for the x axis
+        ylabels (list or None): list of tick labels to be used for the y axis
+        size (tuple): plot size to be used
+        cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
+
+    Returns:
+        fig (matplotlib figure): heatmap object
+    &#34;&#34;&#34;
+
+    if xlabels is None:
+        xlabels=&#34;auto&#34;
+    if ylabels is None:
+        ylabels = &#34;auto&#34;
+
+    if cmap is None:
+        cmap = sns.cubehelix_palette(start=7, rot=0, dark=0.2, light=0.8, reverse=False, as_cmap=True)
+
+    fig, ax = plt.subplots(figsize=size)  
+
+    sns.heatmap(matrix, annot=False, ax=ax, xticklabels=xlabels, yticklabels=ylabels, cmap=cmap)
+
+    return fig
+
+
+
+
+def plot_hierarchical_clustering(matrix, xlabels=None, ylabels=None, size=(10,8), cmap=&#34;bone&#34;):
+
+    &#34;&#34;&#34;
+    Plots a clustermap. Return figure fig can be saved with fig.savefig(). For parameters refer to the matplotlib documentation.
+
+    Parameters:
+        matrix (numpy matrix): matrix containing the values to be plotted
+        xlabels (list or None): list of tick labels to be used for the x axis
+        ylabels (list or None): list of tick labels to be used for the y axis
+        size (tuple): plot size to be used
+        cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
+
+    Returns:
+        fig (matplotlib figure): heatmap object
+    &#34;&#34;&#34;
+
+    if xlabels is None:
+        xlabels=&#34;auto&#34;
+    if ylabels is None:
+        ylabels = &#34;auto&#34;
+
+    if cmap is None:
+
+        cmap = sns.cubehelix_palette(start=7, rot=0, dark=0.2, light=0.8, reverse=False, as_cmap=True)
+
+    
+
+    return sns.clustermap(matrix, annot=False, figsize=size, xticklabels=xlabels, yticklabels=ylabels, cmap=cmap)
+
+    
+def plot_clustering_heatmap(clusters, matrix, labels, cmap=&#34;bone&#34;, size=(10,8)):
+
+    &#34;&#34;&#34;
+    Plots a clustering on top of a provided distance matrix.
+
+    Parameters:
+        clusters (array): containing the cluster IDs, needs to be in the same order as labels
+        matrix (matrix): distance or similarity matrix that has been provided as input for the clustering
+        labels (list): list of labels to be used for plot. Needs to be in the same order as clusters
+        cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
+        size (tuple): figuresize
+
+    Returns:
+        fig (matplotlib figure):
+    &#34;&#34;&#34;
+
+
+
+    c_sorted = np.sort(clusters)
+    c_sorted
+
+    borders = []
+
+    for cl in list(Counter(c_sorted).keys()):
+        found = False
+        end = False
+        for ii in range(len(c_sorted)):
+            i = c_sorted[ii]
+            if i == cl and not found:
+                borders.append(ii)
+                found = True
+                
+            
+                
+    borders.append(len(c_sorted))
+
+    #get indices of the items
+
+    inds = np.argsort(clusters)
+    for n, f in enumerate(borders[:-1]):
+            i = inds[f:borders[n + 1]]
+            
+            cco = i[matrix[np.ix_(i, i)].mean(axis=1).argsort()[::-1]]
+            
+            inds[f:borders[n + 1]] = cco
+            
+            
+            
+    #create plot
+
+    fig, ax = plt.subplots(1, 1, figsize=size)
+    data = matrix[np.ix_(inds, inds)]
+
+    if cmap is None:
+        cmap = sns.cubehelix_palette(start=7, rot=0, dark=0.2, light=0.8, reverse=False, as_cmap=True)
+
+    coll = ax.pcolormesh(data,  cmap=cmap)
+    #ax.set(xlim=(0, data.shape[1]), ylim=(0, data.shape[0]))
+
+
+    #ax.invert_yaxis()
+
+    for n, e in enumerate(np.diff(borders)):
+            ax.add_patch(matplotlib.patches.Rectangle((borders[n], borders[n]),
+                                        e, e, fill=False, linewidth=3,
+                                        edgecolor=&#34;white&#34;))
+
+            
+
+    #sorted labels for plotting labels
+    sorted_labels = []
+    for ind in inds:
+        sorted_labels.append(labels[ind])
+        
+        
+    ax.set_yticks(np.arange(len(sorted_labels)) + 0.5)
+    ax.set_yticklabels(sorted_labels)
+
+    #get tick locations
+    loc = []
+    for i in range(len(borders)-1):
+        loc.append(np.mean([borders[i], borders[i+1]]))
+
+
+    ax.set_xticks(loc)
+    ax.set_xticklabels(labels=list(Counter(c_sorted).keys()))
+
+
+    fig.colorbar(coll)
+
+    return fig</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="graphAlgorithms.plotting.plot_clustering_heatmap"><code class="name flex">
+<span>def <span class="ident">plot_clustering_heatmap</span></span>(<span>clusters, matrix, labels, cmap='bone', size=(10, 8))</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Plots a clustering on top of a provided distance matrix.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>clusters</code></strong> :&ensp;<code>array</code></dt>
+<dd>containing the cluster IDs, needs to be in the same order as labels</dd>
+<dt><strong><code>matrix</code></strong> :&ensp;<code>matrix</code></dt>
+<dd>distance or similarity matrix that has been provided as input for the clustering</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of labels to be used for plot. Needs to be in the same order as clusters</dd>
+<dt><strong><code>cmap</code></strong> :&ensp;<code>matplotlib</code> <code>colormap</code></dt>
+<dd>can be created colormap or name of a pre-defined color map</dd>
+<dt><strong><code>size</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>figuresize</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>fig</code> (<code>matplotlib</code> <code>figure</code>):</dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_clustering_heatmap(clusters, matrix, labels, cmap=&#34;bone&#34;, size=(10,8)):
+
+    &#34;&#34;&#34;
+    Plots a clustering on top of a provided distance matrix.
+
+    Parameters:
+        clusters (array): containing the cluster IDs, needs to be in the same order as labels
+        matrix (matrix): distance or similarity matrix that has been provided as input for the clustering
+        labels (list): list of labels to be used for plot. Needs to be in the same order as clusters
+        cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
+        size (tuple): figuresize
+
+    Returns:
+        fig (matplotlib figure):
+    &#34;&#34;&#34;
+
+
+
+    c_sorted = np.sort(clusters)
+    c_sorted
+
+    borders = []
+
+    for cl in list(Counter(c_sorted).keys()):
+        found = False
+        end = False
+        for ii in range(len(c_sorted)):
+            i = c_sorted[ii]
+            if i == cl and not found:
+                borders.append(ii)
+                found = True
+                
+            
+                
+    borders.append(len(c_sorted))
+
+    #get indices of the items
+
+    inds = np.argsort(clusters)
+    for n, f in enumerate(borders[:-1]):
+            i = inds[f:borders[n + 1]]
+            
+            cco = i[matrix[np.ix_(i, i)].mean(axis=1).argsort()[::-1]]
+            
+            inds[f:borders[n + 1]] = cco
+            
+            
+            
+    #create plot
+
+    fig, ax = plt.subplots(1, 1, figsize=size)
+    data = matrix[np.ix_(inds, inds)]
+
+    if cmap is None:
+        cmap = sns.cubehelix_palette(start=7, rot=0, dark=0.2, light=0.8, reverse=False, as_cmap=True)
+
+    coll = ax.pcolormesh(data,  cmap=cmap)
+    #ax.set(xlim=(0, data.shape[1]), ylim=(0, data.shape[0]))
+
+
+    #ax.invert_yaxis()
+
+    for n, e in enumerate(np.diff(borders)):
+            ax.add_patch(matplotlib.patches.Rectangle((borders[n], borders[n]),
+                                        e, e, fill=False, linewidth=3,
+                                        edgecolor=&#34;white&#34;))
+
+            
+
+    #sorted labels for plotting labels
+    sorted_labels = []
+    for ind in inds:
+        sorted_labels.append(labels[ind])
+        
+        
+    ax.set_yticks(np.arange(len(sorted_labels)) + 0.5)
+    ax.set_yticklabels(sorted_labels)
+
+    #get tick locations
+    loc = []
+    for i in range(len(borders)-1):
+        loc.append(np.mean([borders[i], borders[i+1]]))
+
+
+    ax.set_xticks(loc)
+    ax.set_xticklabels(labels=list(Counter(c_sorted).keys()))
+
+
+    fig.colorbar(coll)
+
+    return fig</code></pre>
+</details>
+</dd>
+<dt id="graphAlgorithms.plotting.plot_heatmap"><code class="name flex">
+<span>def <span class="ident">plot_heatmap</span></span>(<span>matrix, xlabels=None, ylabels=None, size=(10, 8), cmap='bone')</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Plots a heatmap. Return figure fig can be saved with fig.savefig(). For parameters refer to the matplotlib documentation.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>matrix</code></strong> :&ensp;<code>numpy</code> <code>matrix</code></dt>
+<dd>matrix containing the values to be plotted</dd>
+<dt><strong><code>xlabels</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
+<dd>list of tick labels to be used for the x axis</dd>
+<dt><strong><code>ylabels</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
+<dd>list of tick labels to be used for the y axis</dd>
+<dt><strong><code>size</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>plot size to be used</dd>
+<dt><strong><code>cmap</code></strong> :&ensp;<code>matplotlib</code> <code>colormap</code></dt>
+<dd>can be created colormap or name of a pre-defined color map</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib</code> <code>figure</code></dt>
+<dd>heatmap object</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_heatmap(matrix, xlabels=None, ylabels=None, size=(10,8), cmap=&#34;bone&#34;):
+
+    &#34;&#34;&#34;
+    Plots a heatmap. Return figure fig can be saved with fig.savefig(). For parameters refer to the matplotlib documentation.
+
+    Parameters:
+        matrix (numpy matrix): matrix containing the values to be plotted
+        xlabels (list or None): list of tick labels to be used for the x axis
+        ylabels (list or None): list of tick labels to be used for the y axis
+        size (tuple): plot size to be used
+        cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
+
+    Returns:
+        fig (matplotlib figure): heatmap object
+    &#34;&#34;&#34;
+
+    if xlabels is None:
+        xlabels=&#34;auto&#34;
+    if ylabels is None:
+        ylabels = &#34;auto&#34;
+
+    if cmap is None:
+        cmap = sns.cubehelix_palette(start=7, rot=0, dark=0.2, light=0.8, reverse=False, as_cmap=True)
+
+    fig, ax = plt.subplots(figsize=size)  
+
+    sns.heatmap(matrix, annot=False, ax=ax, xticklabels=xlabels, yticklabels=ylabels, cmap=cmap)
+
+    return fig</code></pre>
+</details>
+</dd>
+<dt id="graphAlgorithms.plotting.plot_hierarchical_clustering"><code class="name flex">
+<span>def <span class="ident">plot_hierarchical_clustering</span></span>(<span>matrix, xlabels=None, ylabels=None, size=(10, 8), cmap='bone')</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Plots a clustermap. Return figure fig can be saved with fig.savefig(). For parameters refer to the matplotlib documentation.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>matrix</code></strong> :&ensp;<code>numpy</code> <code>matrix</code></dt>
+<dd>matrix containing the values to be plotted</dd>
+<dt><strong><code>xlabels</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
+<dd>list of tick labels to be used for the x axis</dd>
+<dt><strong><code>ylabels</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
+<dd>list of tick labels to be used for the y axis</dd>
+<dt><strong><code>size</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>plot size to be used</dd>
+<dt><strong><code>cmap</code></strong> :&ensp;<code>matplotlib</code> <code>colormap</code></dt>
+<dd>can be created colormap or name of a pre-defined color map</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib</code> <code>figure</code></dt>
+<dd>heatmap object</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_hierarchical_clustering(matrix, xlabels=None, ylabels=None, size=(10,8), cmap=&#34;bone&#34;):
+
+    &#34;&#34;&#34;
+    Plots a clustermap. Return figure fig can be saved with fig.savefig(). For parameters refer to the matplotlib documentation.
+
+    Parameters:
+        matrix (numpy matrix): matrix containing the values to be plotted
+        xlabels (list or None): list of tick labels to be used for the x axis
+        ylabels (list or None): list of tick labels to be used for the y axis
+        size (tuple): plot size to be used
+        cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
+
+    Returns:
+        fig (matplotlib figure): heatmap object
+    &#34;&#34;&#34;
+
+    if xlabels is None:
+        xlabels=&#34;auto&#34;
+    if ylabels is None:
+        ylabels = &#34;auto&#34;
+
+    if cmap is None:
+
+        cmap = sns.cubehelix_palette(start=7, rot=0, dark=0.2, light=0.8, reverse=False, as_cmap=True)
+
+    
+
+    return sns.clustermap(matrix, annot=False, figsize=size, xticklabels=xlabels, yticklabels=ylabels, cmap=cmap)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="graphAlgorithms" href="index.html">graphAlgorithms</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="graphAlgorithms.plotting.plot_clustering_heatmap" href="#graphAlgorithms.plotting.plot_clustering_heatmap">plot_clustering_heatmap</a></code></li>
+<li><code><a title="graphAlgorithms.plotting.plot_heatmap" href="#graphAlgorithms.plotting.plot_heatmap">plot_heatmap</a></code></li>
+<li><code><a title="graphAlgorithms.plotting.plot_hierarchical_clustering" href="#graphAlgorithms.plotting.plot_hierarchical_clustering">plot_hierarchical_clustering</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

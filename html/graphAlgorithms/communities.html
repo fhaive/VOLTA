@@ -41,9 +41,9 @@ import datetime
 import math
 import networkx as nx
 import collections
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import random
-import treelib as bt
+#import treelib as bt
 import pickle
 import cdlib
 from cdlib import algorithms
@@ -61,7 +61,12 @@ import markov_clustering as mc
 import sklearn
 from sklearn.cluster import AgglomerativeClustering
 import pyintergraph
+from itertools import chain
 
+from networkx.utils import pairwise, not_implemented_for
+import scipy
+import statsmodels.stats.multitest as multi
+from scipy.stats import hypergeom
 
 
 
@@ -109,106 +114,7 @@ def async_fluid(G, k=5, return_object=True):
 
 
 
-&#39;&#39;&#39;
-def em(G, k=5, return_object=True):
-    &#34;&#34;&#34;
-    Based on a mixture model.
 
-    References:
-        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.em.html#cdlib.algorithms.em
-
-        Newman, Mark EJ, and Elizabeth A. Leicht. Mixture community and exploratory analysis in networks. 
-        Proceedings of the National Academy of Sciences 104.23 (2007): 9564-9569.
-        
-    Parameters:
-        G (networkX graph object):
-        k (int): number of desired communities.
-        return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-
-    Returns:
-        communities (dict): key are node IDs and value is list of communities that node belongs to.
-        fitness parameters (NodeClustering object): if return_object is True.
-
-    &#34;&#34;&#34;
-
-    communities = cdlib.algorithms.em(G,k)
-
-    m = communities.to_node_community_map()
-    #j = communities.to_json()
-
-    if return_object:
-        return m,  communities
-
-    else:
-        return m
-&#39;&#39;&#39;
-&#39;&#39;&#39;
-def sbm_dl(G, B_min=None, B_max=None, deg_corr=True, return_object=True):
-    &#34;&#34;&#34;
-    Based on a monte carlo heuristic.
-
-    References:
-        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.sbm_dl.html#cdlib.algorithms.sbm_dl
-
-        Tiago P. Peixoto, “Efficient Monte Carlo and greedy heuristic for the inference of stochastic block models”, 
-        Phys. Rev. E 89, 012804 (2014), DOI: 10.1103/PhysRevE.89.012804
-    
-     Parameters:
-        G (networkX graph object):
-        B_min (int): minimum number of communities that are allowed
-        B_max (int):  maximum number of communities that are allowed
-        deg_corr (boolean): if is True then uses a degree corrected version
-        return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-
-    Returns:
-        communities (dict): key are node IDs and value is list of communities that node belongs to.
-        fitness parameters (NodeClustering object): if return_object is True.
-
-    &#34;&#34;&#34;
-
-    communities = cdlib.algorithms.sbm_dl(G,B_min= B_min, B_max=B_max, deg_corr=deg_corr)
-
-    m = communities.to_node_community_map()
-    #j = communities.to_json()
-
-    if return_object:
-        return m,  communities
-
-    else:
-        return m
-&#39;&#39;&#39;
-&#39;&#39;&#39;
-def newman_modularity(G, return_object=True):
-    &#34;&#34;&#34;
-    Based on (maximising) modularity.
-
-    References:
-        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.eigenvector.html#cdlib.algorithms.eigenvector
-
-        Newman, Mark EJ. Finding community structure in networks using the eigenvectors of matrices. Physical review E 74.3 (2006): 036104.
-        
-    Parameters:
-        G (networkX graph object):
-        return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-
-    Returns:
-        communities (dict): key are node IDs and value is list of communities that node belongs to.
-        fitness parameters (NodeClustering object): if return_object is True.
-
-    &#34;&#34;&#34;
-
-    communities = cdlib.algorithms.eigenvector(G)
-
-    m = communities.to_node_community_map()
-    #j = communities.to_json()
-
-    if return_object:
-        return m,  communities
-
-    else:
-        return m
-
-&#39;&#39;&#39;
 def gdmp2(G, min_threshold=0.75, return_object=True):
     &#34;&#34;&#34;
     Based on finding dense subgraphs.
@@ -483,102 +389,6 @@ def louvain(G, weights=&#34;weight&#34;, resolution=1.0,  return_object=True):
     else:
         return m
 
-&#39;&#39;&#39;
-def rber_pots(G, initial_membership=None, weights=&#34;weight&#34;, node_sizes=None, resolution_parameter=1, return_object=True):
-    &#34;&#34;&#34;
-    Optimizes a quality function.
-
-    References:
-        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.rber_pots.html#cdlib.algorithms.rber_pots
-
-        Reichardt, J., &amp; Bornholdt, S. (2006). Statistical mechanics of community detection. 
-        Physical Review E, 74(1), 016110. 10.1103/PhysRevE.74.016110
-    
-    Input
-
-        a networkx/ igraph object G
-
-        weights list of double, edge attribute or None. 
-            Can be either an iterable or an edge attribute.
-
-        initial_membership  list of int Initial membership for the partition. 
-            If None then defaults to a singleton partition
-
-        node_sizes list of int, or vertex attribute Sizes of nodes 
-            Usually set to 1 for all nodes, but in specific cases this could be changed.
-            e
-        resolution_parameter float &gt;0 
-            Higher resolutions lead to more communities, while lower resolutions lead to fewer communities.
-        
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
-
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
-
-    &#34;&#34;&#34;
-
-    communities = cdlib.algorithms.rber_pots(G, initial_membership=initial_membership, weights=weights, node_sizes=node_sizes, resolution_parameter=resolution_parameter)
-
-    m = communities.to_node_community_map()
-    #j = communities.to_json()
-
-    if return_object:
-        return m,  communities
-
-    else:
-        return m
-
-def surprise(G, initial_membership=None, weights=&#34;weight&#34;, node_sizes=None, return_object=True):
-    &#34;&#34;&#34;
-    optimizes a quality function
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.surprise_communities.html#cdlib.algorithms.surprise_communities
-
-    Traag, V. A., Aldecoa, R., &amp; Delvenne, J.-C. (2015). 
-    Detecting communities using asymptotical surprise. Physical Review E, 92(2), 022816. 10.1103/PhysRevE.92.022816
-    
-    Input
-
-        a networkx/ igraph object G
-
-        weights list of double, edge attribute or None. 
-            Can be either an iterable or an edge attribute.
-
-        initial_membership  list of int Initial membership for the partition. 
-            If None then defaults to a singleton partition
-
-        node_sizes list of int, or vertex attribute Sizes of nodes 
-            Usually set to 1 for all nodes, but in specific cases this could be changed.
-            
-        
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
-
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
-
-    &#34;&#34;&#34;
-
-    communities = cdlib.algorithms.surprise_communities(G, initial_membership=initial_membership, weights=weights, node_sizes=node_sizes)
-
-    m = communities.to_node_community_map()
-    #j = communities.to_json()
-
-    if return_object:
-        return m,  communities
-
-    else:
-        return m
-&#39;&#39;&#39;
-
 
 def weak_link_communities(H, weights=&#34;weight&#34;, t=0.2, max_iter=1000, by_degree=True, r=5, std=0.2, min_community=10, graph=False):
     &#34;&#34;&#34;
@@ -705,7 +515,9 @@ def weak_link_communities(H, weights=&#34;weight&#34;, t=0.2, max_iter=1000, by_
     print(&#34;new number of edges&#34;, len(G.edges()), &#34;our of originally &#34;, init_edges)
 
     #create partition dict based on all subgraphs within the current graph
-    com_temp = list(nx.connected_component_subgraphs(G))
+    #com_temp = list(nx.connected_component_subgraphs(G))
+    com_temp = [G.subgraph(c).copy() for c in nx.connected_components(G)]
+
 
     communities = __convert_graph_to_community_dict__(com_temp)
 
@@ -772,42 +584,6 @@ def __disconnect_high_degree__(G, nodes=10, percentage=None, weight=&#34;weight&
     return G
 
 
-&#39;&#39;&#39;
-def disconnect_high_degree_nodes(H, nodes=10, percentage=None, weight=&#34;weight&#34;, graph = False):
-    &#34;&#34;&#34;
-    Builds communities around hub nodes, be disconnecting hub nodes to create disconnected components.
-
-    Parameters:
-        networkx graph H
-
-        number of high degree nodes that should be disconnected
-
-        percentage percentage of high degree nodes that should be disconnected
-        percentage needs to be in [0,1]
-
-        either number of percentage needs to be set to None, if both are not None nodes is used
-
-        if weight is not None then degree is estimated based on edge weight
-            degree is sum of edge weights adjacent to the node
-
-    Output 
-        dict, were each node ID is key and value is list of communities
-
-        if graph
-            dict, networkx graph object
-    &#34;&#34;&#34;
-
-    H = __disconnect_high_degree__(H, nodes=nodes, percentage=percentage, weight=weight)
-
-    com_temp = list(nx.connected_component_subgraphs(H))
-
-    communities = __convert_graph_to_community_dict__(com_temp)
-
-    if graph:
-        return communities, H
-    else:
-        return communities
-&#39;&#39;&#39;
 
 def girvan_newman(G, valuable_edge=&#34;max_weight&#34;, k=1, is_leve=False, attribute=&#34;weight&#34;, w_max=True):
     &#34;&#34;&#34;
@@ -1023,102 +799,8 @@ def angel(G, treshold=0.5, min_community_size=3, return_object=True):
     else:
         return m
 
-&#39;&#39;&#39;
-def lemon(G,  min_com_size=20, max_com_size=50, expand_step=6, subspace_dim=3, walk_steps=3, biased=False, return_object=True):
-    &#34;&#34;&#34;
-    Based on local expansion.
 
-    References:
-        https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.lemon.html#cdlib.algorithms.lemon
 
-        Yixuan Li, Kun He, David Bindel, John Hopcroft Uncovering the small community structure in large networks: A local spectral approach. 
-        Proceedings of the 24th international conference on world wide web. International World Wide Web Conferences Steering Committee, 2015.
-    
-    Parameters:
-        G (networkX graph object):
-       
-        min_com_size (int): minimum community size.
-
-        max_com_size (int): maximum community size.
-        expand_step (int): expansion used.
-        subspace_dim (int): dimension of the subspace. Large values can increase computational cost.
-        walk_steps:
-
-        expand_step the step of seed set increasement during expansion process
-
-        subspace_dim dimension of the subspace; choosing a large dimension is undesirable because it would increase the computation cost of generating local spectra 
-
-        walk_steps the number of step for the random walk
-
-        if biased random walk startsfrom seed nodes
-            
-        
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
-
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
-
-    &#34;&#34;&#34;
-
-    communities = cdlib.algorithms.lemon(G, seeds=list(G.nodes()), min_com_size=min_com_size, max_com_size=max_com_size, expand_step=expand_step, subspace_dim=subspace_dim, walk_steps=walk_steps, biased=biased)
-
-    m = communities.to_node_community_map()
-    #j = communities.to_json()
-
-    if return_object:
-        return m,  communities
-
-    else:
-        return m
-
-&#39;&#39;&#39;
-&#39;&#39;&#39;
-def congo(G, number_communities=3, height=2, return_object=True):
-    &#34;&#34;&#34;
-    optimization of conga, which is based on girvan newman
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.congo.html#cdlib.algorithms.congo
-
-    but seems to be extremly slow also for small graphs
-
-    Gregory, Steve. A fast algorithm to find overlapping communities in networks. 
-    Joint European Conference on Machine Learning and Knowledge Discovery in Databases. Springer, Berlin, Heidelberg, 2008.
-    
-    Input
-
-        a networkx/ igraph object G
-
-        number_communities int, number of desired communities
-
-        height int, longest shortest path
-            
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
-
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
-
-    &#34;&#34;&#34;
-
-    communities = cdlib.algorithms.congo(G, number_communities, height=height)
-
-    m = communities.to_node_community_map()
-    #j = communities.to_json()
-
-    if return_object:
-        return m,  communities
-
-    else:
-        return m
-&#39;&#39;&#39;
 def ego_networks(G, level=1, return_object=True):
     &#34;&#34;&#34;
     Based on ego networks.
@@ -1151,161 +833,11 @@ def ego_networks(G, level=1, return_object=True):
         return m
 
 
-#########################################################
-##weighted
-&#39;&#39;&#39;
-def lais2(G, edge_weight=&#34;weight&#34;):
-    &#34;&#34;&#34;
-    adjusted implementation of the lais2 algorithm, where node importance is based on edge weights
-    based on density
-    https://github.com/kritishrivastava/CommunityDetection-Project2GDM/blob/master/main.py
-
-    Baumes, Jeffrey, Mark Goldberg, and Malik Magdon-Ismail. 
-    Efficient identification of overlapping communities. 
-    International Conference on Intelligence and Security Informatics. Springer, Berlin, Heidelberg, 2005.
-
-    Input
-
-        a networkx/ igraph object G
-
-        edge_weight str edge attribute to be used for node ranking, based on pagerank
-            if None pagerank runs with equal weights
-            this is a modification to the original algorithm
-            
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
-
-    Output
-
-        dict, were each node ID is key and value is list of communities
-
-    &#34;&#34;&#34;
-
-    initalClusters = __LA__(G)
-    #Get final clusters using Improved Iterative Scan Algorithm
-    finalClusters = []
-    initalClustersWithoutDuplicates = []
-    for cluster in initalClusters:
-        cluster = sorted(cluster)
-        if cluster not in initalClustersWithoutDuplicates:
-            initalClustersWithoutDuplicates.append(cluster)
-            updatedCluster = __IS2__(cluster,G)
-            finalClusters.append(updatedCluster.nodes())
-    d = {}
-    #finalClustersWithoutDuplicates = []
-    counter = 0
-    for cluster in finalClusters:
-        cluster = sorted(cluster)
-        for node in cluster:
-            d[node] = [counter]
-        #if cluster not in finalClustersWithoutDuplicates:
-        #    finalClustersWithoutDuplicates.append(cluster)
-        counter = counter + 1  
-
-    return d
-
-&#39;&#39;&#39;
-
-#########################################################33
-###########################################################
-
-#fuzzy communities
-
-&#39;&#39;&#39;
-def fuzzy_rough(G, theta= 1, eps=0.5, r=2, return_object=True):
-    &#34;&#34;&#34;
-    nodes are assigend to each community based on their probability
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.frc_fgsn.html#cdlib.algorithms.frc_fgsn
-
-    Kundu, S., &amp; Pal, S. K. (2015). Fuzzy-rough community in social networks. Pattern Recognition Letters, 67, 145-152.
-
-    Input
-
-        a networkx/ igraph object G
-
-        theta float, community density coefficient
-
-        eps float in [0,1] coupling coefficient of the community, small values result in smaller communities
-
-        r int, radius of the granule
-            
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
-
-    Output
-
-        dict, were each edge ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
-
-    &#34;&#34;&#34;
-
-    communities = cdlib.algorithms.frc_fgsn(G, theta, eps, r)
-
-    m = communities.to_node_community_map()
-    #j = communities.to_json()
-
-    if return_object:
-        return m,  communities
-
-    else:
-        return m
 
 
-################################################333
-######################################################3
-
-#edge clustering
-
-def agdl(G, number_communities=3, number_neighbors=3, kc=3, a=1, return_object=True):
-    &#34;&#34;&#34;
-    agglomerative clustering of edges
-    https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.agdl.html
-
-    Zhang, W., Wang, X., Zhao, D., &amp; Tang, X. (2012, October). Graph degree linkage: Agglomerative clustering on a directed graph. 
-    In European Conference on Computer Vision (pp. 428-441). Springer, Berlin, Heidelberg.
-
-    Input
-
-        a networkx/ igraph object G
-
-       number_communities int, 
-
-        number_neighbors int, Number of neighbors to use for KNN
-
-        kc int, size of the neighbor set for each cluster
-
-        a – float
-            
-        if return_object is True then the resulting CDlib NodeClustering object is returned, for all options refer to 
-            https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
-            this allows to retrieve a multitude of community fitness parameters
-
-    Output
-
-        dict, were each edge ID is key and value is list of communities
-
-        if return_object then also the whole community object is returned
-
-    &#34;&#34;&#34;
-
-    communities = cdlib.algorithms.agdl(G, number_communities=number_communities, number_neighbors=number_neighbors, kc=kc, a=a)
-
-    m = communities.to_node_community_map()
-    #j = communities.to_json()
-
-    if return_object:
-        return m,  communities
-
-    else:
-        return m
-
-#evaluate partion quality based on pquality package
 
 
-&#39;&#39;&#39;
+
 
 ###########################################################3
 #############################################################3
@@ -1344,7 +876,8 @@ def create_initial_consensus(graph, communities, thresh = 0.2):
     consensus_graph.remove_edges_from(remove_edges)
     print(&#34;initial removed edges&#34;, len(remove_edges))
 
-    com_temp = list(nx.connected_component_subgraphs(consensus_graph))
+    #com_temp = list(nx.connected_component_subgraphs(consensus_graph))
+    com_temp = [consensus_graph.subgraph(c).copy() for c in nx.connected_components(consensus_graph)]
 
     initial_communities = __convert_graph_to_community_dict__(com_temp)
 
@@ -1403,7 +936,8 @@ def fast_consensus(G, communities, algorithms = [], parameters=[], thresh = 0.2,
         consensus_graph.remove_edges_from(remove_edges)
         print(&#34;initial removed edges&#34;, len(remove_edges))
 
-        com_temp = list(nx.connected_component_subgraphs(consensus_graph))
+        #com_temp = list(nx.connected_component_subgraphs(consensus_graph))
+        com_temp = [consensus_graph.subgraph(c).copy() for c in nx.connected_components(consensus_graph)]
 
         initial_communities = __convert_graph_to_community_dict__(com_temp)
 
@@ -1497,7 +1031,8 @@ def fast_consensus(G, communities, algorithms = [], parameters=[], thresh = 0.2,
         print(&#34;max iter has been reached but consensus graph has not converged&#34;)
 
     #i think it would be best to convert the consensus graph into its communities based on its connected components
-    com_temp = list(nx.connected_component_subgraphs(graph))
+    #com_temp = list(nx.connected_component_subgraphs(graph))
+    com_temp = [graph.subgraph(c).copy() for c in nx.connected_components(graph)]
 
     communities = __convert_graph_to_community_dict__(com_temp)
 
@@ -1599,11 +1134,20 @@ def get_number_of_nodes_community(communities, in_detail = False):
         number_of_nodes.append(nr_nodes)
 
     #get distributional values
-    mean = statistics.mean(number_of_nodes)
-    median = statistics.median(number_of_nodes)
-    std = statistics.stdev(number_of_nodes)
-    kurt = kurtosis(number_of_nodes)
-    sk = skew(number_of_nodes)
+    try:
+        mean = statistics.mean(number_of_nodes)
+        median = statistics.median(number_of_nodes)
+        std = statistics.stdev(number_of_nodes)
+        kurt = kurtosis(number_of_nodes)
+        sk = skew(number_of_nodes)
+    except:
+        mean = None
+        median = None
+        std=None
+        kurt = None
+        sk = None
+        
+
 
     if in_detail:
 
@@ -3142,7 +2686,288 @@ def __check_consensus_graph__(G, n_p, delta):
     if count &gt; delta*G.number_of_edges():
         return False
 
-    return True</code></pre>
+    return True
+
+
+def __metric_closure__(G, weight=&#34;weight&#34;):
+    
+    &#34;&#34;&#34;
+    Helper function of steiner tree, taken from Networkx:
+    https://networkx.org/documentation/stable/_modules/networkx/algorithms/approximation/steinertree.html#steiner_tree
+    &#34;&#34;&#34;
+    
+    M = nx.Graph()
+
+    Gnodes = set(G)
+
+    # check for connected graph while processing first node
+    all_paths_iter = nx.all_pairs_dijkstra(G, weight=weight)
+    u, (distance, path) = next(all_paths_iter)
+    if Gnodes - set(distance):
+        msg = &#34;G is not a connected graph. metric_closure is not defined.&#34;
+        raise nx.NetworkXError(msg)
+    Gnodes.remove(u)
+    for v in Gnodes:
+        M.add_edge(u, v, distance=distance[v], path=path[v])
+
+    # first node done -- now process the rest
+    for u, (distance, path) in all_paths_iter:
+        Gnodes.remove(u)
+        for v in Gnodes:
+            M.add_edge(u, v, distance=distance[v], path=path[v])
+
+    return M
+
+################## active module detection 
+
+def __steiner_tree__(G, terminal_nodes, weight=&#34;weight&#34;):
+    &#34;&#34;&#34; 
+    This function has been taken from NetworkX: 
+    https://networkx.org/documentation/stable/_modules/networkx/algorithms/approximation/steinertree.html#steiner_tree
+    
+    Return an approximation to the minimum Steiner tree of a graph.
+
+    The minimum Steiner tree of `G` w.r.t a set of `terminal_nodes`
+    is a tree within `G` that spans those nodes and has minimum size
+    (sum of edge weights) among all such trees.
+
+    The minimum Steiner tree can be approximated by computing the minimum
+    spanning tree of the subgraph of the metric closure of *G* induced by the
+    terminal nodes, where the metric closure of *G* is the complete graph in
+    which each edge is weighted by the shortest path distance between the
+    nodes in *G* .
+    This algorithm produces a tree whose weight is within a (2 - (2 / t))
+    factor of the weight of the optimal Steiner tree where *t* is number of
+    terminal nodes.
+
+    Parameters
+    ----------
+    G : NetworkX graph
+
+    terminal_nodes : list
+         A list of terminal nodes for which minimum steiner tree is
+         to be found.
+
+    Returns
+    -------
+    NetworkX graph
+        Approximation to the minimum steiner tree of `G` induced by
+        `terminal_nodes` .
+
+    
+    &#34;&#34;&#34;
+    # H is the subgraph induced by terminal_nodes in the metric closure M of G.
+    M = __metric_closure__(G, weight=weight)
+    H = M.subgraph(terminal_nodes)
+    # Use the &#39;distance&#39; attribute of each edge provided by M.
+    mst_edges = nx.minimum_spanning_edges(H, weight=&#34;distance&#34;, data=True)
+    # Create an iterator over each edge in each shortest path; repeats are okay
+    edges = chain.from_iterable(pairwise(d[&#34;path&#34;]) for u, v, d in mst_edges)
+    # For multigraph we should add the minimal weight edge keys
+    if G.is_multigraph():
+        edges = (
+            (u, v, min(G[u][v], key=lambda k: G[u][v][k][weight])) for u, v in edges
+        )
+    T = G.edge_subgraph(edges)
+    return T
+
+
+
+def active_modules(G, active_nodes, algorithms=[[louvain],[girvan_newman]], algorithm_parameters=[[{&#34;weights&#34;:&#34;weight&#34;,&#34;return_object&#34;: False}],[{&#34;valuable_edge&#34;:&#34;betweenness&#34;}]], pval1 = 0.3, pval2=0.05):
+    &#34;&#34;&#34;
+    Adjusted implementation of the DOMINO algorithm.
+
+    Levi, Hagai, Ran Elkon, and Ron Shamir. 
+    &#34;DOMINO: a network‐based active module identification algorithm with reduced rate of false calls.&#34; 
+    Molecular Systems Biology 17.1 (2021): e9593.
+    
+    Parameters:
+        G (NetworkX Graph): Graph object active modules are identified of
+        active_nodes (list): list of node IDs that are classified as &#34;active&#34;
+        algorithms (list): list of sublists, where first list contains the community detection algorithms
+            used in the first module detection round and the second list contains the algorithms to be used for
+            the second round. If more than one algorithm is provided in each sublist a consensus partitioning
+            is calculated.
+        algorithm_parameters(list): list of sublists, corresponding to the algorithms stated in algorithms.
+            parameters need to be provided as dict.
+        pval1 (float): in [0,1] pval cutoff to be applied in the first round of module selection
+        pval2 (float): in [0,1] pval cutoff to be applied in the secondround of module selection
+            
+        Output:
+            active_modules (list): list of sublists. Each sublists represents an active module and its items represents
+                the nodes contained in it.
+            active_pval (list): contains the corresponding corrected pvalues to active_modules. 
+                list is in same order as active_modules.
+            all_modules (list): list of sublists. Each sublists represents a module (active or not active)
+                and its items represents the nodes contained in it.
+            pvals (list): contains the corresponding corrected pvalues to all_modules. 
+                list is in same order as all_modules.
+            
+    &#34;&#34;&#34;
+    
+    
+    #do first round of module detection
+    
+    if len(algorithms[0]) &gt; 1:
+        #consensus
+        print(&#34;A consensus partitioning is calculated&#34;)
+        #calculate initial partitionings
+        community_list = []
+        for a in range(len(algorithms[0])):
+            algo = algorithms[0][a]
+            param = algorithm_parameters[0][a]
+            
+            print(&#34;estimating communities &#34;, algo.__name__)
+            community_list.append(algo(G, **param))
+        #TODO expose parameters
+        partitioning, cons1, consgraph  = fast_consensus(G, communities = community_list, algorithms=algorithms[0], parameters=algorithm_parameters[0], thresh=0.5, max_iter=50)
+        
+        
+    else:
+        #do single partitioning
+        community_list = []
+        for a in range(len(algorithms[0])):
+            algo = algorithms[0][a]
+            param = algorithm_parameters[0][a]
+
+            print(&#34;estimating communities &#34;, algo.__name__)
+            community_list.append(algo(G, **param))
+        partitioning = community_list[0]
+
+    
+    #convert partitioning into list of lists format
+    temp = convert_communities(partitioning)
+    partitioning = []
+    for key in temp:
+        partitioning.append(temp[key])
+        
+        
+    print(&#34;find enriched modules&#34;)
+    temp_pvals = []
+
+    for par in partitioning:
+        M = len(G.nodes()) #number of nodes
+        n = len(active_nodes) #nuber of active nodes
+        N = len(par) #cluster size
+
+        x = 0
+        for no in par:
+            if no in active_nodes:
+                x = x+1
+        #number of active nodes in this partitioning
+
+        v = hypergeom.sf(x-1, M, n, N)
+        temp_pvals.append(v)
+
+
+
+    #do correction
+    #TODO expose parameters
+    adj_pval = multi.multipletests(temp_pvals, method=&#34;fdr_bh&#34;)[1]
+
+    subgraphs = []
+    #if below pval treshold create subgraphs of module
+
+    for i in range(len(adj_pval)):
+        if adj_pval[i] &lt;= pval1:
+            subgraphs.append(G.subgraph(partitioning[i]))
+
+    
+    
+    #TODO add node treshold as parameter
+    
+    #apply prize steiner tree
+    print(&#34;calculating Prize Steiner Tree&#34;)
+
+    trees = []
+    for H in subgraphs:
+        #get active nodes
+        terminal = []
+        for no in H.nodes():
+            if no in active_nodes:
+                terminal.append(no)
+        #TODO expose weight parameter
+        trees.append(__steiner_tree__(H, terminal, weight=&#39;weight&#39;))
+    
+    
+    all_modules = []
+    all_pval = []
+    enriched_active_modules=[]
+    enriched_pval = []
+
+
+    for tree in trees:
+
+        if len(algorithms[1]) &gt; 1:
+            #consensus
+            print(&#34;A consensus partitioning is calculated&#34;)
+            #calculate initial partitionings
+            community_list = []
+            for a in range(len(algorithms[1])):
+                algo = algorithms[1][a]
+                param = algorithm_parameters[1][a]
+
+                print(&#34;estimating communities &#34;, algo.__name__)
+                community_list.append(algo(tree, **param))
+            #TODO expose parameters
+            partitioning, cons1, consgraph  = fast_consensus(tree, communities = community_list, algorithms=algorithms[0], parameters=algorithm_parameters[0], thresh=0.5, max_iter=50)
+
+
+        else:
+            #do single partitioning
+            community_list = []
+            for a in range(len(algorithms[1])):
+                algo = algorithms[1][a]
+                param = algorithm_parameters[1][a]
+
+                print(&#34;estimating communities &#34;, algo.__name__)
+                community_list.append(algo(tree, **param))
+            partitioning = community_list[0]
+
+        #convert partitioning into list of lists format
+        temp = convert_communities(partitioning)
+        partitioning = []
+        for key in temp:
+            partitioning.append(temp[key])
+
+        #TODO add community size treshold as parameter
+        print(&#34;find enriched modules&#34;)
+        temp_pvals = []
+
+        #DISCUSS against all nodes or only in the tree??
+        for par in partitioning:
+            M = len(G.nodes()) #number of nodes
+            n = len(active_nodes) #nuber of active nodes
+            N = len(par) #cluster size
+
+            x = 0
+            for no in par:
+                if no in active_nodes:
+                    x = x+1
+            #number of active nodes in this partitioning
+
+            v = hypergeom.sf(x-1, M, n, N)
+            temp_pvals.append(v)
+
+
+
+        #do correction
+        #TODO expose method parameter 
+        adj_pval = multi.multipletests(temp_pvals, method=&#34;bonferroni&#34;)[1]
+
+
+
+        for i in range(len(adj_pval)):
+            if adj_pval[i] &lt;= pval2:
+                enriched_active_modules.append(partitioning[i])
+                enriched_pval.append(adj_pval[i])
+
+            all_modules.append(partitioning[i])
+            all_pval.append(adj_pval[i])
+
+    
+    
+    return enriched_active_modules, enriched_pval, all_modules, all_pval</code></pre>
 </details>
 </section>
 <section>
@@ -3152,6 +2977,242 @@ def __check_consensus_graph__(G, n_p, delta):
 <section>
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
+<dt id="graphAlgorithms.communities.active_modules"><code class="name flex">
+<span>def <span class="ident">active_modules</span></span>(<span>G, active_nodes, algorithms=[[&lt;function louvain&gt;], [&lt;function girvan_newman&gt;]], algorithm_parameters=[[{'weights': 'weight', 'return_object': False}], [{'valuable_edge': 'betweenness'}]], pval1=0.3, pval2=0.05)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Adjusted implementation of the DOMINO algorithm.</p>
+<p>Levi, Hagai, Ran Elkon, and Ron Shamir.
+"DOMINO: a network‐based active module identification algorithm with reduced rate of false calls."
+Molecular Systems Biology 17.1 (2021): e9593.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>Graph</code></dt>
+<dd>Graph object active modules are identified of</dd>
+<dt><strong><code>active_nodes</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of node IDs that are classified as "active"</dd>
+<dt><strong><code>algorithms</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of sublists, where first list contains the community detection algorithms
+used in the first module detection round and the second list contains the algorithms to be used for
+the second round. If more than one algorithm is provided in each sublist a consensus partitioning
+is calculated.</dd>
+<dt>algorithm_parameters(list): list of sublists, corresponding to the algorithms stated in algorithms.</dt>
+<dt>parameters need to be provided as dict.</dt>
+<dt><strong><code>pval1</code></strong> :&ensp;<code>float</code></dt>
+<dd>in [0,1] pval cutoff to be applied in the first round of module selection</dd>
+<dt><strong><code>pval2</code></strong> :&ensp;<code>float</code></dt>
+<dd>in [0,1] pval cutoff to be applied in the secondround of module selection</dd>
+</dl>
+<p>Output:
+active_modules (list): list of sublists. Each sublists represents an active module and its items represents
+the nodes contained in it.
+active_pval (list): contains the corresponding corrected pvalues to active_modules.
+list is in same order as active_modules.
+all_modules (list): list of sublists. Each sublists represents a module (active or not active)
+and its items represents the nodes contained in it.
+pvals (list): contains the corresponding corrected pvalues to all_modules.
+list is in same order as all_modules.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def active_modules(G, active_nodes, algorithms=[[louvain],[girvan_newman]], algorithm_parameters=[[{&#34;weights&#34;:&#34;weight&#34;,&#34;return_object&#34;: False}],[{&#34;valuable_edge&#34;:&#34;betweenness&#34;}]], pval1 = 0.3, pval2=0.05):
+    &#34;&#34;&#34;
+    Adjusted implementation of the DOMINO algorithm.
+
+    Levi, Hagai, Ran Elkon, and Ron Shamir. 
+    &#34;DOMINO: a network‐based active module identification algorithm with reduced rate of false calls.&#34; 
+    Molecular Systems Biology 17.1 (2021): e9593.
+    
+    Parameters:
+        G (NetworkX Graph): Graph object active modules are identified of
+        active_nodes (list): list of node IDs that are classified as &#34;active&#34;
+        algorithms (list): list of sublists, where first list contains the community detection algorithms
+            used in the first module detection round and the second list contains the algorithms to be used for
+            the second round. If more than one algorithm is provided in each sublist a consensus partitioning
+            is calculated.
+        algorithm_parameters(list): list of sublists, corresponding to the algorithms stated in algorithms.
+            parameters need to be provided as dict.
+        pval1 (float): in [0,1] pval cutoff to be applied in the first round of module selection
+        pval2 (float): in [0,1] pval cutoff to be applied in the secondround of module selection
+            
+        Output:
+            active_modules (list): list of sublists. Each sublists represents an active module and its items represents
+                the nodes contained in it.
+            active_pval (list): contains the corresponding corrected pvalues to active_modules. 
+                list is in same order as active_modules.
+            all_modules (list): list of sublists. Each sublists represents a module (active or not active)
+                and its items represents the nodes contained in it.
+            pvals (list): contains the corresponding corrected pvalues to all_modules. 
+                list is in same order as all_modules.
+            
+    &#34;&#34;&#34;
+    
+    
+    #do first round of module detection
+    
+    if len(algorithms[0]) &gt; 1:
+        #consensus
+        print(&#34;A consensus partitioning is calculated&#34;)
+        #calculate initial partitionings
+        community_list = []
+        for a in range(len(algorithms[0])):
+            algo = algorithms[0][a]
+            param = algorithm_parameters[0][a]
+            
+            print(&#34;estimating communities &#34;, algo.__name__)
+            community_list.append(algo(G, **param))
+        #TODO expose parameters
+        partitioning, cons1, consgraph  = fast_consensus(G, communities = community_list, algorithms=algorithms[0], parameters=algorithm_parameters[0], thresh=0.5, max_iter=50)
+        
+        
+    else:
+        #do single partitioning
+        community_list = []
+        for a in range(len(algorithms[0])):
+            algo = algorithms[0][a]
+            param = algorithm_parameters[0][a]
+
+            print(&#34;estimating communities &#34;, algo.__name__)
+            community_list.append(algo(G, **param))
+        partitioning = community_list[0]
+
+    
+    #convert partitioning into list of lists format
+    temp = convert_communities(partitioning)
+    partitioning = []
+    for key in temp:
+        partitioning.append(temp[key])
+        
+        
+    print(&#34;find enriched modules&#34;)
+    temp_pvals = []
+
+    for par in partitioning:
+        M = len(G.nodes()) #number of nodes
+        n = len(active_nodes) #nuber of active nodes
+        N = len(par) #cluster size
+
+        x = 0
+        for no in par:
+            if no in active_nodes:
+                x = x+1
+        #number of active nodes in this partitioning
+
+        v = hypergeom.sf(x-1, M, n, N)
+        temp_pvals.append(v)
+
+
+
+    #do correction
+    #TODO expose parameters
+    adj_pval = multi.multipletests(temp_pvals, method=&#34;fdr_bh&#34;)[1]
+
+    subgraphs = []
+    #if below pval treshold create subgraphs of module
+
+    for i in range(len(adj_pval)):
+        if adj_pval[i] &lt;= pval1:
+            subgraphs.append(G.subgraph(partitioning[i]))
+
+    
+    
+    #TODO add node treshold as parameter
+    
+    #apply prize steiner tree
+    print(&#34;calculating Prize Steiner Tree&#34;)
+
+    trees = []
+    for H in subgraphs:
+        #get active nodes
+        terminal = []
+        for no in H.nodes():
+            if no in active_nodes:
+                terminal.append(no)
+        #TODO expose weight parameter
+        trees.append(__steiner_tree__(H, terminal, weight=&#39;weight&#39;))
+    
+    
+    all_modules = []
+    all_pval = []
+    enriched_active_modules=[]
+    enriched_pval = []
+
+
+    for tree in trees:
+
+        if len(algorithms[1]) &gt; 1:
+            #consensus
+            print(&#34;A consensus partitioning is calculated&#34;)
+            #calculate initial partitionings
+            community_list = []
+            for a in range(len(algorithms[1])):
+                algo = algorithms[1][a]
+                param = algorithm_parameters[1][a]
+
+                print(&#34;estimating communities &#34;, algo.__name__)
+                community_list.append(algo(tree, **param))
+            #TODO expose parameters
+            partitioning, cons1, consgraph  = fast_consensus(tree, communities = community_list, algorithms=algorithms[0], parameters=algorithm_parameters[0], thresh=0.5, max_iter=50)
+
+
+        else:
+            #do single partitioning
+            community_list = []
+            for a in range(len(algorithms[1])):
+                algo = algorithms[1][a]
+                param = algorithm_parameters[1][a]
+
+                print(&#34;estimating communities &#34;, algo.__name__)
+                community_list.append(algo(tree, **param))
+            partitioning = community_list[0]
+
+        #convert partitioning into list of lists format
+        temp = convert_communities(partitioning)
+        partitioning = []
+        for key in temp:
+            partitioning.append(temp[key])
+
+        #TODO add community size treshold as parameter
+        print(&#34;find enriched modules&#34;)
+        temp_pvals = []
+
+        #DISCUSS against all nodes or only in the tree??
+        for par in partitioning:
+            M = len(G.nodes()) #number of nodes
+            n = len(active_nodes) #nuber of active nodes
+            N = len(par) #cluster size
+
+            x = 0
+            for no in par:
+                if no in active_nodes:
+                    x = x+1
+            #number of active nodes in this partitioning
+
+            v = hypergeom.sf(x-1, M, n, N)
+            temp_pvals.append(v)
+
+
+
+        #do correction
+        #TODO expose method parameter 
+        adj_pval = multi.multipletests(temp_pvals, method=&#34;bonferroni&#34;)[1]
+
+
+
+        for i in range(len(adj_pval)):
+            if adj_pval[i] &lt;= pval2:
+                enriched_active_modules.append(partitioning[i])
+                enriched_pval.append(adj_pval[i])
+
+            all_modules.append(partitioning[i])
+            all_pval.append(adj_pval[i])
+
+    
+    
+    return enriched_active_modules, enriched_pval, all_modules, all_pval</code></pre>
+</details>
+</dd>
 <dt id="graphAlgorithms.communities.agglomerative_clustering"><code class="name flex">
 <span>def <span class="ident">agglomerative_clustering</span></span>(<span>G, is_distance=True, linkage='complete', distance_threshold=0.2)</span>
 </code></dt>
@@ -4010,7 +4071,8 @@ Can be used as input of fast_consensus().</p>
     consensus_graph.remove_edges_from(remove_edges)
     print(&#34;initial removed edges&#34;, len(remove_edges))
 
-    com_temp = list(nx.connected_component_subgraphs(consensus_graph))
+    #com_temp = list(nx.connected_component_subgraphs(consensus_graph))
+    com_temp = [consensus_graph.subgraph(c).copy() for c in nx.connected_components(consensus_graph)]
 
     initial_communities = __convert_graph_to_community_dict__(com_temp)
 
@@ -4245,7 +4307,8 @@ consensus graph (networkX graph object): graph object of consensus communities. 
         consensus_graph.remove_edges_from(remove_edges)
         print(&#34;initial removed edges&#34;, len(remove_edges))
 
-        com_temp = list(nx.connected_component_subgraphs(consensus_graph))
+        #com_temp = list(nx.connected_component_subgraphs(consensus_graph))
+        com_temp = [consensus_graph.subgraph(c).copy() for c in nx.connected_components(consensus_graph)]
 
         initial_communities = __convert_graph_to_community_dict__(com_temp)
 
@@ -4339,7 +4402,8 @@ consensus graph (networkX graph object): graph object of consensus communities. 
         print(&#34;max iter has been reached but consensus graph has not converged&#34;)
 
     #i think it would be best to convert the consensus graph into its communities based on its connected components
-    com_temp = list(nx.connected_component_subgraphs(graph))
+    #com_temp = list(nx.connected_component_subgraphs(graph))
+    com_temp = [graph.subgraph(c).copy() for c in nx.connected_components(graph)]
 
     communities = __convert_graph_to_community_dict__(com_temp)
 
@@ -4655,11 +4719,20 @@ IEEE Transactions on Knowledge and Data Engineering 24.7 (2012): 1216-1230.</p>
         number_of_nodes.append(nr_nodes)
 
     #get distributional values
-    mean = statistics.mean(number_of_nodes)
-    median = statistics.median(number_of_nodes)
-    std = statistics.stdev(number_of_nodes)
-    kurt = kurtosis(number_of_nodes)
-    sk = skew(number_of_nodes)
+    try:
+        mean = statistics.mean(number_of_nodes)
+        median = statistics.median(number_of_nodes)
+        std = statistics.stdev(number_of_nodes)
+        kurt = kurtosis(number_of_nodes)
+        sk = skew(number_of_nodes)
+    except:
+        mean = None
+        median = None
+        std=None
+        kurt = None
+        sk = None
+        
+
 
     if in_detail:
 
@@ -6293,7 +6366,9 @@ If None will be ignored.</dd>
     print(&#34;new number of edges&#34;, len(G.edges()), &#34;our of originally &#34;, init_edges)
 
     #create partition dict based on all subgraphs within the current graph
-    com_temp = list(nx.connected_component_subgraphs(G))
+    #com_temp = list(nx.connected_component_subgraphs(G))
+    com_temp = [G.subgraph(c).copy() for c in nx.connected_components(G)]
+
 
     communities = __convert_graph_to_community_dict__(com_temp)
 
@@ -6321,6 +6396,7 @@ If None will be ignored.</dd>
 </li>
 <li><h3><a href="#header-functions">Functions</a></h3>
 <ul class="">
+<li><code><a title="graphAlgorithms.communities.active_modules" href="#graphAlgorithms.communities.active_modules">active_modules</a></code></li>
 <li><code><a title="graphAlgorithms.communities.agglomerative_clustering" href="#graphAlgorithms.communities.agglomerative_clustering">agglomerative_clustering</a></code></li>
 <li><code><a title="graphAlgorithms.communities.angel" href="#graphAlgorithms.communities.angel">angel</a></code></li>
 <li><code><a title="graphAlgorithms.communities.async_fluid" href="#graphAlgorithms.communities.async_fluid">async_fluid</a></code></li>

@@ -37,25 +37,25 @@ import datetime
 import math
 import networkx as nx
 import collections
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import random
-import treelib as bt
+#import treelib as bt
 import pickle
 import itertools
 from scipy.stats import kurtosis, skew, kendalltau
 import statistics
 import numpy as np
 from collections import Counter
-import markov_clustering as mc
+#import markov_clustering as mc
 import pickle
-from netneurotools import cluster
-from netneurotools import plotting
-from sklearn.cluster import AgglomerativeClustering
+#from netneurotools import cluster
+#from netneurotools import plotting
+#from sklearn.cluster import AgglomerativeClustering
 import sklearn
-from pyclustering.cluster.optics import optics, ordering_analyser, ordering_visualizer
-import pyclustering
+#from pyclustering.cluster.optics import optics, ordering_analyser, ordering_visualizer
+#import pyclustering
 from random import randrange
-from pyclustering.cluster.kmedoids import kmedoids
+#from pyclustering.cluster.kmedoids import kmedoids
 import itertools
 #sys.path.insert(1, &#39;distances/&#39;)
 import graphAlgorithms.simplification as simplification
@@ -364,7 +364,8 @@ def get_statistical_overrepresented_communities(clusters_networks, nodes, pval=0
             
             #disconnected components are communities
             
-            graphs = list(nx.connected_component_subgraphs(G))
+            #graphs = list(nx.connected_component_subgraphs(G))
+            graphs = [G.subgraph(c).copy() for c in nx.connected_components(G)]
             
             for i in range(len(graphs)):
                 T = graphs[i]
@@ -1003,7 +1004,8 @@ Value needs to be list of dicts where key is node ID and value is Community ID o
             
             #disconnected components are communities
             
-            graphs = list(nx.connected_component_subgraphs(G))
+            #graphs = list(nx.connected_component_subgraphs(G))
+            graphs = [G.subgraph(c).copy() for c in nx.connected_components(G)]
             
             for i in range(len(graphs)):
                 T = graphs[i]

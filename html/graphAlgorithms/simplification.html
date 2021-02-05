@@ -38,9 +38,9 @@ import datetime
 import math
 import networkx as nx
 import collections
-import matplotlib.pyplot as plt
+#import matplotlib.pyplot as plt
 import random
-import treelib as bt
+#import treelib as bt
 import pickle
 import itertools
 from scipy.stats import kurtosis, skew, kendalltau
@@ -124,7 +124,8 @@ def get_min_spanning_tree(G, weight=&#34;weight&#34;, is_distance=True, new_weig
 
 def remove_edges_per_node(G, treshold=None, percentage=None, direction=&#34;bottom&#34;, attribute=&#34;weight&#34;):
     &#34;&#34;&#34;
-    Removes for each node its weakest or strongest edges, while keeping at least 1 edge per node. If all are below thr treshold then none are removed.
+    Removes for each node its weakest or strongest edges, while keeping at least 1 edge per node. 
+    If all are below thr treshold then none are removed.
 
     Parameters:
         G (networkX graph object):
@@ -833,7 +834,8 @@ If is "betweenness" then either treshold or percentage can be set and top/ botto
 <span>def <span class="ident">remove_edges_per_node</span></span>(<span>G, treshold=None, percentage=None, direction='bottom', attribute='weight')</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Removes for each node its weakest or strongest edges, while keeping at least 1 edge per node. If all are below thr treshold then none are removed.</p>
+<section class="desc"><p>Removes for each node its weakest or strongest edges, while keeping at least 1 edge per node.
+If all are below thr treshold then none are removed.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt>G (networkX graph object):</dt>
@@ -857,7 +859,8 @@ If is "betweenness" then either treshold or percentage can be set and top/ botto
 </summary>
 <pre><code class="python">def remove_edges_per_node(G, treshold=None, percentage=None, direction=&#34;bottom&#34;, attribute=&#34;weight&#34;):
     &#34;&#34;&#34;
-    Removes for each node its weakest or strongest edges, while keeping at least 1 edge per node. If all are below thr treshold then none are removed.
+    Removes for each node its weakest or strongest edges, while keeping at least 1 edge per node. 
+    If all are below thr treshold then none are removed.
 
     Parameters:
         G (networkX graph object):
