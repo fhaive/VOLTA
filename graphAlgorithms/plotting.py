@@ -236,3 +236,39 @@ def plot_correlation_clusterings(clusterings, xlabels=None, ylabels=None, size=(
 
 
     return f, cor
+
+
+def plot_graph(G, pos=None, with_labels=False, node_color="#A0A0A0", edge_color="#A0A0A0",node_size=1000, width=2.0, node_border="black", figsize=(5,5)):
+    """
+    Plots a Graph object.
+    
+    Parameters:
+        G (networkx graph object): graph to be plotted
+        pos (pos or None): node positions as returned by networkx position functions. If None
+            position based on a spring layeout is calculated.
+        with_labels (boolean): if True node labels are plotted.
+        node_color (string or list): if string needs to be hex code of node color to be used. If it is a list
+            it needs to be in the same order as G.nodes() and a color needs to be assigned for each node.
+        edge_color (string or list): is string needs to be hex code of edge color to be used. If it is a list
+            it needs to be in the same order as G.edges() and color needs to be assigned for each edge.
+        node_size (int): size of nodes to be plotted.
+        width (float): edge width to be plotted.
+        node_border (string): hex code of node border to be plotted.
+        figsize (tuple): dimension of to be plotted figure
+        
+    Returns:
+        fig (matplotlib figure): figure
+        pos (dict): used node positining for plots
+    
+    """
+    
+
+
+    fig = plt.figure(figsize=figsize) 
+    
+    if pos is None:
+        pos = nx.spring_layout(G)
+
+    f = nx.draw(G, pos, with_labels = with_labels, node_size=node_size, node_color=node_color, edge_color=edge_color, width=width, edgecolors=node_border)
+
+    return fig, pos
