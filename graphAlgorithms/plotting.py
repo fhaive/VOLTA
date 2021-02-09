@@ -9,6 +9,10 @@ from collections import Counter
 import matplotlib.patches
 import numpy as np
 from scipy.stats.stats import pearsonr 
+import networkx as nx
+import random
+import graphAlgorithms.communities as communities
+
 
 def plot_heatmap(matrix, xlabels=None, ylabels=None, size=(10,8), cmap="bone", annotation=False):
 
@@ -272,3 +276,75 @@ def plot_graph(G, pos=None, with_labels=False, node_color="#A0A0A0", edge_color=
     f = nx.draw(G, pos, with_labels = with_labels, node_size=node_size, node_color=node_color, edge_color=edge_color, width=width, edgecolors=node_border)
 
     return fig, pos
+
+
+
+
+
+def plot_communities(G, communities, pos=None, with_labels=False, node_color=None, edge_color="#A0A0A0",node_size=1000, width=2.0, node_border="black", figsize=(5,5)):
+    """
+    Plots a Graph object.
+    
+    Parameters:
+        G (networkx graph object): graph to be plotted
+        communities (dict): where node ID is key and value is list of communities this node belongs to. 
+            Only the first node assignment will be considered during color selection. If a default dict is returned by
+            the selected community algorithms it needs to be transformed with dict(defaultdict).
+        pos (pos or None): node positions as returned by networkx position functions. If None
+            position based on a spring layeout is calculated.
+        with_labels (boolean): if True node labels are plotted.
+        node_color (list):  If it is a list it needs to be in the same order as G.nodes() 
+            and a color needs to be assigned for each node, which should correspond to its community assignment.
+            If it is None random colors for each community are generated.
+        edge_color (string or list): is string needs to be hex code of edge color to be used. If it is a list
+            it needs to be in the same order as G.edges() and color needs to be assigned for each edge.
+        node_size (int): size of nodes to be plotted.
+        width (float): edge width to be plotted.
+        node_border (string): hex code of node border to be plotted.
+        figsize (tuple): dimension of to be plotted figure
+        
+    Returns:
+        fig (matplotlib figure): figure
+        pos (dict): used node positining for plots
+        colors (dict): where id is community ID and value is assigned color
+    
+    """
+    
+    if node_color is None:
+        #number of communities / colors to generate
+        n = communities.get_number_of_communities(communities)
+
+        colors = {}
+        for i in range(n):
+            #generate colors
+
+            random_number = random.randint(0,16777215)
+            hex_number = str(hex(random_number))
+            color ='#'+ hex_number[2:]
+            while len(color) < 7:
+                color = color + "0"
+            colors[i] = color
+
+
+        node_color = []
+        for node in G.nodes():
+            node_color.append(colors[communities[node][0]])
+
+
+    fig = plt.figure(figsize=figsize) 
+    
+    if pos is None:
+        pos = nx.spring_layout(G)
+
+    f = nx.draw(G, pos, with_labels = with_labels, node_size=node_size, node_color=node_color, edge_color=edge_color, width=width, edgecolors=node_border)
+    
+    
+    #generate a dummy plot in order to add a color ledgend
+    
+    for v in range(n):
+        plt.scatter([],[], c=colors[v], label='Community{}'.format(v))
+        
+        
+    fig.legend()
+
+    return fig, pos, colors
