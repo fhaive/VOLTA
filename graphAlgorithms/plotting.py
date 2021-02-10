@@ -1,5 +1,5 @@
 '''
-Contains some simple plotting functions.
+Contains some plotting functions.
 '''
 
 
