@@ -54,7 +54,7 @@ def consensus_clustering(clusterings, seed=123, threshold=0.75, per_node=True, r
         rep (int): how often louvain clustering is reapeated on the agreement graph.
 
     Returns:
-        consensus class labels (array):
+        consensus class labels (array): of clustering
       
     
     """
@@ -549,7 +549,7 @@ def create_mean_distance_matrix(matrices, set_diagonal = True):
         set_diagonal (boolean): if True diagonal values are set to 0 automatically - this may be helpful if the distance measures applied do not return 0 distance for the same object.
         
     Returns:
-        mean distance matrix (matrix):
+        mean distance matrix (matrix): of input matrices
     """
 
     if len(matrices) < 2:
@@ -587,7 +587,7 @@ def create_median_distance_matrix(matrices, set_diagonal = True):
         set_diagonal (boolean): if True diagonal values are set to 0 automatically - this may be helpful if the distance measures applied do not return 0 distance for the same object.
         
     Returns:
-        median distance matrix (matrix):
+        median distance matrix (matrix): of input matrices
     """
     if len(matrices) < 2:
         print("matrices needs to contain at least two items in order to estimate its median")
@@ -625,7 +625,7 @@ def hierarchical_clustering(distance, n_clusters=2, linkage="complete"):
         linkage (str): linkage method to be used. Options are "average", "complete" or "single".
             
     Returns:
-        labels (array): 
+        labels (array): of clustering
     """
 
     if n_clusters < 2 or n_clusters > len(distance):
@@ -653,7 +653,7 @@ def affinityPropagation_clustering(distance):
         distance (matrix): distance matrix to be used for clustering.
         
     Returns:
-        labels (array): 
+        labels (array): of clustering
     """
 
     
@@ -690,7 +690,7 @@ def convert_clusters(clusters, v):
         v (list): of item IDs as contained in clusters.
 
     Returns:
-        labels (array): 
+        labels (array): of clustering
     """
     d = {}
     for vv in v:
@@ -714,7 +714,7 @@ def optics_clustering(distance, radius=2, neighbors=2, n_clusters=2):
         n_clusters (int): amount of clusters that should be found.
 
     Returns:
-            labels (array):
+            labels (array): of clustering
     """
 
     if n_clusters < 2 or n_clusters > len(distance):
@@ -752,7 +752,7 @@ def kmedoids_clustering(distance, n_clusters=2):
         n_clusters (int): amount of clusters that should be found.
         
     Returns:
-        labels (array):
+        labels (array): of clustering
         created mediods (list): random created mediods used for clustering
     """
 

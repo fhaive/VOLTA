@@ -28,7 +28,7 @@ def construct_tree(H,  root=None, nr_trees=1, type="level", edge_attribute="weig
 	Function to construct a binary tree from a graph object. This can reduce complexity since number of edges is reduced.
 
 	Parameters:
-		H (networkX graph object):
+		H (networkX graph object): graph to estimate on.
 		root (None, int or str): provide node ID which should be selected as root of the tree. If None then a random node is selected.
 		nr_trees (int): specifies how many trees are constructed. If root is None then multiple random trees can be created.
 		type (str): if is "level" then a hierarchical tree is created. Paths from the root indicate how far each nodes are from the root node. Edge weights are not considered.
@@ -406,8 +406,8 @@ def tree_node_level_similarity(t1, t2, type="percentage"):
 	Computes the similarity of nodes (based on their level in two rooted trees t1 and t2).
 
 	Parameters:
-		t1 (treelib tree object):
-		t2 (treelib tree object)
+		t1 (treelib tree object): first tree to compare
+		t2 (treelib tree object): second tree to compare with
 		type (str): defines comparison method. If type = "percentage" then for each level the percentage of shared nodes based on the max possible (length of smaller) shared nodes is estimated.
 					If type = "correlation" then Kendall rank correlation is estimated. Node rankings are estimated based on their level in the trees. If there are unequal number of nodes a subset of the larger one is selected.
 					If type = "smc" then the smc distance for each level is estimated.
@@ -599,10 +599,10 @@ def tree_depth(t):
 	Returns depth of a tree
 
 	Parameters:
-		t (treelib tree object):
+		t (treelib tree object): tree to estimate on.
 
 	Returns:
-		tree depth (int):
+		tree depth (int): depth of provided tree
 	"""
 	return t.depth()
 
@@ -612,10 +612,10 @@ def number_of_leaves(t):
 	Returns the number of leaves in t.
 
 	Parameters:
-		t (treelib tree object):
+		t (treelib tree object): tree to estimate on.
 
 	Returns:
-		leaves (int):
+		leaves (int): number of leaves of provided tree
 	"""
 
 	return (len(t.leaves()))
@@ -625,7 +625,7 @@ def leave_path_metrics(t):
 	Estimates the root - leave pathlength distribution.
 
 	Parameters:
-		t (treelib tree object):
+		t (treelib tree object): tree to estimate on.
 
 	Returns:
 		distribution (dict): keys are mean path length, median path length, std path length, skw path length, kurtosis path length, altitude, altitude magnitude, total exterior path length, total exterior magnitude
@@ -726,7 +726,7 @@ def tree_asymmetry(t, nr_leaves):
 	
 
 	Parameters:
-		t (treelib tree object):
+		t (treelib tree object): tree to estimate on.
 		nr_leaves (int): number of leave nodes contained in t.
 
 	Returns:
@@ -837,7 +837,7 @@ def strahler_branching_ratio(t):
 	Calculates the strahler branching ratio of a tree t.
 
 	Parameters:
-		t (treelib tree object):
+		t (treelib tree object): tree to estimate on.
 
 	Returns:
 		barnching distribution (dict): keys are mean branching ratio, median branching ratio, std branching ratio, skw branching ratio, kurtosis branching ratio
@@ -916,7 +916,7 @@ def exterior_interior_edges(t):
 	Estimates the number of exterior (EE) & interior (IE) edges and their magnitude
 
 	Parameters:
-		t (treelib tree object):
+		t (treelib tree object): tree to estimate on.
 
 	Returns:
 		exterior / interior edges (dict): keys are EE, EI, EE magnitude, EI magnitude

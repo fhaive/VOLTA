@@ -177,7 +177,7 @@ def build_graph_remove_isolates(mat):
         mat (matrix): adjacency matrix
     
     Returns:
-        graph (networkX graph object):
+        graph (networkX graph object): constructed from adjacency matrix
         
     """
     
@@ -270,7 +270,7 @@ def get_statistical_overrepresented_communities(clusters_networks, nodes, pval=0
         
     Returns:
         communities (dict): key is cluster ID and value is the community ID. Ordered the same way as nodes. 
-        Communities with a single node, indicates that that node was not statistically significant connectet to any other node.
+            Communities with a single node, indicates that that node was not statistically significant connectet to any other node.
     """
 
     statistical_communities_back = {}

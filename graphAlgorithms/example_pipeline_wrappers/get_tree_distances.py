@@ -140,10 +140,10 @@ def helper_tree_sim(networks, nodes, tree_type="level", edge_attribute="weight",
 										if False the initial cycles are estimated based on steps only with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.cycle_basis.html#networkx.algorithms.cycles.cycle_basis
         return_all (boolean): if True intermediate similarity results are returned as well else only the similarity matrices between the networks are returned.
     Returns:
-        average node level overlap percentage (numpy matrix): 
-        average node level SMC (numpy matrix):
-        average node level Kendall Rank Correlation (numpy matrix):
-        average node level jaccard index (numpy matrix):
+        average node level overlap percentage (numpy matrix): between network pairs
+        average node level SMC (numpy matrix): between network pairs
+        average node level Kendall Rank Correlation (numpy matrix): between network pairs
+        average node level jaccard index (numpy matrix): between network pairs
         intermediate percentage scores (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
         intermediate SMC scores (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
         intermediate Kendall Rank correlation (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.

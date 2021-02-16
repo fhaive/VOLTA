@@ -24,7 +24,7 @@ def graphlet_helper(network, estimate_on=50, edge_attribute="weight", motif_min_
     Estimates graphlets of different sizes  on a networks based on a random selection of nodes.
 
     Parameters:
-        network (networkX graph object)
+        network (networkX graph object): graph object to estimate on.
         estimate_on (int): graphlets are estimated based on a random selection of estimate_on nodes which cannot be larger than the number of nodes in G
         edge_attribute (str or None): if not None, then based on the provided edge attribute the size of the graphlets will be returned as list, which can be used to estimate its size distributions
         motif_min_siz (int): nodes size of smallest graphlet to be counted. Minimum permitted value is 2.

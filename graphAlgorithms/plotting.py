@@ -61,7 +61,7 @@ def plot_hierarchical_clustering(matrix, xlabels=None, ylabels=None, size=(10,8)
         cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
 
     Returns:
-        fig (matplotlib figure): heatmap object
+        fig (matplotlib figure): cluster-heatmap object
     """
 
     if xlabels is None:
@@ -91,7 +91,7 @@ def plot_clustering_heatmap(clusters, matrix, labels, cmap="bone", size=(10,8)):
         size (tuple): figuresize
 
     Returns:
-        fig (matplotlib figure):
+        fig (matplotlib figure): of clustering
     """
 
 
@@ -281,13 +281,13 @@ def plot_graph(G, pos=None, with_labels=False, node_color="#A0A0A0", edge_color=
 
 
 
-def plot_communities(G, communities, pos=None, with_labels=False, node_color=None, edge_color="#A0A0A0",node_size=1000, width=2.0, node_border="black", figsize=(5,5)):
+def plot_communities(G, com, pos=None, with_labels=False, node_color=None, edge_color="#A0A0A0",node_size=1000, width=2.0, node_border="black", figsize=(5,5)):
     """
     Plots a Graph object.
     
     Parameters:
         G (networkx graph object): graph to be plotted
-        communities (dict): where node ID is key and value is list of communities this node belongs to. 
+        com (dict): where node ID is key and value is list of communities this node belongs to. 
             Only the first node assignment will be considered during color selection. If a default dict is returned by
             the selected community algorithms it needs to be transformed with dict(defaultdict).
         pos (pos or None): node positions as returned by networkx position functions. If None
@@ -312,7 +312,7 @@ def plot_communities(G, communities, pos=None, with_labels=False, node_color=Non
     
     if node_color is None:
         #number of communities / colors to generate
-        n = communities.get_number_of_communities(communities)
+        n = communities.get_number_of_communities(com)
 
         colors = {}
         for i in range(n):
@@ -328,7 +328,7 @@ def plot_communities(G, communities, pos=None, with_labels=False, node_color=Non
 
         node_color = []
         for node in G.nodes():
-            node_color.append(colors[communities[node][0]])
+            node_color.append(colors[com[node][0]])
 
 
     fig = plt.figure(figsize=figsize) 

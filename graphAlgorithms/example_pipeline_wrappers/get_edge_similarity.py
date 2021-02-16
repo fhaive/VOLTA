@@ -78,7 +78,7 @@ def preprocess_edge_list(networks, is_file = False, location = None, names= None
         names (list or None): list of network names in same order as networks. If is_file is True then names will be used to store pickled objects.
 
     Returns:
-        networks with edge IDs or their pickled location (list):
+        networks with edge IDs or their pickled location (list): updated network list objects
         edge ID mapping (dict): keys are str of node IDs building an edge in format "node1, node2" and values are assigned ID.
         
     """
@@ -242,15 +242,15 @@ def estimate_similarities_edges(network_lists, sorted_networks, binary,  kendall
         in_async (boolean): if True then run in async where applicable.
 
     Returns:
-        jaccard similarity (numpy matrix):
-        jaccard distance (numpy matrix):
-        percentage of shared edges (numpy matrix):
-        kendall correlation coefficient based on top edges (numpy matrix):
-        kendall p value based on top edges (numpy matrix):
-        kendall correlation coefficient based on bottom edges (numpy matrix):
-        kendall p value based on bottom edges (numpy matrix):
-        hamming distance (numpy matrix):
-        SMC (numpy matrix):
+        jaccard similarity (numpy matrix): matrix of jaccard similarity between network pairs
+        jaccard distance (numpy matrix): matrix of jaccard distance between network pairs
+        percentage of shared edges (numpy matrix): matrix of shared edge percentage between network pairs
+        kendall correlation coefficient based on top edges (numpy matrix): matrix of kendall coefficient between network pairs
+        kendall p value based on top edges (numpy matrix): matrix of kendall coefficient pval between network pairs
+        kendall correlation coefficient based on bottom edges (numpy matrix): matrix of kendall coefficient between network pairs
+        kendall p value based on bottom edges (numpy matrix): matrix of kendall coefficient pval between network pairs
+        hamming distance (numpy matrix): matrix of hamming distance between network pairs
+        SMC (numpy matrix): matrix of SMC coefficient between network pairs
 
     """
 

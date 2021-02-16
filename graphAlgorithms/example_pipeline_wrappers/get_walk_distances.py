@@ -168,10 +168,10 @@ def helper_walk_sim(networks, performed_walks, nodes, network_ids, undirected=Tr
         edges_ranked (dict): as returned by helper_get_counts())
 
     Returns:
-        correlation edges (numpy matrix):
-        correlation nodes (numpy matrix):
-        correlation edges p-value (numpy matrix):
-        correlation nodes p-value (numpy matrix):
+        correlation edges (numpy matrix): between network pairs
+        correlation nodes (numpy matrix): between network pairs
+        correlation edges p-value (numpy matrix): between network pairs
+        correlation nodes p-value (numpy matrix): between network pairs
         intermediate correaltion scores edges (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes.
         intermediate correaltion scores nodes (dict):  if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes.
         intermediate p-values edges (dict): if return_all is True. Key is tuple of network IDs and value is list of p-values ordered as in nodes.
@@ -341,7 +341,7 @@ def helper_walks_multi(net, nodes, network_id=0, steps=10, number_of_walks=10, d
     Estimates random walks for specific or random select starting node on multiple cores.
 
     Parameters:
-        net (NetworkX graph object):
+        net (NetworkX graph object): graph to estimate on
         nodes (list): nodes to be investigated.
         network_id (str or int): name of network that can be set custom.
         steps (int): is size of random walk
