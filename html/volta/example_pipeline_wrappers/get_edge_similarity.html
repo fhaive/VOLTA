@@ -1,0 +1,759 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.5" />
+<title>volta.example_pipeline_wrappers.get_edge_similarity API documentation</title>
+<meta name="description" content="This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
+based on their similarity in edges." />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>volta.example_pipeline_wrappers.get_edge_similarity</code></h1>
+</header>
+<section id="section-intro">
+<p>This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
+based on their similarity in edges.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
+based on their similarity in edges.
+&#34;&#34;&#34;
+
+import networkx as nx
+import pandas as pd
+import csv
+import random
+import sys
+import volta.distances.global_distances as global_distances
+import volta.distances.local as local
+import volta.simplification as simplification
+import volta.distances.trees as trees
+import volta.distances.node_edge_similarities as node_edge_similarities
+import pickle
+from scipy.stats import kurtosis, skew, kendalltau
+import statistics
+import numpy as np
+import scipy
+
+def preprocess_graph(net_temp, attribute=&#34;weight&#34;, location = None, labels = None):
+    &#34;&#34;&#34;
+    Converts list of networkX graph objects into a list of sublist format, which is used by most functions in this package.
+
+    Parameters:
+        net_temp (list): list of networkX graph objects
+        attribute (str): edge weight label to be converted
+        location (str or None): if None the converted object is returned. Else it needs to be file location where the converted objects should be pickled and their locations will be returned instead.
+        labels (list or None): list of network names in same order as net_temp. Only needs to be provided if location is not None.
+        
+    Return:
+        converted objects (list): if location is None list of converted objects is returned else list of pickled locations is returned.
+    &#34;&#34;&#34;
+    
+    if location is None:
+        networks = []
+        for n in net_temp:
+            temp = []
+            edges = list(n.edges())
+            for edge in edges:
+                temp.append([edge[0], edge[1], n[edge[0]][edge[1]][attribute]])
+
+            networks.append(temp)
+
+        return networks
+
+    else:
+        networks = []
+        for i in range(len(net_temp)):
+            path = net_temp[i]
+            name = labels[i]
+            n=nx.read_weighted_edgelist(path)
+
+            temp = []
+            edges = list(n.edges())
+            for edge in edges:
+                temp.append([edge[0], edge[1], n[edge[0]][edge[1]][attribute]])
+
+                        
+            #save converted
+            print(&#34;save&#34;, name)
+            with open(location + name+&#34;.pckl&#34;, &#34;wb&#34;) as f:
+                pickle.dump(temp, f, protocol=4)
+
+            networks.append(location + name+&#34;.pckl&#34;)
+
+        return networks
+
+def preprocess_edge_list(networks, is_file = False, location = None, names= None):
+    &#34;&#34;&#34;
+    Maps edges to IDs.
+
+    Parameters:
+        networks (list): list of converted networks or list of pickled file locations as returned by preprocess_graph()
+        is_file (boolean): if False then networks is list converted objects. If True then networks is list of file locations to the pickled objects instead.
+        location (str or None): if is_file is True then output of this function will be pickled to location.
+        names (list or None): list of network names in same order as networks. If is_file is True then names will be used to store pickled objects.
+
+    Returns:
+        networks with edge IDs or their pickled location (list): updated network list objects
+        edge ID mapping (dict): keys are str of node IDs building an edge in format &#34;node1, node2&#34; and values are assigned ID.
+        
+    &#34;&#34;&#34;
+
+    if not is_file:
+        for i in range(len(networks)):
+            if i == 0:
+                m, n = node_edge_similarities.map_edge_to_id(networks[i], mapping={}, next_value=0)
+
+            else:
+                m, n = node_edge_similarities.map_edge_to_id(networks[i], mapping=m, next_value=n)
+
+        network_lists = []
+        for net in networks:
+            network_lists.append(node_edge_similarities.construct_mapped_edge(m, net))
+
+        return network_lists, m
+
+
+    else:
+        for i in range(len(networks)):
+            #load file from disk
+            
+            with open(networks[i], &#34;rb&#34;) as f:
+                net = pickle.load(f)
+
+            if i % 10 == 0:
+                print(&#34;loaded &#34;, i , &#34;network from disk out of &#34;, len(networks))
+
+
+            if i == 0:
+                m, n = node_edge_similarities.map_edge_to_id(net, mapping={}, next_value=0)
+
+            else:
+                m, n = node_edge_similarities.map_edge_to_id(net, mapping=m, next_value=n)
+
+
+        network_lists = []
+        for i in range(len(networks)):
+            with open(networks[i], &#34;rb&#34;) as f:
+                net = pickle.load(f)
+
+            lst = list(dict.fromkeys(node_edge_similarities.construct_mapped_edge(m, net)))
+            #save
+            name = names[i]
+
+            with open(location + name+&#34;.pckl&#34;, &#34;wb&#34;) as f:
+                pickle.dump(lst, f, protocol=4)
+
+            print(&#34;saved&#34;)
+            network_lists.append(location + name+&#34;.pckl&#34;)
+
+        return network_lists, m
+
+def sort_list_and_get_shared(networks, m, network_lists, labels, is_file = False, in_async=True):
+    &#34;&#34;&#34;
+    Preprocessing function to sort edge list after weight, convert to a binary format and claculate shared edges.
+
+    parameters:
+        networks (list): list of converted networks or list of pickled file locations as returned by preprocess_graph().
+        m (dict): edge to ID mapping as returned by preprocess_edge_list().
+        is_file (boolean): if False then networks is list converted objects. If True then networks is list of file locations to the pickled objects instead.
+        network_lists (list): list of converted edge IDs as returned by  preprocess_edge_list()
+        labels (list): list of network names in same order as networks. 
+        in_async (boolean): if True then run in async where applicable.
+
+    Returns:
+        sorted networks (list): contains sorted edge list.
+        shared edges (dict): key is edge ID as provided in m and value is list of network labels containing this edge.
+        binary (list): binary representation of network edges based on the union of edges in all provided networks.
+        
+    &#34;&#34;&#34;
+
+    sorted_networks = []
+    if not is_file:
+        for net in networks:
+            sorted_networks.append(node_edge_similarities.sort_edge_list(net, m))
+
+    else:
+        for path in networks:
+            with open(path, &#34;rb&#34;) as f:
+                net = pickle.load(f)
+
+            sorted_networks.append(node_edge_similarities.sort_edge_list(net, m))
+
+    shared_edges = node_edge_similarities.compute_shared_layers(network_lists, labels, in_async=in_async)
+
+    binary = node_edge_similarities.compute_binary_layer(shared_edges, layers=labels)
+
+    return sorted_networks, shared_edges, binary
+
+def sort_list(networks, m,  is_file = False, location=None):
+    &#34;&#34;&#34;
+    Sorts edge list after weight.
+
+    Parameters:
+        networks (list): networks (list): list of converted networks or list of pickled file locations as returned by preprocess_graph().
+        m (dict): edge to ID mapping as returned by preprocess_edge_list().
+        is_file (boolean): if False then networks is list converted objects. If True then networks is list of file locations to the pickled objects instead and output will be saved to file as well.
+        location (str or None): location where to pickle output to if is_file is True.
+        
+    Returns:
+        sorted (list): list of networks containing sorted edge list or if_file is True then contains the file locations of the pickled objects.
+        
+    &#34;&#34;&#34;
+
+    sorted_networks = []
+    if not is_file:
+        for net in networks:
+            sorted_networks.append(node_edge_similarities.sort_edge_list(net, m))
+
+    else:
+        for path in networks:
+            with open(path, &#34;rb&#34;) as f:
+                net = pickle.load(f)
+            name =  path.split(&#34;/&#34;)[-1].replace(&#34;.pckl&#34;, &#34;&#34;)
+            temp = node_edge_similarities.sort_edge_list(net, m)
+
+            with open(location + name+&#34;.pckl&#34;, &#34;wb&#34;) as f:
+                pickle.dump(temp, f, protocol=4)
+
+            sorted_networks.append(location + name+&#34;.pckl&#34;)
+
+    
+
+    return sorted_networks
+
+
+def get_shared(network_lists, labels, is_file = False):
+    &#34;&#34;&#34;
+    Gets shared edges between networks.
+
+    Parameters:
+        network_lists (list): list of converted edge IDs as returned by  preprocess_edge_list().
+        labels (list): list of network names in same order as networks. 
+        is_file (boolean): if False then network_lists is list of converted objects. If True then networks is list of file locations to the pickled objects instead.
+       
+    Returns:
+        shared edges (dict): key is edge ID as provided in m and value is list of network labels containing this edge.
+    &#34;&#34;&#34;
+
+    
+
+    shared_edges = node_edge_similarities.compute_shared_layers(network_lists, labels,  is_file=is_file)
+
+    binary = node_edge_similarities.compute_binary_layer(shared_edges, layers=labels)
+
+    return shared_edges, binary
+
+
+def estimate_similarities_edges(network_lists, sorted_networks, binary,  kendall_x=50, is_file=True, in_async=True):
+    &#34;&#34;&#34;
+    Wrapper function to estimate similarity between networks based on their edges.
+
+    Parameters:
+        network_lists (list): list of converted edge IDs as returned by preprocess_edge_list().
+        sorted_networks (list): list of edges sorted by weight as returned by sort_list_and_get_shared () or sort_list().
+        binary (list): list of binary edge representation as returned by sort_list_and_get_shared() or node_edge_similarities.compute_binary_layer().
+        kendall_x (int): top/bottom number of edges to be considered when estimating kendall rank correlation.
+        is_file (boolean): if False then network_lists is list of converted objects. If True then network_lists is list of file locations to the pickled objects instead.
+        in_async (boolean): if True then run in async where applicable.
+
+    Returns:
+        jaccard similarity (numpy matrix): matrix of jaccard similarity between network pairs
+        jaccard distance (numpy matrix): matrix of jaccard distance between network pairs
+        percentage of shared edges (numpy matrix): matrix of shared edge percentage between network pairs
+        kendall correlation coefficient based on top edges (numpy matrix): matrix of kendall coefficient between network pairs
+        kendall p value based on top edges (numpy matrix): matrix of kendall coefficient pval between network pairs
+        kendall correlation coefficient based on bottom edges (numpy matrix): matrix of kendall coefficient between network pairs
+        kendall p value based on bottom edges (numpy matrix): matrix of kendall coefficient pval between network pairs
+        hamming distance (numpy matrix): matrix of hamming distance between network pairs
+        SMC (numpy matrix): matrix of SMC coefficient between network pairs
+
+    &#34;&#34;&#34;
+
+    j, percentage = node_edge_similarities.shared_elements_multiple(network_lists,  labels=None, percentage=True, jaccard=True, jaccard_similarity = True, penalize_percentage=False, is_file=is_file, in_async=in_async)
+    jd = node_edge_similarities.to_distance(j)
+
+    kendall_top ,b_top, x = node_edge_similarities.build_similarity_matrix_for_binary_and_ranked(sorted_networks, compute=&#34;kendall&#34;, kendall_usage=&#34;top&#34;, kendall_x = kendall_x)
+
+    kendall_bottom ,b_bottom, x = node_edge_similarities.build_similarity_matrix_for_binary_and_ranked(sorted_networks, compute=&#34;kendall&#34;, kendall_usage=&#34;bottom&#34;, kendall_x = kendall_x)
+
+    hamming, p = node_edge_similarities.build_similarity_matrix_for_binary_and_ranked(binary, compute=&#34;hamming&#34;)
+
+    smc, p = node_edge_similarities.build_similarity_matrix_for_binary_and_ranked(binary, compute=&#34;smc&#34;)
+
+
+    return j, jd, percentage, kendall_top,b_top, kendall_bottom, b_bottom, hamming, smc</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="volta.example_pipeline_wrappers.get_edge_similarity.estimate_similarities_edges"><code class="name flex">
+<span>def <span class="ident">estimate_similarities_edges</span></span>(<span>network_lists, sorted_networks, binary, kendall_x=50, is_file=True, in_async=True)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Wrapper function to estimate similarity between networks based on their edges.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>network_lists</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of converted edge IDs as returned by preprocess_edge_list().</dd>
+<dt><strong><code>sorted_networks</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of edges sorted by weight as returned by sort_list_and_get_shared () or sort_list().</dd>
+<dt><strong><code>binary</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of binary edge representation as returned by sort_list_and_get_shared() or node_edge_similarities.compute_binary_layer().</dd>
+<dt><strong><code>kendall_x</code></strong> :&ensp;<code>int</code></dt>
+<dd>top/bottom number of edges to be considered when estimating kendall rank correlation.</dd>
+<dt><strong><code>is_file</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if False then network_lists is list of converted objects. If True then network_lists is list of file locations to the pickled objects instead.</dd>
+<dt><strong><code>in_async</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True then run in async where applicable.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>jaccard</code> <code>similarity</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code> of <code>jaccard</code> <code>similarity</code> <code>between</code> <code>network</code> <code>pairs</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>jaccard</code> <code>distance</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code> of <code>jaccard</code> <code>distance</code> <code>between</code> <code>network</code> <code>pairs</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>percentage</code> of <code>shared</code> <code>edges</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code> of <code>shared</code> <code>edge</code> <code>percentage</code> <code>between</code> <code>network</code> <code>pairs</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>kendall</code> <code>correlation</code> <code>coefficient</code> <code>based</code> <code>on</code> <code>top</code> <code>edges</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code> of <code>kendall</code> <code>coefficient</code> <code>between</code> <code>network</code> <code>pairs</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>kendall</code> <code>p</code> <code>value</code> <code>based</code> <code>on</code> <code>top</code> <code>edges</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code> of <code>kendall</code> <code>coefficient</code> <code>pval</code> <code>between</code> <code>network</code> <code>pairs</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>kendall</code> <code>correlation</code> <code>coefficient</code> <code>based</code> <code>on</code> <code>bottom</code> <code>edges</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code> of <code>kendall</code> <code>coefficient</code> <code>between</code> <code>network</code> <code>pairs</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>kendall</code> <code>p</code> <code>value</code> <code>based</code> <code>on</code> <code>bottom</code> <code>edges</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code> of <code>kendall</code> <code>coefficient</code> <code>pval</code> <code>between</code> <code>network</code> <code>pairs</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>hamming</code> <code>distance</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code> of <code>hamming</code> <code>distance</code> <code>between</code> <code>network</code> <code>pairs</code></dt>
+<dd>&nbsp;</dd>
+<dt><strong><code>SMC</code></strong> :&ensp;<code>numpy</code> <code>matrix</code></dt>
+<dd>matrix of SMC coefficient between network pairs</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def estimate_similarities_edges(network_lists, sorted_networks, binary,  kendall_x=50, is_file=True, in_async=True):
+    &#34;&#34;&#34;
+    Wrapper function to estimate similarity between networks based on their edges.
+
+    Parameters:
+        network_lists (list): list of converted edge IDs as returned by preprocess_edge_list().
+        sorted_networks (list): list of edges sorted by weight as returned by sort_list_and_get_shared () or sort_list().
+        binary (list): list of binary edge representation as returned by sort_list_and_get_shared() or node_edge_similarities.compute_binary_layer().
+        kendall_x (int): top/bottom number of edges to be considered when estimating kendall rank correlation.
+        is_file (boolean): if False then network_lists is list of converted objects. If True then network_lists is list of file locations to the pickled objects instead.
+        in_async (boolean): if True then run in async where applicable.
+
+    Returns:
+        jaccard similarity (numpy matrix): matrix of jaccard similarity between network pairs
+        jaccard distance (numpy matrix): matrix of jaccard distance between network pairs
+        percentage of shared edges (numpy matrix): matrix of shared edge percentage between network pairs
+        kendall correlation coefficient based on top edges (numpy matrix): matrix of kendall coefficient between network pairs
+        kendall p value based on top edges (numpy matrix): matrix of kendall coefficient pval between network pairs
+        kendall correlation coefficient based on bottom edges (numpy matrix): matrix of kendall coefficient between network pairs
+        kendall p value based on bottom edges (numpy matrix): matrix of kendall coefficient pval between network pairs
+        hamming distance (numpy matrix): matrix of hamming distance between network pairs
+        SMC (numpy matrix): matrix of SMC coefficient between network pairs
+
+    &#34;&#34;&#34;
+
+    j, percentage = node_edge_similarities.shared_elements_multiple(network_lists,  labels=None, percentage=True, jaccard=True, jaccard_similarity = True, penalize_percentage=False, is_file=is_file, in_async=in_async)
+    jd = node_edge_similarities.to_distance(j)
+
+    kendall_top ,b_top, x = node_edge_similarities.build_similarity_matrix_for_binary_and_ranked(sorted_networks, compute=&#34;kendall&#34;, kendall_usage=&#34;top&#34;, kendall_x = kendall_x)
+
+    kendall_bottom ,b_bottom, x = node_edge_similarities.build_similarity_matrix_for_binary_and_ranked(sorted_networks, compute=&#34;kendall&#34;, kendall_usage=&#34;bottom&#34;, kendall_x = kendall_x)
+
+    hamming, p = node_edge_similarities.build_similarity_matrix_for_binary_and_ranked(binary, compute=&#34;hamming&#34;)
+
+    smc, p = node_edge_similarities.build_similarity_matrix_for_binary_and_ranked(binary, compute=&#34;smc&#34;)
+
+
+    return j, jd, percentage, kendall_top,b_top, kendall_bottom, b_bottom, hamming, smc</code></pre>
+</details>
+</dd>
+<dt id="volta.example_pipeline_wrappers.get_edge_similarity.get_shared"><code class="name flex">
+<span>def <span class="ident">get_shared</span></span>(<span>network_lists, labels, is_file=False)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Gets shared edges between networks.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>network_lists</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of converted edge IDs as returned by
+preprocess_edge_list().</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of network names in same order as networks. </dd>
+<dt><strong><code>is_file</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if False then network_lists is list of converted objects. If True then networks is list of file locations to the pickled objects instead.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>shared edges (dict): key is edge ID as provided in m and value is list of network labels containing this edge.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_shared(network_lists, labels, is_file = False):
+    &#34;&#34;&#34;
+    Gets shared edges between networks.
+
+    Parameters:
+        network_lists (list): list of converted edge IDs as returned by  preprocess_edge_list().
+        labels (list): list of network names in same order as networks. 
+        is_file (boolean): if False then network_lists is list of converted objects. If True then networks is list of file locations to the pickled objects instead.
+       
+    Returns:
+        shared edges (dict): key is edge ID as provided in m and value is list of network labels containing this edge.
+    &#34;&#34;&#34;
+
+    
+
+    shared_edges = node_edge_similarities.compute_shared_layers(network_lists, labels,  is_file=is_file)
+
+    binary = node_edge_similarities.compute_binary_layer(shared_edges, layers=labels)
+
+    return shared_edges, binary</code></pre>
+</details>
+</dd>
+<dt id="volta.example_pipeline_wrappers.get_edge_similarity.preprocess_edge_list"><code class="name flex">
+<span>def <span class="ident">preprocess_edge_list</span></span>(<span>networks, is_file=False, location=None, names=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Maps edges to IDs.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>networks</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of converted networks or list of pickled file locations as returned by preprocess_graph()</dd>
+<dt><strong><code>is_file</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if False then networks is list converted objects. If True then networks is list of file locations to the pickled objects instead.</dd>
+<dt><strong><code>location</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
+<dd>if is_file is True then output of this function will be pickled to location.</dd>
+<dt><strong><code>names</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
+<dd>list of network names in same order as networks. If is_file is True then names will be used to store pickled objects.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>networks</code> <code>with</code> <code>edge</code> <code>IDs</code> or <code>their</code> <code>pickled</code> <code>location</code> (<code>list</code>): <code>updated</code> <code>network</code> <code>list</code> <code>objects</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<p>edge ID mapping (dict): keys are str of node IDs building an edge in format "node1, node2" and values are assigned ID.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def preprocess_edge_list(networks, is_file = False, location = None, names= None):
+    &#34;&#34;&#34;
+    Maps edges to IDs.
+
+    Parameters:
+        networks (list): list of converted networks or list of pickled file locations as returned by preprocess_graph()
+        is_file (boolean): if False then networks is list converted objects. If True then networks is list of file locations to the pickled objects instead.
+        location (str or None): if is_file is True then output of this function will be pickled to location.
+        names (list or None): list of network names in same order as networks. If is_file is True then names will be used to store pickled objects.
+
+    Returns:
+        networks with edge IDs or their pickled location (list): updated network list objects
+        edge ID mapping (dict): keys are str of node IDs building an edge in format &#34;node1, node2&#34; and values are assigned ID.
+        
+    &#34;&#34;&#34;
+
+    if not is_file:
+        for i in range(len(networks)):
+            if i == 0:
+                m, n = node_edge_similarities.map_edge_to_id(networks[i], mapping={}, next_value=0)
+
+            else:
+                m, n = node_edge_similarities.map_edge_to_id(networks[i], mapping=m, next_value=n)
+
+        network_lists = []
+        for net in networks:
+            network_lists.append(node_edge_similarities.construct_mapped_edge(m, net))
+
+        return network_lists, m
+
+
+    else:
+        for i in range(len(networks)):
+            #load file from disk
+            
+            with open(networks[i], &#34;rb&#34;) as f:
+                net = pickle.load(f)
+
+            if i % 10 == 0:
+                print(&#34;loaded &#34;, i , &#34;network from disk out of &#34;, len(networks))
+
+
+            if i == 0:
+                m, n = node_edge_similarities.map_edge_to_id(net, mapping={}, next_value=0)
+
+            else:
+                m, n = node_edge_similarities.map_edge_to_id(net, mapping=m, next_value=n)
+
+
+        network_lists = []
+        for i in range(len(networks)):
+            with open(networks[i], &#34;rb&#34;) as f:
+                net = pickle.load(f)
+
+            lst = list(dict.fromkeys(node_edge_similarities.construct_mapped_edge(m, net)))
+            #save
+            name = names[i]
+
+            with open(location + name+&#34;.pckl&#34;, &#34;wb&#34;) as f:
+                pickle.dump(lst, f, protocol=4)
+
+            print(&#34;saved&#34;)
+            network_lists.append(location + name+&#34;.pckl&#34;)
+
+        return network_lists, m</code></pre>
+</details>
+</dd>
+<dt id="volta.example_pipeline_wrappers.get_edge_similarity.preprocess_graph"><code class="name flex">
+<span>def <span class="ident">preprocess_graph</span></span>(<span>net_temp, attribute='weight', location=None, labels=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Converts list of networkX graph objects into a list of sublist format, which is used by most functions in this package.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>net_temp</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of networkX graph objects</dd>
+<dt><strong><code>attribute</code></strong> :&ensp;<code>str</code></dt>
+<dd>edge weight label to be converted</dd>
+<dt><strong><code>location</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
+<dd>if None the converted object is returned. Else it needs to be file location where the converted objects should be pickled and their locations will be returned instead.</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
+<dd>list of network names in same order as net_temp. Only needs to be provided if location is not None.</dd>
+</dl>
+<h2 id="return">Return</h2>
+<p>converted objects (list): if location is None list of converted objects is returned else list of pickled locations is returned.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def preprocess_graph(net_temp, attribute=&#34;weight&#34;, location = None, labels = None):
+    &#34;&#34;&#34;
+    Converts list of networkX graph objects into a list of sublist format, which is used by most functions in this package.
+
+    Parameters:
+        net_temp (list): list of networkX graph objects
+        attribute (str): edge weight label to be converted
+        location (str or None): if None the converted object is returned. Else it needs to be file location where the converted objects should be pickled and their locations will be returned instead.
+        labels (list or None): list of network names in same order as net_temp. Only needs to be provided if location is not None.
+        
+    Return:
+        converted objects (list): if location is None list of converted objects is returned else list of pickled locations is returned.
+    &#34;&#34;&#34;
+    
+    if location is None:
+        networks = []
+        for n in net_temp:
+            temp = []
+            edges = list(n.edges())
+            for edge in edges:
+                temp.append([edge[0], edge[1], n[edge[0]][edge[1]][attribute]])
+
+            networks.append(temp)
+
+        return networks
+
+    else:
+        networks = []
+        for i in range(len(net_temp)):
+            path = net_temp[i]
+            name = labels[i]
+            n=nx.read_weighted_edgelist(path)
+
+            temp = []
+            edges = list(n.edges())
+            for edge in edges:
+                temp.append([edge[0], edge[1], n[edge[0]][edge[1]][attribute]])
+
+                        
+            #save converted
+            print(&#34;save&#34;, name)
+            with open(location + name+&#34;.pckl&#34;, &#34;wb&#34;) as f:
+                pickle.dump(temp, f, protocol=4)
+
+            networks.append(location + name+&#34;.pckl&#34;)
+
+        return networks</code></pre>
+</details>
+</dd>
+<dt id="volta.example_pipeline_wrappers.get_edge_similarity.sort_list"><code class="name flex">
+<span>def <span class="ident">sort_list</span></span>(<span>networks, m, is_file=False, location=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Sorts edge list after weight.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>networks</code></strong> :&ensp;<code>list</code></dt>
+<dd>networks (list): list of converted networks or list of pickled file locations as returned by preprocess_graph().</dd>
+<dt><strong><code>m</code></strong> :&ensp;<code>dict</code></dt>
+<dd>edge to ID mapping as returned by preprocess_edge_list().</dd>
+<dt><strong><code>is_file</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if False then networks is list converted objects. If True then networks is list of file locations to the pickled objects instead and output will be saved to file as well.</dd>
+<dt><strong><code>location</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
+<dd>location where to pickle output to if is_file is True.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>sorted</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of networks containing sorted edge list or if_file is True then contains the file locations of the pickled objects.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sort_list(networks, m,  is_file = False, location=None):
+    &#34;&#34;&#34;
+    Sorts edge list after weight.
+
+    Parameters:
+        networks (list): networks (list): list of converted networks or list of pickled file locations as returned by preprocess_graph().
+        m (dict): edge to ID mapping as returned by preprocess_edge_list().
+        is_file (boolean): if False then networks is list converted objects. If True then networks is list of file locations to the pickled objects instead and output will be saved to file as well.
+        location (str or None): location where to pickle output to if is_file is True.
+        
+    Returns:
+        sorted (list): list of networks containing sorted edge list or if_file is True then contains the file locations of the pickled objects.
+        
+    &#34;&#34;&#34;
+
+    sorted_networks = []
+    if not is_file:
+        for net in networks:
+            sorted_networks.append(node_edge_similarities.sort_edge_list(net, m))
+
+    else:
+        for path in networks:
+            with open(path, &#34;rb&#34;) as f:
+                net = pickle.load(f)
+            name =  path.split(&#34;/&#34;)[-1].replace(&#34;.pckl&#34;, &#34;&#34;)
+            temp = node_edge_similarities.sort_edge_list(net, m)
+
+            with open(location + name+&#34;.pckl&#34;, &#34;wb&#34;) as f:
+                pickle.dump(temp, f, protocol=4)
+
+            sorted_networks.append(location + name+&#34;.pckl&#34;)
+
+    
+
+    return sorted_networks</code></pre>
+</details>
+</dd>
+<dt id="volta.example_pipeline_wrappers.get_edge_similarity.sort_list_and_get_shared"><code class="name flex">
+<span>def <span class="ident">sort_list_and_get_shared</span></span>(<span>networks, m, network_lists, labels, is_file=False, in_async=True)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Preprocessing function to sort edge list after weight, convert to a binary format and claculate shared edges.</p>
+<p>parameters:
+networks (list): list of converted networks or list of pickled file locations as returned by preprocess_graph().
+m (dict): edge to ID mapping as returned by preprocess_edge_list().
+is_file (boolean): if False then networks is list converted objects. If True then networks is list of file locations to the pickled objects instead.
+network_lists (list): list of converted edge IDs as returned by
+preprocess_edge_list()
+labels (list): list of network names in same order as networks.
+in_async (boolean): if True then run in async where applicable.</p>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt>sorted networks (list): contains sorted edge list.</dt>
+<dt>shared edges (dict): key is edge ID as provided in m and value is list of network labels containing this edge.</dt>
+<dt><strong><code>binary</code></strong> :&ensp;<code>list</code></dt>
+<dd>binary representation of network edges based on the union of edges in all provided networks.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sort_list_and_get_shared(networks, m, network_lists, labels, is_file = False, in_async=True):
+    &#34;&#34;&#34;
+    Preprocessing function to sort edge list after weight, convert to a binary format and claculate shared edges.
+
+    parameters:
+        networks (list): list of converted networks or list of pickled file locations as returned by preprocess_graph().
+        m (dict): edge to ID mapping as returned by preprocess_edge_list().
+        is_file (boolean): if False then networks is list converted objects. If True then networks is list of file locations to the pickled objects instead.
+        network_lists (list): list of converted edge IDs as returned by  preprocess_edge_list()
+        labels (list): list of network names in same order as networks. 
+        in_async (boolean): if True then run in async where applicable.
+
+    Returns:
+        sorted networks (list): contains sorted edge list.
+        shared edges (dict): key is edge ID as provided in m and value is list of network labels containing this edge.
+        binary (list): binary representation of network edges based on the union of edges in all provided networks.
+        
+    &#34;&#34;&#34;
+
+    sorted_networks = []
+    if not is_file:
+        for net in networks:
+            sorted_networks.append(node_edge_similarities.sort_edge_list(net, m))
+
+    else:
+        for path in networks:
+            with open(path, &#34;rb&#34;) as f:
+                net = pickle.load(f)
+
+            sorted_networks.append(node_edge_similarities.sort_edge_list(net, m))
+
+    shared_edges = node_edge_similarities.compute_shared_layers(network_lists, labels, in_async=in_async)
+
+    binary = node_edge_similarities.compute_binary_layer(shared_edges, layers=labels)
+
+    return sorted_networks, shared_edges, binary</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="volta.example_pipeline_wrappers" href="index.html">volta.example_pipeline_wrappers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="volta.example_pipeline_wrappers.get_edge_similarity.estimate_similarities_edges" href="#volta.example_pipeline_wrappers.get_edge_similarity.estimate_similarities_edges">estimate_similarities_edges</a></code></li>
+<li><code><a title="volta.example_pipeline_wrappers.get_edge_similarity.get_shared" href="#volta.example_pipeline_wrappers.get_edge_similarity.get_shared">get_shared</a></code></li>
+<li><code><a title="volta.example_pipeline_wrappers.get_edge_similarity.preprocess_edge_list" href="#volta.example_pipeline_wrappers.get_edge_similarity.preprocess_edge_list">preprocess_edge_list</a></code></li>
+<li><code><a title="volta.example_pipeline_wrappers.get_edge_similarity.preprocess_graph" href="#volta.example_pipeline_wrappers.get_edge_similarity.preprocess_graph">preprocess_graph</a></code></li>
+<li><code><a title="volta.example_pipeline_wrappers.get_edge_similarity.sort_list" href="#volta.example_pipeline_wrappers.get_edge_similarity.sort_list">sort_list</a></code></li>
+<li><code><a title="volta.example_pipeline_wrappers.get_edge_similarity.sort_list_and_get_shared" href="#volta.example_pipeline_wrappers.get_edge_similarity.sort_list_and_get_shared">sort_list_and_get_shared</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

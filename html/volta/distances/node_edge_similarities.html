@@ -1,0 +1,3135 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.5" />
+<title>volta.distances.node_edge_similarities API documentation</title>
+<meta name="description" content="Functions to estimate between network simialrities based on nodes &amp; edges." />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>volta.distances.node_edge_similarities</code></h1>
+</header>
+<section id="section-intro">
+<p>Functions to estimate between network simialrities based on nodes &amp; edges.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+Functions to estimate between network simialrities based on nodes &amp; edges.
+&#34;&#34;&#34;
+
+import networkx as nx
+import numpy as np
+import os
+import ast
+import sys
+import matplotlib.pyplot as plt
+import pandas as pd
+#import gmatch4py as gm
+#import seaborn as sns
+
+import dask.bag as db
+import asyncio
+import scipy
+import operator
+import statistics
+import pickle
+
+
+def percentage_shared(shared, list1, list2, penalize=False, weight=&#34;length&#34;):
+    &#34;&#34;&#34;
+    Function to estimate the percenatge of shared edges/nodes between two networks.
+    Calculates the percentage of shared edges based on the maximum possible shared edges = len of smaller list.
+
+    Parameters:
+        shraed (list): list of shared edges or nodes. Node IDs need to be consistent between the lists. Duplicate edges in a network are not allowed.
+        list1 (list): list of edges or nodes in Network 1. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
+        list2 (list): list of edges or nodes in Network 2. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
+        penalize (boolean): if True then the score is penalized based on the difference in list lengths (difference in size of the two networks). 
+                Percentage score p (of shared edges) is penalized based on p * (1 / weight * (abs(len(list1) - len(list2)))).
+        weight (str or float): method used when penalize is True. If penalize = &#34;length&#34; then weight is 1. If penalize is float then weight can be custom set.
+       
+    Returns:
+        shared percentage (float): percentage of shared edges/ nodes between the input graphs
+    
+    &#34;&#34;&#34;
+
+    ll1 = len(list1)
+    ll2 = len(list2)
+
+    ls = len(shared)
+
+    p = ls / min(ll1, ll2)
+
+    if not penalize:
+
+        return p
+    else:
+        if type(weight) != type(1):
+            if weight == &#34;length&#34;:
+
+                if len(list1) != len(list2):
+
+                    return p * (1 / (abs(len(list1) - len(list2))))
+                else:
+                    print(&#34;both lists have same length, not penalized&#34;)
+                    return p
+
+        elif type(weight) == type(1):
+            return (p * (1 / weight * (abs(len(list1) - len(list2)))))
+        else:
+            print(&#34;wrong weight will return non penalized score&#34;)
+            return (p)
+
+
+async def __percentage_shared_async__(shared, list1, list2, index, penalize=False, weight=&#34;length&#34;):
+
+    &#34;&#34;&#34;
+    
+    same as percentage shared but runs in parallel
+    s. percentage shared for parameter explanation
+
+    index is used to save results in original order
+    &#34;&#34;&#34;
+
+    ll1 = len(list1)
+    ll2 = len(list2)
+
+    ls = len(shared)
+
+    p = ls / min(ll1, ll2)
+
+    if not penalize:
+
+        return (index, p)
+    else:
+        if type(weight) != type(1):
+            if weight == &#34;length&#34;:
+
+                if len(list1) != len(list2):
+
+                    return (index, p * (1 / (abs(len(list1) - len(list2)))))
+                else:
+                    print(&#34;both lists have same length, not penalized&#34;)
+                    return (index, p)
+
+        elif type(weight) == type(1):
+            return (index, p * (1 / weight * (abs(len(list1) - len(list2)))))
+        else:
+            print(&#34;wrong weight will return non penalized score&#34;)
+            return (index, p)
+
+
+def calculate_jaccard_index(shared, list1, list2, similarity=True):
+    &#34;&#34;&#34;
+    Calculates jaccard index between two networks.
+    
+
+    Parameters:
+        shraed (list): list of shared edges or nodes. Node IDs need to be consistent between the lists. Duplicate edges in a network are not allowed.
+        list1 (list): list of edges or nodes in Network 1. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
+        list2 (list): list of edges or nodes in Network 2. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
+        similarity (boolean): if True returns jaccard similarity else returns jaccard distance.
+    Returns:
+        jaccard similarity/ distance (float): jaccard index or distance between the input lists
+    
+    &#34;&#34;&#34;
+
+    ll1 = len(list1)
+    ll2 = len(list2)
+    ls = len(shared)
+
+
+    try:
+        j = ls / (ll1 + ll2 - ls)
+    except:
+        j = None
+
+    if similarity:
+        return (j)
+    else:
+        if j is not None:
+            return (1 - j)
+        else:
+            return (j)
+
+
+async def __calculate_jaccard_index_async__(shared, list1, list2,  index, similarity=True):
+    &#34;&#34;&#34;
+    parallel version of calculate_jaccard_index()
+
+    &#34;&#34;&#34;
+
+    ll1 = len(list1)
+    ll2 = len(list2)
+    ls = len(shared)
+
+    try:
+        j = ls / (ll1 + ll2 - ls)
+    except:
+        j = None
+
+    if similarity:
+        return (index, j)
+    else:
+        if j is not None:
+            return (index, 1 - j)
+        else:
+            return (index, j)
+
+
+async def __calculate_jaccard_index_and_percentage_async__(shared, list1, list2,  index, similarity=True, penalize=False, weight=&#34;length&#34;):
+    &#34;&#34;&#34;
+    parallel version of __calculate_jaccard_index_and_percentage__()
+
+    &#34;&#34;&#34;
+
+    j = calculate_jaccard_index(shared, list1, list2, similarity=similarity)
+
+    p = percentage_shared(shared, list1, list2, penalize=penalize, weight=weight)
+
+    return (index, j, p)
+
+
+def __calculate_jaccard_index_and_percentage__(shared, list1, list2, similarity=True, penalize=False, weight=&#34;length&#34;):
+    &#34;&#34;&#34;
+    Wrapper function to return jaccard index and shared percentage.
+
+    
+    Parameters:
+        shraed (list): list of shared edges or nodes. Node IDs need to be consistent between the lists. Duplicate edges in a network are not allowed.
+        list1 (list): list of edges or nodes in Network 1. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
+        list2 (list): list of edges or nodes in Network 2. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
+        similarity (boolean): if True returns jaccard similarity else returns jaccard distance.
+        penalize (boolean): if True then the score is penalized based on the difference in list lengths (difference in size of the two networks). 
+                Percentage score p (of shared edges) is penalized based on p * (1 / weight * (abs(len(list1) - len(list2)))).
+        weight (str or float): method used when penalize is True. If penalize = &#34;length&#34; then weight is 1. If penalize is float then weight can be custom set.
+       
+    Returns:
+        jaccard index and percentage (tuple of floats):
+
+    &#34;&#34;&#34;
+
+    j = calculate_jaccard_index(shared, list1, list2, similarity=similarity)
+
+    p = percentage_shared(shared, list1, list2, penalize=penalize, weight=weight)
+
+    return (j, p)
+
+
+def shared_elements_multiple(lists, in_async=True, labels=None, percentage=False, jaccard=True, jaccard_similarity=True, penalize_percentage=False, weight_penalize=&#34;length&#34;, is_file=True):
+    &#34;&#34;&#34;
+    Wrapper function to estimate similarities between a list of networks. 
+    Estimates % of shared edges/nodes between all edge list pairs/ node lists and / or jaccard similarity/ index
+
+    Parameters:
+        lists (list): list of lists containing network edges or nodes to be compared.
+        in_async (boolean): if True runs in asynchronous mode.
+        labels (list or None): list of network labels in same order as lists.
+        percentage (boolean): if True percentage value is calculated.
+        jaccard (bolean): if True jaccard distance/similarity is calculated.
+        jaccard_similarity (boolean): if True returns jaccard similarity else returns jaccard distance.
+        penalize_percentage (boolean): if True then the score is penalized based on the difference in list lengths (difference in size of the two networks). 
+                Percentage score p (of shared edges) is penalized based on p * (1 / weight * (abs(len(list1) - len(list2)))).
+        weight_penalize (str or float): method used when penalize is True. If penalize = &#34;length&#34; then weight is 1. If penalize is float then weight can be custom set.
+        is_file (boolean): if True then lists is list of pickled locations of data described in lists.
+       
+    Returns:
+        similarity (numpy matrix or tuple of numpy matrices): similarity matrix between all networks. If one parameter is estimated returns one matrix only.
+            If both parameters are estimated returns jaccard matrix, percentage matrix
+
+    
+
+    &#34;&#34;&#34;
+
+    if in_async:
+
+        # build result matrix
+        if percentage and jaccard:
+            result1 = np.zeros((len(lists), len(lists)))
+            result2 = np.zeros((len(lists), len(lists)))
+            # split into chunks
+            tasks = []
+            loop = asyncio.new_event_loop()
+
+            computed = []
+            for index, x in np.ndenumerate(result1):
+                # print(index)
+                if index not in computed:
+                    # call shared percentage
+                    if is_file:
+                        with open(lists[index[0]], &#34;rb&#34;) as f:
+                            l1 = pickle.load(f)
+                        with open(lists[index[1]], &#34;rb&#34;) as f:
+                            l2 = pickle.load(f)
+                    else:
+                        l1 = lists[index[0]]
+                        l2 = lists[index[1]]
+                    
+                    re = tasks.append(loop.create_task(__calculate_jaccard_index_and_percentage_async__(shared_edges(l1, l2), l1, l2, index, similarity=jaccard_similarity,  penalize=penalize_percentage, weight=weight_penalize)))
+
+                    computed.append(index)
+                    computed.append((index[1], index[0]))
+            loop.run_until_complete(asyncio.wait(tasks))
+
+            loop.close()
+            # print(tasks)
+            # use tasks (returns index and result as tuple) to fill result matrix
+            for r in tasks:
+
+                index = r.result()[0]
+                jaccard = r.result()[1]
+                percentage = r.result()[2]
+
+                result1[index[0]][index[1]] = jaccard
+                result1[index[1]][index[0]] = jaccard
+
+                result2[index[0]][index[1]] = percentage
+                result2[index[1]][index[0]] = percentage
+
+            return result1, result2
+
+        else:
+            result = np.zeros((len(lists), len(lists)))
+            # split into chunks
+            tasks = []
+            loop = asyncio.new_event_loop()
+
+            computed = []
+            for index, x in np.ndenumerate(result):
+                print(index)
+                if index not in computed:
+                    # call shared percentage
+                    if is_file:
+                        with open(lists[index[0]], &#34;rb&#34;) as f:
+                            l1 = pickle.load(f)
+                        with open(lists[index[1]], &#34;rb&#34;) as f:
+                            l2 = pickle.load(f)
+                    else:
+                        l1 = lists[index[0]]
+                        l2 = lists[index[1]]
+
+                    if jaccard:
+                        re = tasks.append(loop.create_task(__calculate_jaccard_index_async__(shared_edges(l1, l2), l1, l2,  index, similarity=jaccard_similarity)))
+
+                    else:
+                        re = tasks.append(loop.create_task(__percentage_shared_async__(shared_edges(l1, l2), l1, l2, index, penalize=penalize_percentage, weight=weight_penalize)))
+                    #result[index[0]][index[1]] = j
+                    #result[index[1]][index[0]] = j
+                    computed.append(index)
+                    computed.append((index[1], index[0]))
+            loop.run_until_complete(asyncio.wait(tasks))
+
+            loop.close()
+            # print(tasks)
+            # use tasks (returns index and result as tuple) to fill result matrix
+            for r in tasks:
+                index = r.result()[0]
+                value = r.result()[1]
+
+                result[index[0]][index[1]] = value
+                result[index[1]][index[0]] = value
+
+    else:
+
+        if percentage and jaccard:
+            result1 = np.zeros((len(lists), len(lists)))
+            result2 = np.zeros((len(lists), len(lists)))
+
+            computed = []
+            for index, x in np.ndenumerate(result1):
+
+                if is_file:
+                        with open(lists[index[0]], &#34;rb&#34;) as f:
+                            l1 = pickle.load(f)
+                        with open(lists[index[1]], &#34;rb&#34;) as f:
+                            l2 = pickle.load(f)
+                else:
+                        l1 = lists[index[0]]
+                        l2 = lists[index[1]]
+                # print(index)
+                if index not in computed:
+                    # call shared percentage
+
+                    re = __calculate_jaccard_index_and_percentage__(shared_edges(l1, l2), l1, l2, similarity=jaccard_similarity,  penalize=penalize_percentage, weight=weight_penalize)
+
+                    computed.append(index)
+                    computed.append((index[1], index[0]))
+
+                    jaccard = re[0]
+                    percentage = re[1]
+
+                    result1[index[0]][index[1]] = jaccard
+                    result1[index[1]][index[0]] = jaccard
+
+                    result2[index[0]][index[1]] = percentage
+                    result2[index[1]][index[0]] = percentage
+
+            return result1, result2
+
+        else:
+            result = np.zeros((len(lists), len(lists)))
+            # split into chunks
+
+            computed = []
+            for index, x in np.ndenumerate(result):
+                print(index)
+                if index not in computed:
+                    if is_file:
+                        with open(lists[index[0]], &#34;rb&#34;) as f:
+                            l1 = pickle.load(f)
+                        with open(lists[index[1]], &#34;rb&#34;) as f:
+                            l2 = pickle.load(f)
+                    else:
+                        l1 = lists[index[0]]
+                        l2 = lists[index[1]]
+                    # call shared percentage
+                    if jaccard:
+                        re = calculate_jaccard_index(shared_edges(l1, l2), l1, l2, similarity=jaccard_similarity)
+
+                    else:
+                        re = percentage_shared(shared_edges(l1, l2), l1, l2, penalize=penalize_percentage, weight=weight_penalize)
+                    #result[index[0]][index[1]] = j
+                    #result[index[1]][index[0]] = j
+                    computed.append(index)
+                    computed.append((index[1], index[0]))
+
+                    value = re
+
+                    result[index[0]][index[1]] = value
+                    result[index[1]][index[0]] = value
+
+        return result
+
+
+def shared_edges(list1, list2):
+    &#34;&#34;&#34;
+    Calculates shared edges/ nodes between two networks
+
+    Parameters:
+        list1 (list): list of edges or nodes in Network 1. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
+        list2 (list): list of edges or nodes in Network 2. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
+    Returns:
+        shared items (list): list of items shared between input graphs
+
+
+    &#34;&#34;&#34;
+    #shared = []
+
+    # test out faster method based on intersection
+    l1 = set(list1)
+    l2 = set(list2)
+
+    shared = l1.intersection(l2)
+
+    return shared
+
+
+def get_sorensen_coefficient(jaccard):
+    &#34;&#34;&#34;
+    Estimates sorensen coefficient based on jaccard index
+
+    Parameters:
+        jaccard (numpy matrix): numpy matrix filled with jaccard indices as returned by shared_edges_multiple()
+
+    Returns:
+        sorensens (numpy matrix): sorensen coefficient estimated from jaccard index
+    &#34;&#34;&#34;
+    matrix = jaccard.copy()
+
+    for index, j in np.ndenumerate(matrix):
+
+        # call shared percentage
+        s = (2*j) / (1+j)
+        matrix[index[0]][index[1]] = s
+        matrix[index[1]][index[0]] = s
+
+    return matrix
+
+
+def map_edge_to_id(edges, mapping={}, next_value=0):
+    &#34;&#34;&#34;
+    Maps undirected edges to an ID.
+
+    Parameters:
+        edges (list): edge list
+        mapping (dict): either empty dict can be provided or already populated one, when the same mapping should be used for multiple networks.
+        next_value (int): if mapping is provided, then the last id set needs to be provided.
+
+    Returns:
+        mapping (dict): key is edge and value is assigned ID
+        next value (int): can be used if multiple networks are mapped to the same IDs
+    &#34;&#34;&#34;
+
+    for edge in edges:
+        e1 = str(edge[0]) + &#34;,&#34;+str(edge[1])
+        e2 = str(edge[1]) + &#34;,&#34;+str(edge[0])
+        val = None
+        f_e1 = False
+        f_e2 = False
+        if e1 in mapping.keys():
+            # get its value
+            val = mapping[e1]
+            f_e1 = True
+        if e2 in mapping.keys():
+            if val is None:
+                # get value and add e1
+                val = mapping[e2]
+                mapping[e1] = val
+            f_e2 = True
+        if not f_e2 and f_e1:
+            mapping[e2] = val
+        if not f_e2 and not f_e1:
+            mapping[e1] = next_value
+            mapping[e2] = next_value
+            next_value = next_value + 1
+
+    return mapping, next_value
+
+def reverse_node_edge_mapping(mapping):
+    &#34;&#34;&#34;
+    Reverses the mapping object. Switches keys and values of the mapping object. This allows easier retrival of original node IDs from the mapping ID.
+
+    Parameters:
+        mapping (dict): node/ edge to ID mapping as returned by map_node_to_id()/ map_edge_to_id().
+    
+    Returns:
+        reversed mapping (dict): keys are mapped IDs and values are original node/ edge IDs.
+    &#34;&#34;&#34;
+
+    return {value:key for key, value in mapping.items()}
+
+def construct_mapped_edge(mapping, edges):
+
+    &#34;&#34;&#34;
+    Creates list from assigned edge IDs. Can be used to reverse the mapping.
+
+    Parameters:
+        mapping (dict): edge to ID mapping as returned by map_edge_to_id()
+        edges (list): list of edges
+    Returns:
+        ids (list): list of assigned IDs in same order as edges
+    &#34;&#34;&#34;
+    new_edges = []
+
+    for edge in edges:
+        e1 = str(edge[0]) + &#34;,&#34;+str(edge[1])
+        # 2 = str(edge[1]) +&#34;,&#34;+str(edge[0])
+        val = mapping[e1]
+        new_edges.append(val)
+
+    return new_edges
+
+
+def compute_kendall_tau(list1, list2, usage=&#34;all&#34;, x=10):
+    &#34;&#34;&#34;
+    Computes Kendall Rank Correlation between two ranked lists (based on SciPy). This can be edges ranked by weight or other attributed or nodes ranked by some attributes, such as degree.
+    Input lists need to have same length or usage option other than &#34;all&#34; needs to be selected.
+
+    Parameters:
+        list1 (list): list of ranked edge or node IDs as returned by sort_edge_list().
+        list2 (list): list of ranked edge or node IDs as returned by sort_edge_list().
+        usage (str): sets what parto of the two lists should be compared.
+            If &#34;all&#34; then all items are considered but list1 and list2 need to be of same length.
+            If &#34;top&#34; then the top x items will be considered.
+            If &#34;bottom&#34; then the last x items will be considered.
+            If &#34;shared&#34; then only items occuring in list1 and list2 will be considered.
+        x (int): needs to be set when usage = top or bottom. Indicates how many items are considered in the rank correaltion.
+
+    Returns:
+        kendall tau (float): kendell tau coefficient between the input lists
+        p value (float): p-value of the correlation
+
+    
+    &#34;&#34;&#34;
+    if len(list1) != len(list2):
+        print(&#34;input lists have different length&#34;)
+        if usage != &#34;all&#34;:
+            if usage == &#34;top&#34;:
+                l1 = list1[:x]
+                l2 = list2[:x]
+            elif usage == &#34;bottom&#34;:
+                l1 = list1[-x:]
+                l2 = list2[-x:]
+            elif usage == &#34;shared&#34;:
+
+                &#39;&#39;&#39;
+                for item in list1:
+                    if item in list2 and item not in l1:
+                        l1.append(item)
+                for item in list2:
+                    if item in list1 and item not in l2:
+                        l2.append(item)
+                &#39;&#39;&#39;
+                l1 = set(list1).intersection(set(list2))
+                l2 = l1
+
+            else:
+                print(&#34;non specified parameter, will default to top 10&#34;)
+                l1 = list1[:10]
+                l2 = list2[:10]
+
+            tau, p = scipy.stats.kendalltau(l1, l2)
+
+        else:
+            print(&#34;please set usage to top, bottom or shared if lists are of different length will default to top 10&#34;)
+            l1 = list1[:10]
+            l2 = list2[:10]
+            tau, p = scipy.stats.kendalltau(l1, l2)
+    else:
+        tau, p = scipy.stats.kendalltau(list1, list2)
+
+    return tau, p
+
+
+def sort_edge_list(edges, mapping):
+    &#34;&#34;&#34;
+    Sorts edge lists based on weight attribute and returns sorted list of edge ids.
+
+    Parameters:
+        edges (list): list of sublists in following format  [gene1, gene2, weight]
+        mapping (dict): edge to ID mapping as returned by map_edge_to_id()
+
+    Returns:
+        ranked edges (list): list of sorted edge IDs
+    &#34;&#34;&#34;
+
+    edge_weight_mapping = {}
+    sorted_edges = []
+
+    for edge in edges:
+
+        e = (str(edge[0]) + &#34;,&#34;+str(edge[1]))
+
+        edge_weight_mapping[e] = edge[2]
+
+    # sort dict by weight
+
+    s = list(sorted(edge_weight_mapping.items(), key=operator.itemgetter(1), reverse=True))
+
+    # print(s)
+
+    # construct sorted edge list
+    for i in s:
+        # get edge id from mapping
+        id = mapping[i[0]]
+        sorted_edges.append(id)
+    return sorted_edges
+
+
+def compute_hamming(list1, list2):
+    &#34;&#34;&#34;
+    Computes hamming distance (based on SciPy)
+
+    Parameters:
+        list1 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
+        list2 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
+    Returns:
+        hamming distance (float): hamming distance between the input lists
+    &#34;&#34;&#34;
+    return scipy.spatial.distance.hamming(list1, list2)
+
+
+def compute_edit_distance(list1, list2):
+    &#34;&#34;&#34;
+    Computes edit distance (based on https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Python)
+
+    Parameters:
+        list1 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
+        list2 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
+    Returns:
+        edit distance (float): eidt distance between the input lists
+    &#34;&#34;&#34;
+
+    if len(list1) &gt; len(list2):
+        list1, list2 = list2, list1
+
+    distances = range(len(list1) + 1)
+    for i2, c2 in enumerate(list2):
+        distances_ = [i2+1]
+        for i1, c1 in enumerate(list1):
+            if c1 == c2:
+                distances_.append(distances[i1])
+            else:
+                distances_.append(
+                    1 + min((distances[i1], distances[i1 + 1], distances_[-1])))
+        distances = distances_
+    return distances[-1]
+
+
+def compute_simple_matching_coefficient(list1, list2):
+    &#34;&#34;&#34;
+    Computes SMC.
+
+    Parameters:
+        list1 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
+        list2 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
+    Returns:
+        SMC (float): SMC coefficient between input lists
+
+    
+    &#34;&#34;&#34;
+    match = 0
+    no_match = 0
+
+    for k in range(len(list1)):
+        if list1[k] == list2[k]:
+            match = match + 1
+        else:
+            no_match = no_match + 1
+
+    smc = match / (match + no_match)
+    return smc
+
+
+def build_similarity_matrix_for_binary_and_ranked(lists, compute=&#34;kendall&#34;, kendall_usage=&#34;all&#34;, kendall_x=10):
+    &#34;&#34;&#34;
+    Wrapper function to build a similarity/ distance matrix from different distance measures.
+    
+    Parameters:
+
+        lists (list): list of lists, each sublist representing a network. If compute = &#34;Kendall&#34; sublists need to be ranked lists 
+            else sublists need to be binary lists. 1 indicating if edge/node is present in that network and 0 if not.
+        compute (str):
+            &#34;kendall&#34; computes Kendall Rank Coefficient based on compute_kendall_tau()
+            &#34;hamming&#34; computes hamming distance based on compute_hamming()
+            &#34;ed&#34; computes edit distance based on compute_edit_distance()
+            &#34;smc&#34; computes SMC based on compute_simple_matching_coefficient()
+        kendall_usage (str): sets what parto of the two lists should be compared.
+            If &#34;all&#34; then all items are considered but list1 and list2 need to be of same length.
+            If &#34;top&#34; then the top x items will be considered.
+            If &#34;bottom&#34; then the last x items will be considered.
+            If &#34;shared&#34; then only items occuring in list1 and list2 will be considered.
+        kendall_x (int): needs to be set when usage = top or bottom. Indicates how many items are considered in the rank correaltion. If x is larger than one of the lists it will be set automtically to a quarter less than the shortest list.
+
+    Returns:
+        similairty matrix (numpy matrix): matrix containing the kendall correlation values for each input pair
+        p value matrix (numpy matrix): this matrix only contains values if  compute = hamming or compute = kendall
+        used x (int): if kendall then a third value is returned indicating what portion of the lists have been used to estimate the rank correlation value
+        
+    &#34;&#34;&#34;
+
+    print(&#34;check if kendall x is small enough &#34;)
+
+    ml = len(min(lists, key=lambda i: len(i)))
+
+    if compute == &#34;kendall&#34;:
+        if ml &lt; kendall_x:
+            print(&#34;update x&#34;)
+            kendall_x = int(ml - ml * 0.4)
+            print(&#34;new x &#34;+str(kendall_x))
+
+    result = np.zeros((len(lists), len(lists)))
+    result2 = np.zeros((len(lists), len(lists)))
+
+    computed = []
+    for index, x in np.ndenumerate(result):
+        print(index)
+        if index not in computed:
+
+            # call function
+
+            if compute == &#34;kendall&#34;:
+                # returns tau and p value
+
+                tau, p = compute_kendall_tau(lists[index[0]], lists[index[1]], usage=kendall_usage, x=kendall_x)
+
+                result2[index[0]][index[1]] = p
+                result2[index[1]][index[0]] = p
+
+                result[index[0]][index[1]] = tau
+                result[index[1]][index[0]] = tau
+
+            elif compute == &#34;hamming&#34;:
+                h = compute_hamming(lists[index[0]], lists[index[1]])
+
+                result[index[0]][index[1]] = h
+                result[index[1]][index[0]] = h
+
+                result2 = []
+
+            elif compute == &#34;ed&#34;:
+                ed = compute_edit_distance(lists[index[0]], lists[index[1]])
+
+                result[index[0]][index[1]] = ed
+                result[index[1]][index[0]] = ed
+
+                result2 = []
+
+            elif compute == &#34;smc&#34;:
+                smc = compute_simple_matching_coefficient(
+                    lists[index[0]], lists[index[1]])
+
+                result[index[0]][index[1]] = smc
+                result[index[1]][index[0]] = smc
+
+                result2 = []
+
+            else:
+                print(&#34;usage value not supported&#34;)
+
+                result = []
+                result2 = []
+
+            computed.append(index)
+            computed.append((index[1], index[0]))
+
+    if compute == &#34;kendall&#34;:
+
+        return result, result2, kendall_x
+    else:
+        return result, result2
+
+
+def compute_binary_layer(shared_edges, layers=None):
+    &#34;&#34;&#34;
+    Computes binary representation of edges/nodes.
+
+    Parameters:
+        shared_edges (dict): as returned by compute_shared_layers()
+        layers (list): list containing network names. Needs to be the same as used in shared_edges()
+
+    Returns:
+        binary edges (list): list of sublists containing binary edge/ node representation for each layer specified in layers. 
+                Edges/ Nodes are ordered the same way as provided in shared_edges.
+    
+    
+    &#34;&#34;&#34;
+    res = []
+    if layers is not None:
+        for layer in layers:
+            # loop thorugh dict
+            temp = []
+            for key in shared_edges.keys():
+                if layer in shared_edges[key]:
+                    temp.append(1)
+                else:
+                    temp.append(0)
+            res.append(temp)
+
+    else:
+        print(&#34;please provide layer names&#34;)
+
+    return res
+
+
+def to_distance(m):
+    &#34;&#34;&#34;
+    Converts a similarity matrix to a distance matrix (1- x).
+
+    Parameters:
+        m (numpy matrix): similarity matrix
+    Returns:
+        distance matrix (numpy matrix): converted distance matrix
+    &#34;&#34;&#34;
+    matrix = m.copy()
+    computed = []
+    for index, x in np.ndenumerate(matrix):
+
+        if index not in computed:
+            # call shared percentage
+            d = 1 - x
+            matrix[index[0]][index[1]] = d
+            matrix[index[1]][index[0]] = d
+        computed.append(index)
+        computed.append((index[1], index[0]))
+
+    return matrix
+
+
+
+
+
+async def __construct_dict__(edges, label):
+    &#34;&#34;&#34;
+    helper function of compute_shared_layers()
+    &#34;&#34;&#34;
+    result = {}
+
+    for edge in edges:
+        if edge not in result.keys():
+            result[edge] = [label]
+
+    return result
+
+
+def __mergeDict__(dict1, dict2):
+    &#34;&#34;&#34;
+    helper function of compute_shared_layers() to merge two dicts into one dict
+    &#34;&#34;&#34;
+    # Merge dictionaries and keep values of common keys in list
+    res = {**dict1, **dict2}
+    for key, value in res.items():
+        if key in dict1 and key in dict2:
+            res[key].append(dict1[key][0])
+
+    return res
+
+
+def compute_shared_layers(lists, labels, is_file=False, in_async=True):
+    &#34;&#34;&#34;
+    Computes in how many and in which layers/ networks each edge/node occures.
+
+    Parameters:
+        lists (list): list of edge/node IDs as encoded by map_edge_to_id()/ map_node_to_id() and construct_mapped_edge().
+        labels (list): list of network labels. Needs to be in the same order as lists.
+        is_file (boolean): if True then lists needs to contain the pickled locations to the node/ edge lists instead.
+        in_async (boolean): if True then run in async
+
+    Returns:
+        shared edges/nodes (dict): key is edge/ node ID and value is label ID
+
+    &#34;&#34;&#34;
+
+    #shared_edges = {}
+    if in_async:
+        tasks = []
+        loop = asyncio.new_event_loop()
+
+        for edges, label in zip(lists, labels):
+
+            if is_file:
+                #read from file
+                with open(edges, &#34;rb&#34;) as f:
+                    edges = pickle.load(f)
+            # construct for each edge dict and later merge into final
+            # so calculation can be parallelized
+            print(label)
+
+            r = tasks.append(loop.create_task(__construct_dict__(edges, label)))
+
+        loop.run_until_complete(asyncio.wait(tasks))
+
+        loop.close()
+
+    
+
+        # merge all dicts into one
+
+        # edges occuring in multiple layers are merged into list attributes
+
+        for i in range(len(tasks)):
+            r = tasks[i]
+            if i == 0:
+                s_edges = r.result()
+
+            else:
+
+                temp_dict = r.result()
+                #print(&#34;shared edges&#34;, shared_edges)
+                #print(&#34;temp&#34;, temp_dict)
+                for key in temp_dict:
+                    s_edges.setdefault(key, []).append(temp_dict[key][0])
+                
+                #shared_edges = __mergeDict__(cur, temp_dict)
+                #print(&#34;shared after&#34;, s_edges)
+
+
+    else:
+        result = {}
+        for edges, label in zip(lists, labels):
+
+            if is_file:
+                #read from file
+                with open(edges, &#34;rb&#34;) as f:
+                    edges = pickle.load(f)
+            
+            print(label)
+            
+            for edge in edges:
+                if edge not in result.keys():
+                    result[edge] = [label]
+                else:
+                    result.setdefault(edge, []).append(label)
+
+        s_edges = result
+
+    return s_edges
+
+
+async def __get_shared_layers__(index, edge_count):
+
+    res = []
+
+    current_edges = edge_count[index]
+
+    for edge in edge_count.keys():
+        combined = len(list(set(current_edges).intersection(edge_count[edge])))
+
+        res.append(combined)
+
+    return (index, res)
+
+
+def build_share_matrix(d):
+
+    &#34;&#34;&#34;
+    Converts shared layer information into a matrix.
+        
+    Parameters:
+        d (dict): output of compute_shared_layers()
+
+    Returns:
+        shared items (numpy matrix): matrix
+    &#34;&#34;&#34;
+
+    max_key = max(d.keys())
+
+    print(&#34;build matrix of size &#34; + str(max_key ** 2))
+
+    #result = np.zeros((max_key, max_key), dtype=np.int8)
+    result = np.arange(max_key+1).tolist()
+    print(&#34;allocated&#34;)
+    
+    counter = 0
+
+    tasks = []
+    loop = asyncio.new_event_loop()
+
+    for index in range(len(result)):
+        counter = counter + 1
+        if counter % 1000 == 0:
+            print(&#34;computed &#34; + str(counter) + &#34;out of &#34; + str(max_key))
+
+            # index directly corresponds to edge ids in d
+
+        # print(index)
+        t = tasks.append(loop.create_task(__get_shared_layers__(index, d)))
+
+    loop.run_until_complete(asyncio.wait(tasks))
+
+    loop.close()
+
+    # edges occuring in multiple layers are merged into list attributes
+    print(&#34;merging&#34;)
+    for r in tasks:
+
+        row = r.result()[0]
+        data = r.result()[1]
+
+        result[row] = data
+
+    return np.array(result)
+
+
+def get_shared_edges(l1, l2, name=False, mapping=None):
+    &#34;&#34;&#34;
+    Calcualtes shared edges/ nodes between two lists/ networks.
+
+    Paramters:
+        l1 (list): list of node/edge ids as returned by construced_mapped_edge().
+        l2 (list): list of node/edge ids as returned by construced_mapped_edge().
+        name (boolean): if True ID values are replaced by original node/edge names. If Ture mapping needs to be not None.
+        mapping (dict or None): edge /node to ID mapping as returned by map_edge_to_id() / map_node_to_id().
+
+    Returns:
+        shared items (list): list of shared items between input lists
+    &#34;&#34;&#34;
+
+    if not name:
+        return list(set(l1).intersection(l2))
+    else:
+        res = []
+        if mapping is not None:
+
+            for id in list(set(l1).intersection(l2)):
+                res.append(__return_edge_from_id__(id, mapping))
+        else:
+            print(&#34;please provide mapping&#34;)
+
+        return res
+
+
+def __return_edge_from_id__(id, mapping):
+    &#34;&#34;&#34;
+    Converts mapped node/edge back to original name.
+
+    Parameters:
+        id is edge id queried for
+
+        mapping is edge id mapping as returned by map_edge_to_id()/ map_node_to_id()
+    Output
+        list
+    &#34;&#34;&#34;
+
+    return [item for item, i in mapping.items() if i == id]
+
+
+def return_layer_from_id(id, layers):
+    &#34;&#34;&#34;
+    Fetches layers specific node/edge ID is present in.
+
+    Parameters:
+        id (int): edge/ node ID queried for as set in map_edge_to_id()/ map_node_to_id()
+        layers (dict): as returned by compute_shared_layers()
+
+    Returns:
+        layer name/ network name (list): as queried for
+    &#34;&#34;&#34;
+
+    return layers[id]
+
+
+def return_top_layers(x, layers, direction=&#34;large&#34;):
+    &#34;&#34;&#34;
+    Fetches nodes/ edges that are present in the most / least networks.
+
+    Parameters:
+        x (int): number of to be returned entries
+        layers (dict): as returned by compute_shared_layers()
+        direction (str): if direction = &#34;large&#34;, the x items occuring in the most networks are returned. if direction = &#34;small&#34; the x items occuring in the least networks are returned.
+
+    Returns:
+        items (list): list of layer IDs as queried for
+    &#34;&#34;&#34;
+
+    if direction == &#34;large&#34;:
+        s = sorted(layers, key=lambda k: len(layers[k]), reverse=True)
+    else:
+        s = sorted(layers, key=lambda k: len(layers[k]))
+
+    result = []
+    counter = 0
+    for k in s:
+        counter = counter + 1
+        if counter &lt; x+1:
+            result.append((k, layers[k]))
+
+    return result
+
+
+def map_node_to_id(edges, mapping={}, next_value=0):
+    &#34;&#34;&#34;
+    Maps nodes to an ID.
+
+    Parameters:
+        edges (list): edge list
+        mapping (dict): either empty dict can be provided or already populated one, when the same mapping should be used for multiple networks.
+        next_value (int): if mapping is provided, then the last id set needs to be provided.
+
+    Returns:
+        mapping (dict): key is node ID and value is mapped ID
+        next value (int): can be used if multiple networks are mapped to the same IDs
+    &#34;&#34;&#34;
+
+    for edge in edges:
+        nodes = [edge[0], edge[1]]
+
+        for node in nodes:
+
+            if node not in mapping.keys():
+                # get its value
+
+                mapping[node] = next_value
+
+                next_value = next_value + 1
+
+    return mapping, next_value
+
+
+def __construct_mapped_node__(mapping, edges):
+
+    new_nodes = []
+    for edge in edges:
+        nodes = [edge[0], edge[1]]
+        for node in nodes:
+
+            val = mapping[node]
+            new_nodes.append(val)
+
+    return new_nodes
+
+
+def convert_to_dict(l):
+    &#34;&#34;&#34;
+    Convert list l of format [(x,y)] to dict of form {x:y}.
+
+    Parameters:
+        l (list): input list of tuples
+    
+    Returns:
+        convertion (dict): where key is first tuple entry and value is second tuple entry
+    &#34;&#34;&#34;
+
+    new_dict = {}
+
+    for element in l:
+        new_dict[element[0]] = element[1]
+
+    return new_dict
+
+
+def __sort_dict__(d, reverse=True):
+    &#34;&#34;&#34;
+    sorts dict d by value.
+
+    Parameters:
+        d (dict):
+    
+    Returns:
+        sorted (dict):
+    &#34;&#34;&#34;
+    return {k: v for k, v in sorted(d.items(), key=lambda item: item[1], reverse=reverse)}
+
+
+def __list_to_mapping__(d, mapping, as_str=True):
+    &#34;&#34;&#34;
+    helper function of sort_node_list()
+    d is dict of sorted nodes &amp; mapping is node id mapping
+    &#34;&#34;&#34;
+    new_list = []
+    for n in d.keys():
+        if as_str:
+            id = mapping[str(n)]
+        else:
+            id = mapping[n]
+        new_list.append(id)
+
+    return new_list
+
+
+def sort_node_list(Graph, mapping, degree=False, degree_centrality=False, closeness_centrality=False, betweenness=False, k=None, xx=2, as_str=True):
+    &#34;&#34;&#34;
+    Sorts node lists based on weight attribute and returns sorted list of nodes ids.
+
+    Parameters:
+        Graph (networkX graph object): graph to estimate on.
+        mapping (dict): is id mapping as returned by map_node_to_id()
+        as_str (boolean): if True node IDs are assumed to be string else int.
+        degree (boolean): if True nodes are sorted after degree.
+        degree_centrality (boolean): if True nodes are sorted after degree centrality.
+        closeness_centrality (boolean): if True nodes are sorted after closeness centrality.
+        betweenness (boolean): if True nodes are sorted after betweenness.
+        If multiple values are set to True a combined ranking is calculated
+        k (float [0,1] or None): approximation of betweenness, if float then k percentage of nodes are used to approximate the betweenness values. If None all nodes are used.
+        xx (int): state how often random sampling is performed if k is not None
+        as_str (boolean): if True keys in mapping are assumed to be str (are the same as graph node IDs). If False they are assumed to be int.
+        
+    Returns:
+        sorted (dict): keys are degree, dc, cc, betweenness, average_mean and average_median, values are list of ranked node ids (index of list is rank and value is Node ID as provided in mapping). If key is set to False an empty list is returned.
+        
+    
+    &#34;&#34;&#34;
+    cnt = 0
+    # only used in case multiple are mapped
+    x = []
+    values_saved = {}
+    if degree:
+        # type list
+        weighted_degree = list(Graph.degree())
+        # convert to dict
+        # print(weighted_degree)
+        weighted_d = convert_to_dict(weighted_degree)
+        # print(weighted_d)
+        values_saved[&#34;degree&#34;] = weighted_d
+        sorted_d = __sort_dict__(weighted_d)
+        # print(sorted_d)
+        # print(mapping)
+        # convert keys to list and map to ids from mapping
+        s_d = __list_to_mapping__(sorted_d, mapping, as_str=as_str)
+        x.append(s_d)
+        cnt = cnt + 1
+        print(cnt)
+    else:
+        s_d = []
+    if degree_centrality:
+        # normalized version of degree
+        # type dict
+        weighted_dc = nx.degree_centrality(Graph)
+        values_saved[&#34;dc&#34;] = weighted_dc
+        sorted_dc = __sort_dict__(weighted_dc)
+        # convert keys to list and map to ids from mapping
+        s_dc = __list_to_mapping__(sorted_dc, mapping, as_str=as_str)
+        x.append(s_dc)
+        cnt = cnt + 1
+        print(cnt)
+    else:
+        s_dc = []
+    if closeness_centrality:
+        # nx version very slow calculate based on adjacency matrix
+
+        # order is based on G.nodes() =&gt; index of G.nodes() is row index of A
+        id_G = list(Graph.nodes())
+        A = nx.to_numpy_matrix(Graph)
+        D = scipy.sparse.csgraph.floyd_warshall(
+            A, directed=False, unweighted=False)
+        n = D.shape[0]
+        closeness_centrality = {}
+        for r in range(0, n):
+
+            cc = 0.0
+
+            possible_paths = list(enumerate(D[r, :]))
+            shortest_paths = dict(
+                filter(lambda x: not x[1] == np.inf, possible_paths))
+
+            total = sum(shortest_paths.values())
+            n_shortest_paths = len(shortest_paths) - 1.0
+            if total &gt; 0.0 and n &gt; 1:
+                s = n_shortest_paths / (n - 1)
+                cc = (n_shortest_paths / total) * s
+            closeness_centrality[id_G[r]] = cc
+
+        # average shortest path from v to all other nodes
+        # type dict
+        weighted_cc = closeness_centrality
+        values_saved[&#34;cc&#34;] = weighted_cc
+        # print(weighted_cc)
+        sorted_cc = __sort_dict__(weighted_cc)
+        # convert keys to list and map to ids from mapping
+        s_cc = __list_to_mapping__(sorted_cc, mapping, as_str=as_str)
+        x.append(s_cc)
+        cnt = cnt + 1
+        print(cnt)
+    else:
+        s_cc = []
+    if betweenness:
+        # fraction of shortest paths that pass through v
+        # type dict
+        # if k is not None betweenness is calculated x times with new random nodes and all results are averaged to get best optimazion
+
+        if k is not None:
+            temp = []
+            #print(&#34;nodes in graph &#34; +str(len(list(Graph.nodes()))))
+            kk = int(len(list(Graph.nodes())) * k)
+            # print(&#34;k=&#34;+str(kk))
+            for i in range(xx):
+                weighted_b = nx.betweenness_centrality(
+                    Graph, normalized=True, k=kk)
+                temp.append(weighted_b)
+                #print(&#34;len res in loop&#34;)
+                # print(len(weighted_b))
+            # average values
+            # print(temp)
+            df = pd.DataFrame(temp)
+            weighted_b = dict(df.mean())
+            
+            #print(&#34;res mean&#34;)
+            # print(len(weighted_b))
+
+        else:
+            weighted_b = nx.betweenness_centrality(Graph, normalized=True)
+
+        values_saved[&#34;bet&#34;] = weighted_b
+        sorted_b = __sort_dict__(weighted_b)
+        # convert keys to list and map to ids from mapping
+        s_b = __list_to_mapping__(sorted_b, mapping, as_str=as_str)
+        x.append(s_b)
+        cnt = cnt + 1
+        print(cnt)
+    else:
+        s_b = []
+
+    if cnt &gt; 1:
+        print(&#34;average position is calculated&#34;)
+        # get first itme that is non empty
+        # all should contain same nodes so enough to loop through one list to get all nodes of this graph
+        mean_position = {}
+        median_position = {}
+
+        for node in x[0]:
+            # get all indices
+            i = []
+            for element in x:
+                i.append(element.index(node))
+            # average
+            #i = i / len(x)
+            # save
+            #print(&#34;average&#34;, node, i)
+            mean_position[node] = statistics.mean(i)
+            median_position[node] = statistics.median(i)
+
+
+        # convert to sorted list
+        sorted_mean = list(__sort_dict__(mean_position, reverse=False).keys())
+        sorted_median = list(__sort_dict__(median_position, reverse=False).keys())
+        # print(sorted_average)
+    else:
+        sorted_mean = []
+        sorted_median = []
+
+    result = {&#34;degree&#34;: s_d, &#34;dc&#34;: s_dc, &#34;cc&#34;: s_cc,&#34;betweenness&#34;: s_b, &#34;average_mean&#34;: sorted_mean, &#34;average_median&#34;: sorted_median}
+
+    if cnt &lt; 1:
+        print(&#34;no weights are selected please set at least one value to True&#34;)
+
+    return result, values_saved</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="volta.distances.node_edge_similarities.build_share_matrix"><code class="name flex">
+<span>def <span class="ident">build_share_matrix</span></span>(<span>d)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Converts shared layer information into a matrix.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>d</code></strong> :&ensp;<code>dict</code></dt>
+<dd>output of compute_shared_layers()</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>shared</code> <code>items</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def build_share_matrix(d):
+
+    &#34;&#34;&#34;
+    Converts shared layer information into a matrix.
+        
+    Parameters:
+        d (dict): output of compute_shared_layers()
+
+    Returns:
+        shared items (numpy matrix): matrix
+    &#34;&#34;&#34;
+
+    max_key = max(d.keys())
+
+    print(&#34;build matrix of size &#34; + str(max_key ** 2))
+
+    #result = np.zeros((max_key, max_key), dtype=np.int8)
+    result = np.arange(max_key+1).tolist()
+    print(&#34;allocated&#34;)
+    
+    counter = 0
+
+    tasks = []
+    loop = asyncio.new_event_loop()
+
+    for index in range(len(result)):
+        counter = counter + 1
+        if counter % 1000 == 0:
+            print(&#34;computed &#34; + str(counter) + &#34;out of &#34; + str(max_key))
+
+            # index directly corresponds to edge ids in d
+
+        # print(index)
+        t = tasks.append(loop.create_task(__get_shared_layers__(index, d)))
+
+    loop.run_until_complete(asyncio.wait(tasks))
+
+    loop.close()
+
+    # edges occuring in multiple layers are merged into list attributes
+    print(&#34;merging&#34;)
+    for r in tasks:
+
+        row = r.result()[0]
+        data = r.result()[1]
+
+        result[row] = data
+
+    return np.array(result)</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.build_similarity_matrix_for_binary_and_ranked"><code class="name flex">
+<span>def <span class="ident">build_similarity_matrix_for_binary_and_ranked</span></span>(<span>lists, compute='kendall', kendall_usage='all', kendall_x=10)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Wrapper function to build a similarity/ distance matrix from different distance measures.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>lists</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of lists, each sublist representing a network. If compute = "Kendall" sublists need to be ranked lists
+else sublists need to be binary lists. 1 indicating if edge/node is present in that network and 0 if not.</dd>
+<dt>compute (str):</dt>
+<dt>"kendall" computes Kendall Rank Coefficient based on compute_kendall_tau()</dt>
+<dt>"hamming" computes hamming distance based on compute_hamming()</dt>
+<dt>"ed" computes edit distance based on compute_edit_distance()</dt>
+<dt>"smc" computes SMC based on compute_simple_matching_coefficient()</dt>
+<dt><strong><code>kendall_usage</code></strong> :&ensp;<code>str</code></dt>
+<dd>sets what parto of the two lists should be compared.
+If "all" then all items are considered but list1 and list2 need to be of same length.
+If "top" then the top x items will be considered.
+If "bottom" then the last x items will be considered.
+If "shared" then only items occuring in list1 and list2 will be considered.</dd>
+<dt><strong><code>kendall_x</code></strong> :&ensp;<code>int</code></dt>
+<dd>needs to be set when usage = top or bottom. Indicates how many items are considered in the rank correaltion. If x is larger than one of the lists it will be set automtically to a quarter less than the shortest list.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>similairty</code> <code>matrix</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code> <code>containing</code> <code>the</code> <code>kendall</code> <code>correlation</code> <code>values</code> <code>for</code> <code>each</code> <code>input</code> <code>pair</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>p</code> <code>value</code> <code>matrix</code> (<code>numpy</code> <code>matrix</code>): <code>this</code> <code>matrix</code> <code>only</code> <code>contains</code> <code>values</code> <code>if</code>
+<code>compute</code> = <code>hamming</code> or <code>compute</code> = <code>kendall</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>used</code> <code>x</code> (<code>int</code>): <code>if</code> <code>kendall</code> <code>then</code> <code>a</code> <code>third</code> <code>value</code> <code>is</code> <code>returned</code> <code>indicating</code> <code>what</code> <code>portion</code> of <code>the</code> <code>lists</code> <code>have</code> <code>been</code> <code>used</code> <code>to</code> <code>estimate</code> <code>the</code> <code>rank</code> <code>correlation</code> <code>value</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def build_similarity_matrix_for_binary_and_ranked(lists, compute=&#34;kendall&#34;, kendall_usage=&#34;all&#34;, kendall_x=10):
+    &#34;&#34;&#34;
+    Wrapper function to build a similarity/ distance matrix from different distance measures.
+    
+    Parameters:
+
+        lists (list): list of lists, each sublist representing a network. If compute = &#34;Kendall&#34; sublists need to be ranked lists 
+            else sublists need to be binary lists. 1 indicating if edge/node is present in that network and 0 if not.
+        compute (str):
+            &#34;kendall&#34; computes Kendall Rank Coefficient based on compute_kendall_tau()
+            &#34;hamming&#34; computes hamming distance based on compute_hamming()
+            &#34;ed&#34; computes edit distance based on compute_edit_distance()
+            &#34;smc&#34; computes SMC based on compute_simple_matching_coefficient()
+        kendall_usage (str): sets what parto of the two lists should be compared.
+            If &#34;all&#34; then all items are considered but list1 and list2 need to be of same length.
+            If &#34;top&#34; then the top x items will be considered.
+            If &#34;bottom&#34; then the last x items will be considered.
+            If &#34;shared&#34; then only items occuring in list1 and list2 will be considered.
+        kendall_x (int): needs to be set when usage = top or bottom. Indicates how many items are considered in the rank correaltion. If x is larger than one of the lists it will be set automtically to a quarter less than the shortest list.
+
+    Returns:
+        similairty matrix (numpy matrix): matrix containing the kendall correlation values for each input pair
+        p value matrix (numpy matrix): this matrix only contains values if  compute = hamming or compute = kendall
+        used x (int): if kendall then a third value is returned indicating what portion of the lists have been used to estimate the rank correlation value
+        
+    &#34;&#34;&#34;
+
+    print(&#34;check if kendall x is small enough &#34;)
+
+    ml = len(min(lists, key=lambda i: len(i)))
+
+    if compute == &#34;kendall&#34;:
+        if ml &lt; kendall_x:
+            print(&#34;update x&#34;)
+            kendall_x = int(ml - ml * 0.4)
+            print(&#34;new x &#34;+str(kendall_x))
+
+    result = np.zeros((len(lists), len(lists)))
+    result2 = np.zeros((len(lists), len(lists)))
+
+    computed = []
+    for index, x in np.ndenumerate(result):
+        print(index)
+        if index not in computed:
+
+            # call function
+
+            if compute == &#34;kendall&#34;:
+                # returns tau and p value
+
+                tau, p = compute_kendall_tau(lists[index[0]], lists[index[1]], usage=kendall_usage, x=kendall_x)
+
+                result2[index[0]][index[1]] = p
+                result2[index[1]][index[0]] = p
+
+                result[index[0]][index[1]] = tau
+                result[index[1]][index[0]] = tau
+
+            elif compute == &#34;hamming&#34;:
+                h = compute_hamming(lists[index[0]], lists[index[1]])
+
+                result[index[0]][index[1]] = h
+                result[index[1]][index[0]] = h
+
+                result2 = []
+
+            elif compute == &#34;ed&#34;:
+                ed = compute_edit_distance(lists[index[0]], lists[index[1]])
+
+                result[index[0]][index[1]] = ed
+                result[index[1]][index[0]] = ed
+
+                result2 = []
+
+            elif compute == &#34;smc&#34;:
+                smc = compute_simple_matching_coefficient(
+                    lists[index[0]], lists[index[1]])
+
+                result[index[0]][index[1]] = smc
+                result[index[1]][index[0]] = smc
+
+                result2 = []
+
+            else:
+                print(&#34;usage value not supported&#34;)
+
+                result = []
+                result2 = []
+
+            computed.append(index)
+            computed.append((index[1], index[0]))
+
+    if compute == &#34;kendall&#34;:
+
+        return result, result2, kendall_x
+    else:
+        return result, result2</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.calculate_jaccard_index"><code class="name flex">
+<span>def <span class="ident">calculate_jaccard_index</span></span>(<span>shared, list1, list2, similarity=True)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Calculates jaccard index between two networks.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>shraed</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of shared edges or nodes. Node IDs need to be consistent between the lists. Duplicate edges in a network are not allowed.</dd>
+<dt><strong><code>list1</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of edges or nodes in Network 1. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.</dd>
+<dt><strong><code>list2</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of edges or nodes in Network 2. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.</dd>
+<dt><strong><code>similarity</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True returns jaccard similarity else returns jaccard distance.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>jaccard</code> <code>similarity</code>/ <code>distance</code> (<code>float</code>): <code>jaccard</code> <code>index</code> or <code>distance</code> <code>between</code> <code>the</code> <code>input</code> <code>lists</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def calculate_jaccard_index(shared, list1, list2, similarity=True):
+    &#34;&#34;&#34;
+    Calculates jaccard index between two networks.
+    
+
+    Parameters:
+        shraed (list): list of shared edges or nodes. Node IDs need to be consistent between the lists. Duplicate edges in a network are not allowed.
+        list1 (list): list of edges or nodes in Network 1. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
+        list2 (list): list of edges or nodes in Network 2. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
+        similarity (boolean): if True returns jaccard similarity else returns jaccard distance.
+    Returns:
+        jaccard similarity/ distance (float): jaccard index or distance between the input lists
+    
+    &#34;&#34;&#34;
+
+    ll1 = len(list1)
+    ll2 = len(list2)
+    ls = len(shared)
+
+
+    try:
+        j = ls / (ll1 + ll2 - ls)
+    except:
+        j = None
+
+    if similarity:
+        return (j)
+    else:
+        if j is not None:
+            return (1 - j)
+        else:
+            return (j)</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.compute_binary_layer"><code class="name flex">
+<span>def <span class="ident">compute_binary_layer</span></span>(<span>shared_edges, layers=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Computes binary representation of edges/nodes.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><a title="volta.distances.node_edge_similarities.shared_edges" href="#volta.distances.node_edge_similarities.shared_edges"><code>shared_edges()</code></a></strong> :&ensp;<code>dict</code></dt>
+<dd>as returned by compute_shared_layers()</dd>
+<dt><strong><code>layers</code></strong> :&ensp;<code>list</code></dt>
+<dd>list containing network names. Needs to be the same as used in shared_edges()</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>binary</code> <code>edges</code> (<code>list</code>): <code>list</code> of <code>sublists</code> <code>containing</code> <code>binary</code> <code>edge</code>/ <code>node</code> <code>representation</code> <code>for</code> <code>each</code> <code>layer</code> <code>specified</code> <code>in</code> <code>layers.</code></dt>
+<dd>Edges/ Nodes are ordered the same way as provided in shared_edges.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_binary_layer(shared_edges, layers=None):
+    &#34;&#34;&#34;
+    Computes binary representation of edges/nodes.
+
+    Parameters:
+        shared_edges (dict): as returned by compute_shared_layers()
+        layers (list): list containing network names. Needs to be the same as used in shared_edges()
+
+    Returns:
+        binary edges (list): list of sublists containing binary edge/ node representation for each layer specified in layers. 
+                Edges/ Nodes are ordered the same way as provided in shared_edges.
+    
+    
+    &#34;&#34;&#34;
+    res = []
+    if layers is not None:
+        for layer in layers:
+            # loop thorugh dict
+            temp = []
+            for key in shared_edges.keys():
+                if layer in shared_edges[key]:
+                    temp.append(1)
+                else:
+                    temp.append(0)
+            res.append(temp)
+
+    else:
+        print(&#34;please provide layer names&#34;)
+
+    return res</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.compute_edit_distance"><code class="name flex">
+<span>def <span class="ident">compute_edit_distance</span></span>(<span>list1, list2)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Computes edit distance (based on <a href="https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Python">https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Python</a>)</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>list1</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. </dd>
+<dt><strong><code>list2</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. </dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>edit</code> <code>distance</code> (<code>float</code>): <code>eidt</code> <code>distance</code> <code>between</code> <code>the</code> <code>input</code> <code>lists</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_edit_distance(list1, list2):
+    &#34;&#34;&#34;
+    Computes edit distance (based on https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Python)
+
+    Parameters:
+        list1 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
+        list2 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
+    Returns:
+        edit distance (float): eidt distance between the input lists
+    &#34;&#34;&#34;
+
+    if len(list1) &gt; len(list2):
+        list1, list2 = list2, list1
+
+    distances = range(len(list1) + 1)
+    for i2, c2 in enumerate(list2):
+        distances_ = [i2+1]
+        for i1, c1 in enumerate(list1):
+            if c1 == c2:
+                distances_.append(distances[i1])
+            else:
+                distances_.append(
+                    1 + min((distances[i1], distances[i1 + 1], distances_[-1])))
+        distances = distances_
+    return distances[-1]</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.compute_hamming"><code class="name flex">
+<span>def <span class="ident">compute_hamming</span></span>(<span>list1, list2)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Computes hamming distance (based on SciPy)</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>list1</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. </dd>
+<dt><strong><code>list2</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. </dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>hamming</code> <code>distance</code> (<code>float</code>): <code>hamming</code> <code>distance</code> <code>between</code> <code>the</code> <code>input</code> <code>lists</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_hamming(list1, list2):
+    &#34;&#34;&#34;
+    Computes hamming distance (based on SciPy)
+
+    Parameters:
+        list1 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
+        list2 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
+    Returns:
+        hamming distance (float): hamming distance between the input lists
+    &#34;&#34;&#34;
+    return scipy.spatial.distance.hamming(list1, list2)</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.compute_kendall_tau"><code class="name flex">
+<span>def <span class="ident">compute_kendall_tau</span></span>(<span>list1, list2, usage='all', x=10)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Computes Kendall Rank Correlation between two ranked lists (based on SciPy). This can be edges ranked by weight or other attributed or nodes ranked by some attributes, such as degree.
+Input lists need to have same length or usage option other than "all" needs to be selected.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>list1</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of ranked edge or node IDs as returned by sort_edge_list().</dd>
+<dt><strong><code>list2</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of ranked edge or node IDs as returned by sort_edge_list().</dd>
+<dt><strong><code>usage</code></strong> :&ensp;<code>str</code></dt>
+<dd>sets what parto of the two lists should be compared.
+If "all" then all items are considered but list1 and list2 need to be of same length.
+If "top" then the top x items will be considered.
+If "bottom" then the last x items will be considered.
+If "shared" then only items occuring in list1 and list2 will be considered.</dd>
+<dt><strong><code>x</code></strong> :&ensp;<code>int</code></dt>
+<dd>needs to be set when usage = top or bottom. Indicates how many items are considered in the rank correaltion.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>kendall</code> <code>tau</code> (<code>float</code>): <code>kendell</code> <code>tau</code> <code>coefficient</code> <code>between</code> <code>the</code> <code>input</code> <code>lists</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>p</code> <code>value</code> (<code>float</code>): <code>p</code>-<code>value</code> of <code>the</code> <code>correlation</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_kendall_tau(list1, list2, usage=&#34;all&#34;, x=10):
+    &#34;&#34;&#34;
+    Computes Kendall Rank Correlation between two ranked lists (based on SciPy). This can be edges ranked by weight or other attributed or nodes ranked by some attributes, such as degree.
+    Input lists need to have same length or usage option other than &#34;all&#34; needs to be selected.
+
+    Parameters:
+        list1 (list): list of ranked edge or node IDs as returned by sort_edge_list().
+        list2 (list): list of ranked edge or node IDs as returned by sort_edge_list().
+        usage (str): sets what parto of the two lists should be compared.
+            If &#34;all&#34; then all items are considered but list1 and list2 need to be of same length.
+            If &#34;top&#34; then the top x items will be considered.
+            If &#34;bottom&#34; then the last x items will be considered.
+            If &#34;shared&#34; then only items occuring in list1 and list2 will be considered.
+        x (int): needs to be set when usage = top or bottom. Indicates how many items are considered in the rank correaltion.
+
+    Returns:
+        kendall tau (float): kendell tau coefficient between the input lists
+        p value (float): p-value of the correlation
+
+    
+    &#34;&#34;&#34;
+    if len(list1) != len(list2):
+        print(&#34;input lists have different length&#34;)
+        if usage != &#34;all&#34;:
+            if usage == &#34;top&#34;:
+                l1 = list1[:x]
+                l2 = list2[:x]
+            elif usage == &#34;bottom&#34;:
+                l1 = list1[-x:]
+                l2 = list2[-x:]
+            elif usage == &#34;shared&#34;:
+
+                &#39;&#39;&#39;
+                for item in list1:
+                    if item in list2 and item not in l1:
+                        l1.append(item)
+                for item in list2:
+                    if item in list1 and item not in l2:
+                        l2.append(item)
+                &#39;&#39;&#39;
+                l1 = set(list1).intersection(set(list2))
+                l2 = l1
+
+            else:
+                print(&#34;non specified parameter, will default to top 10&#34;)
+                l1 = list1[:10]
+                l2 = list2[:10]
+
+            tau, p = scipy.stats.kendalltau(l1, l2)
+
+        else:
+            print(&#34;please set usage to top, bottom or shared if lists are of different length will default to top 10&#34;)
+            l1 = list1[:10]
+            l2 = list2[:10]
+            tau, p = scipy.stats.kendalltau(l1, l2)
+    else:
+        tau, p = scipy.stats.kendalltau(list1, list2)
+
+    return tau, p</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.compute_shared_layers"><code class="name flex">
+<span>def <span class="ident">compute_shared_layers</span></span>(<span>lists, labels, is_file=False, in_async=True)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Computes in how many and in which layers/ networks each edge/node occures.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>lists</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of edge/node IDs as encoded by map_edge_to_id()/ map_node_to_id() and construct_mapped_edge().</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of network labels. Needs to be in the same order as lists.</dd>
+<dt><strong><code>is_file</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True then lists needs to contain the pickled locations to the node/ edge lists instead.</dd>
+<dt><strong><code>in_async</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True then run in async</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>shared</code> <code>edges</code>/<code>nodes</code> (<code>dict</code>): <code>key</code> <code>is</code> <code>edge</code>/ <code>node</code> <code>ID</code> <code>and</code> <code>value</code> <code>is</code> <code>label</code> <code>ID</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_shared_layers(lists, labels, is_file=False, in_async=True):
+    &#34;&#34;&#34;
+    Computes in how many and in which layers/ networks each edge/node occures.
+
+    Parameters:
+        lists (list): list of edge/node IDs as encoded by map_edge_to_id()/ map_node_to_id() and construct_mapped_edge().
+        labels (list): list of network labels. Needs to be in the same order as lists.
+        is_file (boolean): if True then lists needs to contain the pickled locations to the node/ edge lists instead.
+        in_async (boolean): if True then run in async
+
+    Returns:
+        shared edges/nodes (dict): key is edge/ node ID and value is label ID
+
+    &#34;&#34;&#34;
+
+    #shared_edges = {}
+    if in_async:
+        tasks = []
+        loop = asyncio.new_event_loop()
+
+        for edges, label in zip(lists, labels):
+
+            if is_file:
+                #read from file
+                with open(edges, &#34;rb&#34;) as f:
+                    edges = pickle.load(f)
+            # construct for each edge dict and later merge into final
+            # so calculation can be parallelized
+            print(label)
+
+            r = tasks.append(loop.create_task(__construct_dict__(edges, label)))
+
+        loop.run_until_complete(asyncio.wait(tasks))
+
+        loop.close()
+
+    
+
+        # merge all dicts into one
+
+        # edges occuring in multiple layers are merged into list attributes
+
+        for i in range(len(tasks)):
+            r = tasks[i]
+            if i == 0:
+                s_edges = r.result()
+
+            else:
+
+                temp_dict = r.result()
+                #print(&#34;shared edges&#34;, shared_edges)
+                #print(&#34;temp&#34;, temp_dict)
+                for key in temp_dict:
+                    s_edges.setdefault(key, []).append(temp_dict[key][0])
+                
+                #shared_edges = __mergeDict__(cur, temp_dict)
+                #print(&#34;shared after&#34;, s_edges)
+
+
+    else:
+        result = {}
+        for edges, label in zip(lists, labels):
+
+            if is_file:
+                #read from file
+                with open(edges, &#34;rb&#34;) as f:
+                    edges = pickle.load(f)
+            
+            print(label)
+            
+            for edge in edges:
+                if edge not in result.keys():
+                    result[edge] = [label]
+                else:
+                    result.setdefault(edge, []).append(label)
+
+        s_edges = result
+
+    return s_edges</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.compute_simple_matching_coefficient"><code class="name flex">
+<span>def <span class="ident">compute_simple_matching_coefficient</span></span>(<span>list1, list2)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Computes SMC.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>list1</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. </dd>
+<dt><strong><code>list2</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. </dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>SMC</code></strong> :&ensp;<code>float</code></dt>
+<dd>SMC coefficient between input lists</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def compute_simple_matching_coefficient(list1, list2):
+    &#34;&#34;&#34;
+    Computes SMC.
+
+    Parameters:
+        list1 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
+        list2 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
+    Returns:
+        SMC (float): SMC coefficient between input lists
+
+    
+    &#34;&#34;&#34;
+    match = 0
+    no_match = 0
+
+    for k in range(len(list1)):
+        if list1[k] == list2[k]:
+            match = match + 1
+        else:
+            no_match = no_match + 1
+
+    smc = match / (match + no_match)
+    return smc</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.construct_mapped_edge"><code class="name flex">
+<span>def <span class="ident">construct_mapped_edge</span></span>(<span>mapping, edges)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Creates list from assigned edge IDs. Can be used to reverse the mapping.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code></dt>
+<dd>edge to ID mapping as returned by map_edge_to_id()</dd>
+<dt><strong><code>edges</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of edges</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>ids</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of assigned IDs in same order as edges</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def construct_mapped_edge(mapping, edges):
+
+    &#34;&#34;&#34;
+    Creates list from assigned edge IDs. Can be used to reverse the mapping.
+
+    Parameters:
+        mapping (dict): edge to ID mapping as returned by map_edge_to_id()
+        edges (list): list of edges
+    Returns:
+        ids (list): list of assigned IDs in same order as edges
+    &#34;&#34;&#34;
+    new_edges = []
+
+    for edge in edges:
+        e1 = str(edge[0]) + &#34;,&#34;+str(edge[1])
+        # 2 = str(edge[1]) +&#34;,&#34;+str(edge[0])
+        val = mapping[e1]
+        new_edges.append(val)
+
+    return new_edges</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.convert_to_dict"><code class="name flex">
+<span>def <span class="ident">convert_to_dict</span></span>(<span>l)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Convert list l of format [(x,y)] to dict of form {x:y}.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>l</code></strong> :&ensp;<code>list</code></dt>
+<dd>input list of tuples</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>convertion</code></strong> :&ensp;<code>dict</code></dt>
+<dd>where key is first tuple entry and value is second tuple entry</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def convert_to_dict(l):
+    &#34;&#34;&#34;
+    Convert list l of format [(x,y)] to dict of form {x:y}.
+
+    Parameters:
+        l (list): input list of tuples
+    
+    Returns:
+        convertion (dict): where key is first tuple entry and value is second tuple entry
+    &#34;&#34;&#34;
+
+    new_dict = {}
+
+    for element in l:
+        new_dict[element[0]] = element[1]
+
+    return new_dict</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.get_shared_edges"><code class="name flex">
+<span>def <span class="ident">get_shared_edges</span></span>(<span>l1, l2, name=False, mapping=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Calcualtes shared edges/ nodes between two lists/ networks.</p>
+<h2 id="paramters">Paramters</h2>
+<dl>
+<dt><strong><code>l1</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of node/edge ids as returned by construced_mapped_edge().</dd>
+<dt><strong><code>l2</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of node/edge ids as returned by construced_mapped_edge().</dd>
+<dt><strong><code>name</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True ID values are replaced by original node/edge names. If Ture mapping needs to be not None.</dd>
+<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code> or <code>None</code></dt>
+<dd>edge /node to ID mapping as returned by map_edge_to_id() / map_node_to_id().</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>shared</code> <code>items</code> (<code>list</code>): <code>list</code> of <code>shared</code> <code>items</code> <code>between</code> <code>input</code> <code>lists</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_shared_edges(l1, l2, name=False, mapping=None):
+    &#34;&#34;&#34;
+    Calcualtes shared edges/ nodes between two lists/ networks.
+
+    Paramters:
+        l1 (list): list of node/edge ids as returned by construced_mapped_edge().
+        l2 (list): list of node/edge ids as returned by construced_mapped_edge().
+        name (boolean): if True ID values are replaced by original node/edge names. If Ture mapping needs to be not None.
+        mapping (dict or None): edge /node to ID mapping as returned by map_edge_to_id() / map_node_to_id().
+
+    Returns:
+        shared items (list): list of shared items between input lists
+    &#34;&#34;&#34;
+
+    if not name:
+        return list(set(l1).intersection(l2))
+    else:
+        res = []
+        if mapping is not None:
+
+            for id in list(set(l1).intersection(l2)):
+                res.append(__return_edge_from_id__(id, mapping))
+        else:
+            print(&#34;please provide mapping&#34;)
+
+        return res</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.get_sorensen_coefficient"><code class="name flex">
+<span>def <span class="ident">get_sorensen_coefficient</span></span>(<span>jaccard)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Estimates sorensen coefficient based on jaccard index</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>jaccard</code></strong> :&ensp;<code>numpy</code> <code>matrix</code></dt>
+<dd>numpy matrix filled with jaccard indices as returned by shared_edges_multiple()</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>sorensens</code></strong> :&ensp;<code>numpy</code> <code>matrix</code></dt>
+<dd>sorensen coefficient estimated from jaccard index</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_sorensen_coefficient(jaccard):
+    &#34;&#34;&#34;
+    Estimates sorensen coefficient based on jaccard index
+
+    Parameters:
+        jaccard (numpy matrix): numpy matrix filled with jaccard indices as returned by shared_edges_multiple()
+
+    Returns:
+        sorensens (numpy matrix): sorensen coefficient estimated from jaccard index
+    &#34;&#34;&#34;
+    matrix = jaccard.copy()
+
+    for index, j in np.ndenumerate(matrix):
+
+        # call shared percentage
+        s = (2*j) / (1+j)
+        matrix[index[0]][index[1]] = s
+        matrix[index[1]][index[0]] = s
+
+    return matrix</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.map_edge_to_id"><code class="name flex">
+<span>def <span class="ident">map_edge_to_id</span></span>(<span>edges, mapping={}, next_value=0)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Maps undirected edges to an ID.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>edges</code></strong> :&ensp;<code>list</code></dt>
+<dd>edge list</dd>
+<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code></dt>
+<dd>either empty dict can be provided or already populated one, when the same mapping should be used for multiple networks.</dd>
+<dt><strong><code>next_value</code></strong> :&ensp;<code>int</code></dt>
+<dd>if mapping is provided, then the last id set needs to be provided.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code></dt>
+<dd>key is edge and value is assigned ID</dd>
+<dt><code>next</code> <code>value</code> (<code>int</code>): <code>can</code> <code>be</code> <code>used</code> <code>if</code> <code>multiple</code> <code>networks</code> <code>are</code> <code>mapped</code> <code>to</code> <code>the</code> <code>same</code> <code>IDs</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def map_edge_to_id(edges, mapping={}, next_value=0):
+    &#34;&#34;&#34;
+    Maps undirected edges to an ID.
+
+    Parameters:
+        edges (list): edge list
+        mapping (dict): either empty dict can be provided or already populated one, when the same mapping should be used for multiple networks.
+        next_value (int): if mapping is provided, then the last id set needs to be provided.
+
+    Returns:
+        mapping (dict): key is edge and value is assigned ID
+        next value (int): can be used if multiple networks are mapped to the same IDs
+    &#34;&#34;&#34;
+
+    for edge in edges:
+        e1 = str(edge[0]) + &#34;,&#34;+str(edge[1])
+        e2 = str(edge[1]) + &#34;,&#34;+str(edge[0])
+        val = None
+        f_e1 = False
+        f_e2 = False
+        if e1 in mapping.keys():
+            # get its value
+            val = mapping[e1]
+            f_e1 = True
+        if e2 in mapping.keys():
+            if val is None:
+                # get value and add e1
+                val = mapping[e2]
+                mapping[e1] = val
+            f_e2 = True
+        if not f_e2 and f_e1:
+            mapping[e2] = val
+        if not f_e2 and not f_e1:
+            mapping[e1] = next_value
+            mapping[e2] = next_value
+            next_value = next_value + 1
+
+    return mapping, next_value</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.map_node_to_id"><code class="name flex">
+<span>def <span class="ident">map_node_to_id</span></span>(<span>edges, mapping={}, next_value=0)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Maps nodes to an ID.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>edges</code></strong> :&ensp;<code>list</code></dt>
+<dd>edge list</dd>
+<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code></dt>
+<dd>either empty dict can be provided or already populated one, when the same mapping should be used for multiple networks.</dd>
+<dt><strong><code>next_value</code></strong> :&ensp;<code>int</code></dt>
+<dd>if mapping is provided, then the last id set needs to be provided.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code></dt>
+<dd>key is node ID and value is mapped ID</dd>
+<dt><code>next</code> <code>value</code> (<code>int</code>): <code>can</code> <code>be</code> <code>used</code> <code>if</code> <code>multiple</code> <code>networks</code> <code>are</code> <code>mapped</code> <code>to</code> <code>the</code> <code>same</code> <code>IDs</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def map_node_to_id(edges, mapping={}, next_value=0):
+    &#34;&#34;&#34;
+    Maps nodes to an ID.
+
+    Parameters:
+        edges (list): edge list
+        mapping (dict): either empty dict can be provided or already populated one, when the same mapping should be used for multiple networks.
+        next_value (int): if mapping is provided, then the last id set needs to be provided.
+
+    Returns:
+        mapping (dict): key is node ID and value is mapped ID
+        next value (int): can be used if multiple networks are mapped to the same IDs
+    &#34;&#34;&#34;
+
+    for edge in edges:
+        nodes = [edge[0], edge[1]]
+
+        for node in nodes:
+
+            if node not in mapping.keys():
+                # get its value
+
+                mapping[node] = next_value
+
+                next_value = next_value + 1
+
+    return mapping, next_value</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.percentage_shared"><code class="name flex">
+<span>def <span class="ident">percentage_shared</span></span>(<span>shared, list1, list2, penalize=False, weight='length')</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Function to estimate the percenatge of shared edges/nodes between two networks.
+Calculates the percentage of shared edges based on the maximum possible shared edges = len of smaller list.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>shraed</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of shared edges or nodes. Node IDs need to be consistent between the lists. Duplicate edges in a network are not allowed.</dd>
+<dt><strong><code>list1</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of edges or nodes in Network 1. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.</dd>
+<dt><strong><code>list2</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of edges or nodes in Network 2. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.</dd>
+<dt><strong><code>penalize</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True then the score is penalized based on the difference in list lengths (difference in size of the two networks).
+Percentage score p (of shared edges) is penalized based on p * (1 / weight * (abs(len(list1) - len(list2)))).</dd>
+<dt><strong><code>weight</code></strong> :&ensp;<code>str</code> or <code>float</code></dt>
+<dd>method used when penalize is True. If penalize = "length" then weight is 1. If penalize is float then weight can be custom set.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>shared</code> <code>percentage</code> (<code>float</code>): <code>percentage</code> of <code>shared</code> <code>edges</code>/ <code>nodes</code> <code>between</code> <code>the</code> <code>input</code> <code>graphs</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def percentage_shared(shared, list1, list2, penalize=False, weight=&#34;length&#34;):
+    &#34;&#34;&#34;
+    Function to estimate the percenatge of shared edges/nodes between two networks.
+    Calculates the percentage of shared edges based on the maximum possible shared edges = len of smaller list.
+
+    Parameters:
+        shraed (list): list of shared edges or nodes. Node IDs need to be consistent between the lists. Duplicate edges in a network are not allowed.
+        list1 (list): list of edges or nodes in Network 1. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
+        list2 (list): list of edges or nodes in Network 2. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
+        penalize (boolean): if True then the score is penalized based on the difference in list lengths (difference in size of the two networks). 
+                Percentage score p (of shared edges) is penalized based on p * (1 / weight * (abs(len(list1) - len(list2)))).
+        weight (str or float): method used when penalize is True. If penalize = &#34;length&#34; then weight is 1. If penalize is float then weight can be custom set.
+       
+    Returns:
+        shared percentage (float): percentage of shared edges/ nodes between the input graphs
+    
+    &#34;&#34;&#34;
+
+    ll1 = len(list1)
+    ll2 = len(list2)
+
+    ls = len(shared)
+
+    p = ls / min(ll1, ll2)
+
+    if not penalize:
+
+        return p
+    else:
+        if type(weight) != type(1):
+            if weight == &#34;length&#34;:
+
+                if len(list1) != len(list2):
+
+                    return p * (1 / (abs(len(list1) - len(list2))))
+                else:
+                    print(&#34;both lists have same length, not penalized&#34;)
+                    return p
+
+        elif type(weight) == type(1):
+            return (p * (1 / weight * (abs(len(list1) - len(list2)))))
+        else:
+            print(&#34;wrong weight will return non penalized score&#34;)
+            return (p)</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.return_layer_from_id"><code class="name flex">
+<span>def <span class="ident">return_layer_from_id</span></span>(<span>id, layers)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Fetches layers specific node/edge ID is present in.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>id</code></strong> :&ensp;<code>int</code></dt>
+<dd>edge/ node ID queried for as set in map_edge_to_id()/ map_node_to_id()</dd>
+<dt><strong><code>layers</code></strong> :&ensp;<code>dict</code></dt>
+<dd>as returned by compute_shared_layers()</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>layer</code> <code>name</code>/ <code>network</code> <code>name</code> (<code>list</code>): <code>as</code> <code>queried</code> <code>for</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def return_layer_from_id(id, layers):
+    &#34;&#34;&#34;
+    Fetches layers specific node/edge ID is present in.
+
+    Parameters:
+        id (int): edge/ node ID queried for as set in map_edge_to_id()/ map_node_to_id()
+        layers (dict): as returned by compute_shared_layers()
+
+    Returns:
+        layer name/ network name (list): as queried for
+    &#34;&#34;&#34;
+
+    return layers[id]</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.return_top_layers"><code class="name flex">
+<span>def <span class="ident">return_top_layers</span></span>(<span>x, layers, direction='large')</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Fetches nodes/ edges that are present in the most / least networks.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>x</code></strong> :&ensp;<code>int</code></dt>
+<dd>number of to be returned entries</dd>
+<dt><strong><code>layers</code></strong> :&ensp;<code>dict</code></dt>
+<dd>as returned by compute_shared_layers()</dd>
+<dt><strong><code>direction</code></strong> :&ensp;<code>str</code></dt>
+<dd>if direction = "large", the x items occuring in the most networks are returned. if direction = "small" the x items occuring in the least networks are returned.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>items</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of layer IDs as queried for</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def return_top_layers(x, layers, direction=&#34;large&#34;):
+    &#34;&#34;&#34;
+    Fetches nodes/ edges that are present in the most / least networks.
+
+    Parameters:
+        x (int): number of to be returned entries
+        layers (dict): as returned by compute_shared_layers()
+        direction (str): if direction = &#34;large&#34;, the x items occuring in the most networks are returned. if direction = &#34;small&#34; the x items occuring in the least networks are returned.
+
+    Returns:
+        items (list): list of layer IDs as queried for
+    &#34;&#34;&#34;
+
+    if direction == &#34;large&#34;:
+        s = sorted(layers, key=lambda k: len(layers[k]), reverse=True)
+    else:
+        s = sorted(layers, key=lambda k: len(layers[k]))
+
+    result = []
+    counter = 0
+    for k in s:
+        counter = counter + 1
+        if counter &lt; x+1:
+            result.append((k, layers[k]))
+
+    return result</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.reverse_node_edge_mapping"><code class="name flex">
+<span>def <span class="ident">reverse_node_edge_mapping</span></span>(<span>mapping)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Reverses the mapping object. Switches keys and values of the mapping object. This allows easier retrival of original node IDs from the mapping ID.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code></dt>
+<dd>node/ edge to ID mapping as returned by map_node_to_id()/ map_edge_to_id().</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>reversed mapping (dict): keys are mapped IDs and values are original node/ edge IDs.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def reverse_node_edge_mapping(mapping):
+    &#34;&#34;&#34;
+    Reverses the mapping object. Switches keys and values of the mapping object. This allows easier retrival of original node IDs from the mapping ID.
+
+    Parameters:
+        mapping (dict): node/ edge to ID mapping as returned by map_node_to_id()/ map_edge_to_id().
+    
+    Returns:
+        reversed mapping (dict): keys are mapped IDs and values are original node/ edge IDs.
+    &#34;&#34;&#34;
+
+    return {value:key for key, value in mapping.items()}</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.shared_edges"><code class="name flex">
+<span>def <span class="ident">shared_edges</span></span>(<span>list1, list2)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Calculates shared edges/ nodes between two networks</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>list1</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of edges or nodes in Network 1. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.</dd>
+<dt><strong><code>list2</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of edges or nodes in Network 2. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>shared</code> <code>items</code> (<code>list</code>): <code>list</code> of <code>items</code> <code>shared</code> <code>between</code> <code>input</code> <code>graphs</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def shared_edges(list1, list2):
+    &#34;&#34;&#34;
+    Calculates shared edges/ nodes between two networks
+
+    Parameters:
+        list1 (list): list of edges or nodes in Network 1. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
+        list2 (list): list of edges or nodes in Network 2. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
+    Returns:
+        shared items (list): list of items shared between input graphs
+
+
+    &#34;&#34;&#34;
+    #shared = []
+
+    # test out faster method based on intersection
+    l1 = set(list1)
+    l2 = set(list2)
+
+    shared = l1.intersection(l2)
+
+    return shared</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.shared_elements_multiple"><code class="name flex">
+<span>def <span class="ident">shared_elements_multiple</span></span>(<span>lists, in_async=True, labels=None, percentage=False, jaccard=True, jaccard_similarity=True, penalize_percentage=False, weight_penalize='length', is_file=True)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Wrapper function to estimate similarities between a list of networks.
+Estimates % of shared edges/nodes between all edge list pairs/ node lists and / or jaccard similarity/ index</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>lists</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of lists containing network edges or nodes to be compared.</dd>
+<dt><strong><code>in_async</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True runs in asynchronous mode.</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
+<dd>list of network labels in same order as lists.</dd>
+<dt><strong><code>percentage</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True percentage value is calculated.</dd>
+<dt><strong><code>jaccard</code></strong> :&ensp;<code>bolean</code></dt>
+<dd>if True jaccard distance/similarity is calculated.</dd>
+<dt><strong><code>jaccard_similarity</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True returns jaccard similarity else returns jaccard distance.</dd>
+<dt><strong><code>penalize_percentage</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True then the score is penalized based on the difference in list lengths (difference in size of the two networks).
+Percentage score p (of shared edges) is penalized based on p * (1 / weight * (abs(len(list1) - len(list2)))).</dd>
+<dt><strong><code>weight_penalize</code></strong> :&ensp;<code>str</code> or <code>float</code></dt>
+<dd>method used when penalize is True. If penalize = "length" then weight is 1. If penalize is float then weight can be custom set.</dd>
+<dt><strong><code>is_file</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True then lists is list of pickled locations of data described in lists.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>similarity</code></strong> :&ensp;<code>numpy</code> <code>matrix</code> or <code>tuple</code> of <code>numpy</code> <code>matrices</code></dt>
+<dd>similarity matrix between all networks. If one parameter is estimated returns one matrix only.
+If both parameters are estimated returns jaccard matrix, percentage matrix</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def shared_elements_multiple(lists, in_async=True, labels=None, percentage=False, jaccard=True, jaccard_similarity=True, penalize_percentage=False, weight_penalize=&#34;length&#34;, is_file=True):
+    &#34;&#34;&#34;
+    Wrapper function to estimate similarities between a list of networks. 
+    Estimates % of shared edges/nodes between all edge list pairs/ node lists and / or jaccard similarity/ index
+
+    Parameters:
+        lists (list): list of lists containing network edges or nodes to be compared.
+        in_async (boolean): if True runs in asynchronous mode.
+        labels (list or None): list of network labels in same order as lists.
+        percentage (boolean): if True percentage value is calculated.
+        jaccard (bolean): if True jaccard distance/similarity is calculated.
+        jaccard_similarity (boolean): if True returns jaccard similarity else returns jaccard distance.
+        penalize_percentage (boolean): if True then the score is penalized based on the difference in list lengths (difference in size of the two networks). 
+                Percentage score p (of shared edges) is penalized based on p * (1 / weight * (abs(len(list1) - len(list2)))).
+        weight_penalize (str or float): method used when penalize is True. If penalize = &#34;length&#34; then weight is 1. If penalize is float then weight can be custom set.
+        is_file (boolean): if True then lists is list of pickled locations of data described in lists.
+       
+    Returns:
+        similarity (numpy matrix or tuple of numpy matrices): similarity matrix between all networks. If one parameter is estimated returns one matrix only.
+            If both parameters are estimated returns jaccard matrix, percentage matrix
+
+    
+
+    &#34;&#34;&#34;
+
+    if in_async:
+
+        # build result matrix
+        if percentage and jaccard:
+            result1 = np.zeros((len(lists), len(lists)))
+            result2 = np.zeros((len(lists), len(lists)))
+            # split into chunks
+            tasks = []
+            loop = asyncio.new_event_loop()
+
+            computed = []
+            for index, x in np.ndenumerate(result1):
+                # print(index)
+                if index not in computed:
+                    # call shared percentage
+                    if is_file:
+                        with open(lists[index[0]], &#34;rb&#34;) as f:
+                            l1 = pickle.load(f)
+                        with open(lists[index[1]], &#34;rb&#34;) as f:
+                            l2 = pickle.load(f)
+                    else:
+                        l1 = lists[index[0]]
+                        l2 = lists[index[1]]
+                    
+                    re = tasks.append(loop.create_task(__calculate_jaccard_index_and_percentage_async__(shared_edges(l1, l2), l1, l2, index, similarity=jaccard_similarity,  penalize=penalize_percentage, weight=weight_penalize)))
+
+                    computed.append(index)
+                    computed.append((index[1], index[0]))
+            loop.run_until_complete(asyncio.wait(tasks))
+
+            loop.close()
+            # print(tasks)
+            # use tasks (returns index and result as tuple) to fill result matrix
+            for r in tasks:
+
+                index = r.result()[0]
+                jaccard = r.result()[1]
+                percentage = r.result()[2]
+
+                result1[index[0]][index[1]] = jaccard
+                result1[index[1]][index[0]] = jaccard
+
+                result2[index[0]][index[1]] = percentage
+                result2[index[1]][index[0]] = percentage
+
+            return result1, result2
+
+        else:
+            result = np.zeros((len(lists), len(lists)))
+            # split into chunks
+            tasks = []
+            loop = asyncio.new_event_loop()
+
+            computed = []
+            for index, x in np.ndenumerate(result):
+                print(index)
+                if index not in computed:
+                    # call shared percentage
+                    if is_file:
+                        with open(lists[index[0]], &#34;rb&#34;) as f:
+                            l1 = pickle.load(f)
+                        with open(lists[index[1]], &#34;rb&#34;) as f:
+                            l2 = pickle.load(f)
+                    else:
+                        l1 = lists[index[0]]
+                        l2 = lists[index[1]]
+
+                    if jaccard:
+                        re = tasks.append(loop.create_task(__calculate_jaccard_index_async__(shared_edges(l1, l2), l1, l2,  index, similarity=jaccard_similarity)))
+
+                    else:
+                        re = tasks.append(loop.create_task(__percentage_shared_async__(shared_edges(l1, l2), l1, l2, index, penalize=penalize_percentage, weight=weight_penalize)))
+                    #result[index[0]][index[1]] = j
+                    #result[index[1]][index[0]] = j
+                    computed.append(index)
+                    computed.append((index[1], index[0]))
+            loop.run_until_complete(asyncio.wait(tasks))
+
+            loop.close()
+            # print(tasks)
+            # use tasks (returns index and result as tuple) to fill result matrix
+            for r in tasks:
+                index = r.result()[0]
+                value = r.result()[1]
+
+                result[index[0]][index[1]] = value
+                result[index[1]][index[0]] = value
+
+    else:
+
+        if percentage and jaccard:
+            result1 = np.zeros((len(lists), len(lists)))
+            result2 = np.zeros((len(lists), len(lists)))
+
+            computed = []
+            for index, x in np.ndenumerate(result1):
+
+                if is_file:
+                        with open(lists[index[0]], &#34;rb&#34;) as f:
+                            l1 = pickle.load(f)
+                        with open(lists[index[1]], &#34;rb&#34;) as f:
+                            l2 = pickle.load(f)
+                else:
+                        l1 = lists[index[0]]
+                        l2 = lists[index[1]]
+                # print(index)
+                if index not in computed:
+                    # call shared percentage
+
+                    re = __calculate_jaccard_index_and_percentage__(shared_edges(l1, l2), l1, l2, similarity=jaccard_similarity,  penalize=penalize_percentage, weight=weight_penalize)
+
+                    computed.append(index)
+                    computed.append((index[1], index[0]))
+
+                    jaccard = re[0]
+                    percentage = re[1]
+
+                    result1[index[0]][index[1]] = jaccard
+                    result1[index[1]][index[0]] = jaccard
+
+                    result2[index[0]][index[1]] = percentage
+                    result2[index[1]][index[0]] = percentage
+
+            return result1, result2
+
+        else:
+            result = np.zeros((len(lists), len(lists)))
+            # split into chunks
+
+            computed = []
+            for index, x in np.ndenumerate(result):
+                print(index)
+                if index not in computed:
+                    if is_file:
+                        with open(lists[index[0]], &#34;rb&#34;) as f:
+                            l1 = pickle.load(f)
+                        with open(lists[index[1]], &#34;rb&#34;) as f:
+                            l2 = pickle.load(f)
+                    else:
+                        l1 = lists[index[0]]
+                        l2 = lists[index[1]]
+                    # call shared percentage
+                    if jaccard:
+                        re = calculate_jaccard_index(shared_edges(l1, l2), l1, l2, similarity=jaccard_similarity)
+
+                    else:
+                        re = percentage_shared(shared_edges(l1, l2), l1, l2, penalize=penalize_percentage, weight=weight_penalize)
+                    #result[index[0]][index[1]] = j
+                    #result[index[1]][index[0]] = j
+                    computed.append(index)
+                    computed.append((index[1], index[0]))
+
+                    value = re
+
+                    result[index[0]][index[1]] = value
+                    result[index[1]][index[0]] = value
+
+        return result</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.sort_edge_list"><code class="name flex">
+<span>def <span class="ident">sort_edge_list</span></span>(<span>edges, mapping)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Sorts edge lists based on weight attribute and returns sorted list of edge ids.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>edges</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of sublists in following format
+[gene1, gene2, weight]</dd>
+<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code></dt>
+<dd>edge to ID mapping as returned by map_edge_to_id()</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>ranked</code> <code>edges</code> (<code>list</code>): <code>list</code> of <code>sorted</code> <code>edge</code> <code>IDs</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sort_edge_list(edges, mapping):
+    &#34;&#34;&#34;
+    Sorts edge lists based on weight attribute and returns sorted list of edge ids.
+
+    Parameters:
+        edges (list): list of sublists in following format  [gene1, gene2, weight]
+        mapping (dict): edge to ID mapping as returned by map_edge_to_id()
+
+    Returns:
+        ranked edges (list): list of sorted edge IDs
+    &#34;&#34;&#34;
+
+    edge_weight_mapping = {}
+    sorted_edges = []
+
+    for edge in edges:
+
+        e = (str(edge[0]) + &#34;,&#34;+str(edge[1]))
+
+        edge_weight_mapping[e] = edge[2]
+
+    # sort dict by weight
+
+    s = list(sorted(edge_weight_mapping.items(), key=operator.itemgetter(1), reverse=True))
+
+    # print(s)
+
+    # construct sorted edge list
+    for i in s:
+        # get edge id from mapping
+        id = mapping[i[0]]
+        sorted_edges.append(id)
+    return sorted_edges</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.sort_node_list"><code class="name flex">
+<span>def <span class="ident">sort_node_list</span></span>(<span>Graph, mapping, degree=False, degree_centrality=False, closeness_centrality=False, betweenness=False, k=None, xx=2, as_str=True)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Sorts node lists based on weight attribute and returns sorted list of nodes ids.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>Graph</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on.</dd>
+<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code></dt>
+<dd>is id mapping as returned by map_node_to_id()</dd>
+<dt><strong><code>as_str</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True node IDs are assumed to be string else int.</dd>
+<dt><strong><code>degree</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True nodes are sorted after degree.</dd>
+<dt><strong><code>degree_centrality</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True nodes are sorted after degree centrality.</dd>
+<dt><strong><code>closeness_centrality</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True nodes are sorted after closeness centrality.</dd>
+<dt><strong><code>betweenness</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True nodes are sorted after betweenness.</dd>
+<dt>If multiple values are set to True a combined ranking is calculated</dt>
+<dt><strong><code>k</code></strong> :&ensp;<code>float</code> [<code>0</code>,<code>1</code>] or <code>None</code></dt>
+<dd>approximation of betweenness, if float then k percentage of nodes are used to approximate the betweenness values. If None all nodes are used.</dd>
+<dt><strong><code>xx</code></strong> :&ensp;<code>int</code></dt>
+<dd>state how often random sampling is performed if k is not None</dd>
+<dt><strong><code>as_str</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True keys in mapping are assumed to be str (are the same as graph node IDs). If False they are assumed to be int.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>sorted</code></strong> :&ensp;<code>dict</code></dt>
+<dd>keys are degree, dc, cc, betweenness, average_mean and average_median, values are list of ranked node ids (index of list is rank and value is Node ID as provided in mapping). If key is set to False an empty list is returned.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def sort_node_list(Graph, mapping, degree=False, degree_centrality=False, closeness_centrality=False, betweenness=False, k=None, xx=2, as_str=True):
+    &#34;&#34;&#34;
+    Sorts node lists based on weight attribute and returns sorted list of nodes ids.
+
+    Parameters:
+        Graph (networkX graph object): graph to estimate on.
+        mapping (dict): is id mapping as returned by map_node_to_id()
+        as_str (boolean): if True node IDs are assumed to be string else int.
+        degree (boolean): if True nodes are sorted after degree.
+        degree_centrality (boolean): if True nodes are sorted after degree centrality.
+        closeness_centrality (boolean): if True nodes are sorted after closeness centrality.
+        betweenness (boolean): if True nodes are sorted after betweenness.
+        If multiple values are set to True a combined ranking is calculated
+        k (float [0,1] or None): approximation of betweenness, if float then k percentage of nodes are used to approximate the betweenness values. If None all nodes are used.
+        xx (int): state how often random sampling is performed if k is not None
+        as_str (boolean): if True keys in mapping are assumed to be str (are the same as graph node IDs). If False they are assumed to be int.
+        
+    Returns:
+        sorted (dict): keys are degree, dc, cc, betweenness, average_mean and average_median, values are list of ranked node ids (index of list is rank and value is Node ID as provided in mapping). If key is set to False an empty list is returned.
+        
+    
+    &#34;&#34;&#34;
+    cnt = 0
+    # only used in case multiple are mapped
+    x = []
+    values_saved = {}
+    if degree:
+        # type list
+        weighted_degree = list(Graph.degree())
+        # convert to dict
+        # print(weighted_degree)
+        weighted_d = convert_to_dict(weighted_degree)
+        # print(weighted_d)
+        values_saved[&#34;degree&#34;] = weighted_d
+        sorted_d = __sort_dict__(weighted_d)
+        # print(sorted_d)
+        # print(mapping)
+        # convert keys to list and map to ids from mapping
+        s_d = __list_to_mapping__(sorted_d, mapping, as_str=as_str)
+        x.append(s_d)
+        cnt = cnt + 1
+        print(cnt)
+    else:
+        s_d = []
+    if degree_centrality:
+        # normalized version of degree
+        # type dict
+        weighted_dc = nx.degree_centrality(Graph)
+        values_saved[&#34;dc&#34;] = weighted_dc
+        sorted_dc = __sort_dict__(weighted_dc)
+        # convert keys to list and map to ids from mapping
+        s_dc = __list_to_mapping__(sorted_dc, mapping, as_str=as_str)
+        x.append(s_dc)
+        cnt = cnt + 1
+        print(cnt)
+    else:
+        s_dc = []
+    if closeness_centrality:
+        # nx version very slow calculate based on adjacency matrix
+
+        # order is based on G.nodes() =&gt; index of G.nodes() is row index of A
+        id_G = list(Graph.nodes())
+        A = nx.to_numpy_matrix(Graph)
+        D = scipy.sparse.csgraph.floyd_warshall(
+            A, directed=False, unweighted=False)
+        n = D.shape[0]
+        closeness_centrality = {}
+        for r in range(0, n):
+
+            cc = 0.0
+
+            possible_paths = list(enumerate(D[r, :]))
+            shortest_paths = dict(
+                filter(lambda x: not x[1] == np.inf, possible_paths))
+
+            total = sum(shortest_paths.values())
+            n_shortest_paths = len(shortest_paths) - 1.0
+            if total &gt; 0.0 and n &gt; 1:
+                s = n_shortest_paths / (n - 1)
+                cc = (n_shortest_paths / total) * s
+            closeness_centrality[id_G[r]] = cc
+
+        # average shortest path from v to all other nodes
+        # type dict
+        weighted_cc = closeness_centrality
+        values_saved[&#34;cc&#34;] = weighted_cc
+        # print(weighted_cc)
+        sorted_cc = __sort_dict__(weighted_cc)
+        # convert keys to list and map to ids from mapping
+        s_cc = __list_to_mapping__(sorted_cc, mapping, as_str=as_str)
+        x.append(s_cc)
+        cnt = cnt + 1
+        print(cnt)
+    else:
+        s_cc = []
+    if betweenness:
+        # fraction of shortest paths that pass through v
+        # type dict
+        # if k is not None betweenness is calculated x times with new random nodes and all results are averaged to get best optimazion
+
+        if k is not None:
+            temp = []
+            #print(&#34;nodes in graph &#34; +str(len(list(Graph.nodes()))))
+            kk = int(len(list(Graph.nodes())) * k)
+            # print(&#34;k=&#34;+str(kk))
+            for i in range(xx):
+                weighted_b = nx.betweenness_centrality(
+                    Graph, normalized=True, k=kk)
+                temp.append(weighted_b)
+                #print(&#34;len res in loop&#34;)
+                # print(len(weighted_b))
+            # average values
+            # print(temp)
+            df = pd.DataFrame(temp)
+            weighted_b = dict(df.mean())
+            
+            #print(&#34;res mean&#34;)
+            # print(len(weighted_b))
+
+        else:
+            weighted_b = nx.betweenness_centrality(Graph, normalized=True)
+
+        values_saved[&#34;bet&#34;] = weighted_b
+        sorted_b = __sort_dict__(weighted_b)
+        # convert keys to list and map to ids from mapping
+        s_b = __list_to_mapping__(sorted_b, mapping, as_str=as_str)
+        x.append(s_b)
+        cnt = cnt + 1
+        print(cnt)
+    else:
+        s_b = []
+
+    if cnt &gt; 1:
+        print(&#34;average position is calculated&#34;)
+        # get first itme that is non empty
+        # all should contain same nodes so enough to loop through one list to get all nodes of this graph
+        mean_position = {}
+        median_position = {}
+
+        for node in x[0]:
+            # get all indices
+            i = []
+            for element in x:
+                i.append(element.index(node))
+            # average
+            #i = i / len(x)
+            # save
+            #print(&#34;average&#34;, node, i)
+            mean_position[node] = statistics.mean(i)
+            median_position[node] = statistics.median(i)
+
+
+        # convert to sorted list
+        sorted_mean = list(__sort_dict__(mean_position, reverse=False).keys())
+        sorted_median = list(__sort_dict__(median_position, reverse=False).keys())
+        # print(sorted_average)
+    else:
+        sorted_mean = []
+        sorted_median = []
+
+    result = {&#34;degree&#34;: s_d, &#34;dc&#34;: s_dc, &#34;cc&#34;: s_cc,&#34;betweenness&#34;: s_b, &#34;average_mean&#34;: sorted_mean, &#34;average_median&#34;: sorted_median}
+
+    if cnt &lt; 1:
+        print(&#34;no weights are selected please set at least one value to True&#34;)
+
+    return result, values_saved</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.node_edge_similarities.to_distance"><code class="name flex">
+<span>def <span class="ident">to_distance</span></span>(<span>m)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Converts a similarity matrix to a distance matrix (1- x).</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>m</code></strong> :&ensp;<code>numpy</code> <code>matrix</code></dt>
+<dd>similarity matrix</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>distance</code> <code>matrix</code> (<code>numpy</code> <code>matrix</code>): <code>converted</code> <code>distance</code> <code>matrix</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def to_distance(m):
+    &#34;&#34;&#34;
+    Converts a similarity matrix to a distance matrix (1- x).
+
+    Parameters:
+        m (numpy matrix): similarity matrix
+    Returns:
+        distance matrix (numpy matrix): converted distance matrix
+    &#34;&#34;&#34;
+    matrix = m.copy()
+    computed = []
+    for index, x in np.ndenumerate(matrix):
+
+        if index not in computed:
+            # call shared percentage
+            d = 1 - x
+            matrix[index[0]][index[1]] = d
+            matrix[index[1]][index[0]] = d
+        computed.append(index)
+        computed.append((index[1], index[0]))
+
+    return matrix</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="volta.distances" href="index.html">volta.distances</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="volta.distances.node_edge_similarities.build_share_matrix" href="#volta.distances.node_edge_similarities.build_share_matrix">build_share_matrix</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.build_similarity_matrix_for_binary_and_ranked" href="#volta.distances.node_edge_similarities.build_similarity_matrix_for_binary_and_ranked">build_similarity_matrix_for_binary_and_ranked</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.calculate_jaccard_index" href="#volta.distances.node_edge_similarities.calculate_jaccard_index">calculate_jaccard_index</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.compute_binary_layer" href="#volta.distances.node_edge_similarities.compute_binary_layer">compute_binary_layer</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.compute_edit_distance" href="#volta.distances.node_edge_similarities.compute_edit_distance">compute_edit_distance</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.compute_hamming" href="#volta.distances.node_edge_similarities.compute_hamming">compute_hamming</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.compute_kendall_tau" href="#volta.distances.node_edge_similarities.compute_kendall_tau">compute_kendall_tau</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.compute_shared_layers" href="#volta.distances.node_edge_similarities.compute_shared_layers">compute_shared_layers</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.compute_simple_matching_coefficient" href="#volta.distances.node_edge_similarities.compute_simple_matching_coefficient">compute_simple_matching_coefficient</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.construct_mapped_edge" href="#volta.distances.node_edge_similarities.construct_mapped_edge">construct_mapped_edge</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.convert_to_dict" href="#volta.distances.node_edge_similarities.convert_to_dict">convert_to_dict</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.get_shared_edges" href="#volta.distances.node_edge_similarities.get_shared_edges">get_shared_edges</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.get_sorensen_coefficient" href="#volta.distances.node_edge_similarities.get_sorensen_coefficient">get_sorensen_coefficient</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.map_edge_to_id" href="#volta.distances.node_edge_similarities.map_edge_to_id">map_edge_to_id</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.map_node_to_id" href="#volta.distances.node_edge_similarities.map_node_to_id">map_node_to_id</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.percentage_shared" href="#volta.distances.node_edge_similarities.percentage_shared">percentage_shared</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.return_layer_from_id" href="#volta.distances.node_edge_similarities.return_layer_from_id">return_layer_from_id</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.return_top_layers" href="#volta.distances.node_edge_similarities.return_top_layers">return_top_layers</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.reverse_node_edge_mapping" href="#volta.distances.node_edge_similarities.reverse_node_edge_mapping">reverse_node_edge_mapping</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.shared_edges" href="#volta.distances.node_edge_similarities.shared_edges">shared_edges</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.shared_elements_multiple" href="#volta.distances.node_edge_similarities.shared_elements_multiple">shared_elements_multiple</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.sort_edge_list" href="#volta.distances.node_edge_similarities.sort_edge_list">sort_edge_list</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.sort_node_list" href="#volta.distances.node_edge_similarities.sort_node_list">sort_node_list</a></code></li>
+<li><code><a title="volta.distances.node_edge_similarities.to_distance" href="#volta.distances.node_edge_similarities.to_distance">to_distance</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

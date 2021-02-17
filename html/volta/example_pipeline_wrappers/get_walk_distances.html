@@ -1,0 +1,942 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.5" />
+<title>volta.example_pipeline_wrappers.get_walk_distances API documentation</title>
+<meta name="description" content="This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
+based on random walks." />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>volta.example_pipeline_wrappers.get_walk_distances</code></h1>
+</header>
+<section id="section-intro">
+<p>This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
+based on random walks.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
+based on random walks.
+&#34;&#34;&#34;
+
+import networkx as nx
+import pandas as pd
+import csv
+import random
+import sys
+#sys.path.insert(1, &#39;../distances/&#39;)
+import volta.distances.global_distances as global_distances
+import volta.distances.local as local
+import volta.simplification as simplification
+import volta.distances.trees as trees
+
+import pickle
+from scipy.stats import kurtosis, skew, kendalltau
+import statistics
+import numpy as np
+import scipy
+import multiprocessing as mp
+from multiprocessing import Pool
+from functools import partial
+
+
+def helper_walks(networks, nodes, network_ids, steps=10, number_of_walks=10, degree=True,  probabilistic=True, weight=&#34;weight&#34;):
+
+    &#34;&#34;&#34;
+    Estimates for networks number_of_walks walks of size steps.
+
+    Parameters:
+        networks (list): of networkX graph objects
+        nodes (list): of nodes (areas) to be compared.
+        network_ids (list): list of network IDs.
+        steps (int): is size of random walk
+        number_of_walks (int): how many random walks are performed on G
+        degree (boolean): if True then the number of random walks performed for each starting node is dependent on its degree and is estimated as degree*number_of_walks.
+        probabilisitc (boolean): if True edge weights are taken into account else all edges are considered equal.  If true then weight needs to be set
+        weight (str): edge attribute name as contained in G. Weight is evaluated as a similarity
+
+    Returns:
+        walks (dict): key is network IDs and value is dict where key is starting node and value is list of performed walks.
+                    Each walk is a sublist and contains the node IDs in order of their visit by the random walk.
+        
+    &#34;&#34;&#34;
+
+    performed_walks = {}
+   
+    for net_id in network_ids:
+        performed_walks[net_id] = {}
+        
+        
+    cn = 0
+    for node in nodes:
+        
+        if cn % 100 == 0:
+            print(&#34;walks for node &#34;, cn, &#34;outof&#34;, len(nodes))
+        cn = cn + 1
+
+        walks = []
+        
+
+        for i in range(len(networks)):
+            net = networks[i]
+            network_id = network_ids[i]
+            
+            if node in net.nodes():
+                
+                if not nx.is_isolate(net, node):
+                    if degree:
+                        nw = int(number_of_walks * net.degree[node])
+                        print(&#34;running walks&#34;, nw, &#34;for node&#34;, node)
+                    else:
+                        nw = number_of_walks
+
+                        
+                    walks  = global_distances.perform_random_walks(net, steps=steps, number_of_walks=nw, start=node, probabilistic=probabilistic, weight=weight)
+                    
+
+
+
+            #save
+            performed_walks[network_id][node] = walks
+            
+
+
+    return performed_walks
+
+def helper_get_counts(labels, networks, performed_walks):
+    &#34;&#34;&#34;
+    Count number of appearenses of nodes &amp; edges in walks performed on the same starting nodes. Also estimates the fraction of appearens w.r.t. to all nodes/ edges visited from the same strating node.
+
+    Parameters:
+        labels (list): network labels as provided to helper_walks().
+        networks (list): of networkX graph objects on which the random walks have been performed. Needs to be in same order as labels.
+        performed_walks (dict): as returned by helper_walks().
+     
+    Returns:
+        node counts (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Node ID and value is its counts.
+        edge counts (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Edge ID and value is its counts.
+        node fraction (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Node ID and value is its fraction w.r.t to all visited nodes from that start node.
+        edge fraction (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Edge ID and value is its fraction w.r.t to all visited edges from that start node..
+    &#34;&#34;&#34;
+
+
+    edges = {}
+    nodes = {}
+    edges_percentage = {}
+    nodes_percentage = {}
+    for i in labels:
+        edges[i] = {}
+        nodes[i]= {}
+        edges_percentage[i] = {}
+        nodes_percentage[i]= {}
+        for s in performed_walks[i].keys():
+            edges[i][s] = []
+            nodes[i][s] = []
+            edges_percentage[i][s] = []
+            nodes_percentage[i][s] = []
+
+
+    for ii in range(len(labels)):
+        i = labels[ii]
+        for s in performed_walks[i].keys():
+            walk_list = performed_walks[i][s]
+            nodes_cnt, edges_cnt = global_distances.__rank_walks__(networks[ii], walk_list)
+            edges[i][s] = edges_cnt
+            nodes[i][s] = nodes_cnt
+
+            #compute fraction values
+            nodes_frc = {}
+            for key in nodes_cnt.keys():
+                nodes_frc[key] = nodes_cnt[key] / len(nodes_cnt.keys())
+
+            edges_frc = {}
+            for key in edges_cnt.keys():
+                edges_frc[key] = edges_cnt[key] / len(edges_cnt.keys())
+
+
+            edges_percentage[i][s] = edges_frc
+            nodes_percentage[i][s] = nodes_frc
+
+
+
+            
+
+
+    return nodes, edges, nodes_percentage, edges_percentage
+
+
+
+
+def helper_walk_sim(networks, performed_walks, nodes, network_ids, undirected=True, top=10, return_all=False, nodes_ranked=None, edges_ranked=None):
+
+    &#34;&#34;&#34;
+    Compares random walks based on their similarity of visited nodes/ edges. Estimates for each network pair a correlation score based on the mean of each node pairs random walks.
+    
+    Parameters:
+        networks (list): of networkX graph objects
+        performed_walks (dict): as returned by helper_walks().
+        nodes (list): of nodes (areas) to be compared.
+        network_ids (list): list of network IDs as contained in performed_walks().
+        top (int): top x nodes &amp; edges are considered when calculating the correlation 
+        undirected (boolean): if True then edge traversal is not taken into account
+        return_all (boolean): if True then for each network pair its full correlation list is returned as well.
+        nodes_ranked (dict): as returned by helper_get_counts()
+        edges_ranked (dict): as returned by helper_get_counts())
+
+    Returns:
+        correlation edges (numpy matrix): between network pairs
+        correlation nodes (numpy matrix): between network pairs
+        correlation edges p-value (numpy matrix): between network pairs
+        correlation nodes p-value (numpy matrix): between network pairs
+        intermediate correaltion scores edges (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes.
+        intermediate correaltion scores nodes (dict):  if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes.
+        intermediate p-values edges (dict): if return_all is True. Key is tuple of network IDs and value is list of p-values ordered as in nodes.
+        intermediate p-values edges (dict):  if return_all is True. Key is tuple of network IDs and value is list of p-values ordered as in nodes.
+
+    &#34;&#34;&#34;
+                
+    results_nodes =  np.zeros((len(networks), len(networks)))
+    results_edges =  np.zeros((len(networks), len(networks)))
+
+    results_nodes_p =  np.zeros((len(networks), len(networks)))
+    results_edges_p =  np.zeros((len(networks), len(networks)))
+
+
+    if return_all:
+        results_nodes_all =  {}
+        results_edges_all =  {}
+
+        results_nodes_p_all =  {}
+        results_edges_p_all =  {}
+
+    index_list = []
+    for index, x in np.ndenumerate(results_nodes):
+        temp = (index[1], index[0])
+        if temp not in index_list and index not in index_list:
+            index_list.append(index)
+
+
+    for index in index_list:
+        n1 = network_ids[index[0]]
+        n2 = network_ids[index[1]]
+        #print(&#34;n1&#34;, n1)
+        #print(&#34;n2&#34;, n2)
+
+        nodes_sim = []
+        edges_sim = []
+
+        nodes_sim_p = []
+        edges_sim_p = []
+
+        nodes_sim_all = []
+        edges_sim_all = []
+        nodes_sim_p_all = []
+        edges_sim_p_all = []
+
+        for node in nodes:
+            #get consensus walks
+            #since prefiously if node is not in networks has been set to an empty list this does not need to be checked for here
+            #print(&#34;len c1 network&#34;, len(performed_walks[n1]))
+            c1 = performed_walks[n1][node]
+            c2 = performed_walks[n2][node]
+
+            if len(c1) &gt; 0 and len(c2) &gt; 0:
+
+               
+                kendall = global_distances.compare_walks(networks[index[0]], [nodes_ranked[n1][node], edges_ranked[n1][node]], walk2=[nodes_ranked[n2][node], edges_ranked[n2][node]], G2=networks[index[1]],undirected=undirected, comparison=&#34;ranked&#34;, top=top)
+                
+                e_t = kendall[&#34;edges_tau&#34;]
+                n_t = kendall[&#34;nodes_tau&#34;]
+                e_p = kendall[&#34;edges_p&#34;]
+                n_p = kendall[&#34;nodes_p&#34;]
+
+                nodes_sim.append(n_t)
+                edges_sim.append(e_t)
+                nodes_sim_p.append(n_p)
+                edges_sim_p.append(e_p)
+
+                if return_all:
+                    nodes_sim_all.append(n_t)
+                    edges_sim_all.append(e_t)
+                    nodes_sim_p_all.append(n_p)
+                    edges_sim_p_all.append(e_p)
+
+
+            else:
+                print(&#34;no walk similarities can be estimated&#34;, node, n1, n2)
+                if return_all:
+                    nodes_sim_all.append(None)
+                    edges_sim_all.append(None)
+                    nodes_sim_p_all.append(None)
+                    edges_sim_p_all.append(None)
+
+
+        #estiamte mean and write to results matrix
+        if len(nodes_sim) &gt; 1:
+            mean_nodes = statistics.mean(nodes_sim)
+            mean_nodes_p = statistics.mean(nodes_sim_p)
+        else:
+            print(&#34;no mean value can be estimated &amp; value is set to None for&#34;, n1, n2)
+            mean_nodes = None
+            mean_nodes_p=None
+
+        if len(edges_sim) &gt; 1:
+            mean_edges = statistics.mean(edges_sim)
+            mean_edges_p = statistics.mean(edges_sim_p)
+        else:
+            print(&#34;no mean value can be estimated &amp; value is set to None for&#34;, n1, n2)
+            mean_edges = None
+            mean_edges_p = None
+
+
+        results_edges[index[0]][index[1]] = mean_edges
+        results_edges[index[1]][index[0]] = mean_edges
+        results_edges_p[index[0]][index[1]] = mean_edges_p
+        results_edges_p[index[1]][index[0]] = mean_edges_p
+
+        results_nodes[index[0]][index[1]] = mean_nodes
+        results_nodes[index[1]][index[0]] = mean_nodes
+        results_nodes_p[index[0]][index[1]] = mean_nodes_p
+        results_nodes_p[index[1]][index[0]] = mean_nodes_p
+
+        if return_all:
+            results_nodes_all[(n1, n2)] = nodes_sim_all
+            results_nodes_p_all[(n1, n2)] = nodes_sim_p_all
+
+            results_edges_all[(n1, n2)] = edges_sim_all
+            results_edges_p_all[(n1, n2)] = edges_sim_p_all
+
+
+    if return_all:
+        return results_edges, results_nodes, results_edges_p, results_nodes_p, results_edges_all, results_nodes_all, results_edges_p_all, results_nodes_p_all
+
+    else:
+
+        return results_edges, results_nodes, results_edges_p, results_nodes_p
+
+
+def __walks_multi__(nodes, net=None, network_id=None, steps=10, number_of_walks=10, degree=True, start=None, probabilistic=True, weight=&#34;weight&#34;):
+
+    performed_walks = {}
+    cn = 0
+    for node in nodes:
+        
+        if cn % 100 == 0:
+            print(&#34;walks for node &#34;, cn, &#34;outof&#34;, len(nodes))
+        cn = cn + 1
+
+        walks = []
+        
+
+        
+            
+            
+        if node in net.nodes():
+            
+            if not nx.is_isolate(net, node):
+                if degree:
+                    nw = int(number_of_walks * net.degree[node])
+                    print(&#34;running walks&#34;, nw, &#34;for node&#34;, node)
+                else:
+                    nw = number_of_walks
+
+                    
+                walks  = global_distances.perform_random_walks(net, steps=steps, number_of_walks=nw, start=node, probabilistic=probabilistic, weight=weight)
+                #print(&#34;count nodes / edges in walk&#34;)
+                #nodes_cnt, edges_cnt = global_distances.rank_walks(net, walks)
+                performed_walks[node] = walks
+
+
+    return performed_walks
+
+
+
+def helper_walks_multi(net, nodes, network_id=0, steps=10, number_of_walks=10, degree=True, start=None, probabilistic=True, weight=&#34;weight&#34;, nr_processes=20):
+
+    &#34;&#34;&#34;
+    Estimates random walks for specific or random select starting node on multiple cores.
+
+    Parameters:
+        net (NetworkX graph object): graph to estimate on
+        nodes (list): nodes to be investigated.
+        network_id (str or int): name of network that can be set custom.
+        steps (int): is size of random walk
+        number_of_walks (int): how many random walks are performed on net
+        degree (boolean): if True then the number of random walks performed for each starting node is dependent on its degree and is estimated as degree*number_of_walks.
+        start (node ID): if is None start node is selected at random from nodes else start needs to be node ID as contained in net
+        probabilisitc (boolean): if True edge weights are taken into account else all edges are considered equal.  If true then weight needs to be set
+        weight (str): edge attribute name as contained in G. Weight is evaluated as a similarity
+        nr_processes (int): how many processes should be created.
+
+    Returns:
+        walks (dict): where key is Network ID and value is dict where key is starting node and value is list of performed walks.
+
+    &#34;&#34;&#34;
+
+    performed_walks = {}
+    performed_walks[network_id] = {}
+    
+
+
+    #split into chunks and initialize multiprocessing
+    chunks = list(np.array_split(np.array(nodes), nr_processes))
+
+    func = partial(__walks_multi__, net=net, network_id=network_id, steps=steps, number_of_walks=number_of_walks, degree=degree, start=start, probabilistic=probabilistic, weight=weight)
+
+    pool = Pool(processes=nr_processes)
+
+    result = pool.map(func, chunks)
+
+    print(&#34;terminate multiprocesses&#34;)
+    pool.terminate()
+    pool.join()
+
+    #combine results
+    print(&#34;merging result &#34;)
+   
+    temp = {}
+    for r in result:
+        #print(&#34;r&#34;, r)
+        temp.update(r)
+    
+        
+    
+    performed_walks[network_id] = temp
+
+
+    
+
+
+    return performed_walks</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="volta.example_pipeline_wrappers.get_walk_distances.helper_get_counts"><code class="name flex">
+<span>def <span class="ident">helper_get_counts</span></span>(<span>labels, networks, performed_walks)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Count number of appearenses of nodes &amp; edges in walks performed on the same starting nodes. Also estimates the fraction of appearens w.r.t. to all nodes/ edges visited from the same strating node.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>labels</code></strong> :&ensp;<code>list</code></dt>
+<dd>network labels as provided to helper_walks().</dd>
+<dt><strong><code>networks</code></strong> :&ensp;<code>list</code></dt>
+<dd>of networkX graph objects on which the random walks have been performed. Needs to be in same order as labels.</dd>
+<dt><strong><code>performed_walks</code></strong> :&ensp;<code>dict</code></dt>
+<dd>as returned by helper_walks().</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<p>node counts (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Node ID and value is its counts.
+edge counts (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Edge ID and value is its counts.
+node fraction (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Node ID and value is its fraction w.r.t to all visited nodes from that start node.
+edge fraction (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Edge ID and value is its fraction w.r.t to all visited edges from that start node..</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def helper_get_counts(labels, networks, performed_walks):
+    &#34;&#34;&#34;
+    Count number of appearenses of nodes &amp; edges in walks performed on the same starting nodes. Also estimates the fraction of appearens w.r.t. to all nodes/ edges visited from the same strating node.
+
+    Parameters:
+        labels (list): network labels as provided to helper_walks().
+        networks (list): of networkX graph objects on which the random walks have been performed. Needs to be in same order as labels.
+        performed_walks (dict): as returned by helper_walks().
+     
+    Returns:
+        node counts (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Node ID and value is its counts.
+        edge counts (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Edge ID and value is its counts.
+        node fraction (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Node ID and value is its fraction w.r.t to all visited nodes from that start node.
+        edge fraction (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Edge ID and value is its fraction w.r.t to all visited edges from that start node..
+    &#34;&#34;&#34;
+
+
+    edges = {}
+    nodes = {}
+    edges_percentage = {}
+    nodes_percentage = {}
+    for i in labels:
+        edges[i] = {}
+        nodes[i]= {}
+        edges_percentage[i] = {}
+        nodes_percentage[i]= {}
+        for s in performed_walks[i].keys():
+            edges[i][s] = []
+            nodes[i][s] = []
+            edges_percentage[i][s] = []
+            nodes_percentage[i][s] = []
+
+
+    for ii in range(len(labels)):
+        i = labels[ii]
+        for s in performed_walks[i].keys():
+            walk_list = performed_walks[i][s]
+            nodes_cnt, edges_cnt = global_distances.__rank_walks__(networks[ii], walk_list)
+            edges[i][s] = edges_cnt
+            nodes[i][s] = nodes_cnt
+
+            #compute fraction values
+            nodes_frc = {}
+            for key in nodes_cnt.keys():
+                nodes_frc[key] = nodes_cnt[key] / len(nodes_cnt.keys())
+
+            edges_frc = {}
+            for key in edges_cnt.keys():
+                edges_frc[key] = edges_cnt[key] / len(edges_cnt.keys())
+
+
+            edges_percentage[i][s] = edges_frc
+            nodes_percentage[i][s] = nodes_frc
+
+
+
+            
+
+
+    return nodes, edges, nodes_percentage, edges_percentage</code></pre>
+</details>
+</dd>
+<dt id="volta.example_pipeline_wrappers.get_walk_distances.helper_walk_sim"><code class="name flex">
+<span>def <span class="ident">helper_walk_sim</span></span>(<span>networks, performed_walks, nodes, network_ids, undirected=True, top=10, return_all=False, nodes_ranked=None, edges_ranked=None)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Compares random walks based on their similarity of visited nodes/ edges. Estimates for each network pair a correlation score based on the mean of each node pairs random walks.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>networks</code></strong> :&ensp;<code>list</code></dt>
+<dd>of networkX graph objects</dd>
+<dt><strong><code>performed_walks</code></strong> :&ensp;<code>dict</code></dt>
+<dd>as returned by helper_walks().</dd>
+<dt><strong><code>nodes</code></strong> :&ensp;<code>list</code></dt>
+<dd>of nodes (areas) to be compared.</dd>
+<dt><strong><code>network_ids</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of network IDs as contained in performed_walks().</dd>
+<dt><strong><code>top</code></strong> :&ensp;<code>int</code></dt>
+<dd>top x nodes &amp; edges are considered when calculating the correlation </dd>
+<dt><strong><code>undirected</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True then edge traversal is not taken into account</dd>
+<dt><strong><code>return_all</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True then for each network pair its full correlation list is returned as well.</dd>
+<dt><strong><code>nodes_ranked</code></strong> :&ensp;<code>dict</code></dt>
+<dd>as returned by helper_get_counts()</dd>
+<dt><strong><code>edges_ranked</code></strong> :&ensp;<code>dict</code></dt>
+<dd>as returned by helper_get_counts())</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>correlation</code> <code>edges</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>correlation</code> <code>nodes</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>correlation</code> <code>edges</code> <code>p</code>-<code>value</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>correlation</code> <code>nodes</code> <code>p</code>-<code>value</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<p>intermediate correaltion scores edges (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes.
+intermediate correaltion scores nodes (dict):
+if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes.
+intermediate p-values edges (dict): if return_all is True. Key is tuple of network IDs and value is list of p-values ordered as in nodes.
+intermediate p-values edges (dict):
+if return_all is True. Key is tuple of network IDs and value is list of p-values ordered as in nodes.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def helper_walk_sim(networks, performed_walks, nodes, network_ids, undirected=True, top=10, return_all=False, nodes_ranked=None, edges_ranked=None):
+
+    &#34;&#34;&#34;
+    Compares random walks based on their similarity of visited nodes/ edges. Estimates for each network pair a correlation score based on the mean of each node pairs random walks.
+    
+    Parameters:
+        networks (list): of networkX graph objects
+        performed_walks (dict): as returned by helper_walks().
+        nodes (list): of nodes (areas) to be compared.
+        network_ids (list): list of network IDs as contained in performed_walks().
+        top (int): top x nodes &amp; edges are considered when calculating the correlation 
+        undirected (boolean): if True then edge traversal is not taken into account
+        return_all (boolean): if True then for each network pair its full correlation list is returned as well.
+        nodes_ranked (dict): as returned by helper_get_counts()
+        edges_ranked (dict): as returned by helper_get_counts())
+
+    Returns:
+        correlation edges (numpy matrix): between network pairs
+        correlation nodes (numpy matrix): between network pairs
+        correlation edges p-value (numpy matrix): between network pairs
+        correlation nodes p-value (numpy matrix): between network pairs
+        intermediate correaltion scores edges (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes.
+        intermediate correaltion scores nodes (dict):  if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes.
+        intermediate p-values edges (dict): if return_all is True. Key is tuple of network IDs and value is list of p-values ordered as in nodes.
+        intermediate p-values edges (dict):  if return_all is True. Key is tuple of network IDs and value is list of p-values ordered as in nodes.
+
+    &#34;&#34;&#34;
+                
+    results_nodes =  np.zeros((len(networks), len(networks)))
+    results_edges =  np.zeros((len(networks), len(networks)))
+
+    results_nodes_p =  np.zeros((len(networks), len(networks)))
+    results_edges_p =  np.zeros((len(networks), len(networks)))
+
+
+    if return_all:
+        results_nodes_all =  {}
+        results_edges_all =  {}
+
+        results_nodes_p_all =  {}
+        results_edges_p_all =  {}
+
+    index_list = []
+    for index, x in np.ndenumerate(results_nodes):
+        temp = (index[1], index[0])
+        if temp not in index_list and index not in index_list:
+            index_list.append(index)
+
+
+    for index in index_list:
+        n1 = network_ids[index[0]]
+        n2 = network_ids[index[1]]
+        #print(&#34;n1&#34;, n1)
+        #print(&#34;n2&#34;, n2)
+
+        nodes_sim = []
+        edges_sim = []
+
+        nodes_sim_p = []
+        edges_sim_p = []
+
+        nodes_sim_all = []
+        edges_sim_all = []
+        nodes_sim_p_all = []
+        edges_sim_p_all = []
+
+        for node in nodes:
+            #get consensus walks
+            #since prefiously if node is not in networks has been set to an empty list this does not need to be checked for here
+            #print(&#34;len c1 network&#34;, len(performed_walks[n1]))
+            c1 = performed_walks[n1][node]
+            c2 = performed_walks[n2][node]
+
+            if len(c1) &gt; 0 and len(c2) &gt; 0:
+
+               
+                kendall = global_distances.compare_walks(networks[index[0]], [nodes_ranked[n1][node], edges_ranked[n1][node]], walk2=[nodes_ranked[n2][node], edges_ranked[n2][node]], G2=networks[index[1]],undirected=undirected, comparison=&#34;ranked&#34;, top=top)
+                
+                e_t = kendall[&#34;edges_tau&#34;]
+                n_t = kendall[&#34;nodes_tau&#34;]
+                e_p = kendall[&#34;edges_p&#34;]
+                n_p = kendall[&#34;nodes_p&#34;]
+
+                nodes_sim.append(n_t)
+                edges_sim.append(e_t)
+                nodes_sim_p.append(n_p)
+                edges_sim_p.append(e_p)
+
+                if return_all:
+                    nodes_sim_all.append(n_t)
+                    edges_sim_all.append(e_t)
+                    nodes_sim_p_all.append(n_p)
+                    edges_sim_p_all.append(e_p)
+
+
+            else:
+                print(&#34;no walk similarities can be estimated&#34;, node, n1, n2)
+                if return_all:
+                    nodes_sim_all.append(None)
+                    edges_sim_all.append(None)
+                    nodes_sim_p_all.append(None)
+                    edges_sim_p_all.append(None)
+
+
+        #estiamte mean and write to results matrix
+        if len(nodes_sim) &gt; 1:
+            mean_nodes = statistics.mean(nodes_sim)
+            mean_nodes_p = statistics.mean(nodes_sim_p)
+        else:
+            print(&#34;no mean value can be estimated &amp; value is set to None for&#34;, n1, n2)
+            mean_nodes = None
+            mean_nodes_p=None
+
+        if len(edges_sim) &gt; 1:
+            mean_edges = statistics.mean(edges_sim)
+            mean_edges_p = statistics.mean(edges_sim_p)
+        else:
+            print(&#34;no mean value can be estimated &amp; value is set to None for&#34;, n1, n2)
+            mean_edges = None
+            mean_edges_p = None
+
+
+        results_edges[index[0]][index[1]] = mean_edges
+        results_edges[index[1]][index[0]] = mean_edges
+        results_edges_p[index[0]][index[1]] = mean_edges_p
+        results_edges_p[index[1]][index[0]] = mean_edges_p
+
+        results_nodes[index[0]][index[1]] = mean_nodes
+        results_nodes[index[1]][index[0]] = mean_nodes
+        results_nodes_p[index[0]][index[1]] = mean_nodes_p
+        results_nodes_p[index[1]][index[0]] = mean_nodes_p
+
+        if return_all:
+            results_nodes_all[(n1, n2)] = nodes_sim_all
+            results_nodes_p_all[(n1, n2)] = nodes_sim_p_all
+
+            results_edges_all[(n1, n2)] = edges_sim_all
+            results_edges_p_all[(n1, n2)] = edges_sim_p_all
+
+
+    if return_all:
+        return results_edges, results_nodes, results_edges_p, results_nodes_p, results_edges_all, results_nodes_all, results_edges_p_all, results_nodes_p_all
+
+    else:
+
+        return results_edges, results_nodes, results_edges_p, results_nodes_p</code></pre>
+</details>
+</dd>
+<dt id="volta.example_pipeline_wrappers.get_walk_distances.helper_walks"><code class="name flex">
+<span>def <span class="ident">helper_walks</span></span>(<span>networks, nodes, network_ids, steps=10, number_of_walks=10, degree=True, probabilistic=True, weight='weight')</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Estimates for networks number_of_walks walks of size steps.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>networks</code></strong> :&ensp;<code>list</code></dt>
+<dd>of networkX graph objects</dd>
+<dt><strong><code>nodes</code></strong> :&ensp;<code>list</code></dt>
+<dd>of nodes (areas) to be compared.</dd>
+<dt><strong><code>network_ids</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of network IDs.</dd>
+<dt><strong><code>steps</code></strong> :&ensp;<code>int</code></dt>
+<dd>is size of random walk</dd>
+<dt><strong><code>number_of_walks</code></strong> :&ensp;<code>int</code></dt>
+<dd>how many random walks are performed on G</dd>
+<dt><strong><code>degree</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True then the number of random walks performed for each starting node is dependent on its degree and is estimated as degree*number_of_walks.</dd>
+<dt><strong><code>probabilisitc</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True edge weights are taken into account else all edges are considered equal.
+If true then weight needs to be set</dd>
+<dt><strong><code>weight</code></strong> :&ensp;<code>str</code></dt>
+<dd>edge attribute name as contained in G. Weight is evaluated as a similarity</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>walks</code></strong> :&ensp;<code>dict</code></dt>
+<dd>key is network IDs and value is dict where key is starting node and value is list of performed walks.
+Each walk is a sublist and contains the node IDs in order of their visit by the random walk.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def helper_walks(networks, nodes, network_ids, steps=10, number_of_walks=10, degree=True,  probabilistic=True, weight=&#34;weight&#34;):
+
+    &#34;&#34;&#34;
+    Estimates for networks number_of_walks walks of size steps.
+
+    Parameters:
+        networks (list): of networkX graph objects
+        nodes (list): of nodes (areas) to be compared.
+        network_ids (list): list of network IDs.
+        steps (int): is size of random walk
+        number_of_walks (int): how many random walks are performed on G
+        degree (boolean): if True then the number of random walks performed for each starting node is dependent on its degree and is estimated as degree*number_of_walks.
+        probabilisitc (boolean): if True edge weights are taken into account else all edges are considered equal.  If true then weight needs to be set
+        weight (str): edge attribute name as contained in G. Weight is evaluated as a similarity
+
+    Returns:
+        walks (dict): key is network IDs and value is dict where key is starting node and value is list of performed walks.
+                    Each walk is a sublist and contains the node IDs in order of their visit by the random walk.
+        
+    &#34;&#34;&#34;
+
+    performed_walks = {}
+   
+    for net_id in network_ids:
+        performed_walks[net_id] = {}
+        
+        
+    cn = 0
+    for node in nodes:
+        
+        if cn % 100 == 0:
+            print(&#34;walks for node &#34;, cn, &#34;outof&#34;, len(nodes))
+        cn = cn + 1
+
+        walks = []
+        
+
+        for i in range(len(networks)):
+            net = networks[i]
+            network_id = network_ids[i]
+            
+            if node in net.nodes():
+                
+                if not nx.is_isolate(net, node):
+                    if degree:
+                        nw = int(number_of_walks * net.degree[node])
+                        print(&#34;running walks&#34;, nw, &#34;for node&#34;, node)
+                    else:
+                        nw = number_of_walks
+
+                        
+                    walks  = global_distances.perform_random_walks(net, steps=steps, number_of_walks=nw, start=node, probabilistic=probabilistic, weight=weight)
+                    
+
+
+
+            #save
+            performed_walks[network_id][node] = walks
+            
+
+
+    return performed_walks</code></pre>
+</details>
+</dd>
+<dt id="volta.example_pipeline_wrappers.get_walk_distances.helper_walks_multi"><code class="name flex">
+<span>def <span class="ident">helper_walks_multi</span></span>(<span>net, nodes, network_id=0, steps=10, number_of_walks=10, degree=True, start=None, probabilistic=True, weight='weight', nr_processes=20)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Estimates random walks for specific or random select starting node on multiple cores.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>net</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on</dd>
+<dt><strong><code>nodes</code></strong> :&ensp;<code>list</code></dt>
+<dd>nodes to be investigated.</dd>
+<dt><strong><code>network_id</code></strong> :&ensp;<code>str</code> or <code>int</code></dt>
+<dd>name of network that can be set custom.</dd>
+<dt><strong><code>steps</code></strong> :&ensp;<code>int</code></dt>
+<dd>is size of random walk</dd>
+<dt><strong><code>number_of_walks</code></strong> :&ensp;<code>int</code></dt>
+<dd>how many random walks are performed on net</dd>
+<dt><strong><code>degree</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True then the number of random walks performed for each starting node is dependent on its degree and is estimated as degree*number_of_walks.</dd>
+<dt><strong><code>start</code></strong> :&ensp;<code>node</code> <code>ID</code></dt>
+<dd>if is None start node is selected at random from nodes else start needs to be node ID as contained in net</dd>
+<dt><strong><code>probabilisitc</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True edge weights are taken into account else all edges are considered equal.
+If true then weight needs to be set</dd>
+<dt><strong><code>weight</code></strong> :&ensp;<code>str</code></dt>
+<dd>edge attribute name as contained in G. Weight is evaluated as a similarity</dd>
+<dt><strong><code>nr_processes</code></strong> :&ensp;<code>int</code></dt>
+<dd>how many processes should be created.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>walks</code></strong> :&ensp;<code>dict</code></dt>
+<dd>where key is Network ID and value is dict where key is starting node and value is list of performed walks.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def helper_walks_multi(net, nodes, network_id=0, steps=10, number_of_walks=10, degree=True, start=None, probabilistic=True, weight=&#34;weight&#34;, nr_processes=20):
+
+    &#34;&#34;&#34;
+    Estimates random walks for specific or random select starting node on multiple cores.
+
+    Parameters:
+        net (NetworkX graph object): graph to estimate on
+        nodes (list): nodes to be investigated.
+        network_id (str or int): name of network that can be set custom.
+        steps (int): is size of random walk
+        number_of_walks (int): how many random walks are performed on net
+        degree (boolean): if True then the number of random walks performed for each starting node is dependent on its degree and is estimated as degree*number_of_walks.
+        start (node ID): if is None start node is selected at random from nodes else start needs to be node ID as contained in net
+        probabilisitc (boolean): if True edge weights are taken into account else all edges are considered equal.  If true then weight needs to be set
+        weight (str): edge attribute name as contained in G. Weight is evaluated as a similarity
+        nr_processes (int): how many processes should be created.
+
+    Returns:
+        walks (dict): where key is Network ID and value is dict where key is starting node and value is list of performed walks.
+
+    &#34;&#34;&#34;
+
+    performed_walks = {}
+    performed_walks[network_id] = {}
+    
+
+
+    #split into chunks and initialize multiprocessing
+    chunks = list(np.array_split(np.array(nodes), nr_processes))
+
+    func = partial(__walks_multi__, net=net, network_id=network_id, steps=steps, number_of_walks=number_of_walks, degree=degree, start=start, probabilistic=probabilistic, weight=weight)
+
+    pool = Pool(processes=nr_processes)
+
+    result = pool.map(func, chunks)
+
+    print(&#34;terminate multiprocesses&#34;)
+    pool.terminate()
+    pool.join()
+
+    #combine results
+    print(&#34;merging result &#34;)
+   
+    temp = {}
+    for r in result:
+        #print(&#34;r&#34;, r)
+        temp.update(r)
+    
+        
+    
+    performed_walks[network_id] = temp
+
+
+    
+
+
+    return performed_walks</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="volta.example_pipeline_wrappers" href="index.html">volta.example_pipeline_wrappers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="volta.example_pipeline_wrappers.get_walk_distances.helper_get_counts" href="#volta.example_pipeline_wrappers.get_walk_distances.helper_get_counts">helper_get_counts</a></code></li>
+<li><code><a title="volta.example_pipeline_wrappers.get_walk_distances.helper_walk_sim" href="#volta.example_pipeline_wrappers.get_walk_distances.helper_walk_sim">helper_walk_sim</a></code></li>
+<li><code><a title="volta.example_pipeline_wrappers.get_walk_distances.helper_walks" href="#volta.example_pipeline_wrappers.get_walk_distances.helper_walks">helper_walks</a></code></li>
+<li><code><a title="volta.example_pipeline_wrappers.get_walk_distances.helper_walks_multi" href="#volta.example_pipeline_wrappers.get_walk_distances.helper_walks_multi">helper_walks_multi</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

@@ -1,0 +1,738 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.5" />
+<title>volta.example_pipeline_wrappers.get_tree_distances API documentation</title>
+<meta name="description" content="This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
+based on their (structural) …" />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>volta.example_pipeline_wrappers.get_tree_distances</code></h1>
+</header>
+<section id="section-intro">
+<p>This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
+based on their (structural) similarities when converted into a binary tree.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
+based on their (structural) similarities when converted into a binary tree.
+&#34;&#34;&#34;
+
+import networkx as nx
+import pandas as pd
+import csv
+import random
+import sys
+import volta.distances.global_distances as global_distances
+import volta.distances.local as local
+import volta.simplification as simplification
+import volta.distances.trees as trees
+import pickle
+from scipy.stats import kurtosis, skew, kendalltau
+import statistics
+import numpy as np
+import scipy
+
+
+def helper_tree_vector(networks, nodes, tree_type=&#34;level&#34;, edge_attribute=&#34;weight&#34;, cycle_weight = &#34;max&#34;, initial_cycle_weight=True):
+    &#34;&#34;&#34;
+    Estimate for each network a vector based on its tree properties. Computes a binary tree representation, where each specified node is selected as root.
+    Compares same root trees between each other. 
+
+    Parameters:
+        networks (list): of networkX graph objects
+        nodes (list): list of nodes that should be compared between the networks. Nodes need to be present in all networks.
+        tree_type (str): if is &#34;level&#34; then a hierarchical tree is created. Paths from the root indicate how far each nodes are from the root node. Edge weights are not considered.
+                                        if is &#34;cycle&#34; then a hierarchical tree is created where each node represents a cycle in the graph. 
+                                                Tree leaves are the original cycles in the graph and are merged into larger cycles through edge removal until all have been merged into a single cycle.
+                                                This method can be helpful to categorize cyclic graphs. The root parameter is not considered when this option is selected and only cyclic structures in the graph are considered.
+                edge_attribute (str): name of the edge weights to be considered if type = &#34;cycle&#34;.
+                cycle_weight (str): sets how cycles are merged i.e. which edges are removed to merge cycles into larger ones.
+                                                        if is &#34;max&#34; then the edge with the highest weight is removed first. if is &#34;min&#34; then the edge with the smalles weight is removed first.
+                                                        if is &#34;betweenness_max&#34; the the edge with the highest betweenness value is removed first.
+                                                        if is &#34;betweenness_min&#34; the edge with the lowest betweenness value is removed first.
+                initial_cycle_weight (boolean): if True the initial cycle basis is estimated based on edge weights with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.minimum_cycle_basis.html#networkx.algorithms.cycles.minimum_cycle_basis
+                                                                                if False the initial cycles are estimated based on steps only with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.cycle_basis.html#networkx.algorithms.cycles.cycle_basis
+
+    Returns:
+        tree properties vector (list): each sublist contains a network specific vector, ordered as provided in networks.
+        trees (dict): compared tree objects. Key is network ID and value is dict where key is node ID and value is tree object.
+        
+    &#34;&#34;&#34;
+    tree_vector = []
+    trees_save = {}
+    for i in range(len(networks)):
+        trees_save[i] = {}
+
+
+
+
+    for i in range(len(networks)):
+        network = networks[i]
+        temp_vector = []
+        for node in nodes:
+            #get tree
+            tree = trees.construct_tree(network,  root=node, nr_trees=1, type=tree_type, edge_attribute=edge_attribute, cycle_weight=cycle_weight, initial_cycle_weight=initial_cycle_weight)[0]
+            trees_save[i][node] = tree
+
+            #get tree parameters
+            depth = trees.tree_depth(tree)
+            temp_vector.append(depth)
+
+            paths = trees.leave_path_metrics(tree)
+            mean = paths[&#34;mean path length&#34;]
+            median = paths[&#34;median path length&#34;]
+            std = paths[&#34;std path length&#34;]
+            skw = paths[&#34;skw path length&#34;]
+            kurt = paths[&#34;kurtosis path length&#34;]
+            alt = paths[&#34;altitude&#34;]
+            alt_mag = paths[&#34;altitude magnitude&#34;]
+            ext = paths[&#34;total exterior path length&#34;]
+            ext_mag = paths[&#34;total exterior magnitude&#34;]
+
+            temp_vector.append(mean)
+            temp_vector.append(median)
+            temp_vector.append(std)
+            temp_vector.append(skw)
+            temp_vector.append(kurt)
+            temp_vector.append(alt)
+            temp_vector.append(alt_mag)
+            temp_vector.append(ext)
+            temp_vector.append(ext_mag)
+
+            asy = trees.tree_asymmetry(tree, trees.number_of_leaves(tree))
+            asymmetry = asy[&#34;asymmetry&#34;]
+            temp_vector.append(asymmetry)
+
+            branching = trees.strahler_branching_ratio(tree)
+            mean = branching[&#34;mean branching ratio&#34;]
+            median = branching[&#34;median branching ratio&#34;]
+            std = branching[&#34;std branching ratio&#34;]
+            skw = branching[&#34;skw branching ratio&#34;]
+            kurt = branching[&#34;kurtosis branching ratio&#34;]
+
+            temp_vector.append(mean)
+            temp_vector.append(median)
+            temp_vector.append(std)
+            temp_vector.append(skw)
+            temp_vector.append(kurt)
+
+            ext = trees.exterior_interior_edges(tree)
+            ee = ext[&#34;EE&#34;]
+            ei = ext[&#34;EI&#34;]
+            ee_mag = ext[&#34;EE magnitude&#34;]
+            ei_mag = ext[&#34;EI magnitude&#34;]
+
+            temp_vector.append(ee)
+            temp_vector.append(ei)
+            temp_vector.append(ee_mag)
+            temp_vector.append(ei_mag)
+
+        tree_vector.append(temp_vector)
+
+
+    return tree_vector, trees_save
+
+
+def helper_tree_sim(networks, nodes, tree_type=&#34;level&#34;, edge_attribute=&#34;weight&#34;, cycle_weight = &#34;max&#34;, initial_cycle_weight=True, return_all=False):
+    &#34;&#34;&#34;
+    Estimates a similarity matrix between networks by comparing their tree structures node specific - are the same nodes the same distance apart from the root node?
+
+
+    Parameters:
+        networks (list): of networkX graph objects
+        nodes (list): list of nodes that should be compared between the networks. Nodes need to be present in all networks.
+        tree_type (str): if is &#34;level&#34; then a hierarchical tree is created. Paths from the root indicate how far each nodes are from the root node. Edge weights are not considered.
+                                        if is &#34;cycle&#34; then a hierarchical tree is created where each node represents a cycle in the graph. 
+                                                Tree leaves are the original cycles in the graph and are merged into larger cycles through edge removal until all have been merged into a single cycle.
+                                                This method can be helpful to categorize cyclic graphs. The root parameter is not considered when this option is selected and only cyclic structures in the graph are considered.
+                edge_attribute (str): name of the edge weights to be considered if type = &#34;cycle&#34;.
+                cycle_weight (str): sets how cycles are merged i.e. which edges are removed to merge cycles into larger ones.
+                                                        if is &#34;max&#34; then the edge with the highest weight is removed first. if is &#34;min&#34; then the edge with the smalles weight is removed first.
+                                                        if is &#34;betweenness_max&#34; the the edge with the highest betweenness value is removed first.
+                                                        if is &#34;betweenness_min&#34; the edge with the lowest betweenness value is removed first.
+                initial_cycle_weight (boolean): if True the initial cycle basis is estimated based on edge weights with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.minimum_cycle_basis.html#networkx.algorithms.cycles.minimum_cycle_basis
+                                                                                if False the initial cycles are estimated based on steps only with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.cycle_basis.html#networkx.algorithms.cycles.cycle_basis
+        return_all (boolean): if True intermediate similarity results are returned as well else only the similarity matrices between the networks are returned.
+    Returns:
+        average node level overlap percentage (numpy matrix): between network pairs
+        average node level SMC (numpy matrix): between network pairs
+        average node level Kendall Rank Correlation (numpy matrix): between network pairs
+        average node level jaccard index (numpy matrix): between network pairs
+        intermediate percentage scores (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
+        intermediate SMC scores (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
+        intermediate Kendall Rank correlation (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
+        intermediate jaccard indices (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
+    
+    &#34;&#34;&#34;
+
+    results_percentage =  np.zeros((len(networks), len(networks)))
+    results_correlation =  np.zeros((len(networks), len(networks)))
+    results_smc =  np.zeros((len(networks), len(networks)))
+    results_jaccard =  np.zeros((len(networks), len(networks)))
+
+    if return_all:
+        results_percentage_all =  {}
+        results_correlation_all =  {}
+        results_smc_all =  {}
+        results_jaccard_all =  {}
+
+   
+    index_list = []
+    for index, x in np.ndenumerate(results_percentage):
+        temp = (index[1], index[0])
+        if temp not in index_list and index not in index_list:
+            index_list.append(index)
+
+
+    for index in index_list:
+        n1 = index[0]
+        n2 = index[1]
+
+        p = []
+        c = []
+        s = []
+        j = []
+
+        p_all = []
+        c_all = []
+        s_all = []
+        j_all = []
+
+        for node in nodes:
+            if node in networks[n1].nodes() and node in networks[n2].nodes():
+                t1 = trees.construct_tree(networks[n1],  root=node, nr_trees=1, type=tree_type, edge_attribute=edge_attribute, cycle_weight=cycle_weight, initial_cycle_weight=initial_cycle_weight)[0]
+
+                t2 = trees.construct_tree(networks[n2],  root=node, nr_trees=1, type=tree_type, edge_attribute=edge_attribute, cycle_weight=cycle_weight, initial_cycle_weight=initial_cycle_weight)[0]
+
+
+
+                per, u = trees.tree_node_level_similarity(t1, t2, type=&#34;percentage&#34;)
+                cor, u = trees.tree_node_level_similarity(t1, t2, type=&#34;correlation&#34;)
+                
+                smc, u = trees.tree_node_level_similarity(t1, t2, type=&#34;smc&#34;)
+                jac, u = trees.tree_node_level_similarity(t1, t2, type=&#34;jaccard&#34;)
+
+
+                p.append(per)
+                c.append(cor)
+                s.append(smc)
+                j.append(jac)
+
+                if return_all:
+                    p_all.append(per)
+                    c_all.append(cor)
+                    s_all.append(smc)
+                    j_all.append(jac)
+
+            else:
+                if return_all:
+                    p_all.append(None)
+                    c_all.append(None)
+                    s_all.append(None)
+                    j_all.append(None)
+
+
+        #remove nan values from lists
+
+        p = [x for x in p if str(x) != &#39;nan&#39;]
+        c = [x for x in c if str(x) != &#39;nan&#39;]
+        s = [x for x in s if str(x) != &#39;nan&#39;]
+        j = [x for x in j if str(x) != &#39;nan&#39;]
+
+
+        mean_p = statistics.mean(p)
+        mean_c = statistics.mean(c)
+        mean_s = statistics.mean(s)
+        mean_j = statistics.mean(j)
+
+        results_percentage[n1][n2] = mean_p
+        results_percentage[n2][n1] = mean_p
+
+        results_correlation[n1][n2] = mean_c
+        results_correlation[n2][n1] = mean_c
+
+        results_smc[n1][n2] = mean_s
+        results_smc[n2][n1] = mean_s
+
+        results_jaccard[n1][n2] = mean_j
+        results_jaccard[n2][n1] = mean_j
+
+        if return_all:
+            results_percentage_all[(n1, n2)] = p_all
+            results_correlation_all[(n1, n2)] = c_all
+            results_smc_all[(n1, n2)] = s_all
+            results_jaccard_all[(n1, n2)] = j_all
+
+
+    if return_all:
+
+        return results_percentage, results_smc, results_correlation, results_jaccard, results_percentage_all, results_smc_all, results_correlation_all, results_jaccard_all
+
+
+    else:
+
+        return results_percentage, results_smc, results_correlation, results_jaccard
+
+
+
+
+
+
+def get_node_levels(trees):
+    &#34;&#34;&#34;
+    Estimates level of each node in a list of trees.
+
+    Parameters:
+        trees (dict): Key is network ID and value is dict where key is node ID and value is tree object. As returned as second item by helper_tree_vector().
+
+    Returns:
+        levels (dict): key is network ID  and value is dict where key is node ID of the root and value is dict where keys are node IDs of the tree and values are their level in the tree.
+        
+    &#34;&#34;&#34;
+    node_levels = {}
+    for i in trees.keys(): #this is network id
+        node_levels[i] = {}
+
+    for i in trees.keys():
+        for node in trees[i].keys(): #this are node specific trees
+            tree = trees[i][node]
+
+            #now get for each node its level in the tree
+            node_levels[i][node] = {}
+
+            for n in trees[i].keys():
+                t = tree.get_node(n)
+                level = tree.depth(t)
+
+                node_levels[i][node][n] = level
+
+    return node_levels</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="volta.example_pipeline_wrappers.get_tree_distances.get_node_levels"><code class="name flex">
+<span>def <span class="ident">get_node_levels</span></span>(<span>trees)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Estimates level of each node in a list of trees.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>trees</code></strong> :&ensp;<code>dict</code></dt>
+<dd>Key is network ID and value is dict where key is node ID and value is tree object. As returned as second item by helper_tree_vector().</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>levels</code></strong> :&ensp;<code>dict</code></dt>
+<dd>key is network ID
+and value is dict where key is node ID of the root and value is dict where keys are node IDs of the tree and values are their level in the tree.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def get_node_levels(trees):
+    &#34;&#34;&#34;
+    Estimates level of each node in a list of trees.
+
+    Parameters:
+        trees (dict): Key is network ID and value is dict where key is node ID and value is tree object. As returned as second item by helper_tree_vector().
+
+    Returns:
+        levels (dict): key is network ID  and value is dict where key is node ID of the root and value is dict where keys are node IDs of the tree and values are their level in the tree.
+        
+    &#34;&#34;&#34;
+    node_levels = {}
+    for i in trees.keys(): #this is network id
+        node_levels[i] = {}
+
+    for i in trees.keys():
+        for node in trees[i].keys(): #this are node specific trees
+            tree = trees[i][node]
+
+            #now get for each node its level in the tree
+            node_levels[i][node] = {}
+
+            for n in trees[i].keys():
+                t = tree.get_node(n)
+                level = tree.depth(t)
+
+                node_levels[i][node][n] = level
+
+    return node_levels</code></pre>
+</details>
+</dd>
+<dt id="volta.example_pipeline_wrappers.get_tree_distances.helper_tree_sim"><code class="name flex">
+<span>def <span class="ident">helper_tree_sim</span></span>(<span>networks, nodes, tree_type='level', edge_attribute='weight', cycle_weight='max', initial_cycle_weight=True, return_all=False)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Estimates a similarity matrix between networks by comparing their tree structures node specific - are the same nodes the same distance apart from the root node?</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>networks</code></strong> :&ensp;<code>list</code></dt>
+<dd>of networkX graph objects</dd>
+<dt><strong><code>nodes</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of nodes that should be compared between the networks. Nodes need to be present in all networks.</dd>
+<dt><strong><code>tree_type</code></strong> :&ensp;<code>str</code></dt>
+<dd>if is "level" then a hierarchical tree is created. Paths from the root indicate how far each nodes are from the root node. Edge weights are not considered.
+if is "cycle" then a hierarchical tree is created where each node represents a cycle in the graph.
+Tree leaves are the original cycles in the graph and are merged into larger cycles through edge removal until all have been merged into a single cycle.
+This method can be helpful to categorize cyclic graphs. The root parameter is not considered when this option is selected and only cyclic structures in the graph are considered.
+edge_attribute (str): name of the edge weights to be considered if type = "cycle".
+cycle_weight (str): sets how cycles are merged i.e. which edges are removed to merge cycles into larger ones.
+if is "max" then the edge with the highest weight is removed first. if is "min" then the edge with the smalles weight is removed first.
+if is "betweenness_max" the the edge with the highest betweenness value is removed first.
+if is "betweenness_min" the edge with the lowest betweenness value is removed first.
+initial_cycle_weight (boolean): if True the initial cycle basis is estimated based on edge weights with <a href="https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.minimum_cycle_basis.html#networkx.algorithms.cycles.minimum_cycle_basis">https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.minimum_cycle_basis.html#networkx.algorithms.cycles.minimum_cycle_basis</a>
+if False the initial cycles are estimated based on steps only with <a href="https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.cycle_basis.html#networkx.algorithms.cycles.cycle_basis">https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.cycle_basis.html#networkx.algorithms.cycles.cycle_basis</a></dd>
+<dt><strong><code>return_all</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True intermediate similarity results are returned as well else only the similarity matrices between the networks are returned.</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>average</code> <code>node</code> <code>level</code> <code>overlap</code> <code>percentage</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>average</code> <code>node</code> <code>level</code> <code>SMC</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>average</code> <code>node</code> <code>level</code> <code>Kendall</code> <code>Rank</code> <code>Correlation</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
+<dd>&nbsp;</dd>
+<dt><code>average</code> <code>node</code> <code>level</code> <code>jaccard</code> <code>index</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
+<dd>&nbsp;</dd>
+</dl>
+<p>intermediate percentage scores (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
+intermediate SMC scores (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
+intermediate Kendall Rank correlation (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
+intermediate jaccard indices (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.</p></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def helper_tree_sim(networks, nodes, tree_type=&#34;level&#34;, edge_attribute=&#34;weight&#34;, cycle_weight = &#34;max&#34;, initial_cycle_weight=True, return_all=False):
+    &#34;&#34;&#34;
+    Estimates a similarity matrix between networks by comparing their tree structures node specific - are the same nodes the same distance apart from the root node?
+
+
+    Parameters:
+        networks (list): of networkX graph objects
+        nodes (list): list of nodes that should be compared between the networks. Nodes need to be present in all networks.
+        tree_type (str): if is &#34;level&#34; then a hierarchical tree is created. Paths from the root indicate how far each nodes are from the root node. Edge weights are not considered.
+                                        if is &#34;cycle&#34; then a hierarchical tree is created where each node represents a cycle in the graph. 
+                                                Tree leaves are the original cycles in the graph and are merged into larger cycles through edge removal until all have been merged into a single cycle.
+                                                This method can be helpful to categorize cyclic graphs. The root parameter is not considered when this option is selected and only cyclic structures in the graph are considered.
+                edge_attribute (str): name of the edge weights to be considered if type = &#34;cycle&#34;.
+                cycle_weight (str): sets how cycles are merged i.e. which edges are removed to merge cycles into larger ones.
+                                                        if is &#34;max&#34; then the edge with the highest weight is removed first. if is &#34;min&#34; then the edge with the smalles weight is removed first.
+                                                        if is &#34;betweenness_max&#34; the the edge with the highest betweenness value is removed first.
+                                                        if is &#34;betweenness_min&#34; the edge with the lowest betweenness value is removed first.
+                initial_cycle_weight (boolean): if True the initial cycle basis is estimated based on edge weights with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.minimum_cycle_basis.html#networkx.algorithms.cycles.minimum_cycle_basis
+                                                                                if False the initial cycles are estimated based on steps only with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.cycle_basis.html#networkx.algorithms.cycles.cycle_basis
+        return_all (boolean): if True intermediate similarity results are returned as well else only the similarity matrices between the networks are returned.
+    Returns:
+        average node level overlap percentage (numpy matrix): between network pairs
+        average node level SMC (numpy matrix): between network pairs
+        average node level Kendall Rank Correlation (numpy matrix): between network pairs
+        average node level jaccard index (numpy matrix): between network pairs
+        intermediate percentage scores (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
+        intermediate SMC scores (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
+        intermediate Kendall Rank correlation (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
+        intermediate jaccard indices (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
+    
+    &#34;&#34;&#34;
+
+    results_percentage =  np.zeros((len(networks), len(networks)))
+    results_correlation =  np.zeros((len(networks), len(networks)))
+    results_smc =  np.zeros((len(networks), len(networks)))
+    results_jaccard =  np.zeros((len(networks), len(networks)))
+
+    if return_all:
+        results_percentage_all =  {}
+        results_correlation_all =  {}
+        results_smc_all =  {}
+        results_jaccard_all =  {}
+
+   
+    index_list = []
+    for index, x in np.ndenumerate(results_percentage):
+        temp = (index[1], index[0])
+        if temp not in index_list and index not in index_list:
+            index_list.append(index)
+
+
+    for index in index_list:
+        n1 = index[0]
+        n2 = index[1]
+
+        p = []
+        c = []
+        s = []
+        j = []
+
+        p_all = []
+        c_all = []
+        s_all = []
+        j_all = []
+
+        for node in nodes:
+            if node in networks[n1].nodes() and node in networks[n2].nodes():
+                t1 = trees.construct_tree(networks[n1],  root=node, nr_trees=1, type=tree_type, edge_attribute=edge_attribute, cycle_weight=cycle_weight, initial_cycle_weight=initial_cycle_weight)[0]
+
+                t2 = trees.construct_tree(networks[n2],  root=node, nr_trees=1, type=tree_type, edge_attribute=edge_attribute, cycle_weight=cycle_weight, initial_cycle_weight=initial_cycle_weight)[0]
+
+
+
+                per, u = trees.tree_node_level_similarity(t1, t2, type=&#34;percentage&#34;)
+                cor, u = trees.tree_node_level_similarity(t1, t2, type=&#34;correlation&#34;)
+                
+                smc, u = trees.tree_node_level_similarity(t1, t2, type=&#34;smc&#34;)
+                jac, u = trees.tree_node_level_similarity(t1, t2, type=&#34;jaccard&#34;)
+
+
+                p.append(per)
+                c.append(cor)
+                s.append(smc)
+                j.append(jac)
+
+                if return_all:
+                    p_all.append(per)
+                    c_all.append(cor)
+                    s_all.append(smc)
+                    j_all.append(jac)
+
+            else:
+                if return_all:
+                    p_all.append(None)
+                    c_all.append(None)
+                    s_all.append(None)
+                    j_all.append(None)
+
+
+        #remove nan values from lists
+
+        p = [x for x in p if str(x) != &#39;nan&#39;]
+        c = [x for x in c if str(x) != &#39;nan&#39;]
+        s = [x for x in s if str(x) != &#39;nan&#39;]
+        j = [x for x in j if str(x) != &#39;nan&#39;]
+
+
+        mean_p = statistics.mean(p)
+        mean_c = statistics.mean(c)
+        mean_s = statistics.mean(s)
+        mean_j = statistics.mean(j)
+
+        results_percentage[n1][n2] = mean_p
+        results_percentage[n2][n1] = mean_p
+
+        results_correlation[n1][n2] = mean_c
+        results_correlation[n2][n1] = mean_c
+
+        results_smc[n1][n2] = mean_s
+        results_smc[n2][n1] = mean_s
+
+        results_jaccard[n1][n2] = mean_j
+        results_jaccard[n2][n1] = mean_j
+
+        if return_all:
+            results_percentage_all[(n1, n2)] = p_all
+            results_correlation_all[(n1, n2)] = c_all
+            results_smc_all[(n1, n2)] = s_all
+            results_jaccard_all[(n1, n2)] = j_all
+
+
+    if return_all:
+
+        return results_percentage, results_smc, results_correlation, results_jaccard, results_percentage_all, results_smc_all, results_correlation_all, results_jaccard_all
+
+
+    else:
+
+        return results_percentage, results_smc, results_correlation, results_jaccard</code></pre>
+</details>
+</dd>
+<dt id="volta.example_pipeline_wrappers.get_tree_distances.helper_tree_vector"><code class="name flex">
+<span>def <span class="ident">helper_tree_vector</span></span>(<span>networks, nodes, tree_type='level', edge_attribute='weight', cycle_weight='max', initial_cycle_weight=True)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Estimate for each network a vector based on its tree properties. Computes a binary tree representation, where each specified node is selected as root.
+Compares same root trees between each other. </p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>networks</code></strong> :&ensp;<code>list</code></dt>
+<dd>of networkX graph objects</dd>
+<dt><strong><code>nodes</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of nodes that should be compared between the networks. Nodes need to be present in all networks.</dd>
+<dt><strong><code>tree_type</code></strong> :&ensp;<code>str</code></dt>
+<dd>if is "level" then a hierarchical tree is created. Paths from the root indicate how far each nodes are from the root node. Edge weights are not considered.
+if is "cycle" then a hierarchical tree is created where each node represents a cycle in the graph.
+Tree leaves are the original cycles in the graph and are merged into larger cycles through edge removal until all have been merged into a single cycle.
+This method can be helpful to categorize cyclic graphs. The root parameter is not considered when this option is selected and only cyclic structures in the graph are considered.
+edge_attribute (str): name of the edge weights to be considered if type = "cycle".
+cycle_weight (str): sets how cycles are merged i.e. which edges are removed to merge cycles into larger ones.
+if is "max" then the edge with the highest weight is removed first. if is "min" then the edge with the smalles weight is removed first.
+if is "betweenness_max" the the edge with the highest betweenness value is removed first.
+if is "betweenness_min" the edge with the lowest betweenness value is removed first.
+initial_cycle_weight (boolean): if True the initial cycle basis is estimated based on edge weights with <a href="https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.minimum_cycle_basis.html#networkx.algorithms.cycles.minimum_cycle_basis">https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.minimum_cycle_basis.html#networkx.algorithms.cycles.minimum_cycle_basis</a>
+if False the initial cycles are estimated based on steps only with <a href="https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.cycle_basis.html#networkx.algorithms.cycles.cycle_basis">https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.cycle_basis.html#networkx.algorithms.cycles.cycle_basis</a></dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt>tree properties vector (list): each sublist contains a network specific vector, ordered as provided in networks.</dt>
+<dt><strong><code>trees</code></strong> :&ensp;<code>dict</code></dt>
+<dd>compared tree objects. Key is network ID and value is dict where key is node ID and value is tree object.</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def helper_tree_vector(networks, nodes, tree_type=&#34;level&#34;, edge_attribute=&#34;weight&#34;, cycle_weight = &#34;max&#34;, initial_cycle_weight=True):
+    &#34;&#34;&#34;
+    Estimate for each network a vector based on its tree properties. Computes a binary tree representation, where each specified node is selected as root.
+    Compares same root trees between each other. 
+
+    Parameters:
+        networks (list): of networkX graph objects
+        nodes (list): list of nodes that should be compared between the networks. Nodes need to be present in all networks.
+        tree_type (str): if is &#34;level&#34; then a hierarchical tree is created. Paths from the root indicate how far each nodes are from the root node. Edge weights are not considered.
+                                        if is &#34;cycle&#34; then a hierarchical tree is created where each node represents a cycle in the graph. 
+                                                Tree leaves are the original cycles in the graph and are merged into larger cycles through edge removal until all have been merged into a single cycle.
+                                                This method can be helpful to categorize cyclic graphs. The root parameter is not considered when this option is selected and only cyclic structures in the graph are considered.
+                edge_attribute (str): name of the edge weights to be considered if type = &#34;cycle&#34;.
+                cycle_weight (str): sets how cycles are merged i.e. which edges are removed to merge cycles into larger ones.
+                                                        if is &#34;max&#34; then the edge with the highest weight is removed first. if is &#34;min&#34; then the edge with the smalles weight is removed first.
+                                                        if is &#34;betweenness_max&#34; the the edge with the highest betweenness value is removed first.
+                                                        if is &#34;betweenness_min&#34; the edge with the lowest betweenness value is removed first.
+                initial_cycle_weight (boolean): if True the initial cycle basis is estimated based on edge weights with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.minimum_cycle_basis.html#networkx.algorithms.cycles.minimum_cycle_basis
+                                                                                if False the initial cycles are estimated based on steps only with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.cycle_basis.html#networkx.algorithms.cycles.cycle_basis
+
+    Returns:
+        tree properties vector (list): each sublist contains a network specific vector, ordered as provided in networks.
+        trees (dict): compared tree objects. Key is network ID and value is dict where key is node ID and value is tree object.
+        
+    &#34;&#34;&#34;
+    tree_vector = []
+    trees_save = {}
+    for i in range(len(networks)):
+        trees_save[i] = {}
+
+
+
+
+    for i in range(len(networks)):
+        network = networks[i]
+        temp_vector = []
+        for node in nodes:
+            #get tree
+            tree = trees.construct_tree(network,  root=node, nr_trees=1, type=tree_type, edge_attribute=edge_attribute, cycle_weight=cycle_weight, initial_cycle_weight=initial_cycle_weight)[0]
+            trees_save[i][node] = tree
+
+            #get tree parameters
+            depth = trees.tree_depth(tree)
+            temp_vector.append(depth)
+
+            paths = trees.leave_path_metrics(tree)
+            mean = paths[&#34;mean path length&#34;]
+            median = paths[&#34;median path length&#34;]
+            std = paths[&#34;std path length&#34;]
+            skw = paths[&#34;skw path length&#34;]
+            kurt = paths[&#34;kurtosis path length&#34;]
+            alt = paths[&#34;altitude&#34;]
+            alt_mag = paths[&#34;altitude magnitude&#34;]
+            ext = paths[&#34;total exterior path length&#34;]
+            ext_mag = paths[&#34;total exterior magnitude&#34;]
+
+            temp_vector.append(mean)
+            temp_vector.append(median)
+            temp_vector.append(std)
+            temp_vector.append(skw)
+            temp_vector.append(kurt)
+            temp_vector.append(alt)
+            temp_vector.append(alt_mag)
+            temp_vector.append(ext)
+            temp_vector.append(ext_mag)
+
+            asy = trees.tree_asymmetry(tree, trees.number_of_leaves(tree))
+            asymmetry = asy[&#34;asymmetry&#34;]
+            temp_vector.append(asymmetry)
+
+            branching = trees.strahler_branching_ratio(tree)
+            mean = branching[&#34;mean branching ratio&#34;]
+            median = branching[&#34;median branching ratio&#34;]
+            std = branching[&#34;std branching ratio&#34;]
+            skw = branching[&#34;skw branching ratio&#34;]
+            kurt = branching[&#34;kurtosis branching ratio&#34;]
+
+            temp_vector.append(mean)
+            temp_vector.append(median)
+            temp_vector.append(std)
+            temp_vector.append(skw)
+            temp_vector.append(kurt)
+
+            ext = trees.exterior_interior_edges(tree)
+            ee = ext[&#34;EE&#34;]
+            ei = ext[&#34;EI&#34;]
+            ee_mag = ext[&#34;EE magnitude&#34;]
+            ei_mag = ext[&#34;EI magnitude&#34;]
+
+            temp_vector.append(ee)
+            temp_vector.append(ei)
+            temp_vector.append(ee_mag)
+            temp_vector.append(ei_mag)
+
+        tree_vector.append(temp_vector)
+
+
+    return tree_vector, trees_save</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="volta.example_pipeline_wrappers" href="index.html">volta.example_pipeline_wrappers</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="volta.example_pipeline_wrappers.get_tree_distances.get_node_levels" href="#volta.example_pipeline_wrappers.get_tree_distances.get_node_levels">get_node_levels</a></code></li>
+<li><code><a title="volta.example_pipeline_wrappers.get_tree_distances.helper_tree_sim" href="#volta.example_pipeline_wrappers.get_tree_distances.helper_tree_sim">helper_tree_sim</a></code></li>
+<li><code><a title="volta.example_pipeline_wrappers.get_tree_distances.helper_tree_vector" href="#volta.example_pipeline_wrappers.get_tree_distances.helper_tree_vector">helper_tree_vector</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>

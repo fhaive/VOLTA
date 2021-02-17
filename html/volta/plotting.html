@@ -1,0 +1,985 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.7.5" />
+<title>volta.plotting API documentation</title>
+<meta name="description" content="Contains some plotting functions." />
+<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
+<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
+<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
+<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>volta.plotting</code></h1>
+</header>
+<section id="section-intro">
+<p>Contains some plotting functions.</p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#39;&#39;&#39;
+Contains some plotting functions.
+&#39;&#39;&#39;
+
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+from collections import Counter
+import matplotlib.patches
+import numpy as np
+from scipy.stats.stats import pearsonr 
+import networkx as nx
+import random
+import volta.communities as communities
+
+
+def plot_heatmap(matrix, xlabels=None, ylabels=None, size=(10,8), cmap=&#34;bone&#34;, annotation=False):
+
+    &#34;&#34;&#34;
+    Plots a heatmap. Return figure fig can be saved with fig.savefig(). For parameters refer to the matplotlib documentation.
+
+    Parameters:
+        matrix (numpy matrix): matrix containing the values to be plotted
+        xlabels (list or None): list of tick labels to be used for the x axis
+        ylabels (list or None): list of tick labels to be used for the y axis
+        size (tuple): plot size to be used
+        cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
+        annotation (boolea): if True then cell values are plotted
+
+    Returns:
+        fig (matplotlib figure): heatmap object
+    &#34;&#34;&#34;
+
+    if xlabels is None:
+        xlabels=&#34;auto&#34;
+    if ylabels is None:
+        ylabels = &#34;auto&#34;
+
+    if cmap is None:
+        cmap = sns.cubehelix_palette(start=7, rot=0, dark=0.2, light=0.8, reverse=False, as_cmap=True)
+
+    fig, ax = plt.subplots(figsize=size)  
+
+    sns.heatmap(matrix, annot=annotation, ax=ax, xticklabels=xlabels, yticklabels=ylabels, cmap=cmap)
+
+    return fig
+
+
+
+
+def plot_hierarchical_clustering(matrix, xlabels=None, ylabels=None, size=(10,8), cmap=&#34;bone&#34;):
+
+    &#34;&#34;&#34;
+    Plots a clustermap. Return figure fig can be saved with fig.savefig(). For parameters refer to the matplotlib documentation.
+
+    Parameters:
+        matrix (numpy matrix): matrix containing the values to be plotted
+        xlabels (list or None): list of tick labels to be used for the x axis
+        ylabels (list or None): list of tick labels to be used for the y axis
+        size (tuple): plot size to be used
+        cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
+
+    Returns:
+        fig (matplotlib figure): cluster-heatmap object
+    &#34;&#34;&#34;
+
+    if xlabels is None:
+        xlabels=&#34;auto&#34;
+    if ylabels is None:
+        ylabels = &#34;auto&#34;
+
+    if cmap is None:
+
+        cmap = sns.cubehelix_palette(start=7, rot=0, dark=0.2, light=0.8, reverse=False, as_cmap=True)
+
+    
+
+    return sns.clustermap(matrix, annot=False, figsize=size, xticklabels=xlabels, yticklabels=ylabels, cmap=cmap)
+
+    
+def plot_clustering_heatmap(clusters, matrix, labels, cmap=&#34;bone&#34;, size=(10,8)):
+
+    &#34;&#34;&#34;
+    Plots a clustering on top of a provided distance matrix.
+
+    Parameters:
+        clusters (array): containing the cluster IDs, needs to be in the same order as labels
+        matrix (matrix): distance or similarity matrix that has been provided as input for the clustering
+        labels (list): list of labels to be used for plot. Needs to be in the same order as clusters
+        cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
+        size (tuple): figuresize
+
+    Returns:
+        fig (matplotlib figure): of clustering
+    &#34;&#34;&#34;
+
+
+
+    c_sorted = np.sort(clusters)
+    c_sorted
+
+    borders = []
+
+    for cl in list(Counter(c_sorted).keys()):
+        found = False
+        end = False
+        for ii in range(len(c_sorted)):
+            i = c_sorted[ii]
+            if i == cl and not found:
+                borders.append(ii)
+                found = True
+                
+            
+                
+    borders.append(len(c_sorted))
+
+    #get indices of the items
+
+    inds = np.argsort(clusters)
+    for n, f in enumerate(borders[:-1]):
+            i = inds[f:borders[n + 1]]
+            
+            cco = i[matrix[np.ix_(i, i)].mean(axis=1).argsort()[::-1]]
+            
+            inds[f:borders[n + 1]] = cco
+            
+            
+            
+    #create plot
+
+    fig, ax = plt.subplots(1, 1, figsize=size)
+    data = matrix[np.ix_(inds, inds)]
+
+    if cmap is None:
+        cmap = sns.cubehelix_palette(start=7, rot=0, dark=0.2, light=0.8, reverse=False, as_cmap=True)
+
+    coll = ax.pcolormesh(data,  cmap=cmap)
+    #ax.set(xlim=(0, data.shape[1]), ylim=(0, data.shape[0]))
+
+
+    #ax.invert_yaxis()
+
+    for n, e in enumerate(np.diff(borders)):
+            ax.add_patch(matplotlib.patches.Rectangle((borders[n], borders[n]),
+                                        e, e, fill=False, linewidth=3,
+                                        edgecolor=&#34;white&#34;))
+
+            
+
+    #sorted labels for plotting labels
+    sorted_labels = []
+    for ind in inds:
+        sorted_labels.append(labels[ind])
+        
+        
+    ax.set_yticks(np.arange(len(sorted_labels)) + 0.5)
+    ax.set_yticklabels(sorted_labels)
+
+    #get tick locations
+    loc = []
+    for i in range(len(borders)-1):
+        loc.append(np.mean([borders[i], borders[i+1]]))
+
+
+    ax.set_xticks(loc)
+    ax.set_xticklabels(labels=list(Counter(c_sorted).keys()))
+
+
+    fig.colorbar(coll)
+
+    return fig
+
+
+def plot_agreement_matrix(clusterings, xlabels=None, ylabels=None, size=(10,8), cmap=&#34;bone&#34;, annotation=True):
+    &#34;&#34;&#34;
+    Calculates the agreement matrix between provided clusterings, which is plotted as a heatmap. For each item pair a value is estimated how often
+    this item is grouped together between the provided algorithms.
+
+    Parameters:
+        clusterings (list): list of clusterings. Clusterings need to be lists and items need to be in same order between the provided
+            clusterings.
+        xlabels (list or None): list of tick labels to be used for the x axis
+        ylabels (list or None): list of tick labels to be used for the y axis
+        size (tuple): plot size to be used
+        cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
+        annotation (boolea): if True then cell values are plotted
+
+    Returns:
+        fig (matplotlib figure): heatmap object
+        aggreement matrix (matrix): containing the agreement values
+    &#34;&#34;&#34;
+
+    agg =  np.zeros((len(clusterings[0]), len(clusterings[0])))
+
+    for index, x in np.ndenumerate(agg):
+        cnt = 0
+        for c in clusterings:
+            if c[index[0]] == c[index[1]]:
+                cnt = cnt + 1
+                
+        agg[index[0]][index[1]] = cnt
+
+
+
+    f = plot_heatmap(agg, xlabels=xlabels, ylabels = ylabels, size=size, cmap=cmap, annotation=annotation)
+
+
+    return f, agg
+
+
+
+
+def plot_correlation_clusterings(clusterings, xlabels=None, ylabels=None, size=(10,8), cmap=&#34;bone&#34;):
+    &#34;&#34;&#34;
+    Calculates the pearson correlation between pairs of cluster vectors and plots a cluster map.
+
+    Parameters:
+        clusterings (list): list of clusterings. Clusterings need to be lists and items need to be in same order between the provided
+            clusterings. Individual items need to be int.
+        xlabels (list or None): list of tick labels to be used for the x axis
+        ylabels (list or None): list of tick labels to be used for the y axis
+        size (tuple): plot size to be used
+        cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
+        
+
+    Returns:
+        fig (matplotlib figure): heatmap object
+        correaltion matrix (matrix): containing the correaltion values
+    &#34;&#34;&#34;
+
+    cor =  np.zeros((len(clusterings), len(clusterings)))
+
+    for index, x in np.ndenumerate(cor):
+        c, p = pearsonr(clusterings[index[0]], clusterings[index[1]])
+        cor[index[0]][index[1]] = c
+
+
+
+    f = plot_hierarchical_clustering(cor, xlabels=xlabels, ylabels=ylabels, size=size, cmap=cmap)
+
+
+    return f, cor
+
+
+def plot_graph(G, pos=None, with_labels=False, node_color=&#34;#A0A0A0&#34;, edge_color=&#34;#A0A0A0&#34;,node_size=1000, width=2.0, node_border=&#34;black&#34;, figsize=(5,5)):
+    &#34;&#34;&#34;
+    Plots a Graph object.
+    
+    Parameters:
+        G (networkx graph object): graph to be plotted
+        pos (pos or None): node positions as returned by networkx position functions. If None
+            position based on a spring layeout is calculated.
+        with_labels (boolean): if True node labels are plotted.
+        node_color (string or list): if string needs to be hex code of node color to be used. If it is a list
+            it needs to be in the same order as G.nodes() and a color needs to be assigned for each node.
+        edge_color (string or list): is string needs to be hex code of edge color to be used. If it is a list
+            it needs to be in the same order as G.edges() and color needs to be assigned for each edge.
+        node_size (int): size of nodes to be plotted.
+        width (float): edge width to be plotted.
+        node_border (string): hex code of node border to be plotted.
+        figsize (tuple): dimension of to be plotted figure
+        
+    Returns:
+        fig (matplotlib figure): figure
+        pos (dict): used node positining for plots
+    
+    &#34;&#34;&#34;
+    
+
+
+    fig = plt.figure(figsize=figsize) 
+    
+    if pos is None:
+        pos = nx.spring_layout(G)
+
+    f = nx.draw(G, pos, with_labels = with_labels, node_size=node_size, node_color=node_color, edge_color=edge_color, width=width, edgecolors=node_border)
+
+    return fig, pos
+
+
+
+
+
+def plot_communities(G, com, pos=None, with_labels=False, node_color=None, edge_color=&#34;#A0A0A0&#34;,node_size=1000, width=2.0, node_border=&#34;black&#34;, figsize=(5,5)):
+    &#34;&#34;&#34;
+    Plots a Graph object.
+    
+    Parameters:
+        G (networkx graph object): graph to be plotted
+        com (dict): where node ID is key and value is list of communities this node belongs to. 
+            Only the first node assignment will be considered during color selection. If a default dict is returned by
+            the selected community algorithms it needs to be transformed with dict(defaultdict).
+        pos (pos or None): node positions as returned by networkx position functions. If None
+            position based on a spring layeout is calculated.
+        with_labels (boolean): if True node labels are plotted.
+        node_color (list):  If it is a list it needs to be in the same order as G.nodes() 
+            and a color needs to be assigned for each node, which should correspond to its community assignment.
+            If it is None random colors for each community are generated.
+        edge_color (string or list): is string needs to be hex code of edge color to be used. If it is a list
+            it needs to be in the same order as G.edges() and color needs to be assigned for each edge.
+        node_size (int): size of nodes to be plotted.
+        width (float): edge width to be plotted.
+        node_border (string): hex code of node border to be plotted.
+        figsize (tuple): dimension of to be plotted figure
+        
+    Returns:
+        fig (matplotlib figure): figure
+        pos (dict): used node positining for plots
+        colors (dict): where id is community ID and value is assigned color
+    
+    &#34;&#34;&#34;
+    
+    if node_color is None:
+        #number of communities / colors to generate
+        n = communities.get_number_of_communities(com)
+
+        colors = {}
+        for i in range(n):
+            #generate colors
+
+            random_number = random.randint(0,16777215)
+            hex_number = str(hex(random_number))
+            color =&#39;#&#39;+ hex_number[2:]
+            while len(color) &lt; 7:
+                color = color + &#34;0&#34;
+            colors[i] = color
+
+
+        node_color = []
+        for node in G.nodes():
+            node_color.append(colors[com[node][0]])
+
+
+    fig = plt.figure(figsize=figsize) 
+    
+    if pos is None:
+        pos = nx.spring_layout(G)
+
+    f = nx.draw(G, pos, with_labels = with_labels, node_size=node_size, node_color=node_color, edge_color=edge_color, width=width, edgecolors=node_border)
+    
+    
+    #generate a dummy plot in order to add a color ledgend
+    
+    for v in range(n):
+        plt.scatter([],[], c=colors[v], label=&#39;Community{}&#39;.format(v))
+        
+        
+    fig.legend()
+
+    return fig, pos, colors</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="volta.plotting.plot_agreement_matrix"><code class="name flex">
+<span>def <span class="ident">plot_agreement_matrix</span></span>(<span>clusterings, xlabels=None, ylabels=None, size=(10, 8), cmap='bone', annotation=True)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Calculates the agreement matrix between provided clusterings, which is plotted as a heatmap. For each item pair a value is estimated how often
+this item is grouped together between the provided algorithms.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>clusterings</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of clusterings. Clusterings need to be lists and items need to be in same order between the provided
+clusterings.</dd>
+<dt><strong><code>xlabels</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
+<dd>list of tick labels to be used for the x axis</dd>
+<dt><strong><code>ylabels</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
+<dd>list of tick labels to be used for the y axis</dd>
+<dt><strong><code>size</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>plot size to be used</dd>
+<dt><strong><code>cmap</code></strong> :&ensp;<code>matplotlib</code> <code>colormap</code></dt>
+<dd>can be created colormap or name of a pre-defined color map</dd>
+<dt><strong><code>annotation</code></strong> :&ensp;<code>boolea</code></dt>
+<dd>if True then cell values are plotted</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib</code> <code>figure</code></dt>
+<dd>heatmap object</dd>
+<dt><code>aggreement</code> <code>matrix</code> (<code>matrix</code>): <code>containing</code> <code>the</code> <code>agreement</code> <code>values</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_agreement_matrix(clusterings, xlabels=None, ylabels=None, size=(10,8), cmap=&#34;bone&#34;, annotation=True):
+    &#34;&#34;&#34;
+    Calculates the agreement matrix between provided clusterings, which is plotted as a heatmap. For each item pair a value is estimated how often
+    this item is grouped together between the provided algorithms.
+
+    Parameters:
+        clusterings (list): list of clusterings. Clusterings need to be lists and items need to be in same order between the provided
+            clusterings.
+        xlabels (list or None): list of tick labels to be used for the x axis
+        ylabels (list or None): list of tick labels to be used for the y axis
+        size (tuple): plot size to be used
+        cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
+        annotation (boolea): if True then cell values are plotted
+
+    Returns:
+        fig (matplotlib figure): heatmap object
+        aggreement matrix (matrix): containing the agreement values
+    &#34;&#34;&#34;
+
+    agg =  np.zeros((len(clusterings[0]), len(clusterings[0])))
+
+    for index, x in np.ndenumerate(agg):
+        cnt = 0
+        for c in clusterings:
+            if c[index[0]] == c[index[1]]:
+                cnt = cnt + 1
+                
+        agg[index[0]][index[1]] = cnt
+
+
+
+    f = plot_heatmap(agg, xlabels=xlabels, ylabels = ylabels, size=size, cmap=cmap, annotation=annotation)
+
+
+    return f, agg</code></pre>
+</details>
+</dd>
+<dt id="volta.plotting.plot_clustering_heatmap"><code class="name flex">
+<span>def <span class="ident">plot_clustering_heatmap</span></span>(<span>clusters, matrix, labels, cmap='bone', size=(10, 8))</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Plots a clustering on top of a provided distance matrix.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>clusters</code></strong> :&ensp;<code>array</code></dt>
+<dd>containing the cluster IDs, needs to be in the same order as labels</dd>
+<dt><strong><code>matrix</code></strong> :&ensp;<code>matrix</code></dt>
+<dd>distance or similarity matrix that has been provided as input for the clustering</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of labels to be used for plot. Needs to be in the same order as clusters</dd>
+<dt><strong><code>cmap</code></strong> :&ensp;<code>matplotlib</code> <code>colormap</code></dt>
+<dd>can be created colormap or name of a pre-defined color map</dd>
+<dt><strong><code>size</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>figuresize</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib</code> <code>figure</code></dt>
+<dd>of clustering</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_clustering_heatmap(clusters, matrix, labels, cmap=&#34;bone&#34;, size=(10,8)):
+
+    &#34;&#34;&#34;
+    Plots a clustering on top of a provided distance matrix.
+
+    Parameters:
+        clusters (array): containing the cluster IDs, needs to be in the same order as labels
+        matrix (matrix): distance or similarity matrix that has been provided as input for the clustering
+        labels (list): list of labels to be used for plot. Needs to be in the same order as clusters
+        cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
+        size (tuple): figuresize
+
+    Returns:
+        fig (matplotlib figure): of clustering
+    &#34;&#34;&#34;
+
+
+
+    c_sorted = np.sort(clusters)
+    c_sorted
+
+    borders = []
+
+    for cl in list(Counter(c_sorted).keys()):
+        found = False
+        end = False
+        for ii in range(len(c_sorted)):
+            i = c_sorted[ii]
+            if i == cl and not found:
+                borders.append(ii)
+                found = True
+                
+            
+                
+    borders.append(len(c_sorted))
+
+    #get indices of the items
+
+    inds = np.argsort(clusters)
+    for n, f in enumerate(borders[:-1]):
+            i = inds[f:borders[n + 1]]
+            
+            cco = i[matrix[np.ix_(i, i)].mean(axis=1).argsort()[::-1]]
+            
+            inds[f:borders[n + 1]] = cco
+            
+            
+            
+    #create plot
+
+    fig, ax = plt.subplots(1, 1, figsize=size)
+    data = matrix[np.ix_(inds, inds)]
+
+    if cmap is None:
+        cmap = sns.cubehelix_palette(start=7, rot=0, dark=0.2, light=0.8, reverse=False, as_cmap=True)
+
+    coll = ax.pcolormesh(data,  cmap=cmap)
+    #ax.set(xlim=(0, data.shape[1]), ylim=(0, data.shape[0]))
+
+
+    #ax.invert_yaxis()
+
+    for n, e in enumerate(np.diff(borders)):
+            ax.add_patch(matplotlib.patches.Rectangle((borders[n], borders[n]),
+                                        e, e, fill=False, linewidth=3,
+                                        edgecolor=&#34;white&#34;))
+
+            
+
+    #sorted labels for plotting labels
+    sorted_labels = []
+    for ind in inds:
+        sorted_labels.append(labels[ind])
+        
+        
+    ax.set_yticks(np.arange(len(sorted_labels)) + 0.5)
+    ax.set_yticklabels(sorted_labels)
+
+    #get tick locations
+    loc = []
+    for i in range(len(borders)-1):
+        loc.append(np.mean([borders[i], borders[i+1]]))
+
+
+    ax.set_xticks(loc)
+    ax.set_xticklabels(labels=list(Counter(c_sorted).keys()))
+
+
+    fig.colorbar(coll)
+
+    return fig</code></pre>
+</details>
+</dd>
+<dt id="volta.plotting.plot_communities"><code class="name flex">
+<span>def <span class="ident">plot_communities</span></span>(<span>G, com, pos=None, with_labels=False, node_color=None, edge_color='#A0A0A0', node_size=1000, width=2.0, node_border='black', figsize=(5, 5))</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Plots a Graph object.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkx</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to be plotted</dd>
+<dt><strong><code>com</code></strong> :&ensp;<code>dict</code></dt>
+<dd>where node ID is key and value is list of communities this node belongs to.
+Only the first node assignment will be considered during color selection. If a default dict is returned by
+the selected community algorithms it needs to be transformed with dict(defaultdict).</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code>pos</code> or <code>None</code></dt>
+<dd>node positions as returned by networkx position functions. If None
+position based on a spring layeout is calculated.</dd>
+<dt><strong><code>with_labels</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True node labels are plotted.</dd>
+<dt><strong><code>node_color</code></strong> :&ensp;<code>list</code></dt>
+<dd>If it is a list it needs to be in the same order as G.nodes()
+and a color needs to be assigned for each node, which should correspond to its community assignment.
+If it is None random colors for each community are generated.</dd>
+<dt><strong><code>edge_color</code></strong> :&ensp;<code>string</code> or <code>list</code></dt>
+<dd>is string needs to be hex code of edge color to be used. If it is a list
+it needs to be in the same order as G.edges() and color needs to be assigned for each edge.</dd>
+<dt><strong><code>node_size</code></strong> :&ensp;<code>int</code></dt>
+<dd>size of nodes to be plotted.</dd>
+<dt><strong><code>width</code></strong> :&ensp;<code>float</code></dt>
+<dd>edge width to be plotted.</dd>
+<dt><strong><code>node_border</code></strong> :&ensp;<code>string</code></dt>
+<dd>hex code of node border to be plotted.</dd>
+<dt><strong><code>figsize</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>dimension of to be plotted figure</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib</code> <code>figure</code></dt>
+<dd>figure</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code>dict</code></dt>
+<dd>used node positining for plots</dd>
+<dt><strong><code>colors</code></strong> :&ensp;<code>dict</code></dt>
+<dd>where id is community ID and value is assigned color</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_communities(G, com, pos=None, with_labels=False, node_color=None, edge_color=&#34;#A0A0A0&#34;,node_size=1000, width=2.0, node_border=&#34;black&#34;, figsize=(5,5)):
+    &#34;&#34;&#34;
+    Plots a Graph object.
+    
+    Parameters:
+        G (networkx graph object): graph to be plotted
+        com (dict): where node ID is key and value is list of communities this node belongs to. 
+            Only the first node assignment will be considered during color selection. If a default dict is returned by
+            the selected community algorithms it needs to be transformed with dict(defaultdict).
+        pos (pos or None): node positions as returned by networkx position functions. If None
+            position based on a spring layeout is calculated.
+        with_labels (boolean): if True node labels are plotted.
+        node_color (list):  If it is a list it needs to be in the same order as G.nodes() 
+            and a color needs to be assigned for each node, which should correspond to its community assignment.
+            If it is None random colors for each community are generated.
+        edge_color (string or list): is string needs to be hex code of edge color to be used. If it is a list
+            it needs to be in the same order as G.edges() and color needs to be assigned for each edge.
+        node_size (int): size of nodes to be plotted.
+        width (float): edge width to be plotted.
+        node_border (string): hex code of node border to be plotted.
+        figsize (tuple): dimension of to be plotted figure
+        
+    Returns:
+        fig (matplotlib figure): figure
+        pos (dict): used node positining for plots
+        colors (dict): where id is community ID and value is assigned color
+    
+    &#34;&#34;&#34;
+    
+    if node_color is None:
+        #number of communities / colors to generate
+        n = communities.get_number_of_communities(com)
+
+        colors = {}
+        for i in range(n):
+            #generate colors
+
+            random_number = random.randint(0,16777215)
+            hex_number = str(hex(random_number))
+            color =&#39;#&#39;+ hex_number[2:]
+            while len(color) &lt; 7:
+                color = color + &#34;0&#34;
+            colors[i] = color
+
+
+        node_color = []
+        for node in G.nodes():
+            node_color.append(colors[com[node][0]])
+
+
+    fig = plt.figure(figsize=figsize) 
+    
+    if pos is None:
+        pos = nx.spring_layout(G)
+
+    f = nx.draw(G, pos, with_labels = with_labels, node_size=node_size, node_color=node_color, edge_color=edge_color, width=width, edgecolors=node_border)
+    
+    
+    #generate a dummy plot in order to add a color ledgend
+    
+    for v in range(n):
+        plt.scatter([],[], c=colors[v], label=&#39;Community{}&#39;.format(v))
+        
+        
+    fig.legend()
+
+    return fig, pos, colors</code></pre>
+</details>
+</dd>
+<dt id="volta.plotting.plot_correlation_clusterings"><code class="name flex">
+<span>def <span class="ident">plot_correlation_clusterings</span></span>(<span>clusterings, xlabels=None, ylabels=None, size=(10, 8), cmap='bone')</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Calculates the pearson correlation between pairs of cluster vectors and plots a cluster map.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>clusterings</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of clusterings. Clusterings need to be lists and items need to be in same order between the provided
+clusterings. Individual items need to be int.</dd>
+<dt><strong><code>xlabels</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
+<dd>list of tick labels to be used for the x axis</dd>
+<dt><strong><code>ylabels</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
+<dd>list of tick labels to be used for the y axis</dd>
+<dt><strong><code>size</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>plot size to be used</dd>
+<dt><strong><code>cmap</code></strong> :&ensp;<code>matplotlib</code> <code>colormap</code></dt>
+<dd>can be created colormap or name of a pre-defined color map</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib</code> <code>figure</code></dt>
+<dd>heatmap object</dd>
+<dt><code>correaltion</code> <code>matrix</code> (<code>matrix</code>): <code>containing</code> <code>the</code> <code>correaltion</code> <code>values</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_correlation_clusterings(clusterings, xlabels=None, ylabels=None, size=(10,8), cmap=&#34;bone&#34;):
+    &#34;&#34;&#34;
+    Calculates the pearson correlation between pairs of cluster vectors and plots a cluster map.
+
+    Parameters:
+        clusterings (list): list of clusterings. Clusterings need to be lists and items need to be in same order between the provided
+            clusterings. Individual items need to be int.
+        xlabels (list or None): list of tick labels to be used for the x axis
+        ylabels (list or None): list of tick labels to be used for the y axis
+        size (tuple): plot size to be used
+        cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
+        
+
+    Returns:
+        fig (matplotlib figure): heatmap object
+        correaltion matrix (matrix): containing the correaltion values
+    &#34;&#34;&#34;
+
+    cor =  np.zeros((len(clusterings), len(clusterings)))
+
+    for index, x in np.ndenumerate(cor):
+        c, p = pearsonr(clusterings[index[0]], clusterings[index[1]])
+        cor[index[0]][index[1]] = c
+
+
+
+    f = plot_hierarchical_clustering(cor, xlabels=xlabels, ylabels=ylabels, size=size, cmap=cmap)
+
+
+    return f, cor</code></pre>
+</details>
+</dd>
+<dt id="volta.plotting.plot_graph"><code class="name flex">
+<span>def <span class="ident">plot_graph</span></span>(<span>G, pos=None, with_labels=False, node_color='#A0A0A0', edge_color='#A0A0A0', node_size=1000, width=2.0, node_border='black', figsize=(5, 5))</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Plots a Graph object.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkx</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to be plotted</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code>pos</code> or <code>None</code></dt>
+<dd>node positions as returned by networkx position functions. If None
+position based on a spring layeout is calculated.</dd>
+<dt><strong><code>with_labels</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>if True node labels are plotted.</dd>
+<dt><strong><code>node_color</code></strong> :&ensp;<code>string</code> or <code>list</code></dt>
+<dd>if string needs to be hex code of node color to be used. If it is a list
+it needs to be in the same order as G.nodes() and a color needs to be assigned for each node.</dd>
+<dt><strong><code>edge_color</code></strong> :&ensp;<code>string</code> or <code>list</code></dt>
+<dd>is string needs to be hex code of edge color to be used. If it is a list
+it needs to be in the same order as G.edges() and color needs to be assigned for each edge.</dd>
+<dt><strong><code>node_size</code></strong> :&ensp;<code>int</code></dt>
+<dd>size of nodes to be plotted.</dd>
+<dt><strong><code>width</code></strong> :&ensp;<code>float</code></dt>
+<dd>edge width to be plotted.</dd>
+<dt><strong><code>node_border</code></strong> :&ensp;<code>string</code></dt>
+<dd>hex code of node border to be plotted.</dd>
+<dt><strong><code>figsize</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>dimension of to be plotted figure</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib</code> <code>figure</code></dt>
+<dd>figure</dd>
+<dt><strong><code>pos</code></strong> :&ensp;<code>dict</code></dt>
+<dd>used node positining for plots</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_graph(G, pos=None, with_labels=False, node_color=&#34;#A0A0A0&#34;, edge_color=&#34;#A0A0A0&#34;,node_size=1000, width=2.0, node_border=&#34;black&#34;, figsize=(5,5)):
+    &#34;&#34;&#34;
+    Plots a Graph object.
+    
+    Parameters:
+        G (networkx graph object): graph to be plotted
+        pos (pos or None): node positions as returned by networkx position functions. If None
+            position based on a spring layeout is calculated.
+        with_labels (boolean): if True node labels are plotted.
+        node_color (string or list): if string needs to be hex code of node color to be used. If it is a list
+            it needs to be in the same order as G.nodes() and a color needs to be assigned for each node.
+        edge_color (string or list): is string needs to be hex code of edge color to be used. If it is a list
+            it needs to be in the same order as G.edges() and color needs to be assigned for each edge.
+        node_size (int): size of nodes to be plotted.
+        width (float): edge width to be plotted.
+        node_border (string): hex code of node border to be plotted.
+        figsize (tuple): dimension of to be plotted figure
+        
+    Returns:
+        fig (matplotlib figure): figure
+        pos (dict): used node positining for plots
+    
+    &#34;&#34;&#34;
+    
+
+
+    fig = plt.figure(figsize=figsize) 
+    
+    if pos is None:
+        pos = nx.spring_layout(G)
+
+    f = nx.draw(G, pos, with_labels = with_labels, node_size=node_size, node_color=node_color, edge_color=edge_color, width=width, edgecolors=node_border)
+
+    return fig, pos</code></pre>
+</details>
+</dd>
+<dt id="volta.plotting.plot_heatmap"><code class="name flex">
+<span>def <span class="ident">plot_heatmap</span></span>(<span>matrix, xlabels=None, ylabels=None, size=(10, 8), cmap='bone', annotation=False)</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Plots a heatmap. Return figure fig can be saved with fig.savefig(). For parameters refer to the matplotlib documentation.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>matrix</code></strong> :&ensp;<code>numpy</code> <code>matrix</code></dt>
+<dd>matrix containing the values to be plotted</dd>
+<dt><strong><code>xlabels</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
+<dd>list of tick labels to be used for the x axis</dd>
+<dt><strong><code>ylabels</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
+<dd>list of tick labels to be used for the y axis</dd>
+<dt><strong><code>size</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>plot size to be used</dd>
+<dt><strong><code>cmap</code></strong> :&ensp;<code>matplotlib</code> <code>colormap</code></dt>
+<dd>can be created colormap or name of a pre-defined color map</dd>
+<dt><strong><code>annotation</code></strong> :&ensp;<code>boolea</code></dt>
+<dd>if True then cell values are plotted</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib</code> <code>figure</code></dt>
+<dd>heatmap object</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_heatmap(matrix, xlabels=None, ylabels=None, size=(10,8), cmap=&#34;bone&#34;, annotation=False):
+
+    &#34;&#34;&#34;
+    Plots a heatmap. Return figure fig can be saved with fig.savefig(). For parameters refer to the matplotlib documentation.
+
+    Parameters:
+        matrix (numpy matrix): matrix containing the values to be plotted
+        xlabels (list or None): list of tick labels to be used for the x axis
+        ylabels (list or None): list of tick labels to be used for the y axis
+        size (tuple): plot size to be used
+        cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
+        annotation (boolea): if True then cell values are plotted
+
+    Returns:
+        fig (matplotlib figure): heatmap object
+    &#34;&#34;&#34;
+
+    if xlabels is None:
+        xlabels=&#34;auto&#34;
+    if ylabels is None:
+        ylabels = &#34;auto&#34;
+
+    if cmap is None:
+        cmap = sns.cubehelix_palette(start=7, rot=0, dark=0.2, light=0.8, reverse=False, as_cmap=True)
+
+    fig, ax = plt.subplots(figsize=size)  
+
+    sns.heatmap(matrix, annot=annotation, ax=ax, xticklabels=xlabels, yticklabels=ylabels, cmap=cmap)
+
+    return fig</code></pre>
+</details>
+</dd>
+<dt id="volta.plotting.plot_hierarchical_clustering"><code class="name flex">
+<span>def <span class="ident">plot_hierarchical_clustering</span></span>(<span>matrix, xlabels=None, ylabels=None, size=(10, 8), cmap='bone')</span>
+</code></dt>
+<dd>
+<section class="desc"><p>Plots a clustermap. Return figure fig can be saved with fig.savefig(). For parameters refer to the matplotlib documentation.</p>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>matrix</code></strong> :&ensp;<code>numpy</code> <code>matrix</code></dt>
+<dd>matrix containing the values to be plotted</dd>
+<dt><strong><code>xlabels</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
+<dd>list of tick labels to be used for the x axis</dd>
+<dt><strong><code>ylabels</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
+<dd>list of tick labels to be used for the y axis</dd>
+<dt><strong><code>size</code></strong> :&ensp;<code>tuple</code></dt>
+<dd>plot size to be used</dd>
+<dt><strong><code>cmap</code></strong> :&ensp;<code>matplotlib</code> <code>colormap</code></dt>
+<dd>can be created colormap or name of a pre-defined color map</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib</code> <code>figure</code></dt>
+<dd>cluster-heatmap object</dd>
+</dl></section>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def plot_hierarchical_clustering(matrix, xlabels=None, ylabels=None, size=(10,8), cmap=&#34;bone&#34;):
+
+    &#34;&#34;&#34;
+    Plots a clustermap. Return figure fig can be saved with fig.savefig(). For parameters refer to the matplotlib documentation.
+
+    Parameters:
+        matrix (numpy matrix): matrix containing the values to be plotted
+        xlabels (list or None): list of tick labels to be used for the x axis
+        ylabels (list or None): list of tick labels to be used for the y axis
+        size (tuple): plot size to be used
+        cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
+
+    Returns:
+        fig (matplotlib figure): cluster-heatmap object
+    &#34;&#34;&#34;
+
+    if xlabels is None:
+        xlabels=&#34;auto&#34;
+    if ylabels is None:
+        ylabels = &#34;auto&#34;
+
+    if cmap is None:
+
+        cmap = sns.cubehelix_palette(start=7, rot=0, dark=0.2, light=0.8, reverse=False, as_cmap=True)
+
+    
+
+    return sns.clustermap(matrix, annot=False, figsize=size, xticklabels=xlabels, yticklabels=ylabels, cmap=cmap)</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="volta" href="index.html">volta</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="volta.plotting.plot_agreement_matrix" href="#volta.plotting.plot_agreement_matrix">plot_agreement_matrix</a></code></li>
+<li><code><a title="volta.plotting.plot_clustering_heatmap" href="#volta.plotting.plot_clustering_heatmap">plot_clustering_heatmap</a></code></li>
+<li><code><a title="volta.plotting.plot_communities" href="#volta.plotting.plot_communities">plot_communities</a></code></li>
+<li><code><a title="volta.plotting.plot_correlation_clusterings" href="#volta.plotting.plot_correlation_clusterings">plot_correlation_clusterings</a></code></li>
+<li><code><a title="volta.plotting.plot_graph" href="#volta.plotting.plot_graph">plot_graph</a></code></li>
+<li><code><a title="volta.plotting.plot_heatmap" href="#volta.plotting.plot_heatmap">plot_heatmap</a></code></li>
+<li><code><a title="volta.plotting.plot_hierarchical_clustering" href="#volta.plotting.plot_hierarchical_clustering">plot_hierarchical_clustering</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5</a>.</p>
+</footer>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
+<script>hljs.initHighlightingOnLoad()</script>
+</body>
+</html>
