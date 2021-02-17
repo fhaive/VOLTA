@@ -89,7 +89,7 @@ def async_fluid(G, k=5, return_object=True):
         Fluid Communities: A Competitive and Highly Scalable Community Detection Algorithm.
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         k (int): number of desired communities.
         return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
@@ -126,7 +126,7 @@ def gdmp2(G, min_threshold=0.75, return_object=True):
         IEEE Transactions on Knowledge and Data Engineering 24.7 (2012): 1216-1230.
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         min_threshold (float): minimum density threshold. This is used to control the density of the detected communities.
         return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
@@ -160,7 +160,7 @@ def infomap(G, return_object=True):
         Proc Natl Acad SciUSA 105(4):1118–1123
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
     Returns:
@@ -193,7 +193,7 @@ def label_propagation(G, return_object=True):
         Near linear time algorithm to detect community structures in large-scale networks. Physical review E, 76(3), 036106.
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
     Returns:
@@ -225,7 +225,7 @@ def walktrap(G, return_object=True):
         J. Graph Algorithms Appl. 10.2 (2006): 191-218.
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
     Returns:
@@ -268,7 +268,7 @@ def cpm(G, initial_membership=None, weights=&#34;weight&#34;, resolution_paramet
         Narrow scope for resolution-limit-free community detection. Physical Review E, 84(1), 016114. 10.1103/PhysRevE.84.016114
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         initial_membership (list or None):  list of iInitial membership for the partition. If None then defaults to a singleton partition.
         weights (str): edge attribute to be used.
         resolution_parameter (float):  &gt; 0. Controls the community resolution. Higher values lead to more communities, while lower values lead to fewer communities.
@@ -301,7 +301,7 @@ def greedy_modularity(G, weights=&#34;weight&#34;, return_object=True):
         Finding community structure in very large networks. Physical Review E 70(6), 2004
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         weights (str): edge attribute to be used.
         return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
@@ -334,7 +334,7 @@ def leiden(G,  weights=&#34;weight&#34;, return_object=True):
         From Louvain to Leiden: guaranteeing well-connected communities. arXiv preprint arXiv:1810.08473 (2018).
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         weights (str): edge attribute to be used.
         return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
@@ -367,7 +367,7 @@ def louvain(G, weights=&#34;weight&#34;, resolution=1.0,  return_object=True):
         Journal of statistical mechanics: theory and experiment 2008.10 (2008): P10008.
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         weights (str): edge attribute to be used.
         resolution (float): controls community size.
         return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
@@ -399,7 +399,7 @@ def weak_link_communities(H, weights=&#34;weight&#34;, t=0.2, max_iter=1000, by_
     
     Parameters:
 
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         weights (str): edge attribute to be used.
         t (float): in [0,1]. Treshold on which edges are &#34;selected as weak&#34; and to be removed if they occure &lt;= in of samples neighbors.
         max_iter (int): maximum number of iterations. 
@@ -593,7 +593,7 @@ def girvan_newman(G, valuable_edge=&#34;max_weight&#34;, k=1, is_leve=False, att
         https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.community.centrality.girvan_newman.html
 
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         valuable_edge (str): determines how the most valuable edge is selected. If &#34;max_weight&#34; then the edge with the highest weight is removed.
             If &#34;min_weight&#34; the edge with the lowest weight is removed. If &#34;betweenness&#34;  the edge with the highest/ lowest betweenness centrality is removed first.
             If is &#34;current_flow_betweenness&#34; the edge with the highest/ lowest current flow betweenness centrality is removed first. If is &#34;load&#34; the edge with the highest/lowest load centrality is removed.
@@ -688,7 +688,7 @@ def agglomerative_clustering(G, is_distance=True, linkage=&#34;complete&#34;, di
     Clusters on the adjacency matrix of a graph. Cells need to contain distance or similarity values. Based on sklearn.
 
     Parameters:
-        G (networkX graph object)
+        G (networkX graph object): to estimate on
         is_distance (boolean): if True the values contained in the adjacency matrix are used for clustering. If False they are converted into a distance first with 1-x.
         linkage (str): method to be used. Options are  &#34;complete&#34;, &#34;average&#34;, &#34;single&#34;.
         distance_treshold (float): treshold above which clusters will be merged.
@@ -730,7 +730,7 @@ def markov_clustering(G, inflation=1.1):
     Markov clustering on adjacency matrix. Based on the markovclustering package.
 
     Parameters:
-        G (networkX graph object)
+        G (networkX graph object): to estimate on
         inflation (float): clustering parameter.
         
    Returns:
@@ -777,7 +777,7 @@ def angel(G, treshold=0.5, min_community_size=3, return_object=True):
         International Conference on Complex Networks and Their Applications. Springer, Cham, 2019.
         
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         treshold (float): in  [0,1]. Merging treshold.
         min_community_size (int): minimum community size.
         return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
@@ -810,7 +810,7 @@ def ego_networks(G, level=1, return_object=True):
 
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         level (int): from a node its neighbors within a community have distance &lt;= level.
         return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
@@ -850,7 +850,7 @@ def create_initial_consensus(graph, communities, thresh = 0.2):
     Can be used as input of fast_consensus().
 
     Parameters:
-        graph (networkX graph object):
+        graph (networkX graph object): to estimate on
         communities (list): list of initial clusterings. Items are assumed to be dicts as returned by the community detection algorithms.
         tresh (float): threshold on if to add a node pair to the same community or not.
     
@@ -894,7 +894,7 @@ def fast_consensus(G, communities, algorithms = [], parameters=[], thresh = 0.2,
         https://doi.org/10.1103/PhysRevE.99.042301
 
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         communities (list): list of initial clusterings. Items are assumed to be dicts as returned by the community detection algorithms.
         algorithms (list): list of algorithms to be used during the consensus estimation. If an algorithm needs to be run multiple times it needs to be added multiple times.
             Algorithms that need a connected graph to work (such as async_fluid) cannot be provided as input.
@@ -1054,7 +1054,7 @@ def get_number_of_communities(communities):
     Parameters:
         communities(dict): as returned by the community functions.
     Returns:
-        number of communities (int):
+        number of communities (int): detected
 
     &#34;&#34;&#34;
 
@@ -1587,7 +1587,7 @@ def community_modularity(communities, G):
         G (networkX graph object): the graph the communities where detected on.
 
     Returns:
-        score (float): 
+        score (float): modularity score 
     &#34;&#34;&#34;
     com = {}
     for key in communities:
@@ -2374,10 +2374,10 @@ def __orderNodes__(graph, edge_weight=&#34;weight&#34;):
     #Output: list of nodes sorted in the decreasing order of their page rank
     dictOfNodes = nx.pagerank(graph, weight=edge_weight)
     orderedNodes = dictOfNodes.items()
-    orderedNodes = sorted(orderedNodes, reverse=True, key=get_key)
+    orderedNodes = sorted(orderedNodes, reverse=True, key=__get_key__)
     return orderedNodes
 
-def get_key(node):
+def __get_key__(node):
     #Input: list containing node name and its page rank
     #Output: return rank of the node
     return node[1]
@@ -2445,11 +2445,11 @@ def refactor_communities(community):
     Refactors the community dicts into a list of sublists. This format is needed when using the fastconsensus function.
     
 
-    Input
-        community dict in the format as provided by the community detection algorithms, except fuzzy and agdl
+    Parameters:
+        community (dict): in the format as provided by the community detection algorithms, except fuzzy and agdl
 
-    Ouput
-        list of sublists [[community] [community]], where each community list contains node Ids 
+    Returns:
+        transformed communities (list): list of sublists [[community] [community]], where each community list contains node Ids 
     &#34;&#34;&#34;
     result_temp = {}
 
@@ -3230,7 +3230,8 @@ list is in same order as all_modules.</p></section>
 <section class="desc"><p>Clusters on the adjacency matrix of a graph. Cells need to contain distance or similarity values. Based on sklearn.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (networkX graph object)</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to estimate on</dd>
 <dt><strong><code>is_distance</code></strong> :&ensp;<code>boolean</code></dt>
 <dd>if True the values contained in the adjacency matrix are used for clustering. If False they are converted into a distance first with 1-x.</dd>
 <dt><strong><code>linkage</code></strong> :&ensp;<code>str</code></dt>
@@ -3253,7 +3254,7 @@ list is in same order as all_modules.</p></section>
     Clusters on the adjacency matrix of a graph. Cells need to contain distance or similarity values. Based on sklearn.
 
     Parameters:
-        G (networkX graph object)
+        G (networkX graph object): to estimate on
         is_distance (boolean): if True the values contained in the adjacency matrix are used for clustering. If False they are converted into a distance first with 1-x.
         linkage (str): method to be used. Options are  &#34;complete&#34;, &#34;average&#34;, &#34;single&#34;.
         distance_treshold (float): treshold above which clusters will be merged.
@@ -3297,7 +3298,8 @@ list is in same order as all_modules.</p></section>
 International Conference on Complex Networks and Their Applications. Springer, Cham, 2019.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (networkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to estimate on</dd>
 <dt><strong><code>treshold</code></strong> :&ensp;<code>float</code></dt>
 <dd>in
 [0,1]. Merging treshold.</dd>
@@ -3325,7 +3327,7 @@ International Conference on Complex Networks and Their Applications. Springer, C
         International Conference on Complex Networks and Their Applications. Springer, Cham, 2019.
         
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         treshold (float): in  [0,1]. Merging treshold.
         min_community_size (int): minimum community size.
         return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
@@ -3359,7 +3361,8 @@ International Conference on Complex Networks and Their Applications. Springer, C
 Fluid Communities: A Competitive and Highly Scalable Community Detection Algorithm.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (networkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to estimate on</dd>
 <dt><strong><code>k</code></strong> :&ensp;<code>int</code></dt>
 <dd>number of desired communities.</dd>
 <dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
@@ -3387,7 +3390,7 @@ Fluid Communities: A Competitive and Highly Scalable Community Detection Algorit
         Fluid Communities: A Competitive and Highly Scalable Community Detection Algorithm.
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         k (int): number of desired communities.
         return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
@@ -3810,8 +3813,8 @@ Physical Review E 69, 26113(2004).</p>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>score</code> (<code>float</code>):</dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>score</code></strong> :&ensp;<code>float</code></dt>
+<dd>modularity score</dd>
 </dl></section>
 <details class="source">
 <summary>
@@ -3831,7 +3834,7 @@ Physical Review E 69, 26113(2004).</p>
         G (networkX graph object): the graph the communities where detected on.
 
     Returns:
-        score (float): 
+        score (float): modularity score 
     &#34;&#34;&#34;
     com = {}
     for key in communities:
@@ -3964,7 +3967,8 @@ Where keys are community IDs and values are lists of nodes in that community.</p
 Narrow scope for resolution-limit-free community detection. Physical Review E, 84(1), 016114. 10.1103/PhysRevE.84.016114</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (networkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to estimate on</dd>
 <dt><strong><code>initial_membership</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
 <dd>list of iInitial membership for the partition. If None then defaults to a singleton partition.</dd>
 <dt><strong><code>weights</code></strong> :&ensp;<code>str</code></dt>
@@ -4001,7 +4005,7 @@ Narrow scope for resolution-limit-free community detection. Physical Review E, 8
         Narrow scope for resolution-limit-free community detection. Physical Review E, 84(1), 016114. 10.1103/PhysRevE.84.016114
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         initial_membership (list or None):  list of iInitial membership for the partition. If None then defaults to a singleton partition.
         weights (str): edge attribute to be used.
         resolution_parameter (float):  &gt; 0. Controls the community resolution. Higher values lead to more communities, while lower values lead to fewer communities.
@@ -4032,7 +4036,8 @@ Narrow scope for resolution-limit-free community detection. Physical Review E, 8
 Can be used as input of fast_consensus().</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>graph (networkX graph object):</dt>
+<dt><strong><code>graph</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to estimate on</dd>
 <dt><strong><code>communities</code></strong> :&ensp;<code>list</code></dt>
 <dd>list of initial clusterings. Items are assumed to be dicts as returned by the community detection algorithms.</dd>
 <dt><strong><code>tresh</code></strong> :&ensp;<code>float</code></dt>
@@ -4055,7 +4060,7 @@ Can be used as input of fast_consensus().</p>
     Can be used as input of fast_consensus().
 
     Parameters:
-        graph (networkX graph object):
+        graph (networkX graph object): to estimate on
         communities (list): list of initial clusterings. Items are assumed to be dicts as returned by the community detection algorithms.
         tresh (float): threshold on if to add a node pair to the same community or not.
     
@@ -4177,7 +4182,8 @@ If there are less than 2 communities None is returned.</p></section>
 <p><a href="https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.ego_networks.html#cdlib.algorithms.ego_networks">https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.ego_networks.html#cdlib.algorithms.ego_networks</a></p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (networkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to estimate on</dd>
 <dt><strong><code>level</code></strong> :&ensp;<code>int</code></dt>
 <dd>from a node its neighbors within a community have distance &lt;= level.</dd>
 <dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
@@ -4202,7 +4208,7 @@ If there are less than 2 communities None is returned.</p></section>
 
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         level (int): from a node its neighbors within a community have distance &lt;= level.
         return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
@@ -4236,7 +4242,8 @@ If there are less than 2 communities None is returned.</p></section>
 <a href="https://doi.org/10.1103/PhysRevE.99.042301">https://doi.org/10.1103/PhysRevE.99.042301</a></p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (networkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to estimate on</dd>
 <dt><strong><code>communities</code></strong> :&ensp;<code>list</code></dt>
 <dd>list of initial clusterings. Items are assumed to be dicts as returned by the community detection algorithms.</dd>
 <dt><strong><code>algorithms</code></strong> :&ensp;<code>list</code></dt>
@@ -4275,7 +4282,7 @@ consensus graph (networkX graph object): graph object of consensus communities. 
         https://doi.org/10.1103/PhysRevE.99.042301
 
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         communities (list): list of initial clusterings. Items are assumed to be dicts as returned by the community detection algorithms.
         algorithms (list): list of algorithms to be used during the consensus estimation. If an algorithm needs to be run multiple times it needs to be added multiple times.
             Algorithms that need a connected graph to work (such as async_fluid) cannot be provided as input.
@@ -4585,7 +4592,8 @@ If there are less than 2 communities None is returned.</p></section>
 IEEE Transactions on Knowledge and Data Engineering 24.7 (2012): 1216-1230.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (networkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to estimate on</dd>
 <dt><strong><code>min_threshold</code></strong> :&ensp;<code>float</code></dt>
 <dd>minimum density threshold. This is used to control the density of the detected communities.</dd>
 <dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
@@ -4612,7 +4620,7 @@ IEEE Transactions on Knowledge and Data Engineering 24.7 (2012): 1216-1230.</p>
         IEEE Transactions on Knowledge and Data Engineering 24.7 (2012): 1216-1230.
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         min_threshold (float): minimum density threshold. This is used to control the density of the detected communities.
         return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
@@ -4635,21 +4643,6 @@ IEEE Transactions on Knowledge and Data Engineering 24.7 (2012): 1216-1230.</p>
         return m</code></pre>
 </details>
 </dd>
-<dt id="graphAlgorithms.communities.get_key"><code class="name flex">
-<span>def <span class="ident">get_key</span></span>(<span>node)</span>
-</code></dt>
-<dd>
-<section class="desc"></section>
-<details class="source">
-<summary>
-<span>Expand source code</span>
-</summary>
-<pre><code class="python">def get_key(node):
-    #Input: list containing node name and its page rank
-    #Output: return rank of the node
-    return node[1]</code></pre>
-</details>
-</dd>
 <dt id="graphAlgorithms.communities.get_number_of_communities"><code class="name flex">
 <span>def <span class="ident">get_number_of_communities</span></span>(<span>communities)</span>
 </code></dt>
@@ -4659,7 +4652,7 @@ IEEE Transactions on Knowledge and Data Engineering 24.7 (2012): 1216-1230.</p>
 <p>communities(dict): as returned by the community functions.</p>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>number</code> of <code>communities</code> (<code>int</code>):</dt>
+<dt><code>number</code> of <code>communities</code> (<code>int</code>): <code>detected</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -4673,7 +4666,7 @@ IEEE Transactions on Knowledge and Data Engineering 24.7 (2012): 1216-1230.</p>
     Parameters:
         communities(dict): as returned by the community functions.
     Returns:
-        number of communities (int):
+        number of communities (int): detected
 
     &#34;&#34;&#34;
 
@@ -4760,7 +4753,8 @@ IEEE Transactions on Knowledge and Data Engineering 24.7 (2012): 1216-1230.</p>
 <p><a href="https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.community.centrality.girvan_newman.html">https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.community.centrality.girvan_newman.html</a></p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (networkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to estimate on</dd>
 <dt><strong><code>valuable_edge</code></strong> :&ensp;<code>str</code></dt>
 <dd>determines how the most valuable edge is selected. If "max_weight" then the edge with the highest weight is removed.
 If "min_weight" the edge with the lowest weight is removed. If "betweenness"
@@ -4793,7 +4787,7 @@ If is "current_flow_betweenness" the edge with the highest/ lowest current flow 
         https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.community.centrality.girvan_newman.html
 
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         valuable_edge (str): determines how the most valuable edge is selected. If &#34;max_weight&#34; then the edge with the highest weight is removed.
             If &#34;min_weight&#34; the edge with the lowest weight is removed. If &#34;betweenness&#34;  the edge with the highest/ lowest betweenness centrality is removed first.
             If is &#34;current_flow_betweenness&#34; the edge with the highest/ lowest current flow betweenness centrality is removed first. If is &#34;load&#34; the edge with the highest/lowest load centrality is removed.
@@ -4895,7 +4889,8 @@ If is "current_flow_betweenness" the edge with the highest/ lowest current flow 
 Finding community structure in very large networks. Physical Review E 70(6), 2004</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (networkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to estimate on</dd>
 <dt><strong><code>weights</code></strong> :&ensp;<code>str</code></dt>
 <dd>edge attribute to be used.</dd>
 <dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
@@ -4922,7 +4917,7 @@ Finding community structure in very large networks. Physical Review E 70(6), 200
         Finding community structure in very large networks. Physical Review E 70(6), 2004
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         weights (str): edge attribute to be used.
         return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
@@ -5031,7 +5026,8 @@ If there are less than 2 communities None is returned.</p></section>
 Proc Natl Acad SciUSA 105(4):1118–1123</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (networkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to estimate on</dd>
 <dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
 <dd>if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></dd>
 </dl>
@@ -5056,7 +5052,7 @@ Proc Natl Acad SciUSA 105(4):1118–1123</p>
         Proc Natl Acad SciUSA 105(4):1118–1123
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
     Returns:
@@ -5243,7 +5239,8 @@ If there are less than 2 communities None is returned.</p></section>
 Near linear time algorithm to detect community structures in large-scale networks. Physical review E, 76(3), 036106.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (networkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to estimate on</dd>
 <dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
 <dd>if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></dd>
 </dl>
@@ -5268,7 +5265,7 @@ Near linear time algorithm to detect community structures in large-scale network
         Near linear time algorithm to detect community structures in large-scale networks. Physical review E, 76(3), 036106.
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
     Returns:
@@ -5301,7 +5298,8 @@ Near linear time algorithm to detect community structures in large-scale network
 From Louvain to Leiden: guaranteeing well-connected communities. arXiv preprint arXiv:1810.08473 (2018).</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (networkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to estimate on</dd>
 <dt><strong><code>weights</code></strong> :&ensp;<code>str</code></dt>
 <dd>edge attribute to be used.</dd>
 <dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
@@ -5328,7 +5326,7 @@ From Louvain to Leiden: guaranteeing well-connected communities. arXiv preprint 
         From Louvain to Leiden: guaranteeing well-connected communities. arXiv preprint arXiv:1810.08473 (2018).
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         weights (str): edge attribute to be used.
         return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
@@ -5361,7 +5359,8 @@ From Louvain to Leiden: guaranteeing well-connected communities. arXiv preprint 
 Journal of statistical mechanics: theory and experiment 2008.10 (2008): P10008.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (networkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to estimate on</dd>
 <dt><strong><code>weights</code></strong> :&ensp;<code>str</code></dt>
 <dd>edge attribute to be used.</dd>
 <dt><strong><code>resolution</code></strong> :&ensp;<code>float</code></dt>
@@ -5390,7 +5389,7 @@ Journal of statistical mechanics: theory and experiment 2008.10 (2008): P10008.<
         Journal of statistical mechanics: theory and experiment 2008.10 (2008): P10008.
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         weights (str): edge attribute to be used.
         resolution (float): controls community size.
         return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
@@ -5419,7 +5418,7 @@ Journal of statistical mechanics: theory and experiment 2008.10 (2008): P10008.<
 <dd>
 <section class="desc"><p>Markov clustering on adjacency matrix. Based on the markovclustering package.</p>
 <p>Parameters:
-G (networkX graph object)
+G (networkX graph object): to estimate on
 inflation (float): clustering parameter.</p>
 <h2 id="returns">Returns</h2>
 <dl>
@@ -5435,7 +5434,7 @@ inflation (float): clustering parameter.</p>
     Markov clustering on adjacency matrix. Based on the markovclustering package.
 
     Parameters:
-        G (networkX graph object)
+        G (networkX graph object): to estimate on
         inflation (float): clustering parameter.
         
    Returns:
@@ -6040,10 +6039,16 @@ If there are less than 2 communities None is returned.</p></section>
 </code></dt>
 <dd>
 <section class="desc"><p>Refactors the community dicts into a list of sublists. This format is needed when using the fastconsensus function.</p>
-<p>Input
-community dict in the format as provided by the community detection algorithms, except fuzzy and agdl</p>
-<p>Ouput
-list of sublists [[community] [community]], where each community list contains node Ids</p></section>
+<h2 id="parameters">Parameters</h2>
+<dl>
+<dt><strong><code>community</code></strong> :&ensp;<code>dict</code></dt>
+<dd>in the format as provided by the community detection algorithms, except fuzzy and agdl</dd>
+</dl>
+<h2 id="returns">Returns</h2>
+<dl>
+<dt><code>transformed</code> <code>communities</code> (<code>list</code>): <code>list</code> of <code>sublists</code> [[<code>community</code>] [<code>community</code>]], <code>where</code> <code>each</code> <code>community</code> <code>list</code> <code>contains</code> <code>node</code> <code>Ids</code></dt>
+<dd>&nbsp;</dd>
+</dl></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -6053,11 +6058,11 @@ list of sublists [[community] [community]], where each community list contains n
     Refactors the community dicts into a list of sublists. This format is needed when using the fastconsensus function.
     
 
-    Input
-        community dict in the format as provided by the community detection algorithms, except fuzzy and agdl
+    Parameters:
+        community (dict): in the format as provided by the community detection algorithms, except fuzzy and agdl
 
-    Ouput
-        list of sublists [[community] [community]], where each community list contains node Ids 
+    Returns:
+        transformed communities (list): list of sublists [[community] [community]], where each community list contains node Ids 
     &#34;&#34;&#34;
     result_temp = {}
 
@@ -6162,7 +6167,8 @@ If there are less than 2 communities None is returned.</p></section>
 J. Graph Algorithms Appl. 10.2 (2006): 191-218.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (networkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to estimate on</dd>
 <dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
 <dd>if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></dd>
 </dl>
@@ -6187,7 +6193,7 @@ J. Graph Algorithms Appl. 10.2 (2006): 191-218.</p>
         J. Graph Algorithms Appl. 10.2 (2006): 191-218.
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html
 
     Returns:
@@ -6221,7 +6227,8 @@ Neigbors with less than t occurenses will be disconnected but only if this link 
 The algorithm will stop when max_iter is reached or no edges can be removed anymore.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (networkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to estimate on</dd>
 <dt><strong><code>weights</code></strong> :&ensp;<code>str</code></dt>
 <dd>edge attribute to be used.</dd>
 <dt><strong><code>t</code></strong> :&ensp;<code>float</code></dt>
@@ -6260,7 +6267,7 @@ If None will be ignored.</dd>
     
     Parameters:
 
-        G (networkX graph object):
+        G (networkX graph object): to estimate on
         weights (str): edge attribute to be used.
         t (float): in [0,1]. Treshold on which edges are &#34;selected as weak&#34; and to be removed if they occure &lt;= in of samples neighbors.
         max_iter (int): maximum number of iterations. 
@@ -6426,7 +6433,6 @@ If None will be ignored.</dd>
 <li><code><a title="graphAlgorithms.communities.fraction_of_median_degree" href="#graphAlgorithms.communities.fraction_of_median_degree">fraction_of_median_degree</a></code></li>
 <li><code><a title="graphAlgorithms.communities.fraction_of_weak_members" href="#graphAlgorithms.communities.fraction_of_weak_members">fraction_of_weak_members</a></code></li>
 <li><code><a title="graphAlgorithms.communities.gdmp2" href="#graphAlgorithms.communities.gdmp2">gdmp2</a></code></li>
-<li><code><a title="graphAlgorithms.communities.get_key" href="#graphAlgorithms.communities.get_key">get_key</a></code></li>
 <li><code><a title="graphAlgorithms.communities.get_number_of_communities" href="#graphAlgorithms.communities.get_number_of_communities">get_number_of_communities</a></code></li>
 <li><code><a title="graphAlgorithms.communities.get_number_of_nodes_community" href="#graphAlgorithms.communities.get_number_of_nodes_community">get_number_of_nodes_community</a></code></li>
 <li><code><a title="graphAlgorithms.communities.girvan_newman" href="#graphAlgorithms.communities.girvan_newman">girvan_newman</a></code></li>

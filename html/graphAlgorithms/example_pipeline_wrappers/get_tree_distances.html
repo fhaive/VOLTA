@@ -169,10 +169,10 @@ def helper_tree_sim(networks, nodes, tree_type=&#34;level&#34;, edge_attribute=&
                                                                                 if False the initial cycles are estimated based on steps only with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.cycle_basis.html#networkx.algorithms.cycles.cycle_basis
         return_all (boolean): if True intermediate similarity results are returned as well else only the similarity matrices between the networks are returned.
     Returns:
-        average node level overlap percentage (numpy matrix): 
-        average node level SMC (numpy matrix):
-        average node level Kendall Rank Correlation (numpy matrix):
-        average node level jaccard index (numpy matrix):
+        average node level overlap percentage (numpy matrix): between network pairs
+        average node level SMC (numpy matrix): between network pairs
+        average node level Kendall Rank Correlation (numpy matrix): between network pairs
+        average node level jaccard index (numpy matrix): between network pairs
         intermediate percentage scores (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
         intermediate SMC scores (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
         intermediate Kendall Rank correlation (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
@@ -410,13 +410,13 @@ if False the initial cycles are estimated based on steps only with <a href="http
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>average</code> <code>node</code> <code>level</code> <code>overlap</code> <code>percentage</code> (<code>numpy</code> <code>matrix</code>):</dt>
+<dt><code>average</code> <code>node</code> <code>level</code> <code>overlap</code> <code>percentage</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
 <dd>&nbsp;</dd>
-<dt><code>average</code> <code>node</code> <code>level</code> <code>SMC</code> (<code>numpy</code> <code>matrix</code>):</dt>
+<dt><code>average</code> <code>node</code> <code>level</code> <code>SMC</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
 <dd>&nbsp;</dd>
-<dt><code>average</code> <code>node</code> <code>level</code> <code>Kendall</code> <code>Rank</code> <code>Correlation</code> (<code>numpy</code> <code>matrix</code>):</dt>
+<dt><code>average</code> <code>node</code> <code>level</code> <code>Kendall</code> <code>Rank</code> <code>Correlation</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
 <dd>&nbsp;</dd>
-<dt><code>average</code> <code>node</code> <code>level</code> <code>jaccard</code> <code>index</code> (<code>numpy</code> <code>matrix</code>):</dt>
+<dt><code>average</code> <code>node</code> <code>level</code> <code>jaccard</code> <code>index</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
 <dd>&nbsp;</dd>
 </dl>
 <p>intermediate percentage scores (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
@@ -448,10 +448,10 @@ intermediate jaccard indices (dict): if return_all is True. Key is tuple of netw
                                                                                 if False the initial cycles are estimated based on steps only with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.cycle_basis.html#networkx.algorithms.cycles.cycle_basis
         return_all (boolean): if True intermediate similarity results are returned as well else only the similarity matrices between the networks are returned.
     Returns:
-        average node level overlap percentage (numpy matrix): 
-        average node level SMC (numpy matrix):
-        average node level Kendall Rank Correlation (numpy matrix):
-        average node level jaccard index (numpy matrix):
+        average node level overlap percentage (numpy matrix): between network pairs
+        average node level SMC (numpy matrix): between network pairs
+        average node level Kendall Rank Correlation (numpy matrix): between network pairs
+        average node level jaccard index (numpy matrix): between network pairs
         intermediate percentage scores (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
         intermediate SMC scores (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.
         intermediate Kendall Rank correlation (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes. If node does not exist in the network it is set to None.

@@ -69,9 +69,9 @@ def generate_motifs(x=208):
     Uses networkx graph atlas, which returns all possible graphs with up to 7 nodes, based on https://networkx.github.io/documentation/stable/auto_examples/drawing/plot_atlas.html
 
     Parameters:
-        x (int): which motifs of thr graph atlas are returned
+        x (int): which motifs of the graph atlas are returned
     Returns:
-        graph atlas:
+        graph atlas: contains all possible graphs of specified size as shown in the graph atlas
     &#34;&#34;&#34;
 
     #uses networkx graph atlas, which returns all possible graphs with up to 6 nodes
@@ -142,14 +142,14 @@ def count_graphlets(G, H, estimate_on=300, edge_attribute=None):
     Counts graphlets occuring in G. 
             
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
         H (NetworkX graph object): the graphlet to be counted (generated with generate_motifs())
         estimate_on (int): graphlets are estimated based on a random selection of estimate_on nodes which cannot be larger than the number of nodes in G
         edge_attribute (str or None): if not None, then based on the provided edge attribute the size of the graphlets will be returned as list
             which can be used to estimate its size distributions
 
     Returns:
-        count of graphlets (int):
+        count of graphlets (int): number of graphlets found in the approximation
         graphlets (list): list of the found graphlets in G
         size (list): list of size of the estimated graphlets. If edge_attribute = None it only contains 0s.
 
@@ -204,15 +204,15 @@ def iterate_graphlets(G, estimate_on=300, edge_attribute=None, motif_min_size=3,
     Function to count over all defined motifs in graph G.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
         estimate_on (int): graphlets are estimated based on a random selection of estimate_on nodes which cannot be larger than the number of nodes in G
         edge_attribute (str or None): if not None, then based on the provided edge attribute the size of the graphlets will be returned as list, which can be used to estimate its size distributions
         motif_min_siz (int): nodes size of smallest graphlet to be counted. Minimum permitted value is 2.
         motif_max_size (int): node size of largest graphlets. Maximum permitted value is 6.
 
     Returns:
-        counted graphlets (dict):
-        all graphlets found (dict):
+        counted graphlets (dict): how often graphlets have been counted in approximation
+        all graphlets found (dict): graphs of all graphlets
         size of all graphlets (dict): it is all 0 if edge_attribute = None
         motifs (list): list index corresponds to dict keys
 
@@ -307,7 +307,7 @@ def find_graphlet(G, graphlets):
     Function that checks if graphlets (node/edge specific) are in graph G.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
         graphlets (dict): key is graphlet id and value is edge list
 
     Returns:
@@ -355,7 +355,8 @@ def find_graphlet(G, graphlets):
 <section class="desc"><p>Counts graphlets occuring in G. </p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (NetworkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on.</dd>
 <dt><strong><code>H</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
 <dd>the graphlet to be counted (generated with generate_motifs())</dd>
 <dt><strong><code>estimate_on</code></strong> :&ensp;<code>int</code></dt>
@@ -366,7 +367,7 @@ which can be used to estimate its size distributions</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>count</code> of <code>graphlets</code> (<code>int</code>):</dt>
+<dt><code>count</code> of <code>graphlets</code> (<code>int</code>): <code>number</code> of <code>graphlets</code> <code>found</code> <code>in</code> <code>the</code> <code>approximation</code></dt>
 <dd>&nbsp;</dd>
 <dt><strong><code>graphlets</code></strong> :&ensp;<code>list</code></dt>
 <dd>list of the found graphlets in G</dd>
@@ -383,14 +384,14 @@ which can be used to estimate its size distributions</dd>
     Counts graphlets occuring in G. 
             
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
         H (NetworkX graph object): the graphlet to be counted (generated with generate_motifs())
         estimate_on (int): graphlets are estimated based on a random selection of estimate_on nodes which cannot be larger than the number of nodes in G
         edge_attribute (str or None): if not None, then based on the provided edge attribute the size of the graphlets will be returned as list
             which can be used to estimate its size distributions
 
     Returns:
-        count of graphlets (int):
+        count of graphlets (int): number of graphlets found in the approximation
         graphlets (list): list of the found graphlets in G
         size (list): list of size of the estimated graphlets. If edge_attribute = None it only contains 0s.
 
@@ -446,7 +447,8 @@ which can be used to estimate its size distributions</dd>
 <section class="desc"><p>Function that checks if graphlets (node/edge specific) are in graph G.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (NetworkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on.</dd>
 <dt><strong><code>graphlets</code></strong> :&ensp;<code>dict</code></dt>
 <dd>key is graphlet id and value is edge list</dd>
 </dl>
@@ -464,7 +466,7 @@ which can be used to estimate its size distributions</dd>
     Function that checks if graphlets (node/edge specific) are in graph G.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
         graphlets (dict): key is graphlet id and value is edge list
 
     Returns:
@@ -507,11 +509,11 @@ Uses networkx graph atlas, which returns all possible graphs with up to 7 nodes,
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>x</code></strong> :&ensp;<code>int</code></dt>
-<dd>which motifs of thr graph atlas are returned</dd>
+<dd>which motifs of the graph atlas are returned</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>graph</code> <code>atlas</code>:</dt>
+<dt><code>graph</code> <code>atlas</code>: <code>contains</code> <code>all</code> <code>possible</code> <code>graphs</code> of <code>specified</code> <code>size</code> <code>as</code> <code>shown</code> <code>in</code> <code>the</code> <code>graph</code> <code>atlas</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -524,9 +526,9 @@ Uses networkx graph atlas, which returns all possible graphs with up to 7 nodes,
     Uses networkx graph atlas, which returns all possible graphs with up to 7 nodes, based on https://networkx.github.io/documentation/stable/auto_examples/drawing/plot_atlas.html
 
     Parameters:
-        x (int): which motifs of thr graph atlas are returned
+        x (int): which motifs of the graph atlas are returned
     Returns:
-        graph atlas:
+        graph atlas: contains all possible graphs of specified size as shown in the graph atlas
     &#34;&#34;&#34;
 
     #uses networkx graph atlas, which returns all possible graphs with up to 6 nodes
@@ -631,7 +633,8 @@ Uses networkx graph atlas, which returns all possible graphs with up to 7 nodes,
 <section class="desc"><p>Function to count over all defined motifs in graph G.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (NetworkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on.</dd>
 <dt><strong><code>estimate_on</code></strong> :&ensp;<code>int</code></dt>
 <dd>graphlets are estimated based on a random selection of estimate_on nodes which cannot be larger than the number of nodes in G</dd>
 <dt><strong><code>edge_attribute</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
@@ -643,9 +646,9 @@ Uses networkx graph atlas, which returns all possible graphs with up to 7 nodes,
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>counted</code> <code>graphlets</code> (<code>dict</code>):</dt>
+<dt><code>counted</code> <code>graphlets</code> (<code>dict</code>): <code>how</code> <code>often</code> <code>graphlets</code> <code>have</code> <code>been</code> <code>counted</code> <code>in</code> <code>approximation</code></dt>
 <dd>&nbsp;</dd>
-<dt><code>all</code> <code>graphlets</code> <code>found</code> (<code>dict</code>):</dt>
+<dt><code>all</code> <code>graphlets</code> <code>found</code> (<code>dict</code>): <code>graphs</code> of <code>all</code> <code>graphlets</code></dt>
 <dd>&nbsp;</dd>
 <dt><code>size</code> of <code>all</code> <code>graphlets</code> (<code>dict</code>): <code>it</code> <code>is</code> <code>all</code> <code>0</code> <code>if</code> <code>edge_attribute</code> = <code>None</code></dt>
 <dd>&nbsp;</dd>
@@ -662,15 +665,15 @@ Uses networkx graph atlas, which returns all possible graphs with up to 7 nodes,
     Function to count over all defined motifs in graph G.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
         estimate_on (int): graphlets are estimated based on a random selection of estimate_on nodes which cannot be larger than the number of nodes in G
         edge_attribute (str or None): if not None, then based on the provided edge attribute the size of the graphlets will be returned as list, which can be used to estimate its size distributions
         motif_min_siz (int): nodes size of smallest graphlet to be counted. Minimum permitted value is 2.
         motif_max_size (int): node size of largest graphlets. Maximum permitted value is 6.
 
     Returns:
-        counted graphlets (dict):
-        all graphlets found (dict):
+        counted graphlets (dict): how often graphlets have been counted in approximation
+        all graphlets found (dict): graphs of all graphlets
         size of all graphlets (dict): it is all 0 if edge_attribute = None
         motifs (list): list index corresponds to dict keys
 

@@ -57,7 +57,7 @@ def construct_tree(H,  root=None, nr_trees=1, type=&#34;level&#34;, edge_attribu
         Function to construct a binary tree from a graph object. This can reduce complexity since number of edges is reduced.
 
         Parameters:
-                H (networkX graph object):
+                H (networkX graph object): graph to estimate on.
                 root (None, int or str): provide node ID which should be selected as root of the tree. If None then a random node is selected.
                 nr_trees (int): specifies how many trees are constructed. If root is None then multiple random trees can be created.
                 type (str): if is &#34;level&#34; then a hierarchical tree is created. Paths from the root indicate how far each nodes are from the root node. Edge weights are not considered.
@@ -435,8 +435,8 @@ def tree_node_level_similarity(t1, t2, type=&#34;percentage&#34;):
         Computes the similarity of nodes (based on their level in two rooted trees t1 and t2).
 
         Parameters:
-                t1 (treelib tree object):
-                t2 (treelib tree object)
+                t1 (treelib tree object): first tree to compare
+                t2 (treelib tree object): second tree to compare with
                 type (str): defines comparison method. If type = &#34;percentage&#34; then for each level the percentage of shared nodes based on the max possible (length of smaller) shared nodes is estimated.
                                         If type = &#34;correlation&#34; then Kendall rank correlation is estimated. Node rankings are estimated based on their level in the trees. If there are unequal number of nodes a subset of the larger one is selected.
                                         If type = &#34;smc&#34; then the smc distance for each level is estimated.
@@ -628,10 +628,10 @@ def tree_depth(t):
         Returns depth of a tree
 
         Parameters:
-                t (treelib tree object):
+                t (treelib tree object): tree to estimate on.
 
         Returns:
-                tree depth (int):
+                tree depth (int): depth of provided tree
         &#34;&#34;&#34;
         return t.depth()
 
@@ -641,10 +641,10 @@ def number_of_leaves(t):
         Returns the number of leaves in t.
 
         Parameters:
-                t (treelib tree object):
+                t (treelib tree object): tree to estimate on.
 
         Returns:
-                leaves (int):
+                leaves (int): number of leaves of provided tree
         &#34;&#34;&#34;
 
         return (len(t.leaves()))
@@ -654,7 +654,7 @@ def leave_path_metrics(t):
         Estimates the root - leave pathlength distribution.
 
         Parameters:
-                t (treelib tree object):
+                t (treelib tree object): tree to estimate on.
 
         Returns:
                 distribution (dict): keys are mean path length, median path length, std path length, skw path length, kurtosis path length, altitude, altitude magnitude, total exterior path length, total exterior magnitude
@@ -755,7 +755,7 @@ def tree_asymmetry(t, nr_leaves):
         
 
         Parameters:
-                t (treelib tree object):
+                t (treelib tree object): tree to estimate on.
                 nr_leaves (int): number of leave nodes contained in t.
 
         Returns:
@@ -866,7 +866,7 @@ def strahler_branching_ratio(t):
         Calculates the strahler branching ratio of a tree t.
 
         Parameters:
-                t (treelib tree object):
+                t (treelib tree object): tree to estimate on.
 
         Returns:
                 barnching distribution (dict): keys are mean branching ratio, median branching ratio, std branching ratio, skw branching ratio, kurtosis branching ratio
@@ -945,7 +945,7 @@ def exterior_interior_edges(t):
         Estimates the number of exterior (EE) &amp; interior (IE) edges and their magnitude
 
         Parameters:
-                t (treelib tree object):
+                t (treelib tree object): tree to estimate on.
 
         Returns:
                 exterior / interior edges (dict): keys are EE, EI, EE magnitude, EI magnitude
@@ -974,7 +974,8 @@ def exterior_interior_edges(t):
 <section class="desc"><p>Function to construct a binary tree from a graph object. This can reduce complexity since number of edges is reduced.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>H (networkX graph object):</dt>
+<dt><strong><code>H</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on.</dd>
 <dt><strong><code>root</code></strong> :&ensp;<code>None</code>, <code>int</code> or <code>str</code></dt>
 <dd>provide node ID which should be selected as root of the tree. If None then a random node is selected.</dd>
 <dt><strong><code>nr_trees</code></strong> :&ensp;<code>int</code></dt>
@@ -1011,7 +1012,7 @@ if False the initial cycles are estimated based on steps only with <a href="http
         Function to construct a binary tree from a graph object. This can reduce complexity since number of edges is reduced.
 
         Parameters:
-                H (networkX graph object):
+                H (networkX graph object): graph to estimate on.
                 root (None, int or str): provide node ID which should be selected as root of the tree. If None then a random node is selected.
                 nr_trees (int): specifies how many trees are constructed. If root is None then multiple random trees can be created.
                 type (str): if is &#34;level&#34; then a hierarchical tree is created. Paths from the root indicate how far each nodes are from the root node. Edge weights are not considered.
@@ -1108,7 +1109,10 @@ if False the initial cycles are estimated based on steps only with <a href="http
 <dd>
 <section class="desc"><p>Estimates the number of exterior (EE) &amp; interior (IE) edges and their magnitude</p>
 <h2 id="parameters">Parameters</h2>
-<p>t (treelib tree object):</p>
+<dl>
+<dt><strong><code>t</code></strong> :&ensp;<code>treelib</code> <code>tree</code> <code>object</code></dt>
+<dd>tree to estimate on.</dd>
+</dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>exterior</code> / <code>interior</code> <code>edges</code> (<code>dict</code>): <code>keys</code> <code>are</code> <code>EE</code>, <code>EI</code>, <code>EE</code> <code>magnitude</code>, <code>EI</code> <code>magnitude</code></dt>
@@ -1123,7 +1127,7 @@ if False the initial cycles are estimated based on steps only with <a href="http
         Estimates the number of exterior (EE) &amp; interior (IE) edges and their magnitude
 
         Parameters:
-                t (treelib tree object):
+                t (treelib tree object): tree to estimate on.
 
         Returns:
                 exterior / interior edges (dict): keys are EE, EI, EE magnitude, EI magnitude
@@ -1144,7 +1148,10 @@ if False the initial cycles are estimated based on steps only with <a href="http
 <dd>
 <section class="desc"><p>Estimates the root - leave pathlength distribution.</p>
 <h2 id="parameters">Parameters</h2>
-<p>t (treelib tree object):</p>
+<dl>
+<dt><strong><code>t</code></strong> :&ensp;<code>treelib</code> <code>tree</code> <code>object</code></dt>
+<dd>tree to estimate on.</dd>
+</dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><strong><code>distribution</code></strong> :&ensp;<code>dict</code></dt>
@@ -1159,7 +1166,7 @@ if False the initial cycles are estimated based on steps only with <a href="http
         Estimates the root - leave pathlength distribution.
 
         Parameters:
-                t (treelib tree object):
+                t (treelib tree object): tree to estimate on.
 
         Returns:
                 distribution (dict): keys are mean path length, median path length, std path length, skw path length, kurtosis path length, altitude, altitude magnitude, total exterior path length, total exterior magnitude
@@ -1202,11 +1209,14 @@ if False the initial cycles are estimated based on steps only with <a href="http
 <dd>
 <section class="desc"><p>Returns the number of leaves in t.</p>
 <h2 id="parameters">Parameters</h2>
-<p>t (treelib tree object):</p>
+<dl>
+<dt><strong><code>t</code></strong> :&ensp;<code>treelib</code> <code>tree</code> <code>object</code></dt>
+<dd>tree to estimate on.</dd>
+</dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>leaves</code> (<code>int</code>):</dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>leaves</code></strong> :&ensp;<code>int</code></dt>
+<dd>number of leaves of provided tree</dd>
 </dl></section>
 <details class="source">
 <summary>
@@ -1218,10 +1228,10 @@ if False the initial cycles are estimated based on steps only with <a href="http
         Returns the number of leaves in t.
 
         Parameters:
-                t (treelib tree object):
+                t (treelib tree object): tree to estimate on.
 
         Returns:
-                leaves (int):
+                leaves (int): number of leaves of provided tree
         &#34;&#34;&#34;
 
         return (len(t.leaves()))</code></pre>
@@ -1233,7 +1243,10 @@ if False the initial cycles are estimated based on steps only with <a href="http
 <dd>
 <section class="desc"><p>Calculates the strahler branching ratio of a tree t.</p>
 <h2 id="parameters">Parameters</h2>
-<p>t (treelib tree object):</p>
+<dl>
+<dt><strong><code>t</code></strong> :&ensp;<code>treelib</code> <code>tree</code> <code>object</code></dt>
+<dd>tree to estimate on.</dd>
+</dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>barnching</code> <code>distribution</code> (<code>dict</code>): <code>keys</code> <code>are</code> <code>mean</code> <code>branching</code> <code>ratio</code>, <code>median</code> <code>branching</code> <code>ratio</code>, <code>std</code> <code>branching</code> <code>ratio</code>, <code>skw</code> <code>branching</code> <code>ratio</code>, <code>kurtosis</code> <code>branching</code> <code>ratio</code></dt>
@@ -1248,7 +1261,7 @@ if False the initial cycles are estimated based on steps only with <a href="http
         Calculates the strahler branching ratio of a tree t.
 
         Parameters:
-                t (treelib tree object):
+                t (treelib tree object): tree to estimate on.
 
         Returns:
                 barnching distribution (dict): keys are mean branching ratio, median branching ratio, std branching ratio, skw branching ratio, kurtosis branching ratio
@@ -1285,7 +1298,8 @@ if False the initial cycles are estimated based on steps only with <a href="http
 <section class="desc"><p>Estimates tree asymmetry of a tree based on asymmetry of all possible subtrees</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>t (treelib tree object):</dt>
+<dt><strong><code>t</code></strong> :&ensp;<code>treelib</code> <code>tree</code> <code>object</code></dt>
+<dd>tree to estimate on.</dd>
 <dt><strong><code>nr_leaves</code></strong> :&ensp;<code>int</code></dt>
 <dd>number of leave nodes contained in t.</dd>
 </dl>
@@ -1304,7 +1318,7 @@ if False the initial cycles are estimated based on steps only with <a href="http
         
 
         Parameters:
-                t (treelib tree object):
+                t (treelib tree object): tree to estimate on.
                 nr_leaves (int): number of leave nodes contained in t.
 
         Returns:
@@ -1343,10 +1357,13 @@ if False the initial cycles are estimated based on steps only with <a href="http
 <dd>
 <section class="desc"><p>Returns depth of a tree</p>
 <h2 id="parameters">Parameters</h2>
-<p>t (treelib tree object):</p>
+<dl>
+<dt><strong><code>t</code></strong> :&ensp;<code>treelib</code> <code>tree</code> <code>object</code></dt>
+<dd>tree to estimate on.</dd>
+</dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>tree</code> <code>depth</code> (<code>int</code>):</dt>
+<dt><code>tree</code> <code>depth</code> (<code>int</code>): <code>depth</code> of <code>provided</code> <code>tree</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -1358,10 +1375,10 @@ if False the initial cycles are estimated based on steps only with <a href="http
         Returns depth of a tree
 
         Parameters:
-                t (treelib tree object):
+                t (treelib tree object): tree to estimate on.
 
         Returns:
-                tree depth (int):
+                tree depth (int): depth of provided tree
         &#34;&#34;&#34;
         return t.depth()</code></pre>
 </details>
@@ -1373,8 +1390,10 @@ if False the initial cycles are estimated based on steps only with <a href="http
 <section class="desc"><p>Computes the similarity of nodes (based on their level in two rooted trees t1 and t2).</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>t1 (treelib tree object):</dt>
-<dt>t2 (treelib tree object)</dt>
+<dt><strong><code>t1</code></strong> :&ensp;<code>treelib</code> <code>tree</code> <code>object</code></dt>
+<dd>first tree to compare</dd>
+<dt><strong><code>t2</code></strong> :&ensp;<code>treelib</code> <code>tree</code> <code>object</code></dt>
+<dd>second tree to compare with</dd>
 <dt><strong><code>type</code></strong> :&ensp;<code>str</code></dt>
 <dd>defines comparison method. If type = "percentage" then for each level the percentage of shared nodes based on the max possible (length of smaller) shared nodes is estimated.
 If type = "correlation" then Kendall rank correlation is estimated. Node rankings are estimated based on their level in the trees. If there are unequal number of nodes a subset of the larger one is selected.
@@ -1398,8 +1417,8 @@ If type ) "jaccard" then the jaccard similarity for each level is estimated.</dd
         Computes the similarity of nodes (based on their level in two rooted trees t1 and t2).
 
         Parameters:
-                t1 (treelib tree object):
-                t2 (treelib tree object)
+                t1 (treelib tree object): first tree to compare
+                t2 (treelib tree object): second tree to compare with
                 type (str): defines comparison method. If type = &#34;percentage&#34; then for each level the percentage of shared nodes based on the max possible (length of smaller) shared nodes is estimated.
                                         If type = &#34;correlation&#34; then Kendall rank correlation is estimated. Node rankings are estimated based on their level in the trees. If there are unequal number of nodes a subset of the larger one is selected.
                                         If type = &#34;smc&#34; then the smc distance for each level is estimated.

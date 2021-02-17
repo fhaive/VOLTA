@@ -61,7 +61,7 @@ def percentage_shared(shared, list1, list2, penalize=False, weight=&#34;length&#
         weight (str or float): method used when penalize is True. If penalize = &#34;length&#34; then weight is 1. If penalize is float then weight can be custom set.
        
     Returns:
-        shared percentage (float):
+        shared percentage (float): percentage of shared edges/ nodes between the input graphs
     
     &#34;&#34;&#34;
 
@@ -142,7 +142,7 @@ def calculate_jaccard_index(shared, list1, list2, similarity=True):
         list2 (list): list of edges or nodes in Network 2. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
         similarity (boolean): if True returns jaccard similarity else returns jaccard distance.
     Returns:
-        jaccard similarity/ distance (float):
+        jaccard similarity/ distance (float): jaccard index or distance between the input lists
     
     &#34;&#34;&#34;
 
@@ -421,7 +421,7 @@ def shared_edges(list1, list2):
         list1 (list): list of edges or nodes in Network 1. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
         list2 (list): list of edges or nodes in Network 2. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
     Returns:
-        shared items (list):
+        shared items (list): list of items shared between input graphs
 
 
     &#34;&#34;&#34;
@@ -444,7 +444,7 @@ def get_sorensen_coefficient(jaccard):
         jaccard (numpy matrix): numpy matrix filled with jaccard indices as returned by shared_edges_multiple()
 
     Returns:
-        sorensens (numpy matrix):
+        sorensens (numpy matrix): sorensen coefficient estimated from jaccard index
     &#34;&#34;&#34;
     matrix = jaccard.copy()
 
@@ -468,7 +468,7 @@ def map_edge_to_id(edges, mapping={}, next_value=0):
         next_value (int): if mapping is provided, then the last id set needs to be provided.
 
     Returns:
-        mapping (dict);
+        mapping (dict): key is edge and value is assigned ID
         next value (int): can be used if multiple networks are mapped to the same IDs
     &#34;&#34;&#34;
 
@@ -548,8 +548,8 @@ def compute_kendall_tau(list1, list2, usage=&#34;all&#34;, x=10):
         x (int): needs to be set when usage = top or bottom. Indicates how many items are considered in the rank correaltion.
 
     Returns:
-        kendall tau (float):
-        p value (float):
+        kendall tau (float): kendell tau coefficient between the input lists
+        p value (float): p-value of the correlation
 
     
     &#34;&#34;&#34;
@@ -602,7 +602,7 @@ def sort_edge_list(edges, mapping):
         mapping (dict): edge to ID mapping as returned by map_edge_to_id()
 
     Returns:
-        ranked edges (list):
+        ranked edges (list): list of sorted edge IDs
     &#34;&#34;&#34;
 
     edge_weight_mapping = {}
@@ -636,7 +636,7 @@ def compute_hamming(list1, list2):
         list1 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
         list2 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
     Returns:
-        hamming distance (float):
+        hamming distance (float): hamming distance between the input lists
     &#34;&#34;&#34;
     return scipy.spatial.distance.hamming(list1, list2)
 
@@ -649,7 +649,7 @@ def compute_edit_distance(list1, list2):
         list1 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
         list2 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
     Returns:
-        edit distance (float):
+        edit distance (float): eidt distance between the input lists
     &#34;&#34;&#34;
 
     if len(list1) &gt; len(list2):
@@ -676,7 +676,7 @@ def compute_simple_matching_coefficient(list1, list2):
         list1 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
         list2 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
     Returns:
-        SMC (float):
+        SMC (float): SMC coefficient between input lists
 
     
     &#34;&#34;&#34;
@@ -714,7 +714,7 @@ def build_similarity_matrix_for_binary_and_ranked(lists, compute=&#34;kendall&#3
         kendall_x (int): needs to be set when usage = top or bottom. Indicates how many items are considered in the rank correaltion. If x is larger than one of the lists it will be set automtically to a quarter less than the shortest list.
 
     Returns:
-        similairty matrix (numpy matrix):
+        similairty matrix (numpy matrix): matrix containing the kendall correlation values for each input pair
         p value matrix (numpy matrix): this matrix only contains values if  compute = hamming or compute = kendall
         used x (int): if kendall then a third value is returned indicating what portion of the lists have been used to estimate the rank correlation value
         
@@ -829,9 +829,9 @@ def to_distance(m):
     Converts a similarity matrix to a distance matrix (1- x).
 
     Parameters:
-        m (numpy matrix):
+        m (numpy matrix): similarity matrix
     Returns:
-        distance matrix (numpy matrix)
+        distance matrix (numpy matrix): converted distance matrix
     &#34;&#34;&#34;
     matrix = m.copy()
     computed = []
@@ -981,7 +981,7 @@ def build_share_matrix(d):
         d (dict): output of compute_shared_layers()
 
     Returns:
-        shared items (numpy matrix):
+        shared items (numpy matrix): matrix
     &#34;&#34;&#34;
 
     max_key = max(d.keys())
@@ -1034,7 +1034,7 @@ def get_shared_edges(l1, l2, name=False, mapping=None):
         mapping (dict or None): edge /node to ID mapping as returned by map_edge_to_id() / map_node_to_id().
 
     Returns:
-        shared items (list):
+        shared items (list): list of shared items between input lists
     &#34;&#34;&#34;
 
     if not name:
@@ -1075,7 +1075,7 @@ def return_layer_from_id(id, layers):
         layers (dict): as returned by compute_shared_layers()
 
     Returns:
-        layer name/ network name (list):
+        layer name/ network name (list): as queried for
     &#34;&#34;&#34;
 
     return layers[id]
@@ -1091,7 +1091,7 @@ def return_top_layers(x, layers, direction=&#34;large&#34;):
         direction (str): if direction = &#34;large&#34;, the x items occuring in the most networks are returned. if direction = &#34;small&#34; the x items occuring in the least networks are returned.
 
     Returns:
-        items (list):
+        items (list): list of layer IDs as queried for
     &#34;&#34;&#34;
 
     if direction == &#34;large&#34;:
@@ -1119,7 +1119,7 @@ def map_node_to_id(edges, mapping={}, next_value=0):
         next_value (int): if mapping is provided, then the last id set needs to be provided.
 
     Returns:
-        mapping (dict);
+        mapping (dict): key is node ID and value is mapped ID
         next value (int): can be used if multiple networks are mapped to the same IDs
     &#34;&#34;&#34;
 
@@ -1156,10 +1156,10 @@ def convert_to_dict(l):
     Convert list l of format [(x,y)] to dict of form {x:y}.
 
     Parameters:
-        l (list):
+        l (list): input list of tuples
     
     Returns:
-        convertion (dict):
+        convertion (dict): where key is first tuple entry and value is second tuple entry
     &#34;&#34;&#34;
 
     new_dict = {}
@@ -1204,7 +1204,7 @@ def sort_node_list(Graph, mapping, degree=False, degree_centrality=False, closen
     Sorts node lists based on weight attribute and returns sorted list of nodes ids.
 
     Parameters:
-        Graph (networkX graph object):
+        Graph (networkX graph object): graph to estimate on.
         mapping (dict): is id mapping as returned by map_node_to_id()
         as_str (boolean): if True node IDs are assumed to be string else int.
         degree (boolean): if True nodes are sorted after degree.
@@ -1386,7 +1386,7 @@ def sort_node_list(Graph, mapping, degree=False, degree_centrality=False, closen
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>shared</code> <code>items</code> (<code>numpy</code> <code>matrix</code>):</dt>
+<dt><code>shared</code> <code>items</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -1402,7 +1402,7 @@ def sort_node_list(Graph, mapping, degree=False, degree_centrality=False, closen
         d (dict): output of compute_shared_layers()
 
     Returns:
-        shared items (numpy matrix):
+        shared items (numpy matrix): matrix
     &#34;&#34;&#34;
 
     max_key = max(d.keys())
@@ -1470,7 +1470,7 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>similairty</code> <code>matrix</code> (<code>numpy</code> <code>matrix</code>):</dt>
+<dt><code>similairty</code> <code>matrix</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code> <code>containing</code> <code>the</code> <code>kendall</code> <code>correlation</code> <code>values</code> <code>for</code> <code>each</code> <code>input</code> <code>pair</code></dt>
 <dd>&nbsp;</dd>
 <dt><code>p</code> <code>value</code> <code>matrix</code> (<code>numpy</code> <code>matrix</code>): <code>this</code> <code>matrix</code> <code>only</code> <code>contains</code> <code>values</code> <code>if</code>
 <code>compute</code> = <code>hamming</code> or <code>compute</code> = <code>kendall</code></dt>
@@ -1503,7 +1503,7 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
         kendall_x (int): needs to be set when usage = top or bottom. Indicates how many items are considered in the rank correaltion. If x is larger than one of the lists it will be set automtically to a quarter less than the shortest list.
 
     Returns:
-        similairty matrix (numpy matrix):
+        similairty matrix (numpy matrix): matrix containing the kendall correlation values for each input pair
         p value matrix (numpy matrix): this matrix only contains values if  compute = hamming or compute = kendall
         used x (int): if kendall then a third value is returned indicating what portion of the lists have been used to estimate the rank correlation value
         
@@ -1599,7 +1599,7 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>jaccard</code> <code>similarity</code>/ <code>distance</code> (<code>float</code>):</dt>
+<dt><code>jaccard</code> <code>similarity</code>/ <code>distance</code> (<code>float</code>): <code>jaccard</code> <code>index</code> or <code>distance</code> <code>between</code> <code>the</code> <code>input</code> <code>lists</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -1617,7 +1617,7 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
         list2 (list): list of edges or nodes in Network 2. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
         similarity (boolean): if True returns jaccard similarity else returns jaccard distance.
     Returns:
-        jaccard similarity/ distance (float):
+        jaccard similarity/ distance (float): jaccard index or distance between the input lists
     
     &#34;&#34;&#34;
 
@@ -1707,7 +1707,7 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>edit</code> <code>distance</code> (<code>float</code>):</dt>
+<dt><code>edit</code> <code>distance</code> (<code>float</code>): <code>eidt</code> <code>distance</code> <code>between</code> <code>the</code> <code>input</code> <code>lists</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -1722,7 +1722,7 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
         list1 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
         list2 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
     Returns:
-        edit distance (float):
+        edit distance (float): eidt distance between the input lists
     &#34;&#34;&#34;
 
     if len(list1) &gt; len(list2):
@@ -1755,7 +1755,7 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>hamming</code> <code>distance</code> (<code>float</code>):</dt>
+<dt><code>hamming</code> <code>distance</code> (<code>float</code>): <code>hamming</code> <code>distance</code> <code>between</code> <code>the</code> <code>input</code> <code>lists</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -1770,7 +1770,7 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
         list1 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
         list2 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
     Returns:
-        hamming distance (float):
+        hamming distance (float): hamming distance between the input lists
     &#34;&#34;&#34;
     return scipy.spatial.distance.hamming(list1, list2)</code></pre>
 </details>
@@ -1798,9 +1798,9 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>kendall</code> <code>tau</code> (<code>float</code>):</dt>
+<dt><code>kendall</code> <code>tau</code> (<code>float</code>): <code>kendell</code> <code>tau</code> <code>coefficient</code> <code>between</code> <code>the</code> <code>input</code> <code>lists</code></dt>
 <dd>&nbsp;</dd>
-<dt><code>p</code> <code>value</code> (<code>float</code>):</dt>
+<dt><code>p</code> <code>value</code> (<code>float</code>): <code>p</code>-<code>value</code> of <code>the</code> <code>correlation</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -1823,8 +1823,8 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
         x (int): needs to be set when usage = top or bottom. Indicates how many items are considered in the rank correaltion.
 
     Returns:
-        kendall tau (float):
-        p value (float):
+        kendall tau (float): kendell tau coefficient between the input lists
+        p value (float): p-value of the correlation
 
     
     &#34;&#34;&#34;
@@ -1988,8 +1988,8 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>SMC</code> (<code>float</code>):</dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>SMC</code></strong> :&ensp;<code>float</code></dt>
+<dd>SMC coefficient between input lists</dd>
 </dl></section>
 <details class="source">
 <summary>
@@ -2003,7 +2003,7 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
         list1 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
         list2 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. 
     Returns:
-        SMC (float):
+        SMC (float): SMC coefficient between input lists
 
     
     &#34;&#34;&#34;
@@ -2069,11 +2069,14 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 <dd>
 <section class="desc"><p>Convert list l of format [(x,y)] to dict of form {x:y}.</p>
 <h2 id="parameters">Parameters</h2>
-<p>l (list):</p>
+<dl>
+<dt><strong><code>l</code></strong> :&ensp;<code>list</code></dt>
+<dd>input list of tuples</dd>
+</dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>convertion</code> (<code>dict</code>):</dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>convertion</code></strong> :&ensp;<code>dict</code></dt>
+<dd>where key is first tuple entry and value is second tuple entry</dd>
 </dl></section>
 <details class="source">
 <summary>
@@ -2084,10 +2087,10 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
     Convert list l of format [(x,y)] to dict of form {x:y}.
 
     Parameters:
-        l (list):
+        l (list): input list of tuples
     
     Returns:
-        convertion (dict):
+        convertion (dict): where key is first tuple entry and value is second tuple entry
     &#34;&#34;&#34;
 
     new_dict = {}
@@ -2116,7 +2119,7 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>shared</code> <code>items</code> (<code>list</code>):</dt>
+<dt><code>shared</code> <code>items</code> (<code>list</code>): <code>list</code> of <code>shared</code> <code>items</code> <code>between</code> <code>input</code> <code>lists</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -2134,7 +2137,7 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
         mapping (dict or None): edge /node to ID mapping as returned by map_edge_to_id() / map_node_to_id().
 
     Returns:
-        shared items (list):
+        shared items (list): list of shared items between input lists
     &#34;&#34;&#34;
 
     if not name:
@@ -2163,8 +2166,8 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>sorensens</code> (<code>numpy</code> <code>matrix</code>):</dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>sorensens</code></strong> :&ensp;<code>numpy</code> <code>matrix</code></dt>
+<dd>sorensen coefficient estimated from jaccard index</dd>
 </dl></section>
 <details class="source">
 <summary>
@@ -2178,7 +2181,7 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
         jaccard (numpy matrix): numpy matrix filled with jaccard indices as returned by shared_edges_multiple()
 
     Returns:
-        sorensens (numpy matrix):
+        sorensens (numpy matrix): sorensen coefficient estimated from jaccard index
     &#34;&#34;&#34;
     matrix = jaccard.copy()
 
@@ -2208,8 +2211,8 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>mapping</code> (<code>dict</code>);</dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code></dt>
+<dd>key is edge and value is assigned ID</dd>
 <dt><code>next</code> <code>value</code> (<code>int</code>): <code>can</code> <code>be</code> <code>used</code> <code>if</code> <code>multiple</code> <code>networks</code> <code>are</code> <code>mapped</code> <code>to</code> <code>the</code> <code>same</code> <code>IDs</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
@@ -2227,7 +2230,7 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
         next_value (int): if mapping is provided, then the last id set needs to be provided.
 
     Returns:
-        mapping (dict);
+        mapping (dict): key is edge and value is assigned ID
         next value (int): can be used if multiple networks are mapped to the same IDs
     &#34;&#34;&#34;
 
@@ -2273,8 +2276,8 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>mapping</code> (<code>dict</code>);</dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code></dt>
+<dd>key is node ID and value is mapped ID</dd>
 <dt><code>next</code> <code>value</code> (<code>int</code>): <code>can</code> <code>be</code> <code>used</code> <code>if</code> <code>multiple</code> <code>networks</code> <code>are</code> <code>mapped</code> <code>to</code> <code>the</code> <code>same</code> <code>IDs</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
@@ -2292,7 +2295,7 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
         next_value (int): if mapping is provided, then the last id set needs to be provided.
 
     Returns:
-        mapping (dict);
+        mapping (dict): key is node ID and value is mapped ID
         next value (int): can be used if multiple networks are mapped to the same IDs
     &#34;&#34;&#34;
 
@@ -2333,7 +2336,7 @@ Percentage score p (of shared edges) is penalized based on p * (1 / weight * (ab
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>shared</code> <code>percentage</code> (<code>float</code>):</dt>
+<dt><code>shared</code> <code>percentage</code> (<code>float</code>): <code>percentage</code> of <code>shared</code> <code>edges</code>/ <code>nodes</code> <code>between</code> <code>the</code> <code>input</code> <code>graphs</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -2354,7 +2357,7 @@ Percentage score p (of shared edges) is penalized based on p * (1 / weight * (ab
         weight (str or float): method used when penalize is True. If penalize = &#34;length&#34; then weight is 1. If penalize is float then weight can be custom set.
        
     Returns:
-        shared percentage (float):
+        shared percentage (float): percentage of shared edges/ nodes between the input graphs
     
     &#34;&#34;&#34;
 
@@ -2400,7 +2403,7 @@ Percentage score p (of shared edges) is penalized based on p * (1 / weight * (ab
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>layer</code> <code>name</code>/ <code>network</code> <code>name</code> (<code>list</code>):</dt>
+<dt><code>layer</code> <code>name</code>/ <code>network</code> <code>name</code> (<code>list</code>): <code>as</code> <code>queried</code> <code>for</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -2416,7 +2419,7 @@ Percentage score p (of shared edges) is penalized based on p * (1 / weight * (ab
         layers (dict): as returned by compute_shared_layers()
 
     Returns:
-        layer name/ network name (list):
+        layer name/ network name (list): as queried for
     &#34;&#34;&#34;
 
     return layers[id]</code></pre>
@@ -2438,8 +2441,8 @@ Percentage score p (of shared edges) is penalized based on p * (1 / weight * (ab
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>items</code> (<code>list</code>):</dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>items</code></strong> :&ensp;<code>list</code></dt>
+<dd>list of layer IDs as queried for</dd>
 </dl></section>
 <details class="source">
 <summary>
@@ -2455,7 +2458,7 @@ Percentage score p (of shared edges) is penalized based on p * (1 / weight * (ab
         direction (str): if direction = &#34;large&#34;, the x items occuring in the most networks are returned. if direction = &#34;small&#34; the x items occuring in the least networks are returned.
 
     Returns:
-        items (list):
+        items (list): list of layer IDs as queried for
     &#34;&#34;&#34;
 
     if direction == &#34;large&#34;:
@@ -2517,7 +2520,7 @@ Percentage score p (of shared edges) is penalized based on p * (1 / weight * (ab
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>shared</code> <code>items</code> (<code>list</code>):</dt>
+<dt><code>shared</code> <code>items</code> (<code>list</code>): <code>list</code> of <code>items</code> <code>shared</code> <code>between</code> <code>input</code> <code>graphs</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -2532,7 +2535,7 @@ Percentage score p (of shared edges) is penalized based on p * (1 / weight * (ab
         list1 (list): list of edges or nodes in Network 1. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
         list2 (list): list of edges or nodes in Network 2. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
     Returns:
-        shared items (list):
+        shared items (list): list of items shared between input graphs
 
 
     &#34;&#34;&#34;
@@ -2785,7 +2788,7 @@ If both parameters are estimated returns jaccard matrix, percentage matrix</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>ranked</code> <code>edges</code> (<code>list</code>):</dt>
+<dt><code>ranked</code> <code>edges</code> (<code>list</code>): <code>list</code> of <code>sorted</code> <code>edge</code> <code>IDs</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -2801,7 +2804,7 @@ If both parameters are estimated returns jaccard matrix, percentage matrix</dd>
         mapping (dict): edge to ID mapping as returned by map_edge_to_id()
 
     Returns:
-        ranked edges (list):
+        ranked edges (list): list of sorted edge IDs
     &#34;&#34;&#34;
 
     edge_weight_mapping = {}
@@ -2834,7 +2837,8 @@ If both parameters are estimated returns jaccard matrix, percentage matrix</dd>
 <section class="desc"><p>Sorts node lists based on weight attribute and returns sorted list of nodes ids.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>Graph (networkX graph object):</dt>
+<dt><strong><code>Graph</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on.</dd>
 <dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code></dt>
 <dd>is id mapping as returned by map_node_to_id()</dd>
 <dt><strong><code>as_str</code></strong> :&ensp;<code>boolean</code></dt>
@@ -2869,7 +2873,7 @@ If both parameters are estimated returns jaccard matrix, percentage matrix</dd>
     Sorts node lists based on weight attribute and returns sorted list of nodes ids.
 
     Parameters:
-        Graph (networkX graph object):
+        Graph (networkX graph object): graph to estimate on.
         mapping (dict): is id mapping as returned by map_node_to_id()
         as_str (boolean): if True node IDs are assumed to be string else int.
         degree (boolean): if True nodes are sorted after degree.
@@ -3038,10 +3042,13 @@ If both parameters are estimated returns jaccard matrix, percentage matrix</dd>
 <dd>
 <section class="desc"><p>Converts a similarity matrix to a distance matrix (1- x).</p>
 <h2 id="parameters">Parameters</h2>
-<p>m (numpy matrix):</p>
+<dl>
+<dt><strong><code>m</code></strong> :&ensp;<code>numpy</code> <code>matrix</code></dt>
+<dd>similarity matrix</dd>
+</dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>distance</code> <code>matrix</code> (<code>numpy</code> <code>matrix</code>)</dt>
+<dt><code>distance</code> <code>matrix</code> (<code>numpy</code> <code>matrix</code>): <code>converted</code> <code>distance</code> <code>matrix</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -3053,9 +3060,9 @@ If both parameters are estimated returns jaccard matrix, percentage matrix</dd>
     Converts a similarity matrix to a distance matrix (1- x).
 
     Parameters:
-        m (numpy matrix):
+        m (numpy matrix): similarity matrix
     Returns:
-        distance matrix (numpy matrix)
+        distance matrix (numpy matrix): converted distance matrix
     &#34;&#34;&#34;
     matrix = m.copy()
     computed = []

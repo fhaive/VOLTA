@@ -204,7 +204,7 @@ def build_graph_remove_isolates(mat):
         mat (matrix): adjacency matrix
     
     Returns:
-        graph (networkX graph object):
+        graph (networkX graph object): constructed from adjacency matrix
         
     &#34;&#34;&#34;
     
@@ -297,7 +297,7 @@ def get_statistical_overrepresented_communities(clusters_networks, nodes, pval=0
         
     Returns:
         communities (dict): key is cluster ID and value is the community ID. Ordered the same way as nodes. 
-        Communities with a single node, indicates that that node was not statistically significant connectet to any other node.
+            Communities with a single node, indicates that that node was not statistically significant connectet to any other node.
     &#34;&#34;&#34;
 
     statistical_communities_back = {}
@@ -610,8 +610,8 @@ def significantly_similar_partitionings(all_networks, back, is_file=False, steps
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>graph</code> (<code>networkX</code> <code>graph</code> <code>object</code>):</dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>graph</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>constructed from adjacency matrix</dd>
 </dl></section>
 <details class="source">
 <summary>
@@ -625,7 +625,7 @@ def significantly_similar_partitionings(all_networks, back, is_file=False, steps
         mat (matrix): adjacency matrix
     
     Returns:
-        graph (networkX graph object):
+        graph (networkX graph object): constructed from adjacency matrix
         
     &#34;&#34;&#34;
     
@@ -914,9 +914,9 @@ Value needs to be list of dicts where key is node ID and value is Community ID o
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key is cluster ID and value is the community ID. Ordered the same way as nodes. </dd>
-</dl>
-<p>Communities with a single node, indicates that that node was not statistically significant connectet to any other node.</p></section>
+<dd>key is cluster ID and value is the community ID. Ordered the same way as nodes.
+Communities with a single node, indicates that that node was not statistically significant connectet to any other node.</dd>
+</dl></section>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -937,7 +937,7 @@ Value needs to be list of dicts where key is node ID and value is Community ID o
         
     Returns:
         communities (dict): key is cluster ID and value is the community ID. Ordered the same way as nodes. 
-        Communities with a single node, indicates that that node was not statistically significant connectet to any other node.
+            Communities with a single node, indicates that that node was not statistically significant connectet to any other node.
     &#34;&#34;&#34;
 
     statistical_communities_back = {}

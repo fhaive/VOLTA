@@ -81,7 +81,7 @@ def consensus_clustering(clusterings, seed=123, threshold=0.75, per_node=True, r
         rep (int): how often louvain clustering is reapeated on the agreement graph.
 
     Returns:
-        consensus class labels (array):
+        consensus class labels (array): of clustering
       
     
     &#34;&#34;&#34;
@@ -576,7 +576,7 @@ def create_mean_distance_matrix(matrices, set_diagonal = True):
         set_diagonal (boolean): if True diagonal values are set to 0 automatically - this may be helpful if the distance measures applied do not return 0 distance for the same object.
         
     Returns:
-        mean distance matrix (matrix):
+        mean distance matrix (matrix): of input matrices
     &#34;&#34;&#34;
 
     if len(matrices) &lt; 2:
@@ -614,7 +614,7 @@ def create_median_distance_matrix(matrices, set_diagonal = True):
         set_diagonal (boolean): if True diagonal values are set to 0 automatically - this may be helpful if the distance measures applied do not return 0 distance for the same object.
         
     Returns:
-        median distance matrix (matrix):
+        median distance matrix (matrix): of input matrices
     &#34;&#34;&#34;
     if len(matrices) &lt; 2:
         print(&#34;matrices needs to contain at least two items in order to estimate its median&#34;)
@@ -652,7 +652,7 @@ def hierarchical_clustering(distance, n_clusters=2, linkage=&#34;complete&#34;):
         linkage (str): linkage method to be used. Options are &#34;average&#34;, &#34;complete&#34; or &#34;single&#34;.
             
     Returns:
-        labels (array): 
+        labels (array): of clustering
     &#34;&#34;&#34;
 
     if n_clusters &lt; 2 or n_clusters &gt; len(distance):
@@ -680,7 +680,7 @@ def affinityPropagation_clustering(distance):
         distance (matrix): distance matrix to be used for clustering.
         
     Returns:
-        labels (array): 
+        labels (array): of clustering
     &#34;&#34;&#34;
 
     
@@ -717,7 +717,7 @@ def convert_clusters(clusters, v):
         v (list): of item IDs as contained in clusters.
 
     Returns:
-        labels (array): 
+        labels (array): of clustering
     &#34;&#34;&#34;
     d = {}
     for vv in v:
@@ -741,7 +741,7 @@ def optics_clustering(distance, radius=2, neighbors=2, n_clusters=2):
         n_clusters (int): amount of clusters that should be found.
 
     Returns:
-            labels (array):
+            labels (array): of clustering
     &#34;&#34;&#34;
 
     if n_clusters &lt; 2 or n_clusters &gt; len(distance):
@@ -779,7 +779,7 @@ def kmedoids_clustering(distance, n_clusters=2):
         n_clusters (int): amount of clusters that should be found.
         
     Returns:
-        labels (array):
+        labels (array): of clustering
         created mediods (list): random created mediods used for clustering
     &#34;&#34;&#34;
 
@@ -829,8 +829,8 @@ def kmedoids_clustering(distance, n_clusters=2):
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>labels</code> (<code>array</code>):</dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>array</code></dt>
+<dd>of clustering</dd>
 </dl></section>
 <details class="source">
 <summary>
@@ -844,7 +844,7 @@ def kmedoids_clustering(distance, n_clusters=2):
         distance (matrix): distance matrix to be used for clustering.
         
     Returns:
-        labels (array): 
+        labels (array): of clustering
     &#34;&#34;&#34;
 
     
@@ -881,7 +881,7 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>consensus</code> <code>class</code> <code>labels</code> (<code>array</code>):</dt>
+<dt><code>consensus</code> <code>class</code> <code>labels</code> (<code>array</code>): of <code>clustering</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -905,7 +905,7 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
         rep (int): how often louvain clustering is reapeated on the agreement graph.
 
     Returns:
-        consensus class labels (array):
+        consensus class labels (array): of clustering
       
     
     &#34;&#34;&#34;
@@ -960,8 +960,8 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>labels</code> (<code>array</code>):</dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>array</code></dt>
+<dd>of clustering</dd>
 </dl></section>
 <details class="source">
 <summary>
@@ -977,7 +977,7 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
         v (list): of item IDs as contained in clusters.
 
     Returns:
-        labels (array): 
+        labels (array): of clustering
     &#34;&#34;&#34;
     d = {}
     for vv in v:
@@ -1005,7 +1005,7 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>mean</code> <code>distance</code> <code>matrix</code> (<code>matrix</code>):</dt>
+<dt><code>mean</code> <code>distance</code> <code>matrix</code> (<code>matrix</code>): of <code>input</code> <code>matrices</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -1021,7 +1021,7 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
         set_diagonal (boolean): if True diagonal values are set to 0 automatically - this may be helpful if the distance measures applied do not return 0 distance for the same object.
         
     Returns:
-        mean distance matrix (matrix):
+        mean distance matrix (matrix): of input matrices
     &#34;&#34;&#34;
 
     if len(matrices) &lt; 2:
@@ -1064,7 +1064,7 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>median</code> <code>distance</code> <code>matrix</code> (<code>matrix</code>):</dt>
+<dt><code>median</code> <code>distance</code> <code>matrix</code> (<code>matrix</code>): of <code>input</code> <code>matrices</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -1080,7 +1080,7 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
         set_diagonal (boolean): if True diagonal values are set to 0 automatically - this may be helpful if the distance measures applied do not return 0 distance for the same object.
         
     Returns:
-        median distance matrix (matrix):
+        median distance matrix (matrix): of input matrices
     &#34;&#34;&#34;
     if len(matrices) &lt; 2:
         print(&#34;matrices needs to contain at least two items in order to estimate its median&#34;)
@@ -1124,8 +1124,8 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>labels</code> (<code>array</code>):</dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>array</code></dt>
+<dd>of clustering</dd>
 </dl></section>
 <details class="source">
 <summary>
@@ -1141,7 +1141,7 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
         linkage (str): linkage method to be used. Options are &#34;average&#34;, &#34;complete&#34; or &#34;single&#34;.
             
     Returns:
-        labels (array): 
+        labels (array): of clustering
     &#34;&#34;&#34;
 
     if n_clusters &lt; 2 or n_clusters &gt; len(distance):
@@ -1174,8 +1174,8 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>labels</code> (<code>array</code>):</dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>array</code></dt>
+<dd>of clustering</dd>
 <dt><code>created</code> <code>mediods</code> (<code>list</code>): <code>random</code> <code>created</code> <code>mediods</code> <code>used</code> <code>for</code> <code>clustering</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
@@ -1192,7 +1192,7 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
         n_clusters (int): amount of clusters that should be found.
         
     Returns:
-        labels (array):
+        labels (array): of clustering
         created mediods (list): random created mediods used for clustering
     &#34;&#34;&#34;
 
@@ -1454,8 +1454,8 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>labels</code> (<code>array</code>):</dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>labels</code></strong> :&ensp;<code>array</code></dt>
+<dd>of clustering</dd>
 </dl></section>
 <details class="source">
 <summary>
@@ -1472,7 +1472,7 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
         n_clusters (int): amount of clusters that should be found.
 
     Returns:
-            labels (array):
+            labels (array): of clustering
     &#34;&#34;&#34;
 
     if n_clusters &lt; 2 or n_clusters &gt; len(distance):

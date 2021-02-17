@@ -56,7 +56,7 @@ def perform_random_walks(G, steps=10, number_of_walks=100, start=None, probabili
     Performs x random walks of size n
 
     Parameters:
-        G (networkx graph): 
+        G (networkx graph): graph object to perform random walks on.
         steps (int): is size of random walk
         number_of_walks (int): how many random walks are performed on G
         start (node ID): if is None start node is selected at random from G else start needs to be node ID as contained in G
@@ -314,14 +314,14 @@ def node_degree_distribution(G):
     Estimates a graphs node degree distribution.
 
     Parameters:
-        G (NetworkX graph object): 
+        G (NetworkX graph object): graph to estimate on.
 
     Returns:
-        mean node degree (float):
-        median node degree(float):
-        stdev node degree (float):
-        skewness node degree (float):
-        kurtosis node degree (float):
+        mean node degree (float): mean node degree of all node degrees
+        median node degree(float): median node degree of all node degrees
+        stdev node degree (float): standard deviation of node degree distribution
+        skewness node degree (float): skewness of node degree distribution
+        kurtosis node degree (float): kurtosis of node degree distribution
     &#34;&#34;&#34;
 
     degrees = list(dict(G.degree()).values())
@@ -342,10 +342,10 @@ def is_connected(G):
     Checks if a graph is connected.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
 
     Returns:
-        connected (boolean):
+        connected (boolean): True if graph is connected.
     &#34;&#34;&#34;
     return nx.is_connected(G)
 
@@ -354,7 +354,7 @@ def graph_size(G):
     Estimates graph radius, diameter, number of nodes &amp; number of edges. Graph needs to be connected.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
 
     Returns:
         size (dict): dict keys are radius, diameter, diameter, nodes, edges
@@ -382,10 +382,10 @@ def density(G):
     Estimates graph density.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
 
     Returns:
-        density (float):
+        density (float): network density
     &#34;&#34;&#34;
     return nx.density(G)
 
@@ -394,10 +394,10 @@ def average_clustering(G):
     Estimates a graphs average clustering.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
 
     Returns:
-        average clustering (float):
+        average clustering (float): average clustering of G
     &#34;&#34;&#34;
     return nx.average_clustering(G)
 
@@ -406,7 +406,7 @@ def graph_edges(G):
     Provides estimate on how many of all posible edges exist in G (100% implies that G is a complete graph).
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
 
     Returns :
         edge estimate (dict): dict keys are missing_edges (how many possible edges do not exist)
@@ -446,7 +446,7 @@ def cycle_distribution(G):
     This can provide insight in how &#34;structured&#34; a graph is - and what biological elements it contains, i.e. multiple feedback loops
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
 
     Returns:
         cycle distribution (dict): keys are number_of_cycles, median_cycle_length, mean_cycle_length, std_cycle_length, skw_sycle_length, kurtosis_cycle_length
@@ -479,7 +479,7 @@ def path_length_distribution(H):
     Estimates shortest path length distribution between all node pairs. If the graph is not connected it uses the giant component instead.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
 
     Returns:
         shortest path distribution (dict): keys are mean path length, median path length, std path length, skw path length, kurtosis path length
@@ -522,13 +522,13 @@ def clustering_coefficient(G, nodes=None, weight=None, count_zeros=True):
     Computes the clustering coefficient (CC) for a graph. A complete graph has CC of 1.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
         nodes (list or None): optional. Compute average clustering for nodes in this container or if None computes for all nodes of G.
         weight (str or None): optional The edge attribute that holds the numerical value used as a weight. If None, then each edge has weight 1.
         count_zeros (boolean): If False include only the nodes with nonzero clustering in the average.
 
     Returns:
-        clustering (float):
+        clustering (float): clustering coefficient of G
         
     &#34;&#34;&#34;
 
@@ -536,14 +536,14 @@ def clustering_coefficient(G, nodes=None, weight=None, count_zeros=True):
 
 def contains_triangles(G, nodes=None):
     &#34;&#34;&#34;
-    Computes number of triangles contained in networkx G
+    Computes number of triangles contained in each node of graph G
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
         nodes (list or None): optional. Compute number of triangles for nodes in this container or if None computes for all nodes of G.
 
     Returns:
-        number of triangles (dict):
+        number of triangles (dict): key is node ID and value is number of triangle that node is part of
         
     &#34;&#34;&#34;
 
@@ -555,7 +555,7 @@ def degree_centrality(G, distribution=True):
     Compute the degree centrality for nodes. The degree centrality for a node v is the fraction of nodes it is connected to.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
         distribution (boolean): optional. If True distributional parameters are calculated. If False corresponding return values are None.
             
     Returns:
@@ -592,7 +592,7 @@ def eigenvector_centrality(G, distribution=True, weight=None):
     Computes the eigenvector centrality. Importet from NetworkX, including their parameter settings.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
         weight (str or None):  If None, all edge weights are considered equal. Otherwise name of the edge attribute to be used as weight.
         distribution (boolean): optional. If True distributional parameters are calculated. If False corresponding return values are None.
 
@@ -629,7 +629,7 @@ def closeness_centrality(G, distribution=True):
     Compute the closeness centrality. Imported froom NetworkX, including parameter settings.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
         distribution (boolean): optional. If True distributional parameters are calculated. If False corresponding return values are None.
 
     Returns:
@@ -665,7 +665,7 @@ def betweeness_centrality(G, distribution=True,  weight=None):
     Compute the betweenness centrality. Imported froom NetworkX, including parameter settings.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
         distribution (boolean): optional. If True distributional parameters are calculated. If False corresponding return values are None.
         weight (str or None):  If None, all edge weights are considered equal. Otherwise name of the edge attribute to be used as weight.
 
@@ -710,10 +710,13 @@ def betweeness_centrality(G, distribution=True,  weight=None):
 <dd>
 <section class="desc"><p>Estimates a graphs average clustering.</p>
 <h2 id="parameters">Parameters</h2>
-<p>G (NetworkX graph object):</p>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on.</dd>
+</dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>average</code> <code>clustering</code> (<code>float</code>):</dt>
+<dt><code>average</code> <code>clustering</code> (<code>float</code>): <code>average</code> <code>clustering</code> of <code>G</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -725,10 +728,10 @@ def betweeness_centrality(G, distribution=True,  weight=None):
     Estimates a graphs average clustering.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
 
     Returns:
-        average clustering (float):
+        average clustering (float): average clustering of G
     &#34;&#34;&#34;
     return nx.average_clustering(G)</code></pre>
 </details>
@@ -740,7 +743,8 @@ def betweeness_centrality(G, distribution=True,  weight=None):
 <section class="desc"><p>Compute the betweenness centrality. Imported froom NetworkX, including parameter settings.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (NetworkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on.</dd>
 <dt><strong><code>distribution</code></strong> :&ensp;<code>boolean</code></dt>
 <dd>optional. If True distributional parameters are calculated. If False corresponding return values are None.</dd>
 <dt><strong><code>weight</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
@@ -760,7 +764,7 @@ def betweeness_centrality(G, distribution=True,  weight=None):
     Compute the betweenness centrality. Imported froom NetworkX, including parameter settings.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
         distribution (boolean): optional. If True distributional parameters are calculated. If False corresponding return values are None.
         weight (str or None):  If None, all edge weights are considered equal. Otherwise name of the edge attribute to be used as weight.
 
@@ -799,7 +803,8 @@ def betweeness_centrality(G, distribution=True,  weight=None):
 <section class="desc"><p>Compute the closeness centrality. Imported froom NetworkX, including parameter settings.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (NetworkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on.</dd>
 <dt><strong><code>distribution</code></strong> :&ensp;<code>boolean</code></dt>
 <dd>optional. If True distributional parameters are calculated. If False corresponding return values are None.</dd>
 </dl>
@@ -817,7 +822,7 @@ def betweeness_centrality(G, distribution=True,  weight=None):
     Compute the closeness centrality. Imported froom NetworkX, including parameter settings.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
         distribution (boolean): optional. If True distributional parameters are calculated. If False corresponding return values are None.
 
     Returns:
@@ -854,7 +859,8 @@ def betweeness_centrality(G, distribution=True,  weight=None):
 <section class="desc"><p>Computes the clustering coefficient (CC) for a graph. A complete graph has CC of 1.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (NetworkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on.</dd>
 <dt><strong><code>nodes</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
 <dd>optional. Compute average clustering for nodes in this container or if None computes for all nodes of G.</dd>
 <dt><strong><code>weight</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
@@ -864,8 +870,8 @@ def betweeness_centrality(G, distribution=True,  weight=None):
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>clustering</code> (<code>float</code>):</dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>clustering</code></strong> :&ensp;<code>float</code></dt>
+<dd>clustering coefficient of G</dd>
 </dl></section>
 <details class="source">
 <summary>
@@ -876,13 +882,13 @@ def betweeness_centrality(G, distribution=True,  weight=None):
     Computes the clustering coefficient (CC) for a graph. A complete graph has CC of 1.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
         nodes (list or None): optional. Compute average clustering for nodes in this container or if None computes for all nodes of G.
         weight (str or None): optional The edge attribute that holds the numerical value used as a weight. If None, then each edge has weight 1.
         count_zeros (boolean): If False include only the nodes with nonzero clustering in the average.
 
     Returns:
-        clustering (float):
+        clustering (float): clustering coefficient of G
         
     &#34;&#34;&#34;
 
@@ -1003,16 +1009,17 @@ will be estimated</dd>
 <span>def <span class="ident">contains_triangles</span></span>(<span>G, nodes=None)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Computes number of triangles contained in networkx G</p>
+<section class="desc"><p>Computes number of triangles contained in each node of graph G</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (NetworkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on.</dd>
 <dt><strong><code>nodes</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
 <dd>optional. Compute number of triangles for nodes in this container or if None computes for all nodes of G.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>number</code> of <code>triangles</code> (<code>dict</code>):</dt>
+<dt><code>number</code> of <code>triangles</code> (<code>dict</code>): <code>key</code> <code>is</code> <code>node</code> <code>ID</code> <code>and</code> <code>value</code> <code>is</code> <code>number</code> of <code>triangle</code> <code>that</code> <code>node</code> <code>is</code> <code>part</code> of</dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -1021,14 +1028,14 @@ will be estimated</dd>
 </summary>
 <pre><code class="python">def contains_triangles(G, nodes=None):
     &#34;&#34;&#34;
-    Computes number of triangles contained in networkx G
+    Computes number of triangles contained in each node of graph G
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
         nodes (list or None): optional. Compute number of triangles for nodes in this container or if None computes for all nodes of G.
 
     Returns:
-        number of triangles (dict):
+        number of triangles (dict): key is node ID and value is number of triangle that node is part of
         
     &#34;&#34;&#34;
 
@@ -1042,7 +1049,10 @@ will be estimated</dd>
 <section class="desc"><p>Estimates size distributions of cycles (how many steps to form a cycle) in a graph.
 This can provide insight in how "structured" a graph is - and what biological elements it contains, i.e. multiple feedback loops</p>
 <h2 id="parameters">Parameters</h2>
-<p>G (NetworkX graph object):</p>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on.</dd>
+</dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>cycle</code> <code>distribution</code> (<code>dict</code>): <code>keys</code> <code>are</code> <code>number_of_cycles</code>, <code>median_cycle_length</code>, <code>mean_cycle_length</code>, <code>std_cycle_length</code>, <code>skw_sycle_length</code>, <code>kurtosis_cycle_length</code></dt>
@@ -1058,7 +1068,7 @@ This can provide insight in how "structured" a graph is - and what biological el
     This can provide insight in how &#34;structured&#34; a graph is - and what biological elements it contains, i.e. multiple feedback loops
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
 
     Returns:
         cycle distribution (dict): keys are number_of_cycles, median_cycle_length, mean_cycle_length, std_cycle_length, skw_sycle_length, kurtosis_cycle_length
@@ -1093,7 +1103,8 @@ This can provide insight in how "structured" a graph is - and what biological el
 <section class="desc"><p>Compute the degree centrality for nodes. The degree centrality for a node v is the fraction of nodes it is connected to.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (NetworkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on.</dd>
 <dt><strong><code>distribution</code></strong> :&ensp;<code>boolean</code></dt>
 <dd>optional. If True distributional parameters are calculated. If False corresponding return values are None.</dd>
 </dl>
@@ -1111,7 +1122,7 @@ This can provide insight in how "structured" a graph is - and what biological el
     Compute the degree centrality for nodes. The degree centrality for a node v is the fraction of nodes it is connected to.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
         distribution (boolean): optional. If True distributional parameters are calculated. If False corresponding return values are None.
             
     Returns:
@@ -1148,11 +1159,14 @@ This can provide insight in how "structured" a graph is - and what biological el
 <dd>
 <section class="desc"><p>Estimates graph density.</p>
 <h2 id="parameters">Parameters</h2>
-<p>G (NetworkX graph object):</p>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on.</dd>
+</dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><a title="graphAlgorithms.distances.global_distances.density" href="#graphAlgorithms.distances.global_distances.density"><code>density()</code></a> (<code>float</code>):</dt>
-<dd>&nbsp;</dd>
+<dt><strong><a title="graphAlgorithms.distances.global_distances.density" href="#graphAlgorithms.distances.global_distances.density"><code>density()</code></a></strong> :&ensp;<code>float</code></dt>
+<dd>network density</dd>
 </dl></section>
 <details class="source">
 <summary>
@@ -1163,10 +1177,10 @@ This can provide insight in how "structured" a graph is - and what biological el
     Estimates graph density.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
 
     Returns:
-        density (float):
+        density (float): network density
     &#34;&#34;&#34;
     return nx.density(G)</code></pre>
 </details>
@@ -1178,7 +1192,8 @@ This can provide insight in how "structured" a graph is - and what biological el
 <section class="desc"><p>Computes the eigenvector centrality. Importet from NetworkX, including their parameter settings.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (NetworkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on.</dd>
 <dt><strong><code>weight</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
 <dd>If None, all edge weights are considered equal. Otherwise name of the edge attribute to be used as weight.</dd>
 <dt><strong><code>distribution</code></strong> :&ensp;<code>boolean</code></dt>
@@ -1198,7 +1213,7 @@ This can provide insight in how "structured" a graph is - and what biological el
     Computes the eigenvector centrality. Importet from NetworkX, including their parameter settings.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
         weight (str or None):  If None, all edge weights are considered equal. Otherwise name of the edge attribute to be used as weight.
         distribution (boolean): optional. If True distributional parameters are calculated. If False corresponding return values are None.
 
@@ -1308,8 +1323,11 @@ This is only possible if the walks have been performed with the same start node<
 <dd>
 <section class="desc"><p>Provides estimate on how many of all posible edges exist in G (100% implies that G is a complete graph).</p>
 <h2 id="parameters">Parameters</h2>
-<p>G (NetworkX graph object):
-Returns :
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on.</dd>
+</dl>
+<p>Returns :
 edge estimate (dict): dict keys are missing_edges (how many possible edges do not exist)
 max_edges (number of possible edges)
 missing_edges_percentage (percentage of missing edges)
@@ -1323,7 +1341,7 @@ existing_edges_percentage (percentage of existing edges)</p></section>
     Provides estimate on how many of all posible edges exist in G (100% implies that G is a complete graph).
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
 
     Returns :
         edge estimate (dict): dict keys are missing_edges (how many possible edges do not exist)
@@ -1352,7 +1370,10 @@ existing_edges_percentage (percentage of existing edges)</p></section>
 <dd>
 <section class="desc"><p>Estimates graph radius, diameter, number of nodes &amp; number of edges. Graph needs to be connected.</p>
 <h2 id="parameters">Parameters</h2>
-<p>G (NetworkX graph object):</p>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on.</dd>
+</dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><strong><code>size</code></strong> :&ensp;<code>dict</code></dt>
@@ -1367,7 +1388,7 @@ existing_edges_percentage (percentage of existing edges)</p></section>
     Estimates graph radius, diameter, number of nodes &amp; number of edges. Graph needs to be connected.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
 
     Returns:
         size (dict): dict keys are radius, diameter, diameter, nodes, edges
@@ -1397,11 +1418,14 @@ existing_edges_percentage (percentage of existing edges)</p></section>
 <dd>
 <section class="desc"><p>Checks if a graph is connected.</p>
 <h2 id="parameters">Parameters</h2>
-<p>G (NetworkX graph object):</p>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on.</dd>
+</dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>connected</code> (<code>boolean</code>):</dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>connected</code></strong> :&ensp;<code>boolean</code></dt>
+<dd>True if graph is connected.</dd>
 </dl></section>
 <details class="source">
 <summary>
@@ -1413,10 +1437,10 @@ existing_edges_percentage (percentage of existing edges)</p></section>
     Checks if a graph is connected.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
 
     Returns:
-        connected (boolean):
+        connected (boolean): True if graph is connected.
     &#34;&#34;&#34;
     return nx.is_connected(G)</code></pre>
 </details>
@@ -1429,19 +1453,19 @@ existing_edges_percentage (percentage of existing edges)</p></section>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
-<dd>&nbsp;</dd>
+<dd>graph to estimate on.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>mean</code> <code>node</code> <code>degree</code> (<code>float</code>):</dt>
+<dt><code>mean</code> <code>node</code> <code>degree</code> (<code>float</code>): <code>mean</code> <code>node</code> <code>degree</code> of <code>all</code> <code>node</code> <code>degrees</code></dt>
 <dd>&nbsp;</dd>
-<dt><code>median</code> <code>node</code> <code>degree</code>(<code>float</code>):</dt>
+<dt><code>median</code> <code>node</code> <code>degree</code>(<code>float</code>): <code>median</code> <code>node</code> <code>degree</code> of <code>all</code> <code>node</code> <code>degrees</code></dt>
 <dd>&nbsp;</dd>
-<dt><code>stdev</code> <code>node</code> <code>degree</code> (<code>float</code>):</dt>
+<dt><code>stdev</code> <code>node</code> <code>degree</code> (<code>float</code>): <code>standard</code> <code>deviation</code> of <code>node</code> <code>degree</code> <code>distribution</code></dt>
 <dd>&nbsp;</dd>
-<dt><code>skewness</code> <code>node</code> <code>degree</code> (<code>float</code>):</dt>
+<dt><code>skewness</code> <code>node</code> <code>degree</code> (<code>float</code>): <code>skewness</code> of <code>node</code> <code>degree</code> <code>distribution</code></dt>
 <dd>&nbsp;</dd>
-<dt><code>kurtosis</code> <code>node</code> <code>degree</code> (<code>float</code>):</dt>
+<dt><code>kurtosis</code> <code>node</code> <code>degree</code> (<code>float</code>): <code>kurtosis</code> of <code>node</code> <code>degree</code> <code>distribution</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -1454,14 +1478,14 @@ existing_edges_percentage (percentage of existing edges)</p></section>
     Estimates a graphs node degree distribution.
 
     Parameters:
-        G (NetworkX graph object): 
+        G (NetworkX graph object): graph to estimate on.
 
     Returns:
-        mean node degree (float):
-        median node degree(float):
-        stdev node degree (float):
-        skewness node degree (float):
-        kurtosis node degree (float):
+        mean node degree (float): mean node degree of all node degrees
+        median node degree(float): median node degree of all node degrees
+        stdev node degree (float): standard deviation of node degree distribution
+        skewness node degree (float): skewness of node degree distribution
+        kurtosis node degree (float): kurtosis of node degree distribution
     &#34;&#34;&#34;
 
     degrees = list(dict(G.degree()).values())
@@ -1483,7 +1507,10 @@ existing_edges_percentage (percentage of existing edges)</p></section>
 <dd>
 <section class="desc"><p>Estimates shortest path length distribution between all node pairs. If the graph is not connected it uses the giant component instead.</p>
 <h2 id="parameters">Parameters</h2>
-<p>G (NetworkX graph object):</p>
+<dl>
+<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on.</dd>
+</dl>
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><code>shortest</code> <code>path</code> <code>distribution</code> (<code>dict</code>): <code>keys</code> <code>are</code> <code>mean</code> <code>path</code> <code>length</code>, <code>median</code> <code>path</code> <code>length</code>, <code>std</code> <code>path</code> <code>length</code>, <code>skw</code> <code>path</code> <code>length</code>, <code>kurtosis</code> <code>path</code> <code>length</code></dt>
@@ -1499,7 +1526,7 @@ existing_edges_percentage (percentage of existing edges)</p></section>
     Estimates shortest path length distribution between all node pairs. If the graph is not connected it uses the giant component instead.
 
     Parameters:
-        G (NetworkX graph object):
+        G (NetworkX graph object): graph to estimate on.
 
     Returns:
         shortest path distribution (dict): keys are mean path length, median path length, std path length, skw path length, kurtosis path length
@@ -1545,7 +1572,7 @@ existing_edges_percentage (percentage of existing edges)</p></section>
 <h2 id="parameters">Parameters</h2>
 <dl>
 <dt><strong><code>G</code></strong> :&ensp;<code>networkx</code> <code>graph</code></dt>
-<dd>&nbsp;</dd>
+<dd>graph object to perform random walks on.</dd>
 <dt><strong><code>steps</code></strong> :&ensp;<code>int</code></dt>
 <dd>is size of random walk</dd>
 <dt><strong><code>number_of_walks</code></strong> :&ensp;<code>int</code></dt>
@@ -1572,7 +1599,7 @@ If true then weight needs to be set</dd>
     Performs x random walks of size n
 
     Parameters:
-        G (networkx graph): 
+        G (networkx graph): graph object to perform random walks on.
         steps (int): is size of random walk
         number_of_walks (int): how many random walks are performed on G
         start (node ID): if is None start node is selected at random from G else start needs to be node ID as contained in G

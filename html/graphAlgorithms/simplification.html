@@ -58,12 +58,12 @@ def add_opposit_weight(G, current_weight=&#34;weight&#34;, new_weight=&#34;dista
     Function to convert distance weights into similarity weights and vice versa. Adds a new edge attribute that contains 1-x.
 
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to modify
         current_weight (str): edge attribute to be converted
         new_weight (str): name of to be added edge attribute.
 
     Returns:
-        graph (networkX graph object):
+        graph (networkX graph object): modified graph
     &#34;&#34;&#34;
 
     for edge in G.edges():
@@ -78,12 +78,12 @@ def add_absolute_weight(G, current_weight=&#34;weight&#34;, new_weight=&#34;abso
     Function to convert weights to absolute values.
 
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to modify
         current_weight (str): edge attribute to be converted
         new_weight (str): name of to be added edge attribute.
 
     Returns:
-        graph (networkX graph object):
+        graph (networkX graph object): modified graph
     &#34;&#34;&#34;
 
     for edge in G.edges():
@@ -105,7 +105,7 @@ def get_min_spanning_tree(G, weight=&#34;weight&#34;, is_distance=True, new_weig
         new_weight (str): if is_distance is False the estimated distances are added with this name to the graph.
                     
     Returns:
-        minimum spanning tree (networkX graph object): 
+        minimum spanning tree (networkX graph object): of G 
     &#34;&#34;&#34;
 
 
@@ -128,14 +128,14 @@ def remove_edges_per_node(G, treshold=None, percentage=None, direction=&#34;bott
     If all are below thr treshold then none are removed.
 
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to modify
         treshold (float or None): in [0,1]. Edges below or above this treshold are removed. If treshold is not None percentage needs to be None.
         percentage (float or None): in [0,1]. Percentage of top/ bottom ranked edges are removed for each node individually. If percentage is not None then treshold needs to be None.
         direction (str): options are &#34;bottom&#34; (edges below treshold or weakest percentage edges are removed) and &#34;top&#34; (edges above the treshold or highest ranked perecentage edges are removed).
         attribute (str): name of edge attribute to be used.
         
     Returns:
-        simplified graph (networkX graph object)
+        simplified graph (networkX graph object): of G
 
 
 
@@ -233,7 +233,7 @@ def remove_edges(H, treshold=None, percentage=None, based_on=&#34;weight&#34;, d
     Removes edges from a graph.
 
     Parameters:
-        H (networkX graph object):
+        H (networkX graph object): to modify
         treshold (float or None): in [0,1]. Edges below or above this treshold are removed. If treshold is not None percentage needs to be None.
         percentage (float or None): in [0,1]. Percentage of top/ bottom ranked edges are removed. If percentage is not None then treshold needs to be None.
         based_on (str or list): if &#34;weight&#34; then treshold needs to be not None and all edges in the graph below or above this value are removed.
@@ -243,7 +243,7 @@ def remove_edges(H, treshold=None, percentage=None, based_on=&#34;weight&#34;, d
         attribute (str): name of edge attribute to be used when based_on is &#34;weight&#34;.       
 
     Returns:
-        simplified graph (networkX graph object):
+        simplified graph (networkX graph object): of H
         
     &#34;&#34;&#34;
 
@@ -350,7 +350,7 @@ def remove_nodes(H, treshold=None, percentage=None, based_on=&#34;degree&#34;, d
     &#34;&#34;&#34;
     Removes nodes from a graph.
 
-        H (networkX graph object):
+        H (networkX graph object): to modify
         treshold (float or None): in [0,1]. Nodes below or above this treshold are removed. If treshold is not None percentage needs to be None.
         percentage (float or None): in [0,1]. Percentage of top/ bottom ranked nodes are removed. If percentage is not None then treshold needs to be None.
         based_on (str or list): if is &#34;degree&#34; nodes are removed based on their degree centrality. If is &#34;betweenness&#34; nodes are removed on their betweenness centrality scores.
@@ -358,7 +358,7 @@ def remove_nodes(H, treshold=None, percentage=None, based_on=&#34;degree&#34;, d
         direction (str): options are &#34;bottom&#34; (nodes below treshold or weakest percentage of nodes are removed) and &#34;top&#34; (nodes above the treshold or highest ranked perecentage nodes are removed).
         
     Returns:
-        simplified graph (networkX graph object):
+        simplified graph (networkX graph object): of H
     &#34;&#34;&#34;
 
     G = H.copy()
@@ -516,7 +516,7 @@ def simplify_weak_community_connections(H, weights=&#34;weight&#34;, t=0.2, by_d
     Only one iteration of  communities.weak_link_communities() is performed.
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to modify
         weights (str): edge attribute to be used.
         t (float): in [0,1]. Treshold on which edges are &#34;selected as weak&#34; and to be removed if they occure &lt;= in of samples neighbors.
         by_degree (boolean): if True then the number of samplings for each node is based on its degree. Each node will sample from its neighbors r*node_degree times.
@@ -527,7 +527,7 @@ def simplify_weak_community_connections(H, weights=&#34;weight&#34;, t=0.2, by_d
                 If None will be ignored.
         
     Returns:
-        simplified graph (networkX graph object):
+        simplified graph (networkX graph object): of G
 
     &#34;&#34;&#34;
    
@@ -550,7 +550,8 @@ def simplify_weak_community_connections(H, weights=&#34;weight&#34;, t=0.2, by_d
 <section class="desc"><p>Function to convert weights to absolute values.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (networkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to modify</dd>
 <dt><strong><code>current_weight</code></strong> :&ensp;<code>str</code></dt>
 <dd>edge attribute to be converted</dd>
 <dt><strong><code>new_weight</code></strong> :&ensp;<code>str</code></dt>
@@ -558,8 +559,8 @@ def simplify_weak_community_connections(H, weights=&#34;weight&#34;, t=0.2, by_d
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>graph</code> (<code>networkX</code> <code>graph</code> <code>object</code>):</dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>graph</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>modified graph</dd>
 </dl></section>
 <details class="source">
 <summary>
@@ -570,12 +571,12 @@ def simplify_weak_community_connections(H, weights=&#34;weight&#34;, t=0.2, by_d
     Function to convert weights to absolute values.
 
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to modify
         current_weight (str): edge attribute to be converted
         new_weight (str): name of to be added edge attribute.
 
     Returns:
-        graph (networkX graph object):
+        graph (networkX graph object): modified graph
     &#34;&#34;&#34;
 
     for edge in G.edges():
@@ -593,7 +594,8 @@ def simplify_weak_community_connections(H, weights=&#34;weight&#34;, t=0.2, by_d
 <section class="desc"><p>Function to convert distance weights into similarity weights and vice versa. Adds a new edge attribute that contains 1-x.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (networkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to modify</dd>
 <dt><strong><code>current_weight</code></strong> :&ensp;<code>str</code></dt>
 <dd>edge attribute to be converted</dd>
 <dt><strong><code>new_weight</code></strong> :&ensp;<code>str</code></dt>
@@ -601,8 +603,8 @@ def simplify_weak_community_connections(H, weights=&#34;weight&#34;, t=0.2, by_d
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>graph</code> (<code>networkX</code> <code>graph</code> <code>object</code>):</dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>graph</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>modified graph</dd>
 </dl></section>
 <details class="source">
 <summary>
@@ -613,12 +615,12 @@ def simplify_weak_community_connections(H, weights=&#34;weight&#34;, t=0.2, by_d
     Function to convert distance weights into similarity weights and vice versa. Adds a new edge attribute that contains 1-x.
 
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to modify
         current_weight (str): edge attribute to be converted
         new_weight (str): name of to be added edge attribute.
 
     Returns:
-        graph (networkX graph object):
+        graph (networkX graph object): modified graph
     &#34;&#34;&#34;
 
     for edge in G.edges():
@@ -647,7 +649,7 @@ def simplify_weak_community_connections(H, weights=&#34;weight&#34;, t=0.2, by_d
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>minimum</code> <code>spanning</code> <code>tree</code> (<code>networkX</code> <code>graph</code> <code>object</code>):</dt>
+<dt><code>minimum</code> <code>spanning</code> <code>tree</code> (<code>networkX</code> <code>graph</code> <code>object</code>): of <code>G</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -665,7 +667,7 @@ def simplify_weak_community_connections(H, weights=&#34;weight&#34;, t=0.2, by_d
         new_weight (str): if is_distance is False the estimated distances are added with this name to the graph.
                     
     Returns:
-        minimum spanning tree (networkX graph object): 
+        minimum spanning tree (networkX graph object): of G 
     &#34;&#34;&#34;
 
 
@@ -689,7 +691,8 @@ def simplify_weak_community_connections(H, weights=&#34;weight&#34;, t=0.2, by_d
 <section class="desc"><p>Removes edges from a graph.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>H (networkX graph object):</dt>
+<dt><strong><code>H</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to modify</dd>
 <dt><strong><code>treshold</code></strong> :&ensp;<code>float</code> or <code>None</code></dt>
 <dd>in [0,1]. Edges below or above this treshold are removed. If treshold is not None percentage needs to be None.</dd>
 <dt><strong><code>percentage</code></strong> :&ensp;<code>float</code> or <code>None</code></dt>
@@ -706,7 +709,7 @@ If is "betweenness" then either treshold or percentage can be set and top/ botto
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>simplified</code> <code>graph</code> (<code>networkX</code> <code>graph</code> <code>object</code>):</dt>
+<dt><code>simplified</code> <code>graph</code> (<code>networkX</code> <code>graph</code> <code>object</code>): of <code>H</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -719,7 +722,7 @@ If is "betweenness" then either treshold or percentage can be set and top/ botto
     Removes edges from a graph.
 
     Parameters:
-        H (networkX graph object):
+        H (networkX graph object): to modify
         treshold (float or None): in [0,1]. Edges below or above this treshold are removed. If treshold is not None percentage needs to be None.
         percentage (float or None): in [0,1]. Percentage of top/ bottom ranked edges are removed. If percentage is not None then treshold needs to be None.
         based_on (str or list): if &#34;weight&#34; then treshold needs to be not None and all edges in the graph below or above this value are removed.
@@ -729,7 +732,7 @@ If is "betweenness" then either treshold or percentage can be set and top/ botto
         attribute (str): name of edge attribute to be used when based_on is &#34;weight&#34;.       
 
     Returns:
-        simplified graph (networkX graph object):
+        simplified graph (networkX graph object): of H
         
     &#34;&#34;&#34;
 
@@ -838,7 +841,8 @@ If is "betweenness" then either treshold or percentage can be set and top/ botto
 If all are below thr treshold then none are removed.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (networkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to modify</dd>
 <dt><strong><code>treshold</code></strong> :&ensp;<code>float</code> or <code>None</code></dt>
 <dd>in [0,1]. Edges below or above this treshold are removed. If treshold is not None percentage needs to be None.</dd>
 <dt><strong><code>percentage</code></strong> :&ensp;<code>float</code> or <code>None</code></dt>
@@ -850,7 +854,7 @@ If all are below thr treshold then none are removed.</p>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>simplified</code> <code>graph</code> (<code>networkX</code> <code>graph</code> <code>object</code>)</dt>
+<dt><code>simplified</code> <code>graph</code> (<code>networkX</code> <code>graph</code> <code>object</code>): of <code>G</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -863,14 +867,14 @@ If all are below thr treshold then none are removed.</p>
     If all are below thr treshold then none are removed.
 
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to modify
         treshold (float or None): in [0,1]. Edges below or above this treshold are removed. If treshold is not None percentage needs to be None.
         percentage (float or None): in [0,1]. Percentage of top/ bottom ranked edges are removed for each node individually. If percentage is not None then treshold needs to be None.
         direction (str): options are &#34;bottom&#34; (edges below treshold or weakest percentage edges are removed) and &#34;top&#34; (edges above the treshold or highest ranked perecentage edges are removed).
         attribute (str): name of edge attribute to be used.
         
     Returns:
-        simplified graph (networkX graph object)
+        simplified graph (networkX graph object): of G
 
 
 
@@ -963,7 +967,7 @@ If all are below thr treshold then none are removed.</p>
 </code></dt>
 <dd>
 <section class="desc"><p>Removes nodes from a graph.</p>
-<pre><code>H (networkX graph object):
+<pre><code>H (networkX graph object): to modify
 treshold (float or None): in [0,1]. Nodes below or above this treshold are removed. If treshold is not None percentage needs to be None.
 percentage (float or None): in [0,1]. Percentage of top/ bottom ranked nodes are removed. If percentage is not None then treshold needs to be None.
 based_on (str or list): if is "degree" nodes are removed based on their degree centrality. If is "betweenness" nodes are removed on their betweenness centrality scores.
@@ -972,7 +976,7 @@ direction (str): options are "bottom" (nodes below treshold or weakest percentag
 </code></pre>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>simplified</code> <code>graph</code> (<code>networkX</code> <code>graph</code> <code>object</code>):</dt>
+<dt><code>simplified</code> <code>graph</code> (<code>networkX</code> <code>graph</code> <code>object</code>): of <code>H</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -984,7 +988,7 @@ direction (str): options are "bottom" (nodes below treshold or weakest percentag
     &#34;&#34;&#34;
     Removes nodes from a graph.
 
-        H (networkX graph object):
+        H (networkX graph object): to modify
         treshold (float or None): in [0,1]. Nodes below or above this treshold are removed. If treshold is not None percentage needs to be None.
         percentage (float or None): in [0,1]. Percentage of top/ bottom ranked nodes are removed. If percentage is not None then treshold needs to be None.
         based_on (str or list): if is &#34;degree&#34; nodes are removed based on their degree centrality. If is &#34;betweenness&#34; nodes are removed on their betweenness centrality scores.
@@ -992,7 +996,7 @@ direction (str): options are "bottom" (nodes below treshold or weakest percentag
         direction (str): options are &#34;bottom&#34; (nodes below treshold or weakest percentage of nodes are removed) and &#34;top&#34; (nodes above the treshold or highest ranked perecentage nodes are removed).
         
     Returns:
-        simplified graph (networkX graph object):
+        simplified graph (networkX graph object): of H
     &#34;&#34;&#34;
 
     G = H.copy()
@@ -1152,7 +1156,8 @@ Only one iteration of
 communities.weak_link_communities() is performed.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>G (networkX graph object):</dt>
+<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>to modify</dd>
 <dt><strong><code>weights</code></strong> :&ensp;<code>str</code></dt>
 <dd>edge attribute to be used.</dd>
 <dt><strong><code>t</code></strong> :&ensp;<code>float</code></dt>
@@ -1169,7 +1174,7 @@ If None will be ignored.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>simplified</code> <code>graph</code> (<code>networkX</code> <code>graph</code> <code>object</code>):</dt>
+<dt><code>simplified</code> <code>graph</code> (<code>networkX</code> <code>graph</code> <code>object</code>): of <code>G</code></dt>
 <dd>&nbsp;</dd>
 </dl></section>
 <details class="source">
@@ -1186,7 +1191,7 @@ If None will be ignored.</dd>
     Only one iteration of  communities.weak_link_communities() is performed.
     
     Parameters:
-        G (networkX graph object):
+        G (networkX graph object): to modify
         weights (str): edge attribute to be used.
         t (float): in [0,1]. Treshold on which edges are &#34;selected as weak&#34; and to be removed if they occure &lt;= in of samples neighbors.
         by_degree (boolean): if True then the number of samplings for each node is based on its degree. Each node will sample from its neighbors r*node_degree times.
@@ -1197,7 +1202,7 @@ If None will be ignored.</dd>
                 If None will be ignored.
         
     Returns:
-        simplified graph (networkX graph object):
+        simplified graph (networkX graph object): of G
 
     &#34;&#34;&#34;
    

@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
 <meta name="generator" content="pdoc 0.7.5" />
 <title>graphAlgorithms.plotting API documentation</title>
-<meta name="description" content="Contains some simple plotting functions." />
+<meta name="description" content="Contains some plotting functions." />
 <link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
 <link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
 <link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
@@ -20,13 +20,13 @@
 <h1 class="title">Module <code>graphAlgorithms.plotting</code></h1>
 </header>
 <section id="section-intro">
-<p>Contains some simple plotting functions.</p>
+<p>Contains some plotting functions.</p>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
 <pre><code class="python">&#39;&#39;&#39;
-Contains some simple plotting functions.
+Contains some plotting functions.
 &#39;&#39;&#39;
 
 
@@ -88,7 +88,7 @@ def plot_hierarchical_clustering(matrix, xlabels=None, ylabels=None, size=(10,8)
         cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
 
     Returns:
-        fig (matplotlib figure): heatmap object
+        fig (matplotlib figure): cluster-heatmap object
     &#34;&#34;&#34;
 
     if xlabels is None:
@@ -118,7 +118,7 @@ def plot_clustering_heatmap(clusters, matrix, labels, cmap=&#34;bone&#34;, size=
         size (tuple): figuresize
 
     Returns:
-        fig (matplotlib figure):
+        fig (matplotlib figure): of clustering
     &#34;&#34;&#34;
 
 
@@ -308,13 +308,13 @@ def plot_graph(G, pos=None, with_labels=False, node_color=&#34;#A0A0A0&#34;, edg
 
 
 
-def plot_communities(G, communities, pos=None, with_labels=False, node_color=None, edge_color=&#34;#A0A0A0&#34;,node_size=1000, width=2.0, node_border=&#34;black&#34;, figsize=(5,5)):
+def plot_communities(G, com, pos=None, with_labels=False, node_color=None, edge_color=&#34;#A0A0A0&#34;,node_size=1000, width=2.0, node_border=&#34;black&#34;, figsize=(5,5)):
     &#34;&#34;&#34;
     Plots a Graph object.
     
     Parameters:
         G (networkx graph object): graph to be plotted
-        communities (dict): where node ID is key and value is list of communities this node belongs to. 
+        com (dict): where node ID is key and value is list of communities this node belongs to. 
             Only the first node assignment will be considered during color selection. If a default dict is returned by
             the selected community algorithms it needs to be transformed with dict(defaultdict).
         pos (pos or None): node positions as returned by networkx position functions. If None
@@ -339,7 +339,7 @@ def plot_communities(G, communities, pos=None, with_labels=False, node_color=Non
     
     if node_color is None:
         #number of communities / colors to generate
-        n = communities.get_number_of_communities(communities)
+        n = communities.get_number_of_communities(com)
 
         colors = {}
         for i in range(n):
@@ -355,7 +355,7 @@ def plot_communities(G, communities, pos=None, with_labels=False, node_color=Non
 
         node_color = []
         for node in G.nodes():
-            node_color.append(colors[communities[node][0]])
+            node_color.append(colors[com[node][0]])
 
 
     fig = plt.figure(figsize=figsize) 
@@ -474,8 +474,8 @@ clusterings.</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>fig</code> (<code>matplotlib</code> <code>figure</code>):</dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib</code> <code>figure</code></dt>
+<dd>of clustering</dd>
 </dl></section>
 <details class="source">
 <summary>
@@ -494,7 +494,7 @@ clusterings.</dd>
         size (tuple): figuresize
 
     Returns:
-        fig (matplotlib figure):
+        fig (matplotlib figure): of clustering
     &#34;&#34;&#34;
 
 
@@ -575,7 +575,7 @@ clusterings.</dd>
 </details>
 </dd>
 <dt id="graphAlgorithms.plotting.plot_communities"><code class="name flex">
-<span>def <span class="ident">plot_communities</span></span>(<span>G, communities, pos=None, with_labels=False, node_color=None, edge_color='#A0A0A0', node_size=1000, width=2.0, node_border='black', figsize=(5, 5))</span>
+<span>def <span class="ident">plot_communities</span></span>(<span>G, com, pos=None, with_labels=False, node_color=None, edge_color='#A0A0A0', node_size=1000, width=2.0, node_border='black', figsize=(5, 5))</span>
 </code></dt>
 <dd>
 <section class="desc"><p>Plots a Graph object.</p>
@@ -583,7 +583,7 @@ clusterings.</dd>
 <dl>
 <dt><strong><code>G</code></strong> :&ensp;<code>networkx</code> <code>graph</code> <code>object</code></dt>
 <dd>graph to be plotted</dd>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
+<dt><strong><code>com</code></strong> :&ensp;<code>dict</code></dt>
 <dd>where node ID is key and value is list of communities this node belongs to.
 Only the first node assignment will be considered during color selection. If a default dict is returned by
 the selected community algorithms it needs to be transformed with dict(defaultdict).</dd>
@@ -621,13 +621,13 @@ it needs to be in the same order as G.edges() and color needs to be assigned for
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def plot_communities(G, communities, pos=None, with_labels=False, node_color=None, edge_color=&#34;#A0A0A0&#34;,node_size=1000, width=2.0, node_border=&#34;black&#34;, figsize=(5,5)):
+<pre><code class="python">def plot_communities(G, com, pos=None, with_labels=False, node_color=None, edge_color=&#34;#A0A0A0&#34;,node_size=1000, width=2.0, node_border=&#34;black&#34;, figsize=(5,5)):
     &#34;&#34;&#34;
     Plots a Graph object.
     
     Parameters:
         G (networkx graph object): graph to be plotted
-        communities (dict): where node ID is key and value is list of communities this node belongs to. 
+        com (dict): where node ID is key and value is list of communities this node belongs to. 
             Only the first node assignment will be considered during color selection. If a default dict is returned by
             the selected community algorithms it needs to be transformed with dict(defaultdict).
         pos (pos or None): node positions as returned by networkx position functions. If None
@@ -652,7 +652,7 @@ it needs to be in the same order as G.edges() and color needs to be assigned for
     
     if node_color is None:
         #number of communities / colors to generate
-        n = communities.get_number_of_communities(communities)
+        n = communities.get_number_of_communities(com)
 
         colors = {}
         for i in range(n):
@@ -668,7 +668,7 @@ it needs to be in the same order as G.edges() and color needs to be assigned for
 
         node_color = []
         for node in G.nodes():
-            node_color.append(colors[communities[node][0]])
+            node_color.append(colors[com[node][0]])
 
 
     fig = plt.figure(figsize=figsize) 
@@ -910,7 +910,7 @@ it needs to be in the same order as G.edges() and color needs to be assigned for
 <h2 id="returns">Returns</h2>
 <dl>
 <dt><strong><code>fig</code></strong> :&ensp;<code>matplotlib</code> <code>figure</code></dt>
-<dd>heatmap object</dd>
+<dd>cluster-heatmap object</dd>
 </dl></section>
 <details class="source">
 <summary>
@@ -929,7 +929,7 @@ it needs to be in the same order as G.edges() and color needs to be assigned for
         cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
 
     Returns:
-        fig (matplotlib figure): heatmap object
+        fig (matplotlib figure): cluster-heatmap object
     &#34;&#34;&#34;
 
     if xlabels is None:

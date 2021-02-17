@@ -53,7 +53,7 @@ def graphlet_helper(network, estimate_on=50, edge_attribute=&#34;weight&#34;, mo
     Estimates graphlets of different sizes  on a networks based on a random selection of nodes.
 
     Parameters:
-        network (networkX graph object)
+        network (networkX graph object): graph object to estimate on.
         estimate_on (int): graphlets are estimated based on a random selection of estimate_on nodes which cannot be larger than the number of nodes in G
         edge_attribute (str or None): if not None, then based on the provided edge attribute the size of the graphlets will be returned as list, which can be used to estimate its size distributions
         motif_min_siz (int): nodes size of smallest graphlet to be counted. Minimum permitted value is 2.
@@ -528,7 +528,8 @@ Includes graph size parameters, density, clustering, cycles, degree/ closeness/ 
 on a networks based on a random selection of nodes.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>network (networkX graph object)</dt>
+<dt><strong><code>network</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph object to estimate on.</dd>
 <dt><strong><code>estimate_on</code></strong> :&ensp;<code>int</code></dt>
 <dd>graphlets are estimated based on a random selection of estimate_on nodes which cannot be larger than the number of nodes in G</dd>
 <dt><strong><code>edge_attribute</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
@@ -554,7 +555,7 @@ on a networks based on a random selection of nodes.</p>
     Estimates graphlets of different sizes  on a networks based on a random selection of nodes.
 
     Parameters:
-        network (networkX graph object)
+        network (networkX graph object): graph object to estimate on.
         estimate_on (int): graphlets are estimated based on a random selection of estimate_on nodes which cannot be larger than the number of nodes in G
         edge_attribute (str or None): if not None, then based on the provided edge attribute the size of the graphlets will be returned as list, which can be used to estimate its size distributions
         motif_min_siz (int): nodes size of smallest graphlet to be counted. Minimum permitted value is 2.

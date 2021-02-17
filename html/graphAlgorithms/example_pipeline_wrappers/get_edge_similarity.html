@@ -107,7 +107,7 @@ def preprocess_edge_list(networks, is_file = False, location = None, names= None
         names (list or None): list of network names in same order as networks. If is_file is True then names will be used to store pickled objects.
 
     Returns:
-        networks with edge IDs or their pickled location (list):
+        networks with edge IDs or their pickled location (list): updated network list objects
         edge ID mapping (dict): keys are str of node IDs building an edge in format &#34;node1, node2&#34; and values are assigned ID.
         
     &#34;&#34;&#34;
@@ -271,15 +271,15 @@ def estimate_similarities_edges(network_lists, sorted_networks, binary,  kendall
         in_async (boolean): if True then run in async where applicable.
 
     Returns:
-        jaccard similarity (numpy matrix):
-        jaccard distance (numpy matrix):
-        percentage of shared edges (numpy matrix):
-        kendall correlation coefficient based on top edges (numpy matrix):
-        kendall p value based on top edges (numpy matrix):
-        kendall correlation coefficient based on bottom edges (numpy matrix):
-        kendall p value based on bottom edges (numpy matrix):
-        hamming distance (numpy matrix):
-        SMC (numpy matrix):
+        jaccard similarity (numpy matrix): matrix of jaccard similarity between network pairs
+        jaccard distance (numpy matrix): matrix of jaccard distance between network pairs
+        percentage of shared edges (numpy matrix): matrix of shared edge percentage between network pairs
+        kendall correlation coefficient based on top edges (numpy matrix): matrix of kendall coefficient between network pairs
+        kendall p value based on top edges (numpy matrix): matrix of kendall coefficient pval between network pairs
+        kendall correlation coefficient based on bottom edges (numpy matrix): matrix of kendall coefficient between network pairs
+        kendall p value based on bottom edges (numpy matrix): matrix of kendall coefficient pval between network pairs
+        hamming distance (numpy matrix): matrix of hamming distance between network pairs
+        SMC (numpy matrix): matrix of SMC coefficient between network pairs
 
     &#34;&#34;&#34;
 
@@ -327,24 +327,24 @@ def estimate_similarities_edges(network_lists, sorted_networks, binary,  kendall
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>jaccard</code> <code>similarity</code> (<code>numpy</code> <code>matrix</code>):</dt>
+<dt><code>jaccard</code> <code>similarity</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code> of <code>jaccard</code> <code>similarity</code> <code>between</code> <code>network</code> <code>pairs</code></dt>
 <dd>&nbsp;</dd>
-<dt><code>jaccard</code> <code>distance</code> (<code>numpy</code> <code>matrix</code>):</dt>
+<dt><code>jaccard</code> <code>distance</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code> of <code>jaccard</code> <code>distance</code> <code>between</code> <code>network</code> <code>pairs</code></dt>
 <dd>&nbsp;</dd>
-<dt><code>percentage</code> of <code>shared</code> <code>edges</code> (<code>numpy</code> <code>matrix</code>):</dt>
+<dt><code>percentage</code> of <code>shared</code> <code>edges</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code> of <code>shared</code> <code>edge</code> <code>percentage</code> <code>between</code> <code>network</code> <code>pairs</code></dt>
 <dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>correlation</code> <code>coefficient</code> <code>based</code> <code>on</code> <code>top</code> <code>edges</code> (<code>numpy</code> <code>matrix</code>):</dt>
+<dt><code>kendall</code> <code>correlation</code> <code>coefficient</code> <code>based</code> <code>on</code> <code>top</code> <code>edges</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code> of <code>kendall</code> <code>coefficient</code> <code>between</code> <code>network</code> <code>pairs</code></dt>
 <dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>p</code> <code>value</code> <code>based</code> <code>on</code> <code>top</code> <code>edges</code> (<code>numpy</code> <code>matrix</code>):</dt>
+<dt><code>kendall</code> <code>p</code> <code>value</code> <code>based</code> <code>on</code> <code>top</code> <code>edges</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code> of <code>kendall</code> <code>coefficient</code> <code>pval</code> <code>between</code> <code>network</code> <code>pairs</code></dt>
 <dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>correlation</code> <code>coefficient</code> <code>based</code> <code>on</code> <code>bottom</code> <code>edges</code> (<code>numpy</code> <code>matrix</code>):</dt>
+<dt><code>kendall</code> <code>correlation</code> <code>coefficient</code> <code>based</code> <code>on</code> <code>bottom</code> <code>edges</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code> of <code>kendall</code> <code>coefficient</code> <code>between</code> <code>network</code> <code>pairs</code></dt>
 <dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>p</code> <code>value</code> <code>based</code> <code>on</code> <code>bottom</code> <code>edges</code> (<code>numpy</code> <code>matrix</code>):</dt>
+<dt><code>kendall</code> <code>p</code> <code>value</code> <code>based</code> <code>on</code> <code>bottom</code> <code>edges</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code> of <code>kendall</code> <code>coefficient</code> <code>pval</code> <code>between</code> <code>network</code> <code>pairs</code></dt>
 <dd>&nbsp;</dd>
-<dt><code>hamming</code> <code>distance</code> (<code>numpy</code> <code>matrix</code>):</dt>
+<dt><code>hamming</code> <code>distance</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code> of <code>hamming</code> <code>distance</code> <code>between</code> <code>network</code> <code>pairs</code></dt>
 <dd>&nbsp;</dd>
-<dt><code>SMC</code> (<code>numpy</code> <code>matrix</code>):</dt>
-<dd>&nbsp;</dd>
+<dt><strong><code>SMC</code></strong> :&ensp;<code>numpy</code> <code>matrix</code></dt>
+<dd>matrix of SMC coefficient between network pairs</dd>
 </dl></section>
 <details class="source">
 <summary>
@@ -363,15 +363,15 @@ def estimate_similarities_edges(network_lists, sorted_networks, binary,  kendall
         in_async (boolean): if True then run in async where applicable.
 
     Returns:
-        jaccard similarity (numpy matrix):
-        jaccard distance (numpy matrix):
-        percentage of shared edges (numpy matrix):
-        kendall correlation coefficient based on top edges (numpy matrix):
-        kendall p value based on top edges (numpy matrix):
-        kendall correlation coefficient based on bottom edges (numpy matrix):
-        kendall p value based on bottom edges (numpy matrix):
-        hamming distance (numpy matrix):
-        SMC (numpy matrix):
+        jaccard similarity (numpy matrix): matrix of jaccard similarity between network pairs
+        jaccard distance (numpy matrix): matrix of jaccard distance between network pairs
+        percentage of shared edges (numpy matrix): matrix of shared edge percentage between network pairs
+        kendall correlation coefficient based on top edges (numpy matrix): matrix of kendall coefficient between network pairs
+        kendall p value based on top edges (numpy matrix): matrix of kendall coefficient pval between network pairs
+        kendall correlation coefficient based on bottom edges (numpy matrix): matrix of kendall coefficient between network pairs
+        kendall p value based on bottom edges (numpy matrix): matrix of kendall coefficient pval between network pairs
+        hamming distance (numpy matrix): matrix of hamming distance between network pairs
+        SMC (numpy matrix): matrix of SMC coefficient between network pairs
 
     &#34;&#34;&#34;
 
@@ -451,7 +451,7 @@ preprocess_edge_list().</dd>
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>networks</code> <code>with</code> <code>edge</code> <code>IDs</code> or <code>their</code> <code>pickled</code> <code>location</code> (<code>list</code>):</dt>
+<dt><code>networks</code> <code>with</code> <code>edge</code> <code>IDs</code> or <code>their</code> <code>pickled</code> <code>location</code> (<code>list</code>): <code>updated</code> <code>network</code> <code>list</code> <code>objects</code></dt>
 <dd>&nbsp;</dd>
 </dl>
 <p>edge ID mapping (dict): keys are str of node IDs building an edge in format "node1, node2" and values are assigned ID.</p></section>
@@ -470,7 +470,7 @@ preprocess_edge_list().</dd>
         names (list or None): list of network names in same order as networks. If is_file is True then names will be used to store pickled objects.
 
     Returns:
-        networks with edge IDs or their pickled location (list):
+        networks with edge IDs or their pickled location (list): updated network list objects
         edge ID mapping (dict): keys are str of node IDs building an edge in format &#34;node1, node2&#34; and values are assigned ID.
         
     &#34;&#34;&#34;

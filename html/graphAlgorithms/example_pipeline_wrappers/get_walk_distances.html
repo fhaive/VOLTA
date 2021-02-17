@@ -197,10 +197,10 @@ def helper_walk_sim(networks, performed_walks, nodes, network_ids, undirected=Tr
         edges_ranked (dict): as returned by helper_get_counts())
 
     Returns:
-        correlation edges (numpy matrix):
-        correlation nodes (numpy matrix):
-        correlation edges p-value (numpy matrix):
-        correlation nodes p-value (numpy matrix):
+        correlation edges (numpy matrix): between network pairs
+        correlation nodes (numpy matrix): between network pairs
+        correlation edges p-value (numpy matrix): between network pairs
+        correlation nodes p-value (numpy matrix): between network pairs
         intermediate correaltion scores edges (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes.
         intermediate correaltion scores nodes (dict):  if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes.
         intermediate p-values edges (dict): if return_all is True. Key is tuple of network IDs and value is list of p-values ordered as in nodes.
@@ -370,7 +370,7 @@ def helper_walks_multi(net, nodes, network_id=0, steps=10, number_of_walks=10, d
     Estimates random walks for specific or random select starting node on multiple cores.
 
     Parameters:
-        net (NetworkX graph object):
+        net (NetworkX graph object): graph to estimate on
         nodes (list): nodes to be investigated.
         network_id (str or int): name of network that can be set custom.
         steps (int): is size of random walk
@@ -543,13 +543,13 @@ edge fraction (dict): key is network ID ordered as in labels. Value is dict wher
 </dl>
 <h2 id="returns">Returns</h2>
 <dl>
-<dt><code>correlation</code> <code>edges</code> (<code>numpy</code> <code>matrix</code>):</dt>
+<dt><code>correlation</code> <code>edges</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
 <dd>&nbsp;</dd>
-<dt><code>correlation</code> <code>nodes</code> (<code>numpy</code> <code>matrix</code>):</dt>
+<dt><code>correlation</code> <code>nodes</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
 <dd>&nbsp;</dd>
-<dt><code>correlation</code> <code>edges</code> <code>p</code>-<code>value</code> (<code>numpy</code> <code>matrix</code>):</dt>
+<dt><code>correlation</code> <code>edges</code> <code>p</code>-<code>value</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
 <dd>&nbsp;</dd>
-<dt><code>correlation</code> <code>nodes</code> <code>p</code>-<code>value</code> (<code>numpy</code> <code>matrix</code>):</dt>
+<dt><code>correlation</code> <code>nodes</code> <code>p</code>-<code>value</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
 <dd>&nbsp;</dd>
 </dl>
 <p>intermediate correaltion scores edges (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes.
@@ -579,10 +579,10 @@ if return_all is True. Key is tuple of network IDs and value is list of p-values
         edges_ranked (dict): as returned by helper_get_counts())
 
     Returns:
-        correlation edges (numpy matrix):
-        correlation nodes (numpy matrix):
-        correlation edges p-value (numpy matrix):
-        correlation nodes p-value (numpy matrix):
+        correlation edges (numpy matrix): between network pairs
+        correlation nodes (numpy matrix): between network pairs
+        correlation edges p-value (numpy matrix): between network pairs
+        correlation nodes p-value (numpy matrix): between network pairs
         intermediate correaltion scores edges (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes.
         intermediate correaltion scores nodes (dict):  if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes.
         intermediate p-values edges (dict): if return_all is True. Key is tuple of network IDs and value is list of p-values ordered as in nodes.
@@ -816,7 +816,8 @@ Each walk is a sublist and contains the node IDs in order of their visit by the 
 <section class="desc"><p>Estimates random walks for specific or random select starting node on multiple cores.</p>
 <h2 id="parameters">Parameters</h2>
 <dl>
-<dt>net (NetworkX graph object):</dt>
+<dt><strong><code>net</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
+<dd>graph to estimate on</dd>
 <dt><strong><code>nodes</code></strong> :&ensp;<code>list</code></dt>
 <dd>nodes to be investigated.</dd>
 <dt><strong><code>network_id</code></strong> :&ensp;<code>str</code> or <code>int</code></dt>
@@ -852,7 +853,7 @@ If true then weight needs to be set</dd>
     Estimates random walks for specific or random select starting node on multiple cores.
 
     Parameters:
-        net (NetworkX graph object):
+        net (NetworkX graph object): graph to estimate on
         nodes (list): nodes to be investigated.
         network_id (str or int): name of network that can be set custom.
         steps (int): is size of random walk
