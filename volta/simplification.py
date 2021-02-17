@@ -23,7 +23,7 @@ import numpy
 from collections import Counter
 #sys.path.insert(1, '../../')
 #import communities
-import graphAlgorithms.communities as communities
+import volta.communities as communities
 
 
 

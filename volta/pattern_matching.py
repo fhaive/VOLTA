@@ -31,8 +31,8 @@ from random import randrange
 #from pyclustering.cluster.kmedoids import kmedoids
 import itertools
 #sys.path.insert(1, 'distances/')
-import graphAlgorithms.simplification as simplification
-import graphAlgorithms.clustering as clustering
+import volta.simplification as simplification
+import volta.clustering as clustering
 import bct
 import community as community_louvain
 from sklearn.utils.validation import check_random_state

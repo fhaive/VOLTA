@@ -8,10 +8,10 @@ import pandas as pd
 import csv
 import random
 import sys
-import graphAlgorithms.distances.global_distances as global_distances
-import graphAlgorithms.distances.local as local
-import graphAlgorithms.simplification as simplification
-import graphAlgorithms.distances.trees as trees
+import volta.distances.global_distances as global_distances
+import volta.distances.local as local
+import volta.simplification as simplification
+import volta.distances.trees as trees
 import pickle
 from scipy.stats import kurtosis, skew, kendalltau
 import statistics

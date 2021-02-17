@@ -11,7 +11,7 @@ import numpy as np
 from scipy.stats.stats import pearsonr 
 import networkx as nx
 import random
-import graphAlgorithms.communities as communities
+import volta.communities as communities
 
 
 def plot_heatmap(matrix, xlabels=None, ylabels=None, size=(10,8), cmap="bone", annotation=False):
