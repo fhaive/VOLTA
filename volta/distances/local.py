@@ -36,7 +36,7 @@ def __connected_component_subgraphs__(G):
 
 
 
-def generate_motifs(x=208):
+def __generate_motifs__(x=208):
     """ 
     Return the atlas of all connected graphs of 5 nodes or less.
     Uses networkx graph atlas, which returns all possible graphs with up to 7 nodes, based on https://networkx.github.io/documentation/stable/auto_examples/drawing/plot_atlas.html
@@ -193,7 +193,7 @@ def iterate_graphlets(G, estimate_on=300, edge_attribute=None, motif_min_size=3,
     if motif_max_size <= 6 and motif_min_size >= 2:
 
         #get all motifs
-        H = generate_motifs()
+        H = __generate_motifs__()
         motifs = [H.subgraph(c) for c in nx.connected_components(H)]
 
         graphlet_counter = {}
