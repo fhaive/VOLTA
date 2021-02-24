@@ -2764,7 +2764,7 @@ def active_modules(G, active_nodes, algorithms=[[louvain],[girvan_newman]], algo
         pval1 (float): in [0,1] pval cutoff to be applied in the first round of module selection
         pval2 (float): in [0,1] pval cutoff to be applied in the secondround of module selection
             
-        Output:
+    Output:
             active_modules (list): list of sublists. Each sublists represents an active module and its items represents
                 the nodes contained in it.
             active_pval (list): contains the corresponding corrected pvalues to active_modules. 
