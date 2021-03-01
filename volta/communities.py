@@ -2744,7 +2744,7 @@ def __steiner_tree__(G, terminal_nodes, weight="weight"):
 
 
 
-def active_modules(G, active_nodes, algorithms=[[louvain],[girvan_newman]], algorithm_parameters=[[{"weights":"weight","return_object": False}],[{"valuable_edge":"betweenness"}]], pval1 = 0.3, pval2=0.05):
+def active_modules(G, active_nodes, algorithms=[[louvain],[girvan_newman]], algorithm_parameters=[[{"weights":"weight","return_object": False}],[{"valuable_edge":"betweenness"}]], initialclustering=None, pval1 = 0.3, pval2=0.05):
     """
     Adjusted implementation of the DOMINO algorithm.
 
@@ -2761,6 +2761,10 @@ def active_modules(G, active_nodes, algorithms=[[louvain],[girvan_newman]], algo
             is calculated.
         algorithm_parameters(list): list of sublists, corresponding to the algorithms stated in algorithms.
             parameters need to be provided as dict.
+        initialclustering (dict or None): if None then the provided graph will be partitioned based on the stated algorithms. If dict
+            then instead of estimating an initial partitioning the provided partitioning will be used. Key is node ID and value is list of communities
+            node belongs to. The format correponds to the output of the provided community algorithms. If not None then in algorithms and algorithm_parameter
+            the first list can be subsidiced with an empty list - e.g. [[], [girvan_newman]] 
         pval1 (float): in [0,1] pval cutoff to be applied in the first round of module selection
         pval2 (float): in [0,1] pval cutoff to be applied in the secondround of module selection
             
@@ -2773,39 +2777,44 @@ def active_modules(G, active_nodes, algorithms=[[louvain],[girvan_newman]], algo
                 and its items represents the nodes contained in it.
             pvals (list): contains the corresponding corrected pvalues to all_modules. 
                 list is in same order as all_modules.
+            initialclustering (dict): the partitioning used on the provided graph in the initial partitioning step.
             
     """
     
     
     #do first round of module detection
     
-    if len(algorithms[0]) > 1:
-        #consensus
-        print("A consensus partitioning is calculated")
-        #calculate initial partitionings
-        community_list = []
-        for a in range(len(algorithms[0])):
-            algo = algorithms[0][a]
-            param = algorithm_parameters[0][a]
+    if initialclustering is None:
+        if len(algorithms[0]) > 1:
+            #consensus
+            print("A consensus partitioning is calculated")
+            #calculate initial partitionings
+            community_list = []
+            for a in range(len(algorithms[0])):
+                algo = algorithms[0][a]
+                param = algorithm_parameters[0][a]
+                
+                print("estimating communities ", algo.__name__)
+                community_list.append(algo(G, **param))
+            #TODO expose parameters
+            partitioning, cons1, consgraph  = fast_consensus(G, communities = community_list, algorithms=algorithms[0], parameters=algorithm_parameters[0], thresh=0.5, max_iter=50)
             
-            print("estimating communities ", algo.__name__)
-            community_list.append(algo(G, **param))
-        #TODO expose parameters
-        partitioning, cons1, consgraph  = fast_consensus(G, communities = community_list, algorithms=algorithms[0], parameters=algorithm_parameters[0], thresh=0.5, max_iter=50)
-        
-        
+            
+        else:
+            #do single partitioning
+            community_list = []
+            for a in range(len(algorithms[0])):
+                algo = algorithms[0][a]
+                param = algorithm_parameters[0][a]
+
+                print("estimating communities ", algo.__name__)
+                community_list.append(algo(G, **param))
+            partitioning = community_list[0]
+
     else:
-        #do single partitioning
-        community_list = []
-        for a in range(len(algorithms[0])):
-            algo = algorithms[0][a]
-            param = algorithm_parameters[0][a]
-
-            print("estimating communities ", algo.__name__)
-            community_list.append(algo(G, **param))
-        partitioning = community_list[0]
-
-    
+        partitioning = initialclustering
+    #save as return
+    initialclustering = partitioning
     #convert partitioning into list of lists format
     temp = convert_communities(partitioning)
     partitioning = []
@@ -2943,4 +2952,4 @@ def active_modules(G, active_nodes, algorithms=[[louvain],[girvan_newman]], algo
     print(len(enriched_active_modules), "active modules have been detected")
     print("returning enriched and all modules")
     
-    return enriched_active_modules, enriched_pval, all_modules, all_pval
+    return enriched_active_modules, enriched_pval, all_modules, all_pval, initialclustering
