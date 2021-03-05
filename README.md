@@ -38,7 +38,7 @@ adjust functionalities as needed. Additional complete analysis pipelines are pro
 - Install python-igraph . Based on your system there may be specific Prerequisites to fulfill. Refer to the igraph instructions for these.
 - For windows users please install the optional requirements as instructed here: https://github.com/GiulioRossetti/cdlib , else some of the community algorithms will not be available
 
-VOTLA has been tested on Linux, Mac and Windows systems for Python 3.5+.
+VOTLA has been tested on Linux, Mac and Windows systems for Python 3.6+.
 
 ### Install
 
