@@ -3,16 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.7.5" />
+<meta name="generator" content="pdoc 0.9.2" />
 <title>volta.communities API documentation</title>
 <meta name="description" content="Community detection &amp; evaluation algorithms.
 Many algorithms are imported from CDlib - https://github.com/GiulioRossetti/cdlib. But only a small …" />
-<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
-<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
-<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
 </head>
 <body>
 <main>
@@ -2773,7 +2775,7 @@ def __steiner_tree__(G, terminal_nodes, weight=&#34;weight&#34;):
 
 
 
-def active_modules(G, active_nodes, algorithms=[[louvain],[girvan_newman]], algorithm_parameters=[[{&#34;weights&#34;:&#34;weight&#34;,&#34;return_object&#34;: False}],[{&#34;valuable_edge&#34;:&#34;betweenness&#34;}]], pval1 = 0.3, pval2=0.05):
+def active_modules(G, active_nodes, algorithms=[[louvain],[girvan_newman]], algorithm_parameters=[[{&#34;weights&#34;:&#34;weight&#34;,&#34;return_object&#34;: False}],[{&#34;valuable_edge&#34;:&#34;betweenness&#34;}]], initialclustering=None, pval1 = 0.3, pval2=0.05):
     &#34;&#34;&#34;
     Adjusted implementation of the DOMINO algorithm.
 
@@ -2790,10 +2792,14 @@ def active_modules(G, active_nodes, algorithms=[[louvain],[girvan_newman]], algo
             is calculated.
         algorithm_parameters(list): list of sublists, corresponding to the algorithms stated in algorithms.
             parameters need to be provided as dict.
+        initialclustering (dict or None): if None then the provided graph will be partitioned based on the stated algorithms. If dict
+            then instead of estimating an initial partitioning the provided partitioning will be used. Key is node ID and value is list of communities
+            node belongs to. The format correponds to the output of the provided community algorithms. If not None then in algorithms and algorithm_parameter
+            the first list can be subsidiced with an empty list - e.g. [[], [girvan_newman]] 
         pval1 (float): in [0,1] pval cutoff to be applied in the first round of module selection
         pval2 (float): in [0,1] pval cutoff to be applied in the secondround of module selection
             
-        Output:
+    Output:
             active_modules (list): list of sublists. Each sublists represents an active module and its items represents
                 the nodes contained in it.
             active_pval (list): contains the corresponding corrected pvalues to active_modules. 
@@ -2802,39 +2808,44 @@ def active_modules(G, active_nodes, algorithms=[[louvain],[girvan_newman]], algo
                 and its items represents the nodes contained in it.
             pvals (list): contains the corresponding corrected pvalues to all_modules. 
                 list is in same order as all_modules.
+            initialclustering (dict): the partitioning used on the provided graph in the initial partitioning step.
             
     &#34;&#34;&#34;
     
     
     #do first round of module detection
     
-    if len(algorithms[0]) &gt; 1:
-        #consensus
-        print(&#34;A consensus partitioning is calculated&#34;)
-        #calculate initial partitionings
-        community_list = []
-        for a in range(len(algorithms[0])):
-            algo = algorithms[0][a]
-            param = algorithm_parameters[0][a]
+    if initialclustering is None:
+        if len(algorithms[0]) &gt; 1:
+            #consensus
+            print(&#34;A consensus partitioning is calculated&#34;)
+            #calculate initial partitionings
+            community_list = []
+            for a in range(len(algorithms[0])):
+                algo = algorithms[0][a]
+                param = algorithm_parameters[0][a]
+                
+                print(&#34;estimating communities &#34;, algo.__name__)
+                community_list.append(algo(G, **param))
+            #TODO expose parameters
+            partitioning, cons1, consgraph  = fast_consensus(G, communities = community_list, algorithms=algorithms[0], parameters=algorithm_parameters[0], thresh=0.5, max_iter=50)
             
-            print(&#34;estimating communities &#34;, algo.__name__)
-            community_list.append(algo(G, **param))
-        #TODO expose parameters
-        partitioning, cons1, consgraph  = fast_consensus(G, communities = community_list, algorithms=algorithms[0], parameters=algorithm_parameters[0], thresh=0.5, max_iter=50)
-        
-        
+            
+        else:
+            #do single partitioning
+            community_list = []
+            for a in range(len(algorithms[0])):
+                algo = algorithms[0][a]
+                param = algorithm_parameters[0][a]
+
+                print(&#34;estimating communities &#34;, algo.__name__)
+                community_list.append(algo(G, **param))
+            partitioning = community_list[0]
+
     else:
-        #do single partitioning
-        community_list = []
-        for a in range(len(algorithms[0])):
-            algo = algorithms[0][a]
-            param = algorithm_parameters[0][a]
-
-            print(&#34;estimating communities &#34;, algo.__name__)
-            community_list.append(algo(G, **param))
-        partitioning = community_list[0]
-
-    
+        partitioning = initialclustering
+    #save as return
+    initialclustering = partitioning
     #convert partitioning into list of lists format
     temp = convert_communities(partitioning)
     partitioning = []
@@ -2972,7 +2983,7 @@ def active_modules(G, active_nodes, algorithms=[[louvain],[girvan_newman]], algo
     print(len(enriched_active_modules), &#34;active modules have been detected&#34;)
     print(&#34;returning enriched and all modules&#34;)
     
-    return enriched_active_modules, enriched_pval, all_modules, all_pval</code></pre>
+    return enriched_active_modules, enriched_pval, all_modules, all_pval, initialclustering</code></pre>
 </details>
 </section>
 <section>
@@ -2983,45 +2994,43 @@ def active_modules(G, active_nodes, algorithms=[[louvain],[girvan_newman]], algo
 <h2 class="section-title" id="header-functions">Functions</h2>
 <dl>
 <dt id="volta.communities.active_modules"><code class="name flex">
-<span>def <span class="ident">active_modules</span></span>(<span>G, active_nodes, algorithms=[[&lt;function louvain&gt;], [&lt;function girvan_newman&gt;]], algorithm_parameters=[[{'weights': 'weight', 'return_object': False}], [{'valuable_edge': 'betweenness'}]], pval1=0.3, pval2=0.05)</span>
+<span>def <span class="ident">active_modules</span></span>(<span>G, active_nodes, algorithms=[[&lt;function louvain&gt;], [&lt;function girvan_newman&gt;]], algorithm_parameters=[[{'weights': 'weight', 'return_object': False}], [{'valuable_edge': 'betweenness'}]], initialclustering=None, pval1=0.3, pval2=0.05)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Adjusted implementation of the DOMINO algorithm.</p>
+<div class="desc"><p>Adjusted implementation of the DOMINO algorithm.</p>
 <p>Levi, Hagai, Ran Elkon, and Ron Shamir.
 "DOMINO: a network‐based active module identification algorithm with reduced rate of false calls."
 Molecular Systems Biology 17.1 (2021): e9593.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>Graph</code></dt>
-<dd>Graph object active modules are identified of</dd>
-<dt><strong><code>active_nodes</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of node IDs that are classified as "active"</dd>
-<dt><strong><code>algorithms</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of sublists, where first list contains the community detection algorithms
+<p>G (NetworkX Graph): Graph object active modules are identified of
+active_nodes (list): list of node IDs that are classified as "active"
+algorithms (list): list of sublists, where first list contains the community detection algorithms
 used in the first module detection round and the second list contains the algorithms to be used for
 the second round. If more than one algorithm is provided in each sublist a consensus partitioning
-is calculated.</dd>
-<dt>algorithm_parameters(list): list of sublists, corresponding to the algorithms stated in algorithms.</dt>
-<dt>parameters need to be provided as dict.</dt>
-<dt><strong><code>pval1</code></strong> :&ensp;<code>float</code></dt>
-<dd>in [0,1] pval cutoff to be applied in the first round of module selection</dd>
-<dt><strong><code>pval2</code></strong> :&ensp;<code>float</code></dt>
-<dd>in [0,1] pval cutoff to be applied in the secondround of module selection</dd>
-</dl>
-<p>Output:
-active_modules (list): list of sublists. Each sublists represents an active module and its items represents
+is calculated.
+algorithm_parameters(list): list of sublists, corresponding to the algorithms stated in algorithms.
+parameters need to be provided as dict.
+initialclustering (dict or None): if None then the provided graph will be partitioned based on the stated algorithms. If dict
+then instead of estimating an initial partitioning the provided partitioning will be used. Key is node ID and value is list of communities
+node belongs to. The format correponds to the output of the provided community algorithms. If not None then in algorithms and algorithm_parameter
+the first list can be subsidiced with an empty list - e.g. [[], [girvan_newman]]
+pval1 (float): in [0,1] pval cutoff to be applied in the first round of module selection
+pval2 (float): in [0,1] pval cutoff to be applied in the secondround of module selection</p>
+<h2 id="output">Output</h2>
+<p>active_modules (list): list of sublists. Each sublists represents an active module and its items represents
 the nodes contained in it.
 active_pval (list): contains the corresponding corrected pvalues to active_modules.
 list is in same order as active_modules.
 all_modules (list): list of sublists. Each sublists represents a module (active or not active)
 and its items represents the nodes contained in it.
 pvals (list): contains the corresponding corrected pvalues to all_modules.
-list is in same order as all_modules.</p></section>
+list is in same order as all_modules.
+initialclustering (dict): the partitioning used on the provided graph in the initial partitioning step.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def active_modules(G, active_nodes, algorithms=[[louvain],[girvan_newman]], algorithm_parameters=[[{&#34;weights&#34;:&#34;weight&#34;,&#34;return_object&#34;: False}],[{&#34;valuable_edge&#34;:&#34;betweenness&#34;}]], pval1 = 0.3, pval2=0.05):
+<pre><code class="python">def active_modules(G, active_nodes, algorithms=[[louvain],[girvan_newman]], algorithm_parameters=[[{&#34;weights&#34;:&#34;weight&#34;,&#34;return_object&#34;: False}],[{&#34;valuable_edge&#34;:&#34;betweenness&#34;}]], initialclustering=None, pval1 = 0.3, pval2=0.05):
     &#34;&#34;&#34;
     Adjusted implementation of the DOMINO algorithm.
 
@@ -3038,10 +3047,14 @@ list is in same order as all_modules.</p></section>
             is calculated.
         algorithm_parameters(list): list of sublists, corresponding to the algorithms stated in algorithms.
             parameters need to be provided as dict.
+        initialclustering (dict or None): if None then the provided graph will be partitioned based on the stated algorithms. If dict
+            then instead of estimating an initial partitioning the provided partitioning will be used. Key is node ID and value is list of communities
+            node belongs to. The format correponds to the output of the provided community algorithms. If not None then in algorithms and algorithm_parameter
+            the first list can be subsidiced with an empty list - e.g. [[], [girvan_newman]] 
         pval1 (float): in [0,1] pval cutoff to be applied in the first round of module selection
         pval2 (float): in [0,1] pval cutoff to be applied in the secondround of module selection
             
-        Output:
+    Output:
             active_modules (list): list of sublists. Each sublists represents an active module and its items represents
                 the nodes contained in it.
             active_pval (list): contains the corresponding corrected pvalues to active_modules. 
@@ -3050,39 +3063,44 @@ list is in same order as all_modules.</p></section>
                 and its items represents the nodes contained in it.
             pvals (list): contains the corresponding corrected pvalues to all_modules. 
                 list is in same order as all_modules.
+            initialclustering (dict): the partitioning used on the provided graph in the initial partitioning step.
             
     &#34;&#34;&#34;
     
     
     #do first round of module detection
     
-    if len(algorithms[0]) &gt; 1:
-        #consensus
-        print(&#34;A consensus partitioning is calculated&#34;)
-        #calculate initial partitionings
-        community_list = []
-        for a in range(len(algorithms[0])):
-            algo = algorithms[0][a]
-            param = algorithm_parameters[0][a]
+    if initialclustering is None:
+        if len(algorithms[0]) &gt; 1:
+            #consensus
+            print(&#34;A consensus partitioning is calculated&#34;)
+            #calculate initial partitionings
+            community_list = []
+            for a in range(len(algorithms[0])):
+                algo = algorithms[0][a]
+                param = algorithm_parameters[0][a]
+                
+                print(&#34;estimating communities &#34;, algo.__name__)
+                community_list.append(algo(G, **param))
+            #TODO expose parameters
+            partitioning, cons1, consgraph  = fast_consensus(G, communities = community_list, algorithms=algorithms[0], parameters=algorithm_parameters[0], thresh=0.5, max_iter=50)
             
-            print(&#34;estimating communities &#34;, algo.__name__)
-            community_list.append(algo(G, **param))
-        #TODO expose parameters
-        partitioning, cons1, consgraph  = fast_consensus(G, communities = community_list, algorithms=algorithms[0], parameters=algorithm_parameters[0], thresh=0.5, max_iter=50)
-        
-        
+            
+        else:
+            #do single partitioning
+            community_list = []
+            for a in range(len(algorithms[0])):
+                algo = algorithms[0][a]
+                param = algorithm_parameters[0][a]
+
+                print(&#34;estimating communities &#34;, algo.__name__)
+                community_list.append(algo(G, **param))
+            partitioning = community_list[0]
+
     else:
-        #do single partitioning
-        community_list = []
-        for a in range(len(algorithms[0])):
-            algo = algorithms[0][a]
-            param = algorithm_parameters[0][a]
-
-            print(&#34;estimating communities &#34;, algo.__name__)
-            community_list.append(algo(G, **param))
-        partitioning = community_list[0]
-
-    
+        partitioning = initialclustering
+    #save as return
+    initialclustering = partitioning
     #convert partitioning into list of lists format
     temp = convert_communities(partitioning)
     partitioning = []
@@ -3220,31 +3238,22 @@ list is in same order as all_modules.</p></section>
     print(len(enriched_active_modules), &#34;active modules have been detected&#34;)
     print(&#34;returning enriched and all modules&#34;)
     
-    return enriched_active_modules, enriched_pval, all_modules, all_pval</code></pre>
+    return enriched_active_modules, enriched_pval, all_modules, all_pval, initialclustering</code></pre>
 </details>
 </dd>
 <dt id="volta.communities.agglomerative_clustering"><code class="name flex">
 <span>def <span class="ident">agglomerative_clustering</span></span>(<span>G, is_distance=True, linkage='complete', distance_threshold=0.2)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Clusters on the adjacency matrix of a graph. Cells need to contain distance or similarity values. Based on sklearn.</p>
+<div class="desc"><p>Clusters on the adjacency matrix of a graph. Cells need to contain distance or similarity values. Based on sklearn.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>to estimate on</dd>
-<dt><strong><code>is_distance</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True the values contained in the adjacency matrix are used for clustering. If False they are converted into a distance first with 1-x.</dd>
-<dt><strong><code>linkage</code></strong> :&ensp;<code>str</code></dt>
-<dd>method to be used. Options are
-"complete", "average", "single".</dd>
-<dt><strong><code>distance_treshold</code></strong> :&ensp;<code>float</code></dt>
-<dd>treshold above which clusters will be merged.</dd>
-</dl>
+<p>G (networkX graph object): to estimate on
+is_distance (boolean): if True the values contained in the adjacency matrix are used for clustering. If False they are converted into a distance first with 1-x.
+linkage (str): method to be used. Options are
+"complete", "average", "single".
+distance_treshold (float): treshold above which clusters will be merged.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key are node IDs and value is list of communities that the node belongs to.</dd>
-</dl></section>
+<p>communities (dict): key are node IDs and value is list of communities that the node belongs to.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -3292,28 +3301,19 @@ list is in same order as all_modules.</p></section>
 <span>def <span class="ident">angel</span></span>(<span>G, treshold=0.5, min_community_size=3, return_object=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><h2 id="references">References</h2>
+<div class="desc"><h2 id="references">References</h2>
 <p><a href="https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.angel.html#cdlib.algorithms.angel">https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.angel.html#cdlib.algorithms.angel</a></p>
 <p>Rossetti, Giulio. “Exorcising the Demon: Angel, Efficient Node-Centric Community Discovery.”
 International Conference on Complex Networks and Their Applications. Springer, Cham, 2019.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>to estimate on</dd>
-<dt><strong><code>treshold</code></strong> :&ensp;<code>float</code></dt>
-<dd>in
-[0,1]. Merging treshold.</dd>
-<dt><strong><code>min_community_size</code></strong> :&ensp;<code>int</code></dt>
-<dd>minimum community size.</dd>
-<dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></dd>
-</dl>
+<p>G (networkX graph object): to estimate on
+treshold (float): in
+[0,1]. Merging treshold.
+min_community_size (int): minimum community size.
+return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key are node IDs and value is list of communities that node belongs to.</dd>
-</dl>
-<p>fitness parameters (NodeClustering object): if return_object is True.</p></section>
+<p>communities (dict): key are node IDs and value is list of communities that node belongs to.
+fitness parameters (NodeClustering object): if return_object is True.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -3354,26 +3354,18 @@ International Conference on Complex Networks and Their Applications. Springer, C
 <span>def <span class="ident">async_fluid</span></span>(<span>G, k=5, return_object=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Propagation-based algorithm, were the desired number of communities needs to be set.</p>
+<div class="desc"><p>Propagation-based algorithm, were the desired number of communities needs to be set.</p>
 <h2 id="reference">Reference</h2>
 <p><a href="https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.async_fluid.html#cdlib.algorithms.async_fluid">https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.async_fluid.html#cdlib.algorithms.async_fluid</a></p>
 <p>Ferran Parés, Dario Garcia-Gasulla, Armand Vilalta, Jonatan Moreno, Eduard Ayguadé, Jesús Labarta, Ulises Cortés, Toyotaro Suzumura T.
 Fluid Communities: A Competitive and Highly Scalable Community Detection Algorithm.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>to estimate on</dd>
-<dt><strong><code>k</code></strong> :&ensp;<code>int</code></dt>
-<dd>number of desired communities.</dd>
-<dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></dd>
-</dl>
+<p>G (networkX graph object): to estimate on
+k (int): number of desired communities.
+return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key are node IDs and value is list of communities that node belongs to.</dd>
-</dl>
-<p>fitness parameters (NodeClustering object): if return_object is True.</p></section>
+<p>communities (dict): key are node IDs and value is list of communities that node belongs to.
+fitness parameters (NodeClustering object): if return_object is True.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -3418,24 +3410,18 @@ Fluid Communities: A Competitive and Highly Scalable Community Detection Algorit
 <span>def <span class="ident">average_internal_degree</span></span>(<span>communities, G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates the average internal degree of a communities member nodes. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+<div class="desc"><p>Estimates the average internal degree of a communities member nodes. This measurement is community specific and an average score + distributional parameters over all communities is reported.
 A high within community degree is prefered, indicating a strong connectivity within its members. Based on pquality.</p>
 <h2 id="references">References</h2>
 <p>Radicchi, F., Castellano, C., Cecconi, F., Loreto, V., &amp; Parisi, D. (2004).
 Defining and identifying communities in networks. Proceedings of the National Academy of Sciences, 101(9), 2658-2663.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>individaul</code> <code>scores</code> (<code>dict</code>): <code>key</code> <code>is</code> <code>community</code> <code>ID</code> <code>and</code> <code>value</code> <code>is</code> <code>its</code> <code>average</code> <code>internal</code> <code>degree</code></dt>
-<dd>&nbsp;</dd>
-</dl>
-<p>mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-If there are less than 2 communities None is returned.</p></section>
+<p>individaul scores (dict): key is community ID and value is its average internal degree
+mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
+If there are less than 2 communities None is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -3496,18 +3482,15 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">clustering_coefficient</span></span>(<span>communities, G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates thr average clustering coefficient of the different communities. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+<div class="desc"><p>Estimates thr average clustering coefficient of the different communities. This measurement is community specific and an average score + distributional parameters over all communities is reported.
 A high value is preferred.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.</p>
 <h2 id="returns">Returns</h2>
 <p>individaul scores (dict): key is community ID and value its score.
 mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-If there are less than 2 communities None is returned.</p></section>
+If there are less than 2 communities None is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -3567,20 +3550,16 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">community_average_shortest_path</span></span>(<span>communities, G, weight='weight')</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates thr average shortest path within a community. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+<div class="desc"><p>Estimates thr average shortest path within a community. This measurement is community specific and an average score + distributional parameters over all communities is reported.
 A small score is preferred.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-<dt><strong><code>weight</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
-<dd>edge attribute to be considered for shortest paths. If is None all edges are considered equal.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.
+weight (str or None): edge attribute to be considered for shortest paths. If is None all edges are considered equal.</p>
 <h2 id="returns">Returns</h2>
 <p>individaul scores (dict): key is community ID and value its score.
 mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-If there are less than 2 communities None is returned.</p></section>
+If there are less than 2 communities None is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -3639,20 +3618,16 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">community_average_shortest_path_fraction</span></span>(<span>communities, G, weight='weight')</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates the average shortest path within a community w.r.t avgerage shortest path in the whole graph.This measurement is community specific and an average score + distributional parameters over all communities is reported.
+<div class="desc"><p>Estimates the average shortest path within a community w.r.t avgerage shortest path in the whole graph.This measurement is community specific and an average score + distributional parameters over all communities is reported.
 A small score is preferred.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-<dt><strong><code>weight</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
-<dd>edge attribute to be considered for shortest paths. If is None all edges are considered equal.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.
+weight (str or None): edge attribute to be considered for shortest paths. If is None all edges are considered equal.</p>
 <h2 id="returns">Returns</h2>
 <p>individaul scores (dict): key is community ID and value its score.
 mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-If there are less than 2 communities None is returned.</p></section>
+If there are less than 2 communities None is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -3732,18 +3707,15 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">community_density_to_graph</span></span>(<span>communities, G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates the community density with respect to the complete graph density. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+<div class="desc"><p>Estimates the community density with respect to the complete graph density. This measurement is community specific and an average score + distributional parameters over all communities is reported.
 A high score is preferred.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.</p>
 <p>Returns:
 individaul scores (dict): key is community ID and value its score.
 mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-If there are less than 2 communities None is returned.</p></section>
+If there are less than 2 communities None is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -3801,21 +3773,15 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">community_modularity</span></span>(<span>communities, G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates a communities modularity. A high score is prefered. Based on pquality.</p>
+<div class="desc"><p>Estimates a communities modularity. A high score is prefered. Based on pquality.</p>
 <h2 id="references">References</h2>
 <p>Newman, M.E.J. &amp; Girvan, M. `Finding and evaluating community structure in networks.
 Physical Review E 69, 26113(2004).</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>score</code></strong> :&ensp;<code>float</code></dt>
-<dd>modularity score</dd>
-</dl></section>
+<p>score (float): modularity score</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -3851,20 +3817,17 @@ Physical Review E 69, 26113(2004).</p>
 <span>def <span class="ident">conductance</span></span>(<span>communities, G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates conductance, which is the fraction of edges leaving the community. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+<div class="desc"><p>Estimates conductance, which is the fraction of edges leaving the community. This measurement is community specific and an average score + distributional parameters over all communities is reported.
 A small within community score is prefered. Based on pquality.</p>
 <h2 id="references">References</h2>
 <p>Shi, J., Malik, J.: Normalized cuts and image segmentation. Departmental Papers (CIS), 107 (2000)</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.</p>
 <h2 id="returns">Returns</h2>
 <p>individaul scores (dict): key is community ID and value its score.
 mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-If there are less than 2 communities None is returned.</p></section>
+If there are less than 2 communities None is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -3925,18 +3888,12 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">convert_communities</span></span>(<span>communities)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Converts the community object returned by the community detection algorithms into another dict format.
+<div class="desc"><p>Converts the community object returned by the community detection algorithms into another dict format.
 Where keys are community IDs and values are lists of nodes in that community.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>as returned by the community detection algorithms.</dd>
-</dl>
+<p>communities (dict): as returned by the community detection algorithms.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>transformed object.</dd>
-</dl></section>
+<p>communities (dict): transformed object.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -3960,36 +3917,22 @@ Where keys are community IDs and values are lists of nodes in that community.</p
 <span>def <span class="ident">cpm</span></span>(<span>G, initial_membership=None, weights='weight', resolution_parameter=1, return_object=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Finds communities of a particular density.</p>
+<div class="desc"><p>Finds communities of a particular density.</p>
 <h2 id="references">References</h2>
 <p><a href="https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.cpm.html#cdlib.algorithms.cpm">https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.cpm.html#cdlib.algorithms.cpm</a></p>
 <p>Traag, V. A., Van Dooren, P., &amp; Nesterov, Y. (2011).
 Narrow scope for resolution-limit-free community detection. Physical Review E, 84(1), 016114. 10.1103/PhysRevE.84.016114</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>to estimate on</dd>
-<dt><strong><code>initial_membership</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
-<dd>list of iInitial membership for the partition. If None then defaults to a singleton partition.</dd>
-<dt><strong><code>weights</code></strong> :&ensp;<code>str</code></dt>
-<dd>edge attribute to be used.</dd>
-<dt><strong><code>resolution_parameter</code></strong> :&ensp;<code>float</code></dt>
-<dd>
-<blockquote>
-<ol>
-<li>Controls the community resolution. Higher values lead to more communities, while lower values lead to fewer communities.</li>
-</ol>
-</blockquote>
-</dd>
-<dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></dd>
-</dl>
+<p>G (networkX graph object): to estimate on
+initial_membership (list or None):
+list of iInitial membership for the partition. If None then defaults to a singleton partition.
+weights (str): edge attribute to be used.
+resolution_parameter (float):
+&gt; 0. Controls the community resolution. Higher values lead to more communities, while lower values lead to fewer communities.
+return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key are node IDs and value is list of communities that node belongs to.</dd>
-</dl>
-<p>fitness parameters (NodeClustering object): if return_object is True.</p></section>
+<p>communities (dict): key are node IDs and value is list of communities that node belongs to.
+fitness parameters (NodeClustering object): if return_object is True.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -4032,24 +3975,16 @@ Narrow scope for resolution-limit-free community detection. Physical Review E, 8
 <span>def <span class="ident">create_initial_consensus</span></span>(<span>graph, communities, thresh=0.2)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Creates initial consensus graph out of provided community detection algorithms.
+<div class="desc"><p>Creates initial consensus graph out of provided community detection algorithms.
 Can be used as input of fast_consensus().</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>graph</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>to estimate on</dd>
-<dt><strong><code>communities</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of initial clusterings. Items are assumed to be dicts as returned by the community detection algorithms.</dd>
-<dt><strong><code>tresh</code></strong> :&ensp;<code>float</code></dt>
-<dd>threshold on if to add a node pair to the same community or not.</dd>
-</dl>
+<p>graph (networkX graph object): to estimate on
+communities (list): list of initial clusterings. Items are assumed to be dicts as returned by the community detection algorithms.
+tresh (float): threshold on if to add a node pair to the same community or not.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt>initial communities (dict): merged communities detected. Keys are node IDs and value is list of communities that node belongs to.</dt>
-<dt><code>consensus</code> <code>communities</code> (<code>dict</code>): <code>key</code> <code>is</code> <code>edge</code> <code>ID</code> <code>and</code> <code>value</code> <code>is</code> <code>how</code> <code>often</code> <code>the</code> <code>edge</code> <code>is</code> <code>in</code> <code>the</code> <code>same</code> <code>community</code></dt>
-<dd>&nbsp;</dd>
-</dl>
-<p>consensus graph (networkX graph object): graph object of consensus communities. Edge weights indicate how often the 2 nodes are in the same community.</p></section>
+<p>initial communities (dict): merged communities detected. Keys are node IDs and value is list of communities that node belongs to.
+consensus communities (dict): key is edge ID and value is how often the edge is in the same community
+consensus graph (networkX graph object): graph object of consensus communities. Edge weights indicate how often the 2 nodes are in the same community.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -4098,22 +4033,18 @@ Can be used as input of fast_consensus().</p>
 <span>def <span class="ident">cut_ratio</span></span>(<span>communities, G, normalized=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates the (normalized) cut ratio. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+<div class="desc"><p>Estimates the (normalized) cut ratio. This measurement is community specific and an average score + distributional parameters over all communities is reported.
 A small score is preferred. Based on pquality.</p>
 <h2 id="references">References</h2>
 <p>Fortunato, S.: Community detection in graphs. Physics reports 486(3-5), 75–174 (2010)</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-<dt><strong><code>normalized</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True the normalized cut ratio is returned.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.
+normalized (boolean): if True the normalized cut ratio is returned.</p>
 <p>Returns:
 individaul scores (dict): key is community ID and value its score.
 mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-If there are less than 2 communities None is returned.</p></section>
+If there are less than 2 communities None is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -4177,24 +4108,16 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">ego_networks</span></span>(<span>G, level=1, return_object=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Based on ego networks.</p>
+<div class="desc"><p>Based on ego networks.</p>
 <h2 id="references">References</h2>
 <p><a href="https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.ego_networks.html#cdlib.algorithms.ego_networks">https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.ego_networks.html#cdlib.algorithms.ego_networks</a></p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>to estimate on</dd>
-<dt><strong><code>level</code></strong> :&ensp;<code>int</code></dt>
-<dd>from a node its neighbors within a community have distance &lt;= level.</dd>
-<dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></dd>
-</dl>
+<p>G (networkX graph object): to estimate on
+level (int): from a node its neighbors within a community have distance &lt;= level.
+return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key are node IDs and value is list of communities that node belongs to.</dd>
-</dl>
-<p>fitness parameters (NodeClustering object): if return_object is True.</p></section>
+<p>communities (dict): key are node IDs and value is list of communities that node belongs to.
+fitness parameters (NodeClustering object): if return_object is True.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -4235,39 +4158,26 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">fast_consensus</span></span>(<span>G, communities, algorithms=[], parameters=[], thresh=0.2, delta=0.02, max_iter=100, initial=None)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>This is an adapted implementation of the fast_consensus algorithm.</p>
+<div class="desc"><p>This is an adapted implementation of the fast_consensus algorithm.</p>
 <h2 id="references">References</h2>
 <p><a href="https://github.com/adityat/fastconsensus/blob/master/fast_consensus.py">https://github.com/adityat/fastconsensus/blob/master/fast_consensus.py</a>
 <a href="https://arxiv.org/pdf/1902.04014.pdf">https://arxiv.org/pdf/1902.04014.pdf</a>
 <a href="https://doi.org/10.1103/PhysRevE.99.042301">https://doi.org/10.1103/PhysRevE.99.042301</a></p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>to estimate on</dd>
-<dt><strong><code>communities</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of initial clusterings. Items are assumed to be dicts as returned by the community detection algorithms.</dd>
-<dt><strong><code>algorithms</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of algorithms to be used during the consensus estimation. If an algorithm needs to be run multiple times it needs to be added multiple times.
-Algorithms that need a connected graph to work (such as async_fluid) cannot be provided as input.</dd>
-<dt><strong><code>parameters</code></strong> :&ensp;<code>list</code></dt>
-<dd>items are dicts containing the parameters of the algorithms listed in algorithms. Needs to be in the same order as algorithms.
-Make sure that for the algorithms where applicable return_object is set to False.</dd>
-<dt><strong><code>tresh</code></strong> :&ensp;<code>float</code></dt>
-<dd>threshold on if to add a node pair to the same community or not.</dd>
-<dt><strong><code>delta</code></strong> :&ensp;<code>float</code></dt>
-<dd>in [0.02, 0.1].</dd>
-<dt><strong><code>max_iter</code></strong> :&ensp;<code>int</code></dt>
-<dd>maximum number of iterations allowed if consensus is not reached beforehand.</dd>
-<dt><strong><code>initial</code></strong> :&ensp;<code>None</code> or <code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>instead of using predicted communities provided in communities algorithm can be started on a consensus graph.</dd>
-</dl>
+<p>G (networkX graph object): to estimate on
+communities (list): list of initial clusterings. Items are assumed to be dicts as returned by the community detection algorithms.
+algorithms (list): list of algorithms to be used during the consensus estimation. If an algorithm needs to be run multiple times it needs to be added multiple times.
+Algorithms that need a connected graph to work (such as async_fluid) cannot be provided as input.
+parameters (list): items are dicts containing the parameters of the algorithms listed in algorithms. Needs to be in the same order as algorithms.
+Make sure that for the algorithms where applicable return_object is set to False.
+tresh (float): threshold on if to add a node pair to the same community or not.
+delta (float): in [0.02, 0.1].
+max_iter (int): maximum number of iterations allowed if consensus is not reached beforehand.
+initial (None or networkX graph object): instead of using predicted communities provided in communities algorithm can be started on a consensus graph.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key are node IDs and value is list of communities that node belongs to.</dd>
-</dl>
-<p>consensus communities (dict): key is edge ID and value is how often the edge is in the same community. This is the consensus communities infered from the provided communities only. After one round of the algorithm.
-consensus graph (networkX graph object): graph object of consensus communities. Edge weights indicate how often the 2 nodes are in the same community. This is the consensus graph infered from the provided communities only. After one round of the algorithm.</p></section>
+<p>communities (dict): key are node IDs and value is list of communities that node belongs to.
+consensus communities (dict): key is edge ID and value is how often the edge is in the same community. This is the consensus communities infered from the provided communities only. After one round of the algorithm.
+consensus graph (networkX graph object): graph object of consensus communities. Edge weights indicate how often the 2 nodes are in the same community. This is the consensus graph infered from the provided communities only. After one round of the algorithm.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -4431,21 +4341,18 @@ consensus graph (networkX graph object): graph object of consensus communities. 
 <span>def <span class="ident">fraction_of_median_degree</span></span>(<span>communities, G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates thr fraction of nodes that have a higher degree than the median degree within the community. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+<div class="desc"><p>Estimates thr fraction of nodes that have a higher degree than the median degree within the community. This measurement is community specific and an average score + distributional parameters over all communities is reported.
 A high score indicates that the community contains hub nodes. Based on pquality.</p>
 <h2 id="references">References</h2>
 <p>Yang, J., Leskovec, J.: Defining and evaluating network communities based on ground-truth.
 Knowledge and Information Systems 42(1), 181–213 (2015)</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.</p>
 <h2 id="returns">Returns</h2>
 <p>individaul scores (dict): key is community ID and value its score.
 mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-If there are less than 2 communities None is returned.</p></section>
+If there are less than 2 communities None is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -4507,7 +4414,7 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">fraction_of_weak_members</span></span>(<span>communities, G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates fraction of nodes within a community that have fewer edges going inwards than outwards. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+<div class="desc"><p>Estimates fraction of nodes within a community that have fewer edges going inwards than outwards. This measurement is community specific and an average score + distributional parameters over all communities is reported.
 A small within community score is prefered. Based on pquality.</p>
 <h2 id="references">References</h2>
 <ol>
@@ -4515,15 +4422,12 @@ A small within community score is prefered. Based on pquality.</p>
 Efficient identification of web communities. In: KDD, vol. 2000, pp. 150–160 (2000)</li>
 </ol>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.</p>
 <h2 id="returns">Returns</h2>
 <p>individaul scores (dict): key is community ID and value its score.
 mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-If there are less than 2 communities None is returned.</p></section>
+If there are less than 2 communities None is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -4585,26 +4489,18 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">gdmp2</span></span>(<span>G, min_threshold=0.75, return_object=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Based on finding dense subgraphs.</p>
+<div class="desc"><p>Based on finding dense subgraphs.</p>
 <h2 id="references">References</h2>
 <p><a href="https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.gdmp2.html#cdlib.algorithms.gdmp2">https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.gdmp2.html#cdlib.algorithms.gdmp2</a></p>
 <p>Chen, Jie, and Yousef Saad. Dense subgraph extraction with application to community detection.
 IEEE Transactions on Knowledge and Data Engineering 24.7 (2012): 1216-1230.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>to estimate on</dd>
-<dt><strong><code>min_threshold</code></strong> :&ensp;<code>float</code></dt>
-<dd>minimum density threshold. This is used to control the density of the detected communities.</dd>
-<dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></dd>
-</dl>
+<p>G (networkX graph object): to estimate on
+min_threshold (float): minimum density threshold. This is used to control the density of the detected communities.
+return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key are node IDs and value is list of communities that node belongs to.</dd>
-</dl>
-<p>fitness parameters (NodeClustering object): if return_object is True.</p></section>
+<p>communities (dict): key are node IDs and value is list of communities that node belongs to.
+fitness parameters (NodeClustering object): if return_object is True.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -4647,14 +4543,11 @@ IEEE Transactions on Knowledge and Data Engineering 24.7 (2012): 1216-1230.</p>
 <span>def <span class="ident">get_number_of_communities</span></span>(<span>communities)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Returns the number of detected communities.</p>
+<div class="desc"><p>Returns the number of detected communities.</p>
 <h2 id="parameters">Parameters</h2>
 <p>communities(dict): as returned by the community functions.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>number</code> of <code>communities</code> (<code>int</code>): <code>detected</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>number of communities (int): detected</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -4680,19 +4573,13 @@ IEEE Transactions on Knowledge and Data Engineering 24.7 (2012): 1216-1230.</p>
 <span>def <span class="ident">get_number_of_nodes_community</span></span>(<span>communities, in_detail=False)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimate the distribution of nodes between the communities.</p>
+<div class="desc"><p>Estimate the distribution of nodes between the communities.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>in_detail</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True then for each community its number of nodes is reported. If False only distributional parameters are returned.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+in_detail (boolean): if True then for each community its number of nodes is reported. If False only distributional parameters are returned.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>distribution</code></strong> :&ensp;<code>dict</code></dt>
-<dd>returns mean and median number of nodes, the standard deviation, kurtoisis and skewness. Keys are mean, median, std, kurt, skewness.</dd>
-</dl>
-<p>individual nodes (dict): if in_detail is True. key is community ID and value is number of nodes in that community.</p></section>
+<p>distribution (dict): returns mean and median number of nodes, the standard deviation, kurtoisis and skewness. Keys are mean, median, std, kurt, skewness.
+individual nodes (dict): if in_detail is True. key is community ID and value is number of nodes in that community.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -4748,33 +4635,22 @@ IEEE Transactions on Knowledge and Data Engineering 24.7 (2012): 1216-1230.</p>
 <span>def <span class="ident">girvan_newman</span></span>(<span>G, valuable_edge='max_weight', k=1, is_leve=False, attribute='weight', w_max=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>NetworkX girvan newman implementation. Removes "most valuable edge" from the graph to partition it.</p>
+<div class="desc"><p>NetworkX girvan newman implementation. Removes "most valuable edge" from the graph to partition it.</p>
 <h2 id="references">References</h2>
 <p><a href="https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.community.centrality.girvan_newman.html">https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.community.centrality.girvan_newman.html</a></p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>to estimate on</dd>
-<dt><strong><code>valuable_edge</code></strong> :&ensp;<code>str</code></dt>
-<dd>determines how the most valuable edge is selected. If "max_weight" then the edge with the highest weight is removed.
+<p>G (networkX graph object): to estimate on
+valuable_edge (str): determines how the most valuable edge is selected. If "max_weight" then the edge with the highest weight is removed.
 If "min_weight" the edge with the lowest weight is removed. If "betweenness"
 the edge with the highest/ lowest betweenness centrality is removed first.
-If is "current_flow_betweenness" the edge with the highest/ lowest current flow betweenness centrality is removed first. If is "load" the edge with the highest/lowest load centrality is removed.</dd>
-<dt><strong><code>k</code></strong> :&ensp;<code>int</code> or <code>None</code></dt>
-<dd>which level(s) of the algorithms should be returned. If None all levels are returned.</dd>
-<dt><strong><code>is_level</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if is True then k is assumed to be the level index and only that level is returned. If it is False the the k top levels are returned. </dd>
-<dt><strong><code>attribute</code></strong> :&ensp;<code>str</code></dt>
-<dd>name of the edge attribute to be used.</dd>
-<dt><strong><code>w_max</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>only applies if valuable_edge is not "max_weight" or "min_weight. If True then the edge with the heigest value is remvoed. If False the edge with the lowest value is removed.
-</dd>
-</dl>
+If is "current_flow_betweenness" the edge with the highest/ lowest current flow betweenness centrality is removed first. If is "load" the edge with the highest/lowest load centrality is removed.
+k (int or None): which level(s) of the algorithms should be returned. If None all levels are returned.
+is_level (boolean): if is True then k is assumed to be the level index and only that level is returned. If it is False the the k top levels are returned.
+attribute (str): name of the edge attribute to be used.
+w_max (boolean): only applies if valuable_edge is not "max_weight" or "min_weight. If True then the edge with the heigest value is remvoed. If False the edge with the lowest value is removed.
+</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key are node IDs and value is list of communities that the node belongs to. First value is the top most level and last value is the most granular level.</dd>
-</dl></section>
+<p>communities (dict): key are node IDs and value is list of communities that the node belongs to. First value is the top most level and last value is the most granular level.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -4882,26 +4758,18 @@ If is "current_flow_betweenness" the edge with the highest/ lowest current flow 
 <span>def <span class="ident">greedy_modularity</span></span>(<span>G, weights='weight', return_object=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Based on modularity.</p>
+<div class="desc"><p>Based on modularity.</p>
 <h2 id="references">References</h2>
 <p><a href="https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.greedy_modularity.html#cdlib.algorithms.greedy_modularity">https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.greedy_modularity.html#cdlib.algorithms.greedy_modularity</a></p>
 <p>Clauset, A., Newman, M. E., &amp; Moore, C.
 Finding community structure in very large networks. Physical Review E 70(6), 2004</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>to estimate on</dd>
-<dt><strong><code>weights</code></strong> :&ensp;<code>str</code></dt>
-<dd>edge attribute to be used.</dd>
-<dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></dd>
-</dl>
+<p>G (networkX graph object): to estimate on
+weights (str): edge attribute to be used.
+return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key are node IDs and value is list of communities that node belongs to.</dd>
-</dl>
-<p>fitness parameters (NodeClustering object): if return_object is True.</p></section>
+<p>communities (dict): key are node IDs and value is list of communities that node belongs to.
+fitness parameters (NodeClustering object): if return_object is True.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -4943,18 +4811,15 @@ Finding community structure in very large networks. Physical Review E 70(6), 200
 <span>def <span class="ident">hub_dominace</span></span>(<span>communities, G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates hub dominace. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+<div class="desc"><p>Estimates hub dominace. This measurement is community specific and an average score + distributional parameters over all communities is reported.
 A high value is preferred.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.</p>
 <h2 id="returns">Returns</h2>
 <p>individaul scores (dict): key is community ID and value its score.
 mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-If there are less than 2 communities None is returned.</p></section>
+If there are less than 2 communities None is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -5019,24 +4884,17 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">infomap</span></span>(<span>G, return_object=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Based on random walks.</p>
+<div class="desc"><p>Based on random walks.</p>
 <h2 id="references">References</h2>
 <p><a href="https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.infomap.html#cdlib.algorithms.infomap">https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.infomap.html#cdlib.algorithms.infomap</a></p>
 <p>Rosvall M, Bergstrom CT (2008) Maps of random walks on complex networks reveal community structure.
 Proc Natl Acad SciUSA 105(4):1118–1123</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>to estimate on</dd>
-<dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></dd>
-</dl>
+<p>G (networkX graph object): to estimate on
+return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key are node IDs and value is list of communities that node belongs to.</dd>
-</dl>
-<p>fitness parameters (NodeClustering object): if return_object is True.</p></section>
+<p>communities (dict): key are node IDs and value is list of communities that node belongs to.
+fitness parameters (NodeClustering object): if return_object is True.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -5079,21 +4937,18 @@ Proc Natl Acad SciUSA 105(4):1118–1123</p>
 <span>def <span class="ident">internal_edge_count</span></span>(<span>communities, G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates the number of edges inside the community.This measurement is community specific and an average score + distributional parameters over all communities is reported.
+<div class="desc"><p>Estimates the number of edges inside the community.This measurement is community specific and an average score + distributional parameters over all communities is reported.
 A high within community score is prefered. Based on pquality.</p>
 <h2 id="references">References</h2>
 <p>Radicchi, F., Castellano, C., Cecconi, F., Loreto, V., &amp; Parisi, D. (2004). Defining and identifying communities in networks.
 Proceedings of the National Academy of Sciences, 101(9), 2658-2663.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.</p>
 <h2 id="returns">Returns</h2>
 <p>individaul scores (dict): key is community ID and value its score.
 mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-If there are less than 2 communities None is returned.</p></section>
+If there are less than 2 communities None is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -5155,21 +5010,18 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">internal_edge_density</span></span>(<span>communities, G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates thr internal edge density. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+<div class="desc"><p>Estimates thr internal edge density. This measurement is community specific and an average score + distributional parameters over all communities is reported.
 A high within community score is prefered. Based on pquality.</p>
 <h2 id="references">References</h2>
 <p>Radicchi, F., Castellano, C., Cecconi, F., Loreto, V., &amp; Parisi, D. (2004).
 Defining and identifying communities in networks. Proceedings of the National Academy of Sciences, 101(9), 2658-2663.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.</p>
 <h2 id="returns">Returns</h2>
 <p>individaul scores (dict): key is community ID and value its score.
 mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-If there are less than 2 communities None is returned.</p></section>
+If there are less than 2 communities None is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -5232,24 +5084,17 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">label_propagation</span></span>(<span>G, return_object=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Based on network structure.</p>
+<div class="desc"><p>Based on network structure.</p>
 <h2 id="references">References</h2>
 <p><a href="https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.label_propagation.html#cdlib.algorithms.label_propagation">https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.label_propagation.html#cdlib.algorithms.label_propagation</a></p>
 <p>Raghavan, U. N., Albert, R., &amp; Kumara, S. (2007).
 Near linear time algorithm to detect community structures in large-scale networks. Physical review E, 76(3), 036106.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>to estimate on</dd>
-<dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></dd>
-</dl>
+<p>G (networkX graph object): to estimate on
+return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key are node IDs and value is list of communities that node belongs to.</dd>
-</dl>
-<p>fitness parameters (NodeClustering object): if return_object is True.</p></section>
+<p>communities (dict): key are node IDs and value is list of communities that node belongs to.
+fitness parameters (NodeClustering object): if return_object is True.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -5291,26 +5136,18 @@ Near linear time algorithm to detect community structures in large-scale network
 <span>def <span class="ident">leiden</span></span>(<span>G, weights='weight', return_object=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Based on the louvain algorithm.</p>
+<div class="desc"><p>Based on the louvain algorithm.</p>
 <h2 id="references">References</h2>
 <p><a href="https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.leiden.html#cdlib.algorithms.leiden">https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.leiden.html#cdlib.algorithms.leiden</a></p>
 <p>Traag, Vincent, Ludo Waltman, and Nees Jan van Eck.
 From Louvain to Leiden: guaranteeing well-connected communities. arXiv preprint arXiv:1810.08473 (2018).</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>to estimate on</dd>
-<dt><strong><code>weights</code></strong> :&ensp;<code>str</code></dt>
-<dd>edge attribute to be used.</dd>
-<dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></dd>
-</dl>
+<p>G (networkX graph object): to estimate on
+weights (str): edge attribute to be used.
+return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key are node IDs and value is list of communities that node belongs to.</dd>
-</dl>
-<p>fitness parameters (NodeClustering object): if return_object is True.</p></section>
+<p>communities (dict): key are node IDs and value is list of communities that node belongs to.
+fitness parameters (NodeClustering object): if return_object is True.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -5352,28 +5189,19 @@ From Louvain to Leiden: guaranteeing well-connected communities. arXiv preprint 
 <span>def <span class="ident">louvain</span></span>(<span>G, weights='weight', resolution=1.0, return_object=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Based on modularity.</p>
+<div class="desc"><p>Based on modularity.</p>
 <h2 id="references">References</h2>
 <p><a href="https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.louvain.html#cdlib.algorithms.louvain">https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.louvain.html#cdlib.algorithms.louvain</a></p>
 <p>Blondel, Vincent D., et al. Fast unfolding of communities in large networks.
 Journal of statistical mechanics: theory and experiment 2008.10 (2008): P10008.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>to estimate on</dd>
-<dt><strong><code>weights</code></strong> :&ensp;<code>str</code></dt>
-<dd>edge attribute to be used.</dd>
-<dt><strong><code>resolution</code></strong> :&ensp;<code>float</code></dt>
-<dd>controls community size.</dd>
-<dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></dd>
-</dl>
+<p>G (networkX graph object): to estimate on
+weights (str): edge attribute to be used.
+resolution (float): controls community size.
+return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key are node IDs and value is list of communities that node belongs to.</dd>
-</dl>
-<p>fitness parameters (NodeClustering object): if return_object is True.</p></section>
+<p>communities (dict): key are node IDs and value is list of communities that node belongs to.
+fitness parameters (NodeClustering object): if return_object is True.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -5416,15 +5244,12 @@ Journal of statistical mechanics: theory and experiment 2008.10 (2008): P10008.<
 <span>def <span class="ident">markov_clustering</span></span>(<span>G, inflation=1.1)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Markov clustering on adjacency matrix. Based on the markovclustering package.</p>
+<div class="desc"><p>Markov clustering on adjacency matrix. Based on the markovclustering package.</p>
 <p>Parameters:
 G (networkX graph object): to estimate on
 inflation (float): clustering parameter.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key are node IDs and value is list of communities that the node belongs to.</dd>
-</dl></section>
+<p>communities (dict): key are node IDs and value is list of communities that the node belongs to.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -5468,7 +5293,7 @@ inflation (float): clustering parameter.</p>
 <span>def <span class="ident">max_outgoing_edge_fraction</span></span>(<span>communities, G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Maximum fraction of a nodes's edges that leave the community.This measurement is community specific and an average score + distributional parameters over all communities is reported.
+<div class="desc"><p>Maximum fraction of a nodes's edges that leave the community.This measurement is community specific and an average score + distributional parameters over all communities is reported.
 A small within community score is prefered. Based on pquality.</p>
 <h2 id="references">References</h2>
 <ol>
@@ -5476,15 +5301,12 @@ A small within community score is prefered. Based on pquality.</p>
 Efficient identification of web communities. In: KDD, vol. 2000, pp. 150–160 (2000)</li>
 </ol>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.</p>
 <h2 id="returns">Returns</h2>
 <p>individaul scores (dict): key is community ID and value its score.
 mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-If there are less than 2 communities None is returned.</p></section>
+If there are less than 2 communities None is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -5546,20 +5368,16 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">mean_edge_weight</span></span>(<span>communities, G, weight='weight')</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates thr average edge weight within a community. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+<div class="desc"><p>Estimates thr average edge weight within a community. This measurement is community specific and an average score + distributional parameters over all communities is reported.
 Depending on of edge weights are distances or similarities a small or high score may be prefered.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-<dt><strong><code>weight</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
-<dd>edge attribute to be considered. If is None all edges are considered equal.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.
+weight (str or None): edge attribute to be considered. If is None all edges are considered equal.</p>
 <h2 id="returns">Returns</h2>
 <p>individaul scores (dict): key is community ID and value its score.
 mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-If there are less than 2 communities None is returned.</p></section>
+If there are less than 2 communities None is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -5631,20 +5449,16 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">mean_edge_weight_fraction</span></span>(<span>communities, G, weight='weight')</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates average edge weight within a community w.r.t thr edge weights in the whole graph. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+<div class="desc"><p>Estimates average edge weight within a community w.r.t thr edge weights in the whole graph. This measurement is community specific and an average score + distributional parameters over all communities is reported.
 Depending on of edge weights are distances or similarities a small or high score may be prefered.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-<dt><strong><code>weight</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
-<dd>edge attribute to be considered. If is None all edges are considered equal.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.
+weight (str or None): edge attribute to be considered. If is None all edges are considered equal.</p>
 <h2 id="returns">Returns</h2>
 <p>individaul scores (dict): key is community ID and value its score.
 mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-If there are less than 2 communities None is returned.</p></section>
+If there are less than 2 communities None is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -5722,7 +5536,7 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">mean_outgoing_edge_fraction</span></span>(<span>communities, G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates average fraction of a nodes's edges that leave the community.This measurement is community specific and an average score + distributional parameters over all communities is reported.
+<div class="desc"><p>Estimates average fraction of a nodes's edges that leave the community.This measurement is community specific and an average score + distributional parameters over all communities is reported.
 A small within community score is prefered. Based on pquality.</p>
 <h2 id="references">References</h2>
 <ol>
@@ -5730,15 +5544,12 @@ A small within community score is prefered. Based on pquality.</p>
 Efficient identification of web communities. In: KDD, vol. 2000, pp. 150–160 (2000)</li>
 </ol>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.</p>
 <h2 id="returns">Returns</h2>
 <p>individaul scores (dict): key is community ID and value its score.
 mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-If there are less than 2 communities None is returned.</p></section>
+If there are less than 2 communities None is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -5800,24 +5611,18 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">modular_density</span></span>(<span>communities, G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates modularity while considering community size. Based on pquality.</p>
+<div class="desc"><p>Estimates modularity while considering community size. Based on pquality.</p>
 <h2 id="references">References</h2>
 <p>Li, Z., Zhang, S., Wang, R. S., Zhang, X. S., &amp; Chen, L. (2008). Quantitative function for community detection.
 Physical review E, 77(3), 036109.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>density</code></strong> :&ensp;<code>float</code></dt>
-<dd>modularity score for whole partitioning.</dd>
-</dl>
-<p>individual scores (dict): key is community ID and value is modularity score.
+<p>density (float): modularity score for whole partitioning.
+individual scores (dict): key is community ID and value is modularity score.
 mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-If there are less than 2 communities None is returned.</p></section>
+If there are less than 2 communities None is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -5891,18 +5696,15 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">node_embeddedness</span></span>(<span>communities, G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates community embeddedness. This is a nodes mean degree within the community w.r.t. its overall degree in the graph.This measurement is community specific and an average score + distributional parameters over all communities is reported.
+<div class="desc"><p>Estimates community embeddedness. This is a nodes mean degree within the community w.r.t. its overall degree in the graph.This measurement is community specific and an average score + distributional parameters over all communities is reported.
 A high value is preferred.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.</p>
 <h2 id="returns">Returns</h2>
 <p>individaul scores (dict): key is community ID and value its score.
 mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-If there are less than 2 communities None is returned.</p></section>
+If there are less than 2 communities None is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -5962,21 +5764,18 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">outgoing_edges</span></span>(<span>communities, G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates fraction of edges leaving the community (expansion). This measurement is community specific and an average score + distributional parameters over all communities is reported.
+<div class="desc"><p>Estimates fraction of edges leaving the community (expansion). This measurement is community specific and an average score + distributional parameters over all communities is reported.
 A small score indicates closed up communities. Based on pquality.</p>
 <h2 id="references">References</h2>
 <p>Radicchi, F., Castellano, C., Cecconi, F., Loreto, V., &amp; Parisi, D. (2004).
 Defining and identifying communities in networks. Proceedings of the National Academy of Sciences, 101(9), 2658-2663.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.</p>
 <h2 id="returns">Returns</h2>
 <p>individaul scores (dict): key is community ID and value its score.
 mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-If there are less than 2 communities None is returned.</p></section>
+If there are less than 2 communities None is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -6038,17 +5837,11 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">refactor_communities</span></span>(<span>community)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Refactors the community dicts into a list of sublists. This format is needed when using the fastconsensus function.</p>
+<div class="desc"><p>Refactors the community dicts into a list of sublists. This format is needed when using the fastconsensus function.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>community</code></strong> :&ensp;<code>dict</code></dt>
-<dd>in the format as provided by the community detection algorithms, except fuzzy and agdl</dd>
-</dl>
+<p>community (dict): in the format as provided by the community detection algorithms, except fuzzy and agdl</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>transformed</code> <code>communities</code> (<code>list</code>): <code>list</code> of <code>sublists</code> [[<code>community</code>] [<code>community</code>]], <code>where</code> <code>each</code> <code>community</code> <code>list</code> <code>contains</code> <code>node</code> <code>Ids</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>transformed communities (list): list of sublists [[community] [community]], where each community list contains node Ids</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -6084,21 +5877,18 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">triangle_ratio</span></span>(<span>communities, G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates thr triangle participation ratio. This measurement is community specific and an average score + distributional parameters over all communities is reported.
+<div class="desc"><p>Estimates thr triangle participation ratio. This measurement is community specific and an average score + distributional parameters over all communities is reported.
 A high within community score is prefered. Based on pquality.</p>
 <h2 id="references">References</h2>
 <p>Yang, J., Leskovec, J.: Defining and evaluating network communities based on ground-truth.
 Knowledge and Information Systems 42(1), 181–213 (2015)</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt>communities(dict): as returned by the community functions.</dt>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph the communities where detected on.</dd>
-</dl>
+<p>communities(dict): as returned by the community functions.
+G (networkX graph object): the graph the communities where detected on.</p>
 <h2 id="returns">Returns</h2>
 <p>individaul scores (dict): key is community ID and value its score.
 mean score (dict): Returns distributional parameters of mean, median, standard deviation, kurtosis and skewness. Keys are mean, median , std, kurt and skewness.
-If there are less than 2 communities None is returned.</p></section>
+If there are less than 2 communities None is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -6160,24 +5950,17 @@ If there are less than 2 communities None is returned.</p></section>
 <span>def <span class="ident">walktrap</span></span>(<span>G, return_object=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Based on random walks.</p>
+<div class="desc"><p>Based on random walks.</p>
 <h2 id="references">References</h2>
 <p><a href="https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.walktrap.html#cdlib.algorithms.walktrap">https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.walktrap.html#cdlib.algorithms.walktrap</a></p>
 <p>Pons, Pascal, and Matthieu Latapy. Computing communities in large networks using random walks.
 J. Graph Algorithms Appl. 10.2 (2006): 191-218.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>to estimate on</dd>
-<dt><strong><code>return_object</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></dd>
-</dl>
+<p>G (networkX graph object): to estimate on
+return_object (boolean): if is True then the resulting CDlib NodeClustering object is returned which includes fitness parameters. For all options refer to <a href="https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html">https://cdlib.readthedocs.io/en/latest/reference/classes/node_clustering.html</a></p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key are node IDs and value is list of communities that node belongs to.</dd>
-</dl>
-<p>fitness parameters (NodeClustering object): if return_object is True.</p></section>
+<p>communities (dict): key are node IDs and value is list of communities that node belongs to.
+fitness parameters (NodeClustering object): if return_object is True.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -6221,39 +6004,25 @@ J. Graph Algorithms Appl. 10.2 (2006): 191-218.</p>
 <span>def <span class="ident">weak_link_communities</span></span>(<span>H, weights='weight', t=0.2, max_iter=1000, by_degree=True, r=5, std=0.2, min_community=10, graph=False)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Tries to find weak links between node groups, while ensuring that no new isolates occure.
+<div class="desc"><p>Tries to find weak links between node groups, while ensuring that no new isolates occure.
 For each node a probabilistic selection of neighbors is run for r rounds based on their edge weights.
 Neigbors with less than t occurenses will be disconnected but only if this link is selected as a weak link in both directions.
 The algorithm will stop when max_iter is reached or no edges can be removed anymore.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>to estimate on</dd>
-<dt><strong><code>weights</code></strong> :&ensp;<code>str</code></dt>
-<dd>edge attribute to be used.</dd>
-<dt><strong><code>t</code></strong> :&ensp;<code>float</code></dt>
-<dd>in [0,1]. Treshold on which edges are "selected as weak" and to be removed if they occure &lt;= in of samples neighbors.</dd>
-<dt><strong><code>max_iter</code></strong> :&ensp;<code>int</code></dt>
-<dd>maximum number of iterations. </dd>
-<dt><strong><code>by_degree</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True then the number of samplings for each node is based on its degree. Each node will sample from its neighbors r*node_degree times.
-If is false then each nodes neighbors will be sampled r times.</dd>
-<dt>r (int) how often a nodes neighbors are sampled.</dt>
-<dt><strong><code>std</code></strong> :&ensp;<code>float</code></dt>
-<dd>treshold of a nodes neighboring sampling distribution standardiviationf. If it is above std then edge removal will be performed.</dd>
-<dt><strong><code>min_community</code></strong> :&ensp;<code>int</code> or <code>None</code></dt>
-<dd>minimum community size allowed. If already disconnected components of size &lt; min_community exist, smaller communities can still occure.
-If None will be ignored.</dd>
-<dt><strong><code>graph</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if is true then the paritioned graph object will be returned as well.</dd>
-</dl>
+<p>G (networkX graph object): to estimate on
+weights (str): edge attribute to be used.
+t (float): in [0,1]. Treshold on which edges are "selected as weak" and to be removed if they occure &lt;= in of samples neighbors.
+max_iter (int): maximum number of iterations.
+by_degree (boolean): if True then the number of samplings for each node is based on its degree. Each node will sample from its neighbors r*node_degree times.
+If is false then each nodes neighbors will be sampled r times.
+r (int) how often a nodes neighbors are sampled.<br>
+std (float): treshold of a nodes neighboring sampling distribution standardiviationf. If it is above std then edge removal will be performed.
+min_community (int or None): minimum community size allowed. If already disconnected components of size &lt; min_community exist, smaller communities can still occure.
+If None will be ignored.
+graph (boolean): if is true then the paritioned graph object will be returned as well.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key are node IDs and value is list of communities that node belongs to.</dd>
-<dt><strong><code>graph</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>if graph is True.</dd>
-</dl></section>
+<p>communities (dict): key are node IDs and value is list of communities that node belongs to.
+graph (networkX graph object): if graph is True.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -6462,9 +6231,7 @@ If None will be ignored.</dd>
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
 </footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad()</script>
 </body>
 </html>

@@ -3,15 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.7.5" />
+<meta name="generator" content="pdoc 0.9.2" />
 <title>volta.pattern_matching API documentation</title>
 <meta name="description" content="Functions to find common structures / communities between a group of graphs or statistical overrepresented structures / communities." />
-<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
-<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
-<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
 </head>
 <body>
 <main>
@@ -602,17 +604,11 @@ def significantly_similar_partitionings(all_networks, back, is_file=False, steps
 <span>def <span class="ident">build_graph_remove_isolates</span></span>(<span>mat)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Constructs a networkx graph from an adj matrix and removes isolated nodes.</p>
+<div class="desc"><p>Constructs a networkx graph from an adj matrix and removes isolated nodes.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>mat</code></strong> :&ensp;<code>matrix</code></dt>
-<dd>adjacency matrix</dd>
-</dl>
+<p>mat (matrix): adjacency matrix</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>graph</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>constructed from adjacency matrix</dd>
-</dl></section>
+<p>graph (networkX graph object): constructed from adjacency matrix</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -641,23 +637,15 @@ def significantly_similar_partitionings(all_networks, back, is_file=False, steps
 <span>def <span class="ident">generate_community_overlap_background_distribution</span></span>(<span>communities, runs=1000, steps=5)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates how likely it is that two graphs have communities with x% overlapping nodes. All graphs need ot have the same nodes.
+<div class="desc"><p>Estimates how likely it is that two graphs have communities with x% overlapping nodes. All graphs need ot have the same nodes.
 <br>
 Runs times, two communities are selected at random and their node % overlap is estimated.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>list</code></dt>
-<dd>of dicts were keys are node IDs and values are community IDs.</dd>
-<dt><strong><code>runs</code></strong> :&ensp;<code>int</code></dt>
-<dd>how often random sampling should be performed to estimate the background distribution.</dd>
-<dt><strong><code>steps</code></strong> :&ensp;<code>int</code></dt>
-<dd>in [1,100]. Results are summarized into sections. For example steps = 5 would return results for sections 1-5%; 6-10%; 11-15% &hellip; .</dd>
-</dl>
+<p>communities (list): of dicts were keys are node IDs and values are community IDs.
+runs (int): how often random sampling should be performed to estimate the background distribution.
+steps (int): in [1,100]. Results are summarized into sections. For example steps = 5 would return results for sections 1-5%; 6-10%; 11-15% &hellip; .</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>background</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key is % overlap (rounded and summaized to steps) and value is how often this value has been scored.</dd>
-</dl></section>
+<p>background (dict): key is % overlap (rounded and summaized to steps) and value is how often this value has been scored.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -744,16 +732,12 @@ Runs times, two communities are selected at random and their node % overlap is e
 <span>def <span class="ident">get_common_subgraph</span></span>(<span>matrices, p=0.5)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Retrieve subgraph structure based on edges that are common in at least p fraction of the provided graphs.</p>
+<div class="desc"><p>Retrieve subgraph structure based on edges that are common in at least p fraction of the provided graphs.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>matrices</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of adjacency matrices. Nodes need to be ordered the same in all matrices. 1 indicates that the edge exists and 0 that the edge does not exist.</dd>
-<dt><strong><code>p</code></strong> :&ensp;<code>float</code></dt>
-<dd>in [0,1]: fraction in how many networks an edge should be present to be kept.</dd>
-</dl>
+<p>matrices (list): list of adjacency matrices. Nodes need to be ordered the same in all matrices. 1 indicates that the edge exists and 0 that the edge does not exist.
+p (float): in [0,1]: fraction in how many networks an edge should be present to be kept.</p>
 <h2 id="returns">Returns</h2>
-<p>common subgraph (matrix): An adjacency matrix where a 1 indicates that this edge is present in at least p fraction networks.</p></section>
+<p>common subgraph (matrix): An adjacency matrix where a 1 indicates that this edge is present in at least p fraction networks.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -792,36 +776,23 @@ Runs times, two communities are selected at random and their node % overlap is e
 <span>def <span class="ident">get_consensus_community</span></span>(<span>networks, nodes, partitionings=None, rep_network=10, seed=123, threshold=0.75, per_node=True, rep=10)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Finds a consensus community distribution between all provided networks. For each network communities are identified based on the Louvain algorithm.
+<div class="desc"><p>Finds a consensus community distribution between all provided networks. For each network communities are identified based on the Louvain algorithm.
 A consensus is constructed from these based on clustering.consensus_clustering(). All networks need to contain the same nodes.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>networks</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of networkX graph objects.</dd>
-<dt><strong><code>nodes</code></strong> :&ensp;<code>list</code></dt>
-<dd>of all nodes. Ordering will be used in the output.</dd>
-<dt><strong><code>partitionings</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
-<dd>if None partitionings are estimated based on the Louvain algorithm for each provided network.
+<p>networks (list): list of networkX graph objects.
+nodes (list): of all nodes. Ordering will be used in the output.
+partitionings (list or None): if None partitionings are estimated based on the Louvain algorithm for each provided network.
 If list then partitionings need to be provided for each network. Lists need to be lists of sublists where each item represents the partitionings of a network
-, needs to be in the same order as networks. Each item is a list of sublists where each item is a dict, where keys are node IDs and values are community IDs.</dd>
-<dt><strong><code>rep_network</code></strong> :&ensp;<code>int</code></dt>
-<dd>how often the Louvain algorithm should be applied to each network during the community detection stage. If partitionings is not None then this value is ignored.</dd>
-<dt><strong><code>seed</code></strong> :&ensp;<code>int</code></dt>
-<dd>random seed to be used for any random processes in clustering.consensus_clustering()</dd>
-<dt><strong><code>treshold</code></strong> :&ensp;<code>float</code> or <code>str</code></dt>
-<dd>if float needs to be in [0,1]. If float and not per_node all edges with a weight lower than the treshold are removed
+, needs to be in the same order as networks. Each item is a list of sublists where each item is a dict, where keys are node IDs and values are community IDs.
+rep_network (int): how often the Louvain algorithm should be applied to each network during the community detection stage. If partitionings is not None then this value is ignored.
+seed (int): random seed to be used for any random processes in clustering.consensus_clustering()
+treshold (float or str): if float needs to be in [0,1]. If float and not per_node all edges with a weight lower than the treshold are removed
 in the agreement graph. If float and per_node is True then for each node the weakes treshold % of edges are removed, if they are weak for
-both nodes making up the edge. If treshold is "matrix" then the teshold is estimated based on a permutation of the clusterings as implemented in netneurotools.</dd>
-<dt><strong><code>per_node</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True treshold is applied on a per node pasis else it is applied gloablly.</dd>
-<dt><strong><code>rep</code></strong> :&ensp;<code>int</code></dt>
-<dd>how often louvain clustering is reapeated on the agreement graph.</dd>
-</dl>
+both nodes making up the edge. If treshold is "matrix" then the teshold is estimated based on a permutation of the clusterings as implemented in netneurotools.
+per_node (boolean): if True treshold is applied on a per node pasis else it is applied gloablly.
+rep (int): how often louvain clustering is reapeated on the agreement graph.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>list</code></dt>
-<dd>of community IDs ordered as in nodes</dd>
-</dl></section>
+<p>communities (list): of community IDs ordered as in nodes</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -895,28 +866,19 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
 <span>def <span class="ident">get_statistical_overrepresented_communities</span></span>(<span>clusters_networks, nodes, pval=0.05, partions=None)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates a background distribution on how likely it is for each node pair to fall in the same community.
+<div class="desc"><p>Estimates a background distribution on how likely it is for each node pair to fall in the same community.
 Based on this it can be calculated if specific communities are overrepresented within a cluster (group of networks).
 P values are estimated based on a hypergeometric function + a Benjamin Hochberg correction. Communities are estimated on a louvain parition.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>cluster_networks</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key is cluster ID and value is list of networkX graph objects. All networks need to have the same nodes</dd>
-<dt><strong><code>nodes</code></strong> :&ensp;<code>list</code></dt>
-<dd>of node IDs. </dd>
-<dt><strong><code>p</code></strong> :&ensp;<code>float</code></dt>
-<dd>[0,1]. P value cutoff applied, which estimates if a node pair is statistically enriched.</dd>
-<dt><strong><code>partions</code></strong> :&ensp;<code>dict</code> or <code>None</code></dt>
-<dd>if None the community detection based on Louvain is performed on each network provided in clusters_networks.
+<p>cluster_networks (dict): key is cluster ID and value is list of networkX graph objects. All networks need to have the same nodes
+nodes (list): of node IDs.
+p (float): [0,1]. P value cutoff applied, which estimates if a node pair is statistically enriched.
+partions (dict or None): if None the community detection based on Louvain is performed on each network provided in clusters_networks.
 If it is not None a custom partioning can be provided. Key needs to be cluster ID same as in clusters_networks.
-Value needs to be list of dicts where key is node ID and value is Community ID of performed partitionings order as the networks provided in clusters_networks.</dd>
-</dl>
+Value needs to be list of dicts where key is node ID and value is Community ID of performed partitionings order as the networks provided in clusters_networks.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>communities</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key is cluster ID and value is the community ID. Ordered the same way as nodes.
-Communities with a single node, indicates that that node was not statistically significant connectet to any other node.</dd>
-</dl></section>
+<p>communities (dict): key is cluster ID and value is the community ID. Ordered the same way as nodes.
+Communities with a single node, indicates that that node was not statistically significant connectet to any other node.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1025,16 +987,13 @@ Communities with a single node, indicates that that node was not statistically s
 <span>def <span class="ident">get_statistical_overrepresented_edges</span></span>(<span>clusters)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Finds substructures (edges) that are statistically overrepresented in a cluster (group of networks) based on a hypergeometric function and Benjamin-Hochberg correction.
+<div class="desc"><p>Finds substructures (edges) that are statistically overrepresented in a cluster (group of networks) based on a hypergeometric function and Benjamin-Hochberg correction.
 All networks need to have the same nodes.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>clusters</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key is cluster id and value is list of adjacency matrices (containing only 0s and 1s). Nodes need to be in the same order in the matrices.</dd>
-</dl>
+<p>clusters (dict): key is cluster id and value is list of adjacency matrices (containing only 0s and 1s). Nodes need to be in the same order in the matrices.</p>
 <h2 id="returns">Returns</h2>
 <p>p values (dict): non corrected p-values as estimated by the hypergeometric function. Keys are cluster IDs and values are adjacency matrices where cell values are p-values.
-corrected p values (dict): p-values corrected with a Benjamin-Hochberg correction. Keys are cluster IDs and values are adjacency matrices where cell values are p-values.</p></section>
+corrected p values (dict): p-values corrected with a Benjamin-Hochberg correction. Keys are cluster IDs and values are adjacency matrices where cell values are p-values.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1139,26 +1098,20 @@ corrected p values (dict): p-values corrected with a Benjamin-Hochberg correctio
 <span>def <span class="ident">significantly_similar_partitionings</span></span>(<span>all_networks, back, is_file=False, steps=5)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Compares networks pairwise, based on if their community-node-overlap is statistically significant.
+<div class="desc"><p>Compares networks pairwise, based on if their community-node-overlap is statistically significant.
 For each network community detection based on louvain is perforemd. Statistical significant overlap is determained based on a provided background distribution as computed by
 generate_community_overlap_background_distribution().
 For each network pair a mean &amp; median p-value (and adjusted p-value based on a benjamin hochberg correction) is estimated based on the p-value overlap score of each community pair between these networks.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>all_networks</code></strong> :&ensp;<code>list</code></dt>
-<dd>of networkX graph objects or file locations if is_file is True.</dd>
-<dt><strong><code>back</code></strong> :&ensp;<code>dict</code></dt>
-<dd>background community overlap distribution as computed by generate_community_overlap_background_distribution().</dd>
-<dt><strong><code>is_file</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True all_networks should contain file locations to pickled graph objects. If False should contain the networkX graph objects.</dd>
-<dt><strong><code>steps</code></strong> :&ensp;<code>int</code></dt>
-<dd>in [1,100]. Results are summarized into sections. Needs to be the same value as used to generate the background distribution.</dd>
-</dl>
+<p>all_networks (list): of networkX graph objects or file locations if is_file is True.
+back (dict): background community overlap distribution as computed by generate_community_overlap_background_distribution().
+is_file (boolean): if True all_networks should contain file locations to pickled graph objects. If False should contain the networkX graph objects.
+steps (int): in [1,100]. Results are summarized into sections. Needs to be the same value as used to generate the background distribution.</p>
 <h2 id="returns">Returns</h2>
 <p>mean p value (matrix): ordered as in all_networks.
 median p value (matrix): ordered as in all_networks.
 mean corrected p value (matrix): correction performed based on a Benjamin Hochberg correction. Ordered as in all_networks.
-median corrected p value (matrix): correction performed based on a Benjamin Hochberg correction. Ordered as in all_networks.</p></section>
+median corrected p value (matrix): correction performed based on a Benjamin Hochberg correction. Ordered as in all_networks.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1323,9 +1276,7 @@ median corrected p value (matrix): correction performed based on a Benjamin Hoch
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
 </footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad()</script>
 </body>
 </html>

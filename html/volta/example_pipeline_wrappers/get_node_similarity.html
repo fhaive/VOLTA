@@ -3,16 +3,18 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.7.5" />
+<meta name="generator" content="pdoc 0.9.2" />
 <title>volta.example_pipeline_wrappers.get_node_similarity API documentation</title>
 <meta name="description" content="This is a collection of wrapper functions to simplify how to estimate the similarity between multiple networks
 based on their similarity in nodes." />
-<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
-<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
-<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
 </head>
 <body>
 <main>
@@ -340,75 +342,40 @@ def estimate_similarities_nodes(node_lists, sorted_nodes, binary,  kendall_x=50,
 <span>def <span class="ident">estimate_similarities_nodes</span></span>(<span>node_lists, sorted_nodes, binary, kendall_x=50, is_file=False, in_async=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Wrapper function to estimate similarity between networks based on their nodes.</p>
+<div class="desc"><p>Wrapper function to estimate similarity between networks based on their nodes.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>node_lists</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of converted node IDs as returned by preprocess_node_list().</dd>
-<dt><strong><code>sorted_nodes</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of node sorted by weight as returned object by sort_list_and_get_shared () or sort_node_list().</dd>
-<dt><strong><code>binary</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of binary node representation as returned by sort_list_and_get_shared() or node_edge_similarities.compute_binary_layer().</dd>
-<dt><strong><code>kendall_x</code></strong> :&ensp;<code>int</code></dt>
-<dd>top/bottom number of nodes to be considered when estimating kendall rank correlation.</dd>
-<dt><strong><code>is_file</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if False then node_lists is list of converted objects. If True then node_lists is list of file locations to the pickled objects instead.</dd>
-<dt><strong><code>in_async</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True then run in async where applicable.</dd>
-</dl>
+<p>node_lists (list): list of converted node IDs as returned by preprocess_node_list().
+sorted_nodes (list): list of node sorted by weight as returned object by sort_list_and_get_shared () or sort_node_list().
+binary (list): list of binary node representation as returned by sort_list_and_get_shared() or node_edge_similarities.compute_binary_layer().
+kendall_x (int): top/bottom number of nodes to be considered when estimating kendall rank correlation.
+is_file (boolean): if False then node_lists is list of converted objects. If True then node_lists is list of file locations to the pickled objects instead.
+in_async (boolean): if True then run in async where applicable.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>jaccard</code> <code>similarity</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>jaccard</code> <code>distance</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>percentage</code> of <code>shared</code> <code>nodes</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>correlation</code> <code>coefficient</code> <code>based</code> <code>on</code> <code>top</code> <code>nodes</code> <code>ranked</code> <code>by</code> <code>degree</code> <code>centrality</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>p</code> <code>value</code> <code>based</code> <code>on</code> <code>top</code> <code>nodes</code> <code>ranked</code> <code>by</code> <code>degree</code> <code>centrality</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>correlation</code> <code>coefficient</code> <code>based</code> <code>on</code> <code>top</code> <code>nodes</code> <code>ranked</code> <code>by</code> <code>closeness</code> <code>centrality</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>p</code> <code>value</code> <code>based</code> <code>on</code> <code>top</code> <code>nodes</code> <code>ranked</code> <code>by</code> <code>closeness</code> <code>centrality</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>correlation</code> <code>coefficient</code> <code>based</code> <code>on</code> <code>top</code> <code>nodes</code> <code>ranked</code> <code>by</code> <code>betweenness</code> <code>centrality</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>p</code> <code>value</code> <code>based</code> <code>on</code> <code>top</code> <code>nodes</code> <code>ranked</code> <code>by</code> <code>degree</code> <code>betweenness</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>correlation</code> <code>coefficient</code> <code>based</code> <code>on</code> <code>top</code> <code>nodes</code> <code>ranked</code> <code>by</code> <code>mean</code> <code>ranking</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>p</code> <code>value</code> <code>based</code> <code>on</code> <code>top</code> <code>nodes</code> <code>ranked</code> <code>by</code> <code>mean</code> <code>ranking</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>hamming</code> <code>distance</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>correlation</code> <code>coefficient</code> <code>based</code> <code>on</code> <code>bottom</code> <code>nodes</code> <code>ranked</code> <code>by</code> <code>degree</code> <code>centrality</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>p</code> <code>value</code> <code>based</code> <code>on</code> <code>bottom</code> <code>nodes</code> <code>ranked</code> <code>by</code> <code>degree</code> <code>centrality</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>correlation</code> <code>coefficient</code> <code>based</code> <code>on</code> <code>bottom</code> <code>nodes</code> <code>ranked</code> <code>by</code> <code>closeness</code> <code>centrality</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>p</code> <code>value</code> <code>based</code> <code>on</code> <code>bottom</code> <code>nodes</code> <code>ranked</code> <code>by</code> <code>closeness</code> <code>centrality</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>correlation</code> <code>coefficient</code> <code>based</code> <code>on</code> <code>bottom</code> <code>nodes</code> <code>ranked</code> <code>by</code> <code>betweenness</code> <code>centrality</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>p</code> <code>value</code> <code>based</code> <code>on</code> <code>bottom</code> <code>nodes</code> <code>ranked</code> <code>by</code> <code>degree</code> <code>betweenness</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>correlation</code> <code>coefficient</code> <code>based</code> <code>on</code> <code>bottom</code> <code>nodes</code> <code>ranked</code> <code>by</code> <code>mean</code> <code>ranking</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>p</code> <code>value</code> <code>based</code> <code>on</code> <code>bottom</code> <code>nodes</code> <code>ranked</code> <code>by</code> <code>mean</code> <code>ranking</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><strong><code>SMC</code></strong> :&ensp;<code>numpy</code> <code>matrix</code></dt>
-<dd>between network pairs</dd>
-<dt><code>kendall</code> <code>correlation</code> <code>coefficient</code> <code>based</code> <code>on</code> <code>top</code> <code>nodes</code> <code>ranked</code> <code>by</code> <code>median</code> <code>ranking</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>p</code> <code>value</code> <code>based</code> <code>on</code> <code>top</code> <code>nodes</code> <code>ranked</code> <code>by</code> <code>median</code> <code>ranking</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>correlation</code> <code>coefficient</code> <code>based</code> <code>on</code> <code>bottom</code> <code>nodes</code> <code>ranked</code> <code>by</code> <code>median</code> <code>ranking</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>kendall</code> <code>p</code> <code>value</code> <code>based</code> <code>on</code> <code>bottom</code> <code>nodes</code> <code>ranked</code> <code>by</code> <code>meadianranking</code> (<code>numpy</code> <code>matrix</code>): <code>between</code> <code>network</code> <code>pairs</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>jaccard similarity (numpy matrix): between network pairs
+jaccard distance (numpy matrix): between network pairs
+percentage of shared nodes (numpy matrix): between network pairs
+kendall correlation coefficient based on top nodes ranked by degree centrality (numpy matrix): between network pairs
+kendall p value based on top nodes ranked by degree centrality (numpy matrix): between network pairs
+kendall correlation coefficient based on top nodes ranked by closeness centrality (numpy matrix): between network pairs
+kendall p value based on top nodes ranked by closeness centrality (numpy matrix): between network pairs
+kendall correlation coefficient based on top nodes ranked by betweenness centrality (numpy matrix): between network pairs
+kendall p value based on top nodes ranked by degree betweenness (numpy matrix): between network pairs
+kendall correlation coefficient based on top nodes ranked by mean ranking (numpy matrix): between network pairs
+kendall p value based on top nodes ranked by mean ranking (numpy matrix): between network pairs
+hamming distance (numpy matrix): between network pairs
+kendall correlation coefficient based on bottom nodes ranked by degree centrality (numpy matrix): between network pairs
+kendall p value based on bottom nodes ranked by degree centrality (numpy matrix): between network pairs
+kendall correlation coefficient based on bottom nodes ranked by closeness centrality (numpy matrix): between network pairs
+kendall p value based on bottom nodes ranked by closeness centrality (numpy matrix): between network pairs
+kendall correlation coefficient based on bottom nodes ranked by betweenness centrality (numpy matrix): between network pairs
+kendall p value based on bottom nodes ranked by degree betweenness (numpy matrix): between network pairs
+kendall correlation coefficient based on bottom nodes ranked by mean ranking (numpy matrix): between network pairs
+kendall p value based on bottom nodes ranked by mean ranking (numpy matrix): between network pairs
+SMC (numpy matrix): between network pairs
+kendall correlation coefficient based on top nodes ranked by median ranking (numpy matrix): between network pairs
+kendall p value based on top nodes ranked by median ranking (numpy matrix): between network pairs
+kendall correlation coefficient based on bottom nodes ranked by median ranking (numpy matrix): between network pairs
+kendall p value based on bottom nodes ranked by meadianranking (numpy matrix): between network pairs</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -528,20 +495,14 @@ def estimate_similarities_nodes(node_lists, sorted_nodes, binary,  kendall_x=50,
 <span>def <span class="ident">preprocess_graph</span></span>(<span>net_temp, attribute='weight', location=None, labels=None)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Converts list of networkX graph objects into a list of sublist format, which is used by most functions in this package.</p>
+<div class="desc"><p>Converts list of networkX graph objects into a list of sublist format, which is used by most functions in this package.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>net_temp</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of networkX graph objects</dd>
-<dt><strong><code>attribute</code></strong> :&ensp;<code>str</code></dt>
-<dd>edge weight label to be converted</dd>
-<dt><strong><code>location</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
-<dd>if None the converted object is returned. Else it needs to be file location where the converted objects should be pickled and their locations will be returned instead.</dd>
-<dt><strong><code>labels</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
-<dd>list of network names in same order as net_temp. Only needs to be provided if location is not None.</dd>
-</dl>
+<p>net_temp (list): list of networkX graph objects
+attribute (str): edge weight label to be converted
+location (str or None): if None the converted object is returned. Else it needs to be file location where the converted objects should be pickled and their locations will be returned instead.
+labels (list or None): list of network names in same order as net_temp. Only needs to be provided if location is not None.</p>
 <h2 id="return">Return</h2>
-<p>converted objects (list): if location is None list of converted objects is returned else list of pickled locations is returned.</p></section>
+<p>converted objects (list): if location is None list of converted objects is returned else list of pickled locations is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -598,24 +559,15 @@ def estimate_similarities_nodes(node_lists, sorted_nodes, binary,  kendall_x=50,
 <span>def <span class="ident">preprocess_node_list</span></span>(<span>networks, is_file=False, location=None, names=None)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Maps nodes to IDs.</p>
+<div class="desc"><p>Maps nodes to IDs.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>networks</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of converted networks or list of pickled file locations as returned by preprocess_graph()</dd>
-<dt><strong><code>is_file</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if False then networks is list converted objects. If True then networks is list of file locations to the pickled objects instead.</dd>
-<dt><strong><code>location</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
-<dd>if is_file is True then output of this function will be pickled to location.</dd>
-<dt><strong><code>names</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
-<dd>list of network names in same order as networks. If is_file is True then names will be used to store pickled objects.</dd>
-</dl>
+<p>networks (list): list of converted networks or list of pickled file locations as returned by preprocess_graph()
+is_file (boolean): if False then networks is list converted objects. If True then networks is list of file locations to the pickled objects instead.
+location (str or None): if is_file is True then output of this function will be pickled to location.
+names (list or None): list of network names in same order as networks. If is_file is True then names will be used to store pickled objects.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>networks</code></strong> :&ensp;<code>list</code></dt>
-<dd>with nodes IDs or their pickled location as network list format</dd>
-</dl>
-<p>node ID mapping (dict): keys are node IDs and values are assigned ID.</p></section>
+<p>networks (list): with nodes IDs or their pickled location as network list format
+node ID mapping (dict): keys are node IDs and values are assigned ID.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -698,7 +650,7 @@ def estimate_similarities_nodes(node_lists, sorted_nodes, binary,  kendall_x=50,
 <span>def <span class="ident">sort_list_and_get_shared</span></span>(<span>node_lists, m, network_graphs, labels, degree=True, degree_centrality=True, closeness_centrality=True, betweenness=True, is_file=False, in_async=True, k=None)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Preprocessing function to sort node list after their attributes, convert to a binary format and claculate shared nodes.</p>
+<div class="desc"><p>Preprocessing function to sort node list after their attributes, convert to a binary format and claculate shared nodes.</p>
 <p>parameters:
 node_lists (list): list of converted node IDs as returned by
 preprocess_node_list()
@@ -713,12 +665,9 @@ is_file (boolean): if False then network_graphs is list converted objects. If Tr
 in_async (boolean): if True then run in async where applicable.
 k (float [0,1] or None): approximation of betweenness, if float then k percentage of nodes are used to approximate the betweenness values. If None all nodes are used.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt>sorted networks (list): contains dicts where keys are degree, dc, cc, betweenness, average_mean and average_median, values are list of ranked node ids. If key is set to False an empty list is returned.</dt>
-<dt>shared nodes (dict): key is node ID as provided in m and value is list of network labels containing this node.</dt>
-<dt><strong><code>binary</code></strong> :&ensp;<code>list</code></dt>
-<dd>binary representation of network nodes based on the union of nodes in all provided networks.</dd>
-</dl></section>
+<p>sorted networks (list): contains dicts where keys are degree, dc, cc, betweenness, average_mean and average_median, values are list of ranked node ids. If key is set to False an empty list is returned.
+shared nodes (dict): key is node ID as provided in m and value is list of network labels containing this node.
+binary (list): binary representation of network nodes based on the union of nodes in all provided networks.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -800,9 +749,7 @@ k (float [0,1] or None): approximation of betweenness, if float then k percentag
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
 </footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad()</script>
 </body>
 </html>

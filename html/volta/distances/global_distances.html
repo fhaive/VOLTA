@@ -3,15 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.7.5" />
+<meta name="generator" content="pdoc 0.9.2" />
 <title>volta.distances.global_distances API documentation</title>
 <meta name="description" content="Functions to estimate global measurements of a graph object, mainly based on overal node &amp; centrality distributions as well as random walks." />
-<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
-<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
-<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
 </head>
 <body>
 <main>
@@ -708,17 +710,11 @@ def betweeness_centrality(G, distribution=True,  weight=None):
 <span>def <span class="ident">average_clustering</span></span>(<span>G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates a graphs average clustering.</p>
+<div class="desc"><p>Estimates a graphs average clustering.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
-<dd>graph to estimate on.</dd>
-</dl>
+<p>G (NetworkX graph object): graph to estimate on.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>average</code> <code>clustering</code> (<code>float</code>): <code>average</code> <code>clustering</code> of <code>G</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>average clustering (float): average clustering of G</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -740,21 +736,14 @@ def betweeness_centrality(G, distribution=True,  weight=None):
 <span>def <span class="ident">betweeness_centrality</span></span>(<span>G, distribution=True, weight=None)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Compute the betweenness centrality. Imported froom NetworkX, including parameter settings.</p>
+<div class="desc"><p>Compute the betweenness centrality. Imported froom NetworkX, including parameter settings.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
-<dd>graph to estimate on.</dd>
-<dt><strong><code>distribution</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>optional. If True distributional parameters are calculated. If False corresponding return values are None.</dd>
-<dt><strong><code>weight</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
-<dd>If None, all edge weights are considered equal. Otherwise name of the edge attribute to be used as weight.</dd>
-</dl>
+<p>G (NetworkX graph object): graph to estimate on.
+distribution (boolean): optional. If True distributional parameters are calculated. If False corresponding return values are None.
+weight (str or None):
+If None, all edge weights are considered equal. Otherwise name of the edge attribute to be used as weight.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>centrality</code></strong> :&ensp;<code>dict</code></dt>
-<dd>keys are centrality, mean_centrality, median_centrality, std_centrality, skew_centrality, kurtosis_centrality</dd>
-</dl></section>
+<p>centrality (dict): keys are centrality, mean_centrality, median_centrality, std_centrality, skew_centrality, kurtosis_centrality</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -800,19 +789,12 @@ def betweeness_centrality(G, distribution=True,  weight=None):
 <span>def <span class="ident">closeness_centrality</span></span>(<span>G, distribution=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Compute the closeness centrality. Imported froom NetworkX, including parameter settings.</p>
+<div class="desc"><p>Compute the closeness centrality. Imported froom NetworkX, including parameter settings.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
-<dd>graph to estimate on.</dd>
-<dt><strong><code>distribution</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>optional. If True distributional parameters are calculated. If False corresponding return values are None.</dd>
-</dl>
+<p>G (NetworkX graph object): graph to estimate on.
+distribution (boolean): optional. If True distributional parameters are calculated. If False corresponding return values are None.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>centrality</code></strong> :&ensp;<code>dict</code></dt>
-<dd>keys are centrality, mean_centrality, median_centrality, std_centrality, skew_centrality, kurtosis_centrality</dd>
-</dl></section>
+<p>centrality (dict): keys are centrality, mean_centrality, median_centrality, std_centrality, skew_centrality, kurtosis_centrality</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -856,23 +838,14 @@ def betweeness_centrality(G, distribution=True,  weight=None):
 <span>def <span class="ident">clustering_coefficient</span></span>(<span>G, nodes=None, weight=None, count_zeros=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Computes the clustering coefficient (CC) for a graph. A complete graph has CC of 1.</p>
+<div class="desc"><p>Computes the clustering coefficient (CC) for a graph. A complete graph has CC of 1.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
-<dd>graph to estimate on.</dd>
-<dt><strong><code>nodes</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
-<dd>optional. Compute average clustering for nodes in this container or if None computes for all nodes of G.</dd>
-<dt><strong><code>weight</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
-<dd>optional The edge attribute that holds the numerical value used as a weight. If None, then each edge has weight 1.</dd>
-<dt><strong><code>count_zeros</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>If False include only the nodes with nonzero clustering in the average.</dd>
-</dl>
+<p>G (NetworkX graph object): graph to estimate on.
+nodes (list or None): optional. Compute average clustering for nodes in this container or if None computes for all nodes of G.
+weight (str or None): optional The edge attribute that holds the numerical value used as a weight. If None, then each edge has weight 1.
+count_zeros (boolean): If False include only the nodes with nonzero clustering in the average.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>clustering</code></strong> :&ensp;<code>float</code></dt>
-<dd>clustering coefficient of G</dd>
-</dl></section>
+<p>clustering (float): clustering coefficient of G</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -899,31 +872,19 @@ def betweeness_centrality(G, distribution=True,  weight=None):
 <span>def <span class="ident">compare_walks</span></span>(<span>G, walk1, walk2=None, G2=None, comparison='ranked', undirected=True, top=100)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Compares list of random walks (for same and multiple graphs)</p>
+<div class="desc"><p>Compares list of random walks (for same and multiple graphs)</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>walk1</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of sublists containing node lists orderd as walks</dd>
-<dt><strong><code>walk2</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of sublists containing node lists orderd as walks. If walks performed on the same graph should be compared set walk1 &amp; walk2 to the same values
+<p>walk1 (list): list of sublists containing node lists orderd as walks
+walk2 (list): list of sublists containing node lists orderd as walks. If walks performed on the same graph should be compared set walk1 &amp; walk2 to the same values
 &amp; their similarity between each other
-will be estimated</dd>
-<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
-<dd>graph walk1 has been performed on</dd>
-<dt><strong><code>G2</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
-<dd>graph walk2 has been performed on</dd>
-<dt><strong><code>comparison</code></strong> :&ensp;<code>str</code></dt>
-<dd>states what comparison should be performed - currently only "ranked" is implemented. Nodes &amp; edges are ranked (for each subwalk after usage) and kendall rank correlation between rankings is estimated</dd>
-<dt><strong><code>top</code></strong> :&ensp;<code>int</code></dt>
-<dd>top x nodes &amp; edges are considered when calculating the correlation </dd>
-<dt><strong><code>undirected</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True then edge traversal is not taken into account</dd>
-</dl>
+will be estimated
+G (NetworkX graph object): graph walk1 has been performed on
+G2 (NetworkX graph object): graph walk2 has been performed on
+comparison (str): states what comparison should be performed - currently only "ranked" is implemented. Nodes &amp; edges are ranked (for each subwalk after usage) and kendall rank correlation between rankings is estimated
+top (int): top x nodes &amp; edges are considered when calculating the correlation
+undirected (boolean): if True then edge traversal is not taken into account</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>correlation</code></strong> :&ensp;<code>dict</code></dt>
-<dd>containing 4 keys where values are correlation value and corresponding p-value. Keys are nodes_tau, nodes_p, edges_tau, edges_p</dd>
-</dl></section>
+<p>correlation (dict): containing 4 keys where values are correlation value and corresponding p-value. Keys are nodes_tau, nodes_p, edges_tau, edges_p</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1009,19 +970,12 @@ will be estimated</dd>
 <span>def <span class="ident">contains_triangles</span></span>(<span>G, nodes=None)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Computes number of triangles contained in each node of graph G</p>
+<div class="desc"><p>Computes number of triangles contained in each node of graph G</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
-<dd>graph to estimate on.</dd>
-<dt><strong><code>nodes</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
-<dd>optional. Compute number of triangles for nodes in this container or if None computes for all nodes of G.</dd>
-</dl>
+<p>G (NetworkX graph object): graph to estimate on.
+nodes (list or None): optional. Compute number of triangles for nodes in this container or if None computes for all nodes of G.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>number</code> of <code>triangles</code> (<code>dict</code>): <code>key</code> <code>is</code> <code>node</code> <code>ID</code> <code>and</code> <code>value</code> <code>is</code> <code>number</code> of <code>triangle</code> <code>that</code> <code>node</code> <code>is</code> <code>part</code> of</dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>number of triangles (dict): key is node ID and value is number of triangle that node is part of</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1046,18 +1000,12 @@ will be estimated</dd>
 <span>def <span class="ident">cycle_distribution</span></span>(<span>G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates size distributions of cycles (how many steps to form a cycle) in a graph.
+<div class="desc"><p>Estimates size distributions of cycles (how many steps to form a cycle) in a graph.
 This can provide insight in how "structured" a graph is - and what biological elements it contains, i.e. multiple feedback loops</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
-<dd>graph to estimate on.</dd>
-</dl>
+<p>G (NetworkX graph object): graph to estimate on.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>cycle</code> <code>distribution</code> (<code>dict</code>): <code>keys</code> <code>are</code> <code>number_of_cycles</code>, <code>median_cycle_length</code>, <code>mean_cycle_length</code>, <code>std_cycle_length</code>, <code>skw_sycle_length</code>, <code>kurtosis_cycle_length</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>cycle distribution (dict): keys are number_of_cycles, median_cycle_length, mean_cycle_length, std_cycle_length, skw_sycle_length, kurtosis_cycle_length</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1100,19 +1048,12 @@ This can provide insight in how "structured" a graph is - and what biological el
 <span>def <span class="ident">degree_centrality</span></span>(<span>G, distribution=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Compute the degree centrality for nodes. The degree centrality for a node v is the fraction of nodes it is connected to.</p>
+<div class="desc"><p>Compute the degree centrality for nodes. The degree centrality for a node v is the fraction of nodes it is connected to.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
-<dd>graph to estimate on.</dd>
-<dt><strong><code>distribution</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>optional. If True distributional parameters are calculated. If False corresponding return values are None.</dd>
-</dl>
+<p>G (NetworkX graph object): graph to estimate on.
+distribution (boolean): optional. If True distributional parameters are calculated. If False corresponding return values are None.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>degree</code> <code>centrality</code> (<code>dict</code>): <code>keys</code> <code>are</code> <code>centrality</code>, <code>mean_centrality</code>, <code>median_centrality</code>, <code>std_centrality</code>, <code>skw_centrality</code>, <code>kurtosis_centrality</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>degree centrality (dict): keys are centrality, mean_centrality, median_centrality, std_centrality, skw_centrality, kurtosis_centrality</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1157,17 +1098,11 @@ This can provide insight in how "structured" a graph is - and what biological el
 <span>def <span class="ident">density</span></span>(<span>G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates graph density.</p>
+<div class="desc"><p>Estimates graph density.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
-<dd>graph to estimate on.</dd>
-</dl>
+<p>G (NetworkX graph object): graph to estimate on.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><a title="volta.distances.global_distances.density" href="#volta.distances.global_distances.density"><code>density()</code></a></strong> :&ensp;<code>float</code></dt>
-<dd>network density</dd>
-</dl></section>
+<p>density (float): network density</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1189,21 +1124,14 @@ This can provide insight in how "structured" a graph is - and what biological el
 <span>def <span class="ident">eigenvector_centrality</span></span>(<span>G, distribution=True, weight=None)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Computes the eigenvector centrality. Importet from NetworkX, including their parameter settings.</p>
+<div class="desc"><p>Computes the eigenvector centrality. Importet from NetworkX, including their parameter settings.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
-<dd>graph to estimate on.</dd>
-<dt><strong><code>weight</code></strong> :&ensp;<code>str</code> or <code>None</code></dt>
-<dd>If None, all edge weights are considered equal. Otherwise name of the edge attribute to be used as weight.</dd>
-<dt><strong><code>distribution</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>optional. If True distributional parameters are calculated. If False corresponding return values are None.</dd>
-</dl>
+<p>G (NetworkX graph object): graph to estimate on.
+weight (str or None):
+If None, all edge weights are considered equal. Otherwise name of the edge attribute to be used as weight.
+distribution (boolean): optional. If True distributional parameters are calculated. If False corresponding return values are None.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>centrality</code></strong> :&ensp;<code>dict</code></dt>
-<dd>keys are centrality, mean_centrality, median_centrality, std_centrality, skew_centrality, kurtosis_centrality</dd>
-</dl></section>
+<p>centrality (dict): keys are centrality, mean_centrality, median_centrality, std_centrality, skew_centrality, kurtosis_centrality</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1248,20 +1176,13 @@ This can provide insight in how "structured" a graph is - and what biological el
 <span>def <span class="ident">get_walk_consensus</span></span>(<span>walks, G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimate for one network a consensus walk based on all performed walks
+<div class="desc"><p>Estimate for one network a consensus walk based on all performed walks
 This is only possible if the walks have been performed with the same start node</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>walks</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of sublists (individual walks) including node ids in order performed for each single walk</dd>
-<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
-<dd>the graph object walks have been computed on </dd>
-</dl>
+<p>walks (list): list of sublists (individual walks) including node ids in order performed for each single walk</p>
+<p>G (NetworkX graph object): the graph object walks have been computed on </p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>consensus</code> <code>walk</code> (<code>list</code>): <code>containing</code> <code>node</code> <code>ids</code> of <code>consensus</code> <code>random</code> <code>walk</code> or <code>None</code> <code>if</code> <code>start</code> <code>node</code> <code>is</code> <code>not</code> <code>the</code> <code>same</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>consensus walk (list): containing node ids of consensus random walk or None if start node is not the same</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1321,17 +1242,14 @@ This is only possible if the walks have been performed with the same start node<
 <span>def <span class="ident">graph_edges</span></span>(<span>G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Provides estimate on how many of all posible edges exist in G (100% implies that G is a complete graph).</p>
+<div class="desc"><p>Provides estimate on how many of all posible edges exist in G (100% implies that G is a complete graph).</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
-<dd>graph to estimate on.</dd>
-</dl>
+<p>G (NetworkX graph object): graph to estimate on.</p>
 <p>Returns :
 edge estimate (dict): dict keys are missing_edges (how many possible edges do not exist)
 max_edges (number of possible edges)
 missing_edges_percentage (percentage of missing edges)
-existing_edges_percentage (percentage of existing edges)</p></section>
+existing_edges_percentage (percentage of existing edges)</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1368,17 +1286,11 @@ existing_edges_percentage (percentage of existing edges)</p></section>
 <span>def <span class="ident">graph_size</span></span>(<span>G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates graph radius, diameter, number of nodes &amp; number of edges. Graph needs to be connected.</p>
+<div class="desc"><p>Estimates graph radius, diameter, number of nodes &amp; number of edges. Graph needs to be connected.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
-<dd>graph to estimate on.</dd>
-</dl>
+<p>G (NetworkX graph object): graph to estimate on.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>size</code></strong> :&ensp;<code>dict</code></dt>
-<dd>dict keys are radius, diameter, diameter, nodes, edges</dd>
-</dl></section>
+<p>size (dict): dict keys are radius, diameter, diameter, nodes, edges</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1416,17 +1328,11 @@ existing_edges_percentage (percentage of existing edges)</p></section>
 <span>def <span class="ident">is_connected</span></span>(<span>G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Checks if a graph is connected.</p>
+<div class="desc"><p>Checks if a graph is connected.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
-<dd>graph to estimate on.</dd>
-</dl>
+<p>G (NetworkX graph object): graph to estimate on.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>connected</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>True if graph is connected.</dd>
-</dl></section>
+<p>connected (boolean): True if graph is connected.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1449,25 +1355,15 @@ existing_edges_percentage (percentage of existing edges)</p></section>
 <span>def <span class="ident">node_degree_distribution</span></span>(<span>G)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates a graphs node degree distribution.</p>
+<div class="desc"><p>Estimates a graphs node degree distribution.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
-<dd>graph to estimate on.</dd>
-</dl>
+<p>G (NetworkX graph object): graph to estimate on.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>mean</code> <code>node</code> <code>degree</code> (<code>float</code>): <code>mean</code> <code>node</code> <code>degree</code> of <code>all</code> <code>node</code> <code>degrees</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>median</code> <code>node</code> <code>degree</code>(<code>float</code>): <code>median</code> <code>node</code> <code>degree</code> of <code>all</code> <code>node</code> <code>degrees</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>stdev</code> <code>node</code> <code>degree</code> (<code>float</code>): <code>standard</code> <code>deviation</code> of <code>node</code> <code>degree</code> <code>distribution</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>skewness</code> <code>node</code> <code>degree</code> (<code>float</code>): <code>skewness</code> of <code>node</code> <code>degree</code> <code>distribution</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>kurtosis</code> <code>node</code> <code>degree</code> (<code>float</code>): <code>kurtosis</code> of <code>node</code> <code>degree</code> <code>distribution</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>mean node degree (float): mean node degree of all node degrees
+median node degree(float): median node degree of all node degrees
+stdev node degree (float): standard deviation of node degree distribution
+skewness node degree (float): skewness of node degree distribution
+kurtosis node degree (float): kurtosis of node degree distribution</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1505,17 +1401,11 @@ existing_edges_percentage (percentage of existing edges)</p></section>
 <span>def <span class="ident">path_length_distribution</span></span>(<span>H)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates shortest path length distribution between all node pairs. If the graph is not connected it uses the giant component instead.</p>
+<div class="desc"><p>Estimates shortest path length distribution between all node pairs. If the graph is not connected it uses the giant component instead.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>NetworkX</code> <code>graph</code> <code>object</code></dt>
-<dd>graph to estimate on.</dd>
-</dl>
+<p>G (NetworkX graph object): graph to estimate on.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>shortest</code> <code>path</code> <code>distribution</code> (<code>dict</code>): <code>keys</code> <code>are</code> <code>mean</code> <code>path</code> <code>length</code>, <code>median</code> <code>path</code> <code>length</code>, <code>std</code> <code>path</code> <code>length</code>, <code>skw</code> <code>path</code> <code>length</code>, <code>kurtosis</code> <code>path</code> <code>length</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>shortest path distribution (dict): keys are mean path length, median path length, std path length, skw path length, kurtosis path length</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1568,28 +1458,17 @@ existing_edges_percentage (percentage of existing edges)</p></section>
 <span>def <span class="ident">perform_random_walks</span></span>(<span>G, steps=10, number_of_walks=100, start=None, probabilistic=True, weight='weight')</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Performs x random walks of size n</p>
+<div class="desc"><p>Performs x random walks of size n</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>G</code></strong> :&ensp;<code>networkx</code> <code>graph</code></dt>
-<dd>graph object to perform random walks on.</dd>
-<dt><strong><code>steps</code></strong> :&ensp;<code>int</code></dt>
-<dd>is size of random walk</dd>
-<dt><strong><code>number_of_walks</code></strong> :&ensp;<code>int</code></dt>
-<dd>how many random walks are performed on G</dd>
-<dt><strong><code>start</code></strong> :&ensp;<code>node</code> <code>ID</code></dt>
-<dd>if is None start node is selected at random from G else start needs to be node ID as contained in G</dd>
-<dt><strong><code>probabilisitc</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True edge weights are taken into account else all edges are considered equal.
-If true then weight needs to be set</dd>
-<dt><strong><code>weight</code></strong> :&ensp;<code>str</code></dt>
-<dd>edge attribute name as contained in G. Weight is evaluated as a similarity</dd>
-</dl>
+<p>G (networkx graph): graph object to perform random walks on.
+steps (int): is size of random walk
+number_of_walks (int): how many random walks are performed on G
+start (node ID): if is None start node is selected at random from G else start needs to be node ID as contained in G
+probabilisitc (boolean): if True edge weights are taken into account else all edges are considered equal.
+If true then weight needs to be set
+weight (str): edge attribute name as contained in G. Weight is evaluated as a similarity</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>walks</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of lists containing random walk sequence</dd>
-</dl></section>
+<p>walks (list): list of lists containing random walk sequence</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1666,9 +1545,7 @@ If true then weight needs to be set</dd>
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
 </footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad()</script>
 </body>
 </html>

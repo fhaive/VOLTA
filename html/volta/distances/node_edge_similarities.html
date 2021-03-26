@@ -3,15 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.7.5" />
+<meta name="generator" content="pdoc 0.9.2" />
 <title>volta.distances.node_edge_similarities API documentation</title>
 <meta name="description" content="Functions to estimate between network simialrities based on nodes &amp; edges." />
-<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
-<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
-<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
 </head>
 <body>
 <main>
@@ -1378,17 +1380,11 @@ def sort_node_list(Graph, mapping, degree=False, degree_centrality=False, closen
 <span>def <span class="ident">build_share_matrix</span></span>(<span>d)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Converts shared layer information into a matrix.</p>
+<div class="desc"><p>Converts shared layer information into a matrix.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>d</code></strong> :&ensp;<code>dict</code></dt>
-<dd>output of compute_shared_layers()</dd>
-</dl>
+<p>d (dict): output of compute_shared_layers()</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>shared</code> <code>items</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>shared items (numpy matrix): matrix</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1448,36 +1444,26 @@ def sort_node_list(Graph, mapping, degree=False, degree_centrality=False, closen
 <span>def <span class="ident">build_similarity_matrix_for_binary_and_ranked</span></span>(<span>lists, compute='kendall', kendall_usage='all', kendall_x=10)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Wrapper function to build a similarity/ distance matrix from different distance measures.</p>
+<div class="desc"><p>Wrapper function to build a similarity/ distance matrix from different distance measures.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>lists</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of lists, each sublist representing a network. If compute = "Kendall" sublists need to be ranked lists
-else sublists need to be binary lists. 1 indicating if edge/node is present in that network and 0 if not.</dd>
-<dt>compute (str):</dt>
-<dt>"kendall" computes Kendall Rank Coefficient based on compute_kendall_tau()</dt>
-<dt>"hamming" computes hamming distance based on compute_hamming()</dt>
-<dt>"ed" computes edit distance based on compute_edit_distance()</dt>
-<dt>"smc" computes SMC based on compute_simple_matching_coefficient()</dt>
-<dt><strong><code>kendall_usage</code></strong> :&ensp;<code>str</code></dt>
-<dd>sets what parto of the two lists should be compared.
+<p>lists (list): list of lists, each sublist representing a network. If compute = "Kendall" sublists need to be ranked lists
+else sublists need to be binary lists. 1 indicating if edge/node is present in that network and 0 if not.
+compute (str):
+"kendall" computes Kendall Rank Coefficient based on compute_kendall_tau()
+"hamming" computes hamming distance based on compute_hamming()
+"ed" computes edit distance based on compute_edit_distance()
+"smc" computes SMC based on compute_simple_matching_coefficient()
+kendall_usage (str): sets what parto of the two lists should be compared.
 If "all" then all items are considered but list1 and list2 need to be of same length.
 If "top" then the top x items will be considered.
 If "bottom" then the last x items will be considered.
-If "shared" then only items occuring in list1 and list2 will be considered.</dd>
-<dt><strong><code>kendall_x</code></strong> :&ensp;<code>int</code></dt>
-<dd>needs to be set when usage = top or bottom. Indicates how many items are considered in the rank correaltion. If x is larger than one of the lists it will be set automtically to a quarter less than the shortest list.</dd>
-</dl>
+If "shared" then only items occuring in list1 and list2 will be considered.
+kendall_x (int): needs to be set when usage = top or bottom. Indicates how many items are considered in the rank correaltion. If x is larger than one of the lists it will be set automtically to a quarter less than the shortest list.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>similairty</code> <code>matrix</code> (<code>numpy</code> <code>matrix</code>): <code>matrix</code> <code>containing</code> <code>the</code> <code>kendall</code> <code>correlation</code> <code>values</code> <code>for</code> <code>each</code> <code>input</code> <code>pair</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>p</code> <code>value</code> <code>matrix</code> (<code>numpy</code> <code>matrix</code>): <code>this</code> <code>matrix</code> <code>only</code> <code>contains</code> <code>values</code> <code>if</code>
-<code>compute</code> = <code>hamming</code> or <code>compute</code> = <code>kendall</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>used</code> <code>x</code> (<code>int</code>): <code>if</code> <code>kendall</code> <code>then</code> <code>a</code> <code>third</code> <code>value</code> <code>is</code> <code>returned</code> <code>indicating</code> <code>what</code> <code>portion</code> of <code>the</code> <code>lists</code> <code>have</code> <code>been</code> <code>used</code> <code>to</code> <code>estimate</code> <code>the</code> <code>rank</code> <code>correlation</code> <code>value</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>similairty matrix (numpy matrix): matrix containing the kendall correlation values for each input pair
+p value matrix (numpy matrix): this matrix only contains values if
+compute = hamming or compute = kendall
+used x (int): if kendall then a third value is returned indicating what portion of the lists have been used to estimate the rank correlation value</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1585,23 +1571,14 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 <span>def <span class="ident">calculate_jaccard_index</span></span>(<span>shared, list1, list2, similarity=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Calculates jaccard index between two networks.</p>
+<div class="desc"><p>Calculates jaccard index between two networks.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>shraed</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of shared edges or nodes. Node IDs need to be consistent between the lists. Duplicate edges in a network are not allowed.</dd>
-<dt><strong><code>list1</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of edges or nodes in Network 1. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.</dd>
-<dt><strong><code>list2</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of edges or nodes in Network 2. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.</dd>
-<dt><strong><code>similarity</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True returns jaccard similarity else returns jaccard distance.</dd>
-</dl>
+<p>shraed (list): list of shared edges or nodes. Node IDs need to be consistent between the lists. Duplicate edges in a network are not allowed.
+list1 (list): list of edges or nodes in Network 1. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
+list2 (list): list of edges or nodes in Network 2. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
+similarity (boolean): if True returns jaccard similarity else returns jaccard distance.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>jaccard</code> <code>similarity</code>/ <code>distance</code> (<code>float</code>): <code>jaccard</code> <code>index</code> or <code>distance</code> <code>between</code> <code>the</code> <code>input</code> <code>lists</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>jaccard similarity/ distance (float): jaccard index or distance between the input lists</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1644,19 +1621,13 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 <span>def <span class="ident">compute_binary_layer</span></span>(<span>shared_edges, layers=None)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Computes binary representation of edges/nodes.</p>
+<div class="desc"><p>Computes binary representation of edges/nodes.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><a title="volta.distances.node_edge_similarities.shared_edges" href="#volta.distances.node_edge_similarities.shared_edges"><code>shared_edges()</code></a></strong> :&ensp;<code>dict</code></dt>
-<dd>as returned by compute_shared_layers()</dd>
-<dt><strong><code>layers</code></strong> :&ensp;<code>list</code></dt>
-<dd>list containing network names. Needs to be the same as used in shared_edges()</dd>
-</dl>
+<p>shared_edges (dict): as returned by compute_shared_layers()
+layers (list): list containing network names. Needs to be the same as used in shared_edges()</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>binary</code> <code>edges</code> (<code>list</code>): <code>list</code> of <code>sublists</code> <code>containing</code> <code>binary</code> <code>edge</code>/ <code>node</code> <code>representation</code> <code>for</code> <code>each</code> <code>layer</code> <code>specified</code> <code>in</code> <code>layers.</code></dt>
-<dd>Edges/ Nodes are ordered the same way as provided in shared_edges.</dd>
-</dl></section>
+<p>binary edges (list): list of sublists containing binary edge/ node representation for each layer specified in layers.
+Edges/ Nodes are ordered the same way as provided in shared_edges.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1697,19 +1668,12 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 <span>def <span class="ident">compute_edit_distance</span></span>(<span>list1, list2)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Computes edit distance (based on <a href="https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Python">https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Python</a>)</p>
+<div class="desc"><p>Computes edit distance (based on <a href="https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Python">https://en.wikibooks.org/wiki/Algorithm_Implementation/Strings/Levenshtein_distance#Python</a>)</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>list1</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. </dd>
-<dt><strong><code>list2</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. </dd>
-</dl>
+<p>list1 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not.
+list2 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. </p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>edit</code> <code>distance</code> (<code>float</code>): <code>eidt</code> <code>distance</code> <code>between</code> <code>the</code> <code>input</code> <code>lists</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>edit distance (float): eidt distance between the input lists</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1745,19 +1709,12 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 <span>def <span class="ident">compute_hamming</span></span>(<span>list1, list2)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Computes hamming distance (based on SciPy)</p>
+<div class="desc"><p>Computes hamming distance (based on SciPy)</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>list1</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. </dd>
-<dt><strong><code>list2</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. </dd>
-</dl>
+<p>list1 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not.
+list2 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. </p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>hamming</code> <code>distance</code> (<code>float</code>): <code>hamming</code> <code>distance</code> <code>between</code> <code>the</code> <code>input</code> <code>lists</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>hamming distance (float): hamming distance between the input lists</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1779,30 +1736,20 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 <span>def <span class="ident">compute_kendall_tau</span></span>(<span>list1, list2, usage='all', x=10)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Computes Kendall Rank Correlation between two ranked lists (based on SciPy). This can be edges ranked by weight or other attributed or nodes ranked by some attributes, such as degree.
+<div class="desc"><p>Computes Kendall Rank Correlation between two ranked lists (based on SciPy). This can be edges ranked by weight or other attributed or nodes ranked by some attributes, such as degree.
 Input lists need to have same length or usage option other than "all" needs to be selected.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>list1</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of ranked edge or node IDs as returned by sort_edge_list().</dd>
-<dt><strong><code>list2</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of ranked edge or node IDs as returned by sort_edge_list().</dd>
-<dt><strong><code>usage</code></strong> :&ensp;<code>str</code></dt>
-<dd>sets what parto of the two lists should be compared.
+<p>list1 (list): list of ranked edge or node IDs as returned by sort_edge_list().
+list2 (list): list of ranked edge or node IDs as returned by sort_edge_list().
+usage (str): sets what parto of the two lists should be compared.
 If "all" then all items are considered but list1 and list2 need to be of same length.
 If "top" then the top x items will be considered.
 If "bottom" then the last x items will be considered.
-If "shared" then only items occuring in list1 and list2 will be considered.</dd>
-<dt><strong><code>x</code></strong> :&ensp;<code>int</code></dt>
-<dd>needs to be set when usage = top or bottom. Indicates how many items are considered in the rank correaltion.</dd>
-</dl>
+If "shared" then only items occuring in list1 and list2 will be considered.
+x (int): needs to be set when usage = top or bottom. Indicates how many items are considered in the rank correaltion.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>kendall</code> <code>tau</code> (<code>float</code>): <code>kendell</code> <code>tau</code> <code>coefficient</code> <code>between</code> <code>the</code> <code>input</code> <code>lists</code></dt>
-<dd>&nbsp;</dd>
-<dt><code>p</code> <code>value</code> (<code>float</code>): <code>p</code>-<code>value</code> of <code>the</code> <code>correlation</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>kendall tau (float): kendell tau coefficient between the input lists
+p value (float): p-value of the correlation</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1872,23 +1819,14 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 <span>def <span class="ident">compute_shared_layers</span></span>(<span>lists, labels, is_file=False, in_async=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Computes in how many and in which layers/ networks each edge/node occures.</p>
+<div class="desc"><p>Computes in how many and in which layers/ networks each edge/node occures.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>lists</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of edge/node IDs as encoded by map_edge_to_id()/ map_node_to_id() and construct_mapped_edge().</dd>
-<dt><strong><code>labels</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of network labels. Needs to be in the same order as lists.</dd>
-<dt><strong><code>is_file</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True then lists needs to contain the pickled locations to the node/ edge lists instead.</dd>
-<dt><strong><code>in_async</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True then run in async</dd>
-</dl>
+<p>lists (list): list of edge/node IDs as encoded by map_edge_to_id()/ map_node_to_id() and construct_mapped_edge().
+labels (list): list of network labels. Needs to be in the same order as lists.
+is_file (boolean): if True then lists needs to contain the pickled locations to the node/ edge lists instead.
+in_async (boolean): if True then run in async</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>shared</code> <code>edges</code>/<code>nodes</code> (<code>dict</code>): <code>key</code> <code>is</code> <code>edge</code>/ <code>node</code> <code>ID</code> <code>and</code> <code>value</code> <code>is</code> <code>label</code> <code>ID</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>shared edges/nodes (dict): key is edge/ node ID and value is label ID</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1978,19 +1916,12 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 <span>def <span class="ident">compute_simple_matching_coefficient</span></span>(<span>list1, list2)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Computes SMC.</p>
+<div class="desc"><p>Computes SMC.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>list1</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. </dd>
-<dt><strong><code>list2</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. </dd>
-</dl>
+<p>list1 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not.
+list2 (list): list of binary values as returned by compute_binary_layer(). 1 indicating if edge/node is present in that network and 0 if not. </p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>SMC</code></strong> :&ensp;<code>float</code></dt>
-<dd>SMC coefficient between input lists</dd>
-</dl></section>
+<p>SMC (float): SMC coefficient between input lists</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2024,19 +1955,12 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 <span>def <span class="ident">construct_mapped_edge</span></span>(<span>mapping, edges)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Creates list from assigned edge IDs. Can be used to reverse the mapping.</p>
+<div class="desc"><p>Creates list from assigned edge IDs. Can be used to reverse the mapping.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code></dt>
-<dd>edge to ID mapping as returned by map_edge_to_id()</dd>
-<dt><strong><code>edges</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of edges</dd>
-</dl>
+<p>mapping (dict): edge to ID mapping as returned by map_edge_to_id()
+edges (list): list of edges</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>ids</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of assigned IDs in same order as edges</dd>
-</dl></section>
+<p>ids (list): list of assigned IDs in same order as edges</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2067,17 +1991,11 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 <span>def <span class="ident">convert_to_dict</span></span>(<span>l)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Convert list l of format [(x,y)] to dict of form {x:y}.</p>
+<div class="desc"><p>Convert list l of format [(x,y)] to dict of form {x:y}.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>l</code></strong> :&ensp;<code>list</code></dt>
-<dd>input list of tuples</dd>
-</dl>
+<p>l (list): input list of tuples</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>convertion</code></strong> :&ensp;<code>dict</code></dt>
-<dd>where key is first tuple entry and value is second tuple entry</dd>
-</dl></section>
+<p>convertion (dict): where key is first tuple entry and value is second tuple entry</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2105,23 +2023,14 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 <span>def <span class="ident">get_shared_edges</span></span>(<span>l1, l2, name=False, mapping=None)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Calcualtes shared edges/ nodes between two lists/ networks.</p>
+<div class="desc"><p>Calcualtes shared edges/ nodes between two lists/ networks.</p>
 <h2 id="paramters">Paramters</h2>
-<dl>
-<dt><strong><code>l1</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of node/edge ids as returned by construced_mapped_edge().</dd>
-<dt><strong><code>l2</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of node/edge ids as returned by construced_mapped_edge().</dd>
-<dt><strong><code>name</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True ID values are replaced by original node/edge names. If Ture mapping needs to be not None.</dd>
-<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code> or <code>None</code></dt>
-<dd>edge /node to ID mapping as returned by map_edge_to_id() / map_node_to_id().</dd>
-</dl>
+<p>l1 (list): list of node/edge ids as returned by construced_mapped_edge().
+l2 (list): list of node/edge ids as returned by construced_mapped_edge().
+name (boolean): if True ID values are replaced by original node/edge names. If Ture mapping needs to be not None.
+mapping (dict or None): edge /node to ID mapping as returned by map_edge_to_id() / map_node_to_id().</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>shared</code> <code>items</code> (<code>list</code>): <code>list</code> of <code>shared</code> <code>items</code> <code>between</code> <code>input</code> <code>lists</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>shared items (list): list of shared items between input lists</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2158,17 +2067,11 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 <span>def <span class="ident">get_sorensen_coefficient</span></span>(<span>jaccard)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Estimates sorensen coefficient based on jaccard index</p>
+<div class="desc"><p>Estimates sorensen coefficient based on jaccard index</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>jaccard</code></strong> :&ensp;<code>numpy</code> <code>matrix</code></dt>
-<dd>numpy matrix filled with jaccard indices as returned by shared_edges_multiple()</dd>
-</dl>
+<p>jaccard (numpy matrix): numpy matrix filled with jaccard indices as returned by shared_edges_multiple()</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>sorensens</code></strong> :&ensp;<code>numpy</code> <code>matrix</code></dt>
-<dd>sorensen coefficient estimated from jaccard index</dd>
-</dl></section>
+<p>sorensens (numpy matrix): sorensen coefficient estimated from jaccard index</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2199,23 +2102,14 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 <span>def <span class="ident">map_edge_to_id</span></span>(<span>edges, mapping={}, next_value=0)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Maps undirected edges to an ID.</p>
+<div class="desc"><p>Maps undirected edges to an ID.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>edges</code></strong> :&ensp;<code>list</code></dt>
-<dd>edge list</dd>
-<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code></dt>
-<dd>either empty dict can be provided or already populated one, when the same mapping should be used for multiple networks.</dd>
-<dt><strong><code>next_value</code></strong> :&ensp;<code>int</code></dt>
-<dd>if mapping is provided, then the last id set needs to be provided.</dd>
-</dl>
+<p>edges (list): edge list
+mapping (dict): either empty dict can be provided or already populated one, when the same mapping should be used for multiple networks.
+next_value (int): if mapping is provided, then the last id set needs to be provided.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key is edge and value is assigned ID</dd>
-<dt><code>next</code> <code>value</code> (<code>int</code>): <code>can</code> <code>be</code> <code>used</code> <code>if</code> <code>multiple</code> <code>networks</code> <code>are</code> <code>mapped</code> <code>to</code> <code>the</code> <code>same</code> <code>IDs</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>mapping (dict): key is edge and value is assigned ID
+next value (int): can be used if multiple networks are mapped to the same IDs</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2264,23 +2158,14 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 <span>def <span class="ident">map_node_to_id</span></span>(<span>edges, mapping={}, next_value=0)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Maps nodes to an ID.</p>
+<div class="desc"><p>Maps nodes to an ID.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>edges</code></strong> :&ensp;<code>list</code></dt>
-<dd>edge list</dd>
-<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code></dt>
-<dd>either empty dict can be provided or already populated one, when the same mapping should be used for multiple networks.</dd>
-<dt><strong><code>next_value</code></strong> :&ensp;<code>int</code></dt>
-<dd>if mapping is provided, then the last id set needs to be provided.</dd>
-</dl>
+<p>edges (list): edge list
+mapping (dict): either empty dict can be provided or already populated one, when the same mapping should be used for multiple networks.
+next_value (int): if mapping is provided, then the last id set needs to be provided.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code></dt>
-<dd>key is node ID and value is mapped ID</dd>
-<dt><code>next</code> <code>value</code> (<code>int</code>): <code>can</code> <code>be</code> <code>used</code> <code>if</code> <code>multiple</code> <code>networks</code> <code>are</code> <code>mapped</code> <code>to</code> <code>the</code> <code>same</code> <code>IDs</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>mapping (dict): key is node ID and value is mapped ID
+next value (int): can be used if multiple networks are mapped to the same IDs</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2318,27 +2203,17 @@ If "shared" then only items occuring in list1 and list2 will be considered.</dd>
 <span>def <span class="ident">percentage_shared</span></span>(<span>shared, list1, list2, penalize=False, weight='length')</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Function to estimate the percenatge of shared edges/nodes between two networks.
+<div class="desc"><p>Function to estimate the percenatge of shared edges/nodes between two networks.
 Calculates the percentage of shared edges based on the maximum possible shared edges = len of smaller list.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>shraed</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of shared edges or nodes. Node IDs need to be consistent between the lists. Duplicate edges in a network are not allowed.</dd>
-<dt><strong><code>list1</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of edges or nodes in Network 1. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.</dd>
-<dt><strong><code>list2</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of edges or nodes in Network 2. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.</dd>
-<dt><strong><code>penalize</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True then the score is penalized based on the difference in list lengths (difference in size of the two networks).
-Percentage score p (of shared edges) is penalized based on p * (1 / weight * (abs(len(list1) - len(list2)))).</dd>
-<dt><strong><code>weight</code></strong> :&ensp;<code>str</code> or <code>float</code></dt>
-<dd>method used when penalize is True. If penalize = "length" then weight is 1. If penalize is float then weight can be custom set.</dd>
-</dl>
+<p>shraed (list): list of shared edges or nodes. Node IDs need to be consistent between the lists. Duplicate edges in a network are not allowed.
+list1 (list): list of edges or nodes in Network 1. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
+list2 (list): list of edges or nodes in Network 2. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
+penalize (boolean): if True then the score is penalized based on the difference in list lengths (difference in size of the two networks).
+Percentage score p (of shared edges) is penalized based on p * (1 / weight * (abs(len(list1) - len(list2)))).
+weight (str or float): method used when penalize is True. If penalize = "length" then weight is 1. If penalize is float then weight can be custom set.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>shared</code> <code>percentage</code> (<code>float</code>): <code>percentage</code> of <code>shared</code> <code>edges</code>/ <code>nodes</code> <code>between</code> <code>the</code> <code>input</code> <code>graphs</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>shared percentage (float): percentage of shared edges/ nodes between the input graphs</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2393,19 +2268,12 @@ Percentage score p (of shared edges) is penalized based on p * (1 / weight * (ab
 <span>def <span class="ident">return_layer_from_id</span></span>(<span>id, layers)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Fetches layers specific node/edge ID is present in.</p>
+<div class="desc"><p>Fetches layers specific node/edge ID is present in.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>id</code></strong> :&ensp;<code>int</code></dt>
-<dd>edge/ node ID queried for as set in map_edge_to_id()/ map_node_to_id()</dd>
-<dt><strong><code>layers</code></strong> :&ensp;<code>dict</code></dt>
-<dd>as returned by compute_shared_layers()</dd>
-</dl>
+<p>id (int): edge/ node ID queried for as set in map_edge_to_id()/ map_node_to_id()
+layers (dict): as returned by compute_shared_layers()</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>layer</code> <code>name</code>/ <code>network</code> <code>name</code> (<code>list</code>): <code>as</code> <code>queried</code> <code>for</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>layer name/ network name (list): as queried for</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2429,21 +2297,13 @@ Percentage score p (of shared edges) is penalized based on p * (1 / weight * (ab
 <span>def <span class="ident">return_top_layers</span></span>(<span>x, layers, direction='large')</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Fetches nodes/ edges that are present in the most / least networks.</p>
+<div class="desc"><p>Fetches nodes/ edges that are present in the most / least networks.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>x</code></strong> :&ensp;<code>int</code></dt>
-<dd>number of to be returned entries</dd>
-<dt><strong><code>layers</code></strong> :&ensp;<code>dict</code></dt>
-<dd>as returned by compute_shared_layers()</dd>
-<dt><strong><code>direction</code></strong> :&ensp;<code>str</code></dt>
-<dd>if direction = "large", the x items occuring in the most networks are returned. if direction = "small" the x items occuring in the least networks are returned.</dd>
-</dl>
+<p>x (int): number of to be returned entries
+layers (dict): as returned by compute_shared_layers()
+direction (str): if direction = "large", the x items occuring in the most networks are returned. if direction = "small" the x items occuring in the least networks are returned.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>items</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of layer IDs as queried for</dd>
-</dl></section>
+<p>items (list): list of layer IDs as queried for</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2480,14 +2340,11 @@ Percentage score p (of shared edges) is penalized based on p * (1 / weight * (ab
 <span>def <span class="ident">reverse_node_edge_mapping</span></span>(<span>mapping)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Reverses the mapping object. Switches keys and values of the mapping object. This allows easier retrival of original node IDs from the mapping ID.</p>
+<div class="desc"><p>Reverses the mapping object. Switches keys and values of the mapping object. This allows easier retrival of original node IDs from the mapping ID.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code></dt>
-<dd>node/ edge to ID mapping as returned by map_node_to_id()/ map_edge_to_id().</dd>
-</dl>
+<p>mapping (dict): node/ edge to ID mapping as returned by map_node_to_id()/ map_edge_to_id().</p>
 <h2 id="returns">Returns</h2>
-<p>reversed mapping (dict): keys are mapped IDs and values are original node/ edge IDs.</p></section>
+<p>reversed mapping (dict): keys are mapped IDs and values are original node/ edge IDs.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2510,19 +2367,12 @@ Percentage score p (of shared edges) is penalized based on p * (1 / weight * (ab
 <span>def <span class="ident">shared_edges</span></span>(<span>list1, list2)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Calculates shared edges/ nodes between two networks</p>
+<div class="desc"><p>Calculates shared edges/ nodes between two networks</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>list1</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of edges or nodes in Network 1. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.</dd>
-<dt><strong><code>list2</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of edges or nodes in Network 2. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.</dd>
-</dl>
+<p>list1 (list): list of edges or nodes in Network 1. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.
+list2 (list): list of edges or nodes in Network 2. Node IDs need to be consistent between the networks (lists). Duplicate edges in a network are not allowed.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>shared</code> <code>items</code> (<code>list</code>): <code>list</code> of <code>items</code> <code>shared</code> <code>between</code> <code>input</code> <code>graphs</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>shared items (list): list of items shared between input graphs</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2554,36 +2404,22 @@ Percentage score p (of shared edges) is penalized based on p * (1 / weight * (ab
 <span>def <span class="ident">shared_elements_multiple</span></span>(<span>lists, in_async=True, labels=None, percentage=False, jaccard=True, jaccard_similarity=True, penalize_percentage=False, weight_penalize='length', is_file=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Wrapper function to estimate similarities between a list of networks.
+<div class="desc"><p>Wrapper function to estimate similarities between a list of networks.
 Estimates % of shared edges/nodes between all edge list pairs/ node lists and / or jaccard similarity/ index</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>lists</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of lists containing network edges or nodes to be compared.</dd>
-<dt><strong><code>in_async</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True runs in asynchronous mode.</dd>
-<dt><strong><code>labels</code></strong> :&ensp;<code>list</code> or <code>None</code></dt>
-<dd>list of network labels in same order as lists.</dd>
-<dt><strong><code>percentage</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True percentage value is calculated.</dd>
-<dt><strong><code>jaccard</code></strong> :&ensp;<code>bolean</code></dt>
-<dd>if True jaccard distance/similarity is calculated.</dd>
-<dt><strong><code>jaccard_similarity</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True returns jaccard similarity else returns jaccard distance.</dd>
-<dt><strong><code>penalize_percentage</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True then the score is penalized based on the difference in list lengths (difference in size of the two networks).
-Percentage score p (of shared edges) is penalized based on p * (1 / weight * (abs(len(list1) - len(list2)))).</dd>
-<dt><strong><code>weight_penalize</code></strong> :&ensp;<code>str</code> or <code>float</code></dt>
-<dd>method used when penalize is True. If penalize = "length" then weight is 1. If penalize is float then weight can be custom set.</dd>
-<dt><strong><code>is_file</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True then lists is list of pickled locations of data described in lists.</dd>
-</dl>
+<p>lists (list): list of lists containing network edges or nodes to be compared.
+in_async (boolean): if True runs in asynchronous mode.
+labels (list or None): list of network labels in same order as lists.
+percentage (boolean): if True percentage value is calculated.
+jaccard (bolean): if True jaccard distance/similarity is calculated.
+jaccard_similarity (boolean): if True returns jaccard similarity else returns jaccard distance.
+penalize_percentage (boolean): if True then the score is penalized based on the difference in list lengths (difference in size of the two networks).
+Percentage score p (of shared edges) is penalized based on p * (1 / weight * (abs(len(list1) - len(list2)))).
+weight_penalize (str or float): method used when penalize is True. If penalize = "length" then weight is 1. If penalize is float then weight can be custom set.
+is_file (boolean): if True then lists is list of pickled locations of data described in lists.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>similarity</code></strong> :&ensp;<code>numpy</code> <code>matrix</code> or <code>tuple</code> of <code>numpy</code> <code>matrices</code></dt>
-<dd>similarity matrix between all networks. If one parameter is estimated returns one matrix only.
-If both parameters are estimated returns jaccard matrix, percentage matrix</dd>
-</dl></section>
+<p>similarity (numpy matrix or tuple of numpy matrices): similarity matrix between all networks. If one parameter is estimated returns one matrix only.
+If both parameters are estimated returns jaccard matrix, percentage matrix</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2777,20 +2613,13 @@ If both parameters are estimated returns jaccard matrix, percentage matrix</dd>
 <span>def <span class="ident">sort_edge_list</span></span>(<span>edges, mapping)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Sorts edge lists based on weight attribute and returns sorted list of edge ids.</p>
+<div class="desc"><p>Sorts edge lists based on weight attribute and returns sorted list of edge ids.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>edges</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of sublists in following format
-[gene1, gene2, weight]</dd>
-<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code></dt>
-<dd>edge to ID mapping as returned by map_edge_to_id()</dd>
-</dl>
+<p>edges (list): list of sublists in following format
+[gene1, gene2, weight]
+mapping (dict): edge to ID mapping as returned by map_edge_to_id()</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>ranked</code> <code>edges</code> (<code>list</code>): <code>list</code> of <code>sorted</code> <code>edge</code> <code>IDs</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>ranked edges (list): list of sorted edge IDs</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -2834,36 +2663,21 @@ If both parameters are estimated returns jaccard matrix, percentage matrix</dd>
 <span>def <span class="ident">sort_node_list</span></span>(<span>Graph, mapping, degree=False, degree_centrality=False, closeness_centrality=False, betweenness=False, k=None, xx=2, as_str=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Sorts node lists based on weight attribute and returns sorted list of nodes ids.</p>
+<div class="desc"><p>Sorts node lists based on weight attribute and returns sorted list of nodes ids.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>Graph</code></strong> :&ensp;<code>networkX</code> <code>graph</code> <code>object</code></dt>
-<dd>graph to estimate on.</dd>
-<dt><strong><code>mapping</code></strong> :&ensp;<code>dict</code></dt>
-<dd>is id mapping as returned by map_node_to_id()</dd>
-<dt><strong><code>as_str</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True node IDs are assumed to be string else int.</dd>
-<dt><strong><code>degree</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True nodes are sorted after degree.</dd>
-<dt><strong><code>degree_centrality</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True nodes are sorted after degree centrality.</dd>
-<dt><strong><code>closeness_centrality</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True nodes are sorted after closeness centrality.</dd>
-<dt><strong><code>betweenness</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True nodes are sorted after betweenness.</dd>
-<dt>If multiple values are set to True a combined ranking is calculated</dt>
-<dt><strong><code>k</code></strong> :&ensp;<code>float</code> [<code>0</code>,<code>1</code>] or <code>None</code></dt>
-<dd>approximation of betweenness, if float then k percentage of nodes are used to approximate the betweenness values. If None all nodes are used.</dd>
-<dt><strong><code>xx</code></strong> :&ensp;<code>int</code></dt>
-<dd>state how often random sampling is performed if k is not None</dd>
-<dt><strong><code>as_str</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True keys in mapping are assumed to be str (are the same as graph node IDs). If False they are assumed to be int.</dd>
-</dl>
+<p>Graph (networkX graph object): graph to estimate on.
+mapping (dict): is id mapping as returned by map_node_to_id()
+as_str (boolean): if True node IDs are assumed to be string else int.
+degree (boolean): if True nodes are sorted after degree.
+degree_centrality (boolean): if True nodes are sorted after degree centrality.
+closeness_centrality (boolean): if True nodes are sorted after closeness centrality.
+betweenness (boolean): if True nodes are sorted after betweenness.
+If multiple values are set to True a combined ranking is calculated
+k (float [0,1] or None): approximation of betweenness, if float then k percentage of nodes are used to approximate the betweenness values. If None all nodes are used.
+xx (int): state how often random sampling is performed if k is not None
+as_str (boolean): if True keys in mapping are assumed to be str (are the same as graph node IDs). If False they are assumed to be int.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>sorted</code></strong> :&ensp;<code>dict</code></dt>
-<dd>keys are degree, dc, cc, betweenness, average_mean and average_median, values are list of ranked node ids (index of list is rank and value is Node ID as provided in mapping). If key is set to False an empty list is returned.</dd>
-</dl></section>
+<p>sorted (dict): keys are degree, dc, cc, betweenness, average_mean and average_median, values are list of ranked node ids (index of list is rank and value is Node ID as provided in mapping). If key is set to False an empty list is returned.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -3040,17 +2854,11 @@ If both parameters are estimated returns jaccard matrix, percentage matrix</dd>
 <span>def <span class="ident">to_distance</span></span>(<span>m)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Converts a similarity matrix to a distance matrix (1- x).</p>
+<div class="desc"><p>Converts a similarity matrix to a distance matrix (1- x).</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>m</code></strong> :&ensp;<code>numpy</code> <code>matrix</code></dt>
-<dd>similarity matrix</dd>
-</dl>
+<p>m (numpy matrix): similarity matrix</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>distance</code> <code>matrix</code> (<code>numpy</code> <code>matrix</code>): <code>converted</code> <code>distance</code> <code>matrix</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>distance matrix (numpy matrix): converted distance matrix</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -3127,9 +2935,7 @@ If both parameters are estimated returns jaccard matrix, percentage matrix</dd>
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
 </footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad()</script>
 </body>
 </html>

@@ -3,15 +3,17 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
-<meta name="generator" content="pdoc 0.7.5" />
+<meta name="generator" content="pdoc 0.9.2" />
 <title>volta.clustering API documentation</title>
 <meta name="description" content="Clustering algorithms that take as input a distance matrix." />
-<link href='https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.0/normalize.min.css' rel='stylesheet'>
-<link href='https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/8.0.0/sanitize.min.css' rel='stylesheet'>
-<link href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/styles/github.min.css" rel="stylesheet">
-<style>.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{font-weight:bold}#index h4 + ul{margin-bottom:.6em}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
-<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
 <style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
 </head>
 <body>
 <main>
@@ -821,17 +823,11 @@ def kmedoids_clustering(distance, n_clusters=2):
 <span>def <span class="ident">affinityPropagation_clustering</span></span>(<span>distance)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Affinity propagation clustering on distance matrix. Based on sklearn</p>
+<div class="desc"><p>Affinity propagation clustering on distance matrix. Based on sklearn</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>distance</code></strong> :&ensp;<code>matrix</code></dt>
-<dd>distance matrix to be used for clustering.</dd>
-</dl>
+<p>distance (matrix): distance matrix to be used for clustering.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>labels</code></strong> :&ensp;<code>array</code></dt>
-<dd>of clustering</dd>
-</dl></section>
+<p>labels (array): of clustering</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -859,31 +855,21 @@ def kmedoids_clustering(distance, n_clusters=2):
 <span>def <span class="ident">consensus_clustering</span></span>(<span>clusterings, seed=123, threshold=0.75, per_node=True, rep=10)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Finds a consensus clustering based on multiple provided clusterings.
+<div class="desc"><p>Finds a consensus clustering based on multiple provided clusterings.
 Based on netneurotools &amp; bct for whole graph thresholds
 <a href="https://github.com/netneurolab/netneurotools">https://github.com/netneurolab/netneurotools</a> , <a href="https://github.com/aestrivex/bctpy.">https://github.com/aestrivex/bctpy.</a>
 Builds an agreement graph from different clusterings, removes weak edges &amp; performs community detection rep times (louvain) until convergance.
 Multiple options on how to identify weak edges are provided.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>clusterings</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of arrays containing numeric class labels</dd>
-<dt><strong><code>seed</code></strong> :&ensp;<code>int</code></dt>
-<dd>seed to be used for random processes</dd>
-<dt><strong><code>treshold</code></strong> :&ensp;<code>float</code> or <code>str</code></dt>
-<dd>if float needs to be in [0,1]. If float and not per_node all edges with a weight lower than the treshold are removed
+<p>clusterings (list): list of arrays containing numeric class labels
+seed (int): seed to be used for random processes
+treshold (float or str): if float needs to be in [0,1]. If float and not per_node all edges with a weight lower than the treshold are removed
 in the agreement graph. If float and per_node is True then for each node the weakes treshold % of edges are removed, if they are weak for
-both nodes making up the edge. If treshold is "matrix" then the teshold is estimated based on a permutation of the clusterings as implemented in netneurotools.</dd>
-<dt><strong><code>per_node</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True treshold is applied on a per node pasis else it is applied gloablly.</dd>
-<dt><strong><code>rep</code></strong> :&ensp;<code>int</code></dt>
-<dd>how often louvain clustering is reapeated on the agreement graph.</dd>
-</dl>
+both nodes making up the edge. If treshold is "matrix" then the teshold is estimated based on a permutation of the clusterings as implemented in netneurotools.
+per_node (boolean): if True treshold is applied on a per node pasis else it is applied gloablly.
+rep (int): how often louvain clustering is reapeated on the agreement graph.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>consensus</code> <code>class</code> <code>labels</code> (<code>array</code>): of <code>clustering</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>consensus class labels (array): of clustering</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -950,19 +936,12 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
 <span>def <span class="ident">convert_clusters</span></span>(<span>clusters, v)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Converts list of sublists into array of cluster labels,</p>
+<div class="desc"><p>Converts list of sublists into array of cluster labels,</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>clusters</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of sublists where each list contains indices of the items in this cluster and each sublist is a different cluster.</dd>
-<dt><strong><code>v</code></strong> :&ensp;<code>list</code></dt>
-<dd>of item IDs as contained in clusters.</dd>
-</dl>
+<p>clusters (list): list of sublists where each list contains indices of the items in this cluster and each sublist is a different cluster.
+v (list): of item IDs as contained in clusters.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>labels</code></strong> :&ensp;<code>array</code></dt>
-<dd>of clustering</dd>
-</dl></section>
+<p>labels (array): of clustering</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -995,19 +974,12 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
 <span>def <span class="ident">create_mean_distance_matrix</span></span>(<span>matrices, set_diagonal=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Creates a mean distance matrix out of individual distance matrices.</p>
+<div class="desc"><p>Creates a mean distance matrix out of individual distance matrices.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>matrices</code></strong> :&ensp;<code>list</code></dt>
-<dd>of numpy matrices. Items need to be in the same order in all the matrices. Matrices are assumed to be "distance amtrices".</dd>
-<dt><strong><code>set_diagonal</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True diagonal values are set to 0 automatically - this may be helpful if the distance measures applied do not return 0 distance for the same object.</dd>
-</dl>
+<p>matrices (list): of numpy matrices. Items need to be in the same order in all the matrices. Matrices are assumed to be "distance amtrices".
+set_diagonal (boolean): if True diagonal values are set to 0 automatically - this may be helpful if the distance measures applied do not return 0 distance for the same object.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>mean</code> <code>distance</code> <code>matrix</code> (<code>matrix</code>): of <code>input</code> <code>matrices</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>mean distance matrix (matrix): of input matrices</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1054,19 +1026,12 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
 <span>def <span class="ident">create_median_distance_matrix</span></span>(<span>matrices, set_diagonal=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Creates a median distance matrix out of individual distance matrices.</p>
+<div class="desc"><p>Creates a median distance matrix out of individual distance matrices.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>matrices</code></strong> :&ensp;<code>list</code></dt>
-<dd>of numpy matrices. Items need to be in the same order in all the matrices. Matrices are assumed to be "distance amtrices".</dd>
-<dt><strong><code>set_diagonal</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True diagonal values are set to 0 automatically - this may be helpful if the distance measures applied do not return 0 distance for the same object.</dd>
-</dl>
+<p>matrices (list): of numpy matrices. Items need to be in the same order in all the matrices. Matrices are assumed to be "distance amtrices".
+set_diagonal (boolean): if True diagonal values are set to 0 automatically - this may be helpful if the distance measures applied do not return 0 distance for the same object.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><code>median</code> <code>distance</code> <code>matrix</code> (<code>matrix</code>): of <code>input</code> <code>matrices</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>median distance matrix (matrix): of input matrices</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1112,21 +1077,13 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
 <span>def <span class="ident">hierarchical_clustering</span></span>(<span>distance, n_clusters=2, linkage='complete')</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Hierarchical clustering of distance matrix. Based on sklearn.</p>
+<div class="desc"><p>Hierarchical clustering of distance matrix. Based on sklearn.</p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>distance</code></strong> :&ensp;<code>matrix</code></dt>
-<dd>distance matrix to be used for clustering.</dd>
-<dt><strong><code>n_clusters</code></strong> :&ensp;<code>int</code></dt>
-<dd>number of to be computed clusters. Maximum allowed value is thr number of items in distance. Minimum allowed value is 2.</dd>
-<dt><strong><code>linkage</code></strong> :&ensp;<code>str</code></dt>
-<dd>linkage method to be used. Options are "average", "complete" or "single".</dd>
-</dl>
+<p>distance (matrix): distance matrix to be used for clustering.
+n_clusters (int): number of to be computed clusters. Maximum allowed value is thr number of items in distance. Minimum allowed value is 2.
+linkage (str): linkage method to be used. Options are "average", "complete" or "single".</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>labels</code></strong> :&ensp;<code>array</code></dt>
-<dd>of clustering</dd>
-</dl></section>
+<p>labels (array): of clustering</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1164,21 +1121,13 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
 <span>def <span class="ident">kmedoids_clustering</span></span>(<span>distance, n_clusters=2)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Kmediods clustering on a provided distance matrix. Based on pyclustering <a href="https://pyclustering.github.io/docs/0.8.2/html/de/d3b/classpyclustering_1_1cluster_1_1optics_1_1optics.html">https://pyclustering.github.io/docs/0.8.2/html/de/d3b/classpyclustering_1_1cluster_1_1optics_1_1optics.html</a></p>
+<div class="desc"><p>Kmediods clustering on a provided distance matrix. Based on pyclustering <a href="https://pyclustering.github.io/docs/0.8.2/html/de/d3b/classpyclustering_1_1cluster_1_1optics_1_1optics.html">https://pyclustering.github.io/docs/0.8.2/html/de/d3b/classpyclustering_1_1cluster_1_1optics_1_1optics.html</a></p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>distance</code></strong> :&ensp;<code>matrix</code></dt>
-<dd>distance matrix to be used for clustering.</dd>
-<dt><strong><code>n_clusters</code></strong> :&ensp;<code>int</code></dt>
-<dd>amount of clusters that should be found.</dd>
-</dl>
+<p>distance (matrix): distance matrix to be used for clustering.
+n_clusters (int): amount of clusters that should be found.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>labels</code></strong> :&ensp;<code>array</code></dt>
-<dd>of clustering</dd>
-<dt><code>created</code> <code>mediods</code> (<code>list</code>): <code>random</code> <code>created</code> <code>mediods</code> <code>used</code> <code>for</code> <code>clustering</code></dt>
-<dd>&nbsp;</dd>
-</dl></section>
+<p>labels (array): of clustering
+created mediods (list): random created mediods used for clustering</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1227,34 +1176,21 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
 <span>def <span class="ident">multiobjective</span></span>(<span>X, labels, min_number_clusters=2, max_number_clusters=None, min_cluster_size=10, max_cluster_size=None, local=True, bet=True, e=0.5, s=0.5, cluster_size_distribution=True)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Multi objective function to evaluate clusterings. </p>
+<div class="desc"><p>Multi objective function to evaluate clusterings. </p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>X</code></strong> :&ensp;<code>matrix</code></dt>
-<dd>distance matrix, as used for clustering.</dd>
-<dt><strong><code>labels</code></strong> :&ensp;<code>list</code></dt>
-<dd>list of predicted labels. Needs to be in the same order as X.</dd>
-<dt><strong><code>min_number_clusters</code></strong> :&ensp;<code>int</code> or <code>None</code></dt>
-<dd>minimum number of allowed clusters, if less than a penalty is applied. If None will not be taken into account. </dd>
-<dt><strong><code>max_number_clusters</code></strong> :&ensp;<code>int</code> or <code>None</code></dt>
-<dd>maximum number of clusters, if more then penalty is applied. If None will not be taken into account.</dd>
-<dt><strong><code>min_cluster_size</code></strong> :&ensp;<code>int</code> or <code>None</code></dt>
-<dd>for each cluster with less than x items a penalty is applied. If None will not be taken into account .</dd>
-<dt><strong><code>max_cluster_size</code></strong> :&ensp;<code>int</code> or <code>None</code></dt>
-<dd>for each cluster with more than x items a penalty is applied. If None will not be taken into account.</dd>
-<dt><strong><code>local</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if is True then objective aims at minimizing within cluster similarity based on thr data provided in X. If is False will be ignored.</dd>
-<dt><strong><code>bet</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True objective aims at maximizing dissimilarity between clusters. If False will be ignored.</dd>
-<dt><strong><code>e</code></strong> :&ensp;<code>float</code></dt>
-<dd>in [0,1]. For each cluster with a mean similarity less than e an additional penalty is applied. If None will be ignored.</dd>
-<dt><strong><code>s</code></strong> :&ensp;<code>float</code></dt>
-<dd>in [0,1]. Between each cluster pair where thr distance is less than s an additional penalty is applied. If None will be ignored.</dd>
-<dt><strong><code>cluster_size_distribution</code></strong> :&ensp;<code>boolean</code></dt>
-<dd>if True mean difference of cluster size for each cluster to "most equal" partitioning is applied. Most equal partitioning is len(labels) / number of clusters. If False will be ignored.</dd>
-</dl>
+<p>X (matrix): distance matrix, as used for clustering.
+labels (list): list of predicted labels. Needs to be in the same order as X.
+min_number_clusters (int or None): minimum number of allowed clusters, if less than a penalty is applied. If None will not be taken into account.
+max_number_clusters (int or None): maximum number of clusters, if more then penalty is applied. If None will not be taken into account.
+min_cluster_size (int or None): for each cluster with less than x items a penalty is applied. If None will not be taken into account .
+max_cluster_size (int or None): for each cluster with more than x items a penalty is applied. If None will not be taken into account.
+local (boolean): if is True then objective aims at minimizing within cluster similarity based on thr data provided in X. If is False will be ignored.
+bet (boolean): if True objective aims at maximizing dissimilarity between clusters. If False will be ignored.
+e (float): in [0,1]. For each cluster with a mean similarity less than e an additional penalty is applied. If None will be ignored.
+s (float): in [0,1]. Between each cluster pair where thr distance is less than s an additional penalty is applied. If None will be ignored.
+cluster_size_distribution (boolean): if True mean difference of cluster size for each cluster to "most equal" partitioning is applied. Most equal partitioning is len(labels) / number of clusters. If False will be ignored.</p>
 <h2 id="returns">Returns</h2>
-<p>clustering score (float): the closer to 0 the better the clustering is with regards to the selected objectives.</p></section>
+<p>clustering score (float): the closer to 0 the better the clustering is with regards to the selected objectives.</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1440,23 +1376,14 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
 <span>def <span class="ident">optics_clustering</span></span>(<span>distance, radius=2, neighbors=2, n_clusters=2)</span>
 </code></dt>
 <dd>
-<section class="desc"><p>Optics clustering on a provided distance matrix. Based on pyclustering <a href="https://pyclustering.github.io/docs/0.8.2/html/de/d3b/classpyclustering_1_1cluster_1_1optics_1_1optics.html">https://pyclustering.github.io/docs/0.8.2/html/de/d3b/classpyclustering_1_1cluster_1_1optics_1_1optics.html</a></p>
+<div class="desc"><p>Optics clustering on a provided distance matrix. Based on pyclustering <a href="https://pyclustering.github.io/docs/0.8.2/html/de/d3b/classpyclustering_1_1cluster_1_1optics_1_1optics.html">https://pyclustering.github.io/docs/0.8.2/html/de/d3b/classpyclustering_1_1cluster_1_1optics_1_1optics.html</a></p>
 <h2 id="parameters">Parameters</h2>
-<dl>
-<dt><strong><code>distance</code></strong> :&ensp;<code>matrix</code></dt>
-<dd>distance matrix to be used for clustering.</dd>
-<dt><strong><code>radius</code></strong> :&ensp;<code>int</code></dt>
-<dd>connectivity radius. </dd>
-<dt><strong><code>neighbors</code></strong> :&ensp;<code>int</code></dt>
-<dd>in [1, number of samples -1]</dd>
-<dt><strong><code>n_clusters</code></strong> :&ensp;<code>int</code></dt>
-<dd>amount of clusters that should be found.</dd>
-</dl>
+<p>distance (matrix): distance matrix to be used for clustering.
+radius (int): connectivity radius.
+neighbors (int): in [1, number of samples -1]
+n_clusters (int): amount of clusters that should be found.</p>
 <h2 id="returns">Returns</h2>
-<dl>
-<dt><strong><code>labels</code></strong> :&ensp;<code>array</code></dt>
-<dd>of clustering</dd>
-</dl></section>
+<p>labels (array): of clustering</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
@@ -1533,9 +1460,7 @@ both nodes making up the edge. If treshold is "matrix" then the teshold is estim
 </nav>
 </main>
 <footer id="footer">
-<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.7.5</a>.</p>
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
 </footer>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/9.12.0/highlight.min.js"></script>
-<script>hljs.initHighlightingOnLoad()</script>
 </body>
 </html>
