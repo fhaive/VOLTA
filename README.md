@@ -69,4 +69,4 @@ More information about VOLTA can be found in the corresponding publication:
 
 ### License
 
-VOLTA is published under a xxx license. Individual parts may underly a differet license, for this please refer to the package providers.
+VOLTA is published under a GNU GENERAL PUBLIC LICENSE Version 3 license. Individual parts may underly a differet license, for this please refer to the package providers.
