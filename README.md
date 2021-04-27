@@ -42,7 +42,7 @@ VOTLA has been tested on Linux, Mac and Windows systems for Python 3.6+.
 
 ### Install
 
-- download repository (wget ... when public repo)
+- download repository (wget https://github.com/fhaive/VOLTA.git)
 - cd graphalgorithms
 - pip3 install .
 
