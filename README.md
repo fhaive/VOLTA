@@ -55,7 +55,7 @@ pip3 install wheel
 - import volta 
 
 In the jupyternotebooks folder different examples on how to use VOLTA as well as complete analysis pipleines for co-expression 
-network analysis are provided. 
+network analysis are provided. Test networks that are automatically read into the example pipelines are provided in the networks folder.
 VOLTA requires networks to be provided in the form of NetworkX graph objects. A Jupyter Notebook file is provided, showing how
 different network formats can be converted into the required graph object.
 
