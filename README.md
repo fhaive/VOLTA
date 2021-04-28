@@ -43,7 +43,7 @@ VOTLA has been tested on Linux, Mac and Windows systems for Python 3.6+.
 ### Install
 
 - download repository (wget https://github.com/fhaive/VOLTA.git)
-- cd graphalgorithms
+- cd into the repository
 - pip3 install .
 
 Depending on your system you may receive an "invalid command bdist_wheel" error. You can fix this by installing the wheel package.
