@@ -3,7 +3,7 @@ from codecs import open
 from os import path
 
 __author__ = 'Alisa Pavel'
-__license__ = "BSD-2-Clause"
+__license__ = "GLP-3.0"
 __email__ = ""
 
 
