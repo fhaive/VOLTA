@@ -42,12 +42,28 @@ VOTLA has been tested on Linux, Mac and Windows systems for Python 3.6+.
 
 ### Install
 
-- download repository (wget https://github.com/fhaive/VOLTA.git)
-- cd into the repository
-- pip3 install .
+- download repository 
+  -  *git clone https://github.com/fhaive/VOLTA.git*
+  -  or *wget https://github.com/fhaive/VOLTA/archive/refs/heads/master.zip*
+  -  or download zip file from browser
+- extract file (if zip was downloaded - e.g. with *unzip* filename)
+- *cd* into the repository
+- *pip3 install .*
 
 Depending on your system you may receive an "invalid command bdist_wheel" error. You can fix this by installing the wheel package.
 pip3 install wheel
+
+It may be advisable to install the application in a virtual environment.
+Please refer to the installation and setup instructions from the provider.
+Conda: https://conda.io/projects/conda/en/latest/user-guide/getting-started.html
+Python Virtual Environment: https://docs.python.org/3/tutorial/venv.html
+
+To run the example pipelines a Jupyter Notebooks server needs to be installed (https://jupyter.org/install).
+
+Installation via Conda: *conda install -c conda-forge jupyterlab*
+Installation via pip: *pip3 install njupyterlab*
+
+Start with *jupyter notebook* in a terminal.
 
 
 ## Usage
