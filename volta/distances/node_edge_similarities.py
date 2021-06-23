@@ -1172,7 +1172,7 @@ def __list_to_mapping__(d, mapping, as_str=True):
     return new_list
 
 
-def sort_node_list(Graph, mapping, degree=False, degree_centrality=False, closeness_centrality=False, betweenness=False, k=None, xx=2, as_str=True):
+def sort_node_list(Graph, mapping, degree=False, degree_centrality=False, closeness_centrality=False, betweenness=False, weight=None, k=None, xx=2, as_str=True):
     """
     Sorts node lists based on weight attribute and returns sorted list of nodes ids.
 
@@ -1185,6 +1185,9 @@ def sort_node_list(Graph, mapping, degree=False, degree_centrality=False, closen
         closeness_centrality (boolean): if True nodes are sorted after closeness centrality.
         betweenness (boolean): if True nodes are sorted after betweenness.
         If multiple values are set to True a combined ranking is calculated
+        weight (str or None): for weighted networks name of edge attribute to be used. If None all edges are considered equal.
+            Instead of node degree strength of degree will be calculated if not None, betweenness centrality will be calculated based on
+            weighted edges as well as closeness centrality (weight is distance). Has no impact on degree centrality.
         k (float [0,1] or None): approximation of betweenness, if float then k percentage of nodes are used to approximate the betweenness values. If None all nodes are used.
         xx (int): state how often random sampling is performed if k is not None
         as_str (boolean): if True keys in mapping are assumed to be str (are the same as graph node IDs). If False they are assumed to be int.
@@ -1200,7 +1203,7 @@ def sort_node_list(Graph, mapping, degree=False, degree_centrality=False, closen
     values_saved = {}
     if degree:
         # type list
-        weighted_degree = list(Graph.degree())
+        weighted_degree = list(Graph.degree(weight=weight))
         # convert to dict
         # print(weighted_degree)
         weighted_d = convert_to_dict(weighted_degree)
@@ -1234,7 +1237,7 @@ def sort_node_list(Graph, mapping, degree=False, degree_centrality=False, closen
 
         # order is based on G.nodes() => index of G.nodes() is row index of A
         id_G = list(Graph.nodes())
-        A = nx.to_numpy_matrix(Graph)
+        A = nx.to_numpy_matrix(Graph, weight=weight)
         D = scipy.sparse.csgraph.floyd_warshall(
             A, directed=False, unweighted=False)
         n = D.shape[0]
@@ -1279,7 +1282,7 @@ def sort_node_list(Graph, mapping, degree=False, degree_centrality=False, closen
             # print("k="+str(kk))
             for i in range(xx):
                 weighted_b = nx.betweenness_centrality(
-                    Graph, normalized=True, k=kk)
+                    Graph, normalized=True, k=kk, weight=weight)
                 temp.append(weighted_b)
                 #print("len res in loop")
                 # print(len(weighted_b))

@@ -141,7 +141,7 @@ def preprocess_node_list(networks, is_file = False, location = None, names= None
         return node_lists, m
 
 
-def sort_list_and_get_shared(node_lists, m, network_graphs, labels, degree=True, degree_centrality=True, closeness_centrality=True, betweenness=True, is_file = False, in_async =True, k=None):
+def sort_list_and_get_shared(node_lists, m, network_graphs, labels, degree=True, degree_centrality=True, closeness_centrality=True, betweenness=True, weight=None, is_file = False, in_async =True, k=None):
     """
     Preprocessing function to sort node list after their attributes, convert to a binary format and claculate shared nodes.
 
@@ -154,6 +154,9 @@ def sort_list_and_get_shared(node_lists, m, network_graphs, labels, degree=True,
         degree_centrality (boolean): if True nodes are sorted after degree centrality. If multiple values are set to True a combined ranking is calculated.
         closeness_centrality (boolean): if True nodes are sorted after closeness centrality. If multiple values are set to True a combined ranking is calculated.
         betweenness (boolean): if True nodes are sorted after betweenness. If multiple values are set to True a combined ranking is calculated.
+        weight (str or None): for weighted networks name of edge attribute to be used. If None all edges are considered equal.
+            Instead of node degree strength of degree will be calculated if not None, betweenness centrality will be calculated based on
+            weighted edges as well as closeness centrality (weight is distance). Has no impact on degree centrality.
         is_file (boolean): if False then network_graphs is list converted objects. If True then network_graphs is list of file locations to the pickled objects instead.
         in_async (boolean): if True then run in async where applicable.
         k (float [0,1] or None): approximation of betweenness, if float then k percentage of nodes are used to approximate the betweenness values. If None all nodes are used.
@@ -175,14 +178,14 @@ def sort_list_and_get_shared(node_lists, m, network_graphs, labels, degree=True,
     
     if not is_file:
         for net in network_graphs:
-            s, v = node_edge_similarities.sort_node_list(net, m, degree=degree, degree_centrality=degree_centrality, closeness_centrality=closeness_centrality, betweenness=betweenness,as_str=False, k=k)
+            s, v = node_edge_similarities.sort_node_list(net, m, degree=degree, degree_centrality=degree_centrality, closeness_centrality=closeness_centrality, betweenness=betweenness, weight=weight, as_str=False, k=k)
             sorted_nodes.append(s)
             saved_values.append(v)
 
     else:
         for path in network_graphs:
             net = nx.read_weighted_edgelist(path)
-            s, v = node_edge_similarities.sort_node_list(net, m, degree=degree, degree_centrality=degree_centrality, closeness_centrality=closeness_centrality, betweenness=betweenness,as_str=False, k=k)
+            s, v = node_edge_similarities.sort_node_list(net, m, degree=degree, degree_centrality=degree_centrality, closeness_centrality=closeness_centrality, betweenness=betweenness, weight = weight, as_str=False, k=k)
             sorted_nodes.append(s)
             saved_values.append(v)
 
