@@ -191,13 +191,13 @@ def perform_walks_compute_counts(networks, nodes, network_ids, steps=10, number_
         edge_frct_temp = {}
         #split nodes into chunks
         for c in [nodes[i:i + 10] for i in range(0, len(nodes), 10)]:
-            walks_temp2 = helper_walks(networks[i], c, network_ids[i], steps=steps, number_of_walks=number_of_walks, degree=degree,  probabilistic=probabilistic, weight=weight)
+            walks_temp2 = helper_walks([networks[i]], c, [network_ids[i]], steps=steps, number_of_walks=number_of_walks, degree=degree,  probabilistic=probabilistic, weight=weight)
 
             #merge with walks_temp
             walks_temp.update(walks_temp2[network_ids[i]])
 
             #call counter
-            node_cnt_temp2, edge_cnt_temp2, node_frct_temp2, edge_frct_temp2 = helper_get_counts(network_ids[i], networks[i], walks_temp2)
+            node_cnt_temp2, edge_cnt_temp2, node_frct_temp2, edge_frct_temp2 = helper_get_counts([network_ids[i]], [networks[i]], walks_temp2)
 
             #update dict
             node_cnt_temp.update(node_cnt_temp2[network_ids[i]])
