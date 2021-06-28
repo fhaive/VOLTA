@@ -153,6 +153,9 @@ def perform_walks_compute_counts(networks, nodes, network_ids, steps=10, number_
     
     """
     Estimates for networks number_of_walks walks of size steps.
+    Count number of appearenses of nodes & edges in walks performed on the same starting nodes. Also estimates the fraction of appearens w.r.t. to all nodes/ edges visited from the same strating node.
+
+    Combination of helper_walks() and helper_get_counts(), where interation through nodes is performed in chunks of size 10.
 
     Parameters:
         networks (list): of networkX graph objects
@@ -291,7 +294,7 @@ def helper_walk_sim(networks, performed_walks, nodes, network_ids, undirected=Tr
 
         for node in nodes:
             #get consensus walks
-            #since prefiously if node is not in networks has been set to an empty list this does not need to be checked for here
+            #since previously if node is not in networks has been set to an empty list this does not need to be checked for here
             #print("len c1 network", len(performed_walks[n1]))
             c1 = performed_walks[n1][node]
             c2 = performed_walks[n2][node]
