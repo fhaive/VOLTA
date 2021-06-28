@@ -149,85 +149,16 @@ def helper_get_counts(labels, networks, performed_walks):
     return nodes, edges, nodes_percentage, edges_percentage
 
 
-def perform_walks_compute_counts(networks, nodes, network_ids, steps=10, number_of_walks=10, degree=True,  probabilistic=True, weight="weight"):
-    
-    """
-    Estimates for networks number_of_walks walks of size steps.
-    Count number of appearenses of nodes & edges in walks performed on the same starting nodes. Also estimates the fraction of appearens w.r.t. to all nodes/ edges visited from the same strating node.
-
-    Combination of helper_walks() and helper_get_counts(), where interation through nodes is performed in chunks of size 10.
-
-    Parameters:
-        networks (list): of networkX graph objects
-        nodes (list): of nodes (areas) to be compared.
-        network_ids (list): list of network IDs.
-        steps (int): is size of random walk
-        number_of_walks (int): how many random walks are performed on G
-        degree (boolean): if True then the number of random walks performed for each starting node is dependent on its degree and is estimated as degree*number_of_walks.
-        probabilisitc (boolean): if True edge weights are taken into account else all edges are considered equal.  If true then weight needs to be set
-        weight (str): edge attribute name as contained in G. Weight is evaluated as a similarity
-
-    Returns:
-        
-        node counts (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Node ID and value is its counts.
-        edge counts (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Edge ID and value is its counts.
-        node fraction (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Node ID and value is its fraction w.r.t to all visited nodes from that start node.
-        edge fraction (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Edge
-        
-    """
-
-    #call helper_walks() & helper_get_counts and chunks of nodes for each network & then merge dicts
-    
-    node_cnt = {}
-    edge_cnt = {}
-    node_frct = {}
-    edge_frct = {}
-
-    for i in range(len(networks)):
-        #provide networks[i] & networks_ids[i]
-        
-
-        
-        node_frct_temp = {}
-        edge_frct_temp = {}
-        #split nodes into chunks
-        for c in [nodes[i:i + 10] for i in range(0, len(nodes), 10)]:
-            walks_temp2 = helper_walks([networks[i]], c, [network_ids[i]], steps=steps, number_of_walks=number_of_walks, degree=degree,  probabilistic=probabilistic, weight=weight)
-
-            
-
-            #call counter
-            node_cnt_temp2, edge_cnt_temp2, node_frct_temp2, edge_frct_temp2 = helper_get_counts([network_ids[i]], [networks[i]], walks_temp2)
-
-            #update dict
-            
-            node_frct_temp.update(node_frct_temp2[network_ids[i]])
-            edge_frct_temp.update(edge_frct_temp2[network_ids[i]])
-
-        #append to main dict
-        
-
-        
-        node_frct[network_ids[i]] = node_frct_temp
-        edge_frct[network_ids[i]] = edge_frct_temp
 
 
-    return  node_frct, edge_frct
-
-
-
-
-
-
-    
-
-def helper_walk_sim(networks,  nodes, network_ids, undirected=True, top=10, return_all=False, nodes_ranked=None, edges_ranked=None):
+def helper_walk_sim(networks, performed_walks, nodes, network_ids, undirected=True, top=10, return_all=False, nodes_ranked=None, edges_ranked=None):
 
     """
     Compares random walks based on their similarity of visited nodes/ edges. Estimates for each network pair a correlation score based on the mean of each node pairs random walks.
     
     Parameters:
         networks (list): of networkX graph objects
+        performed_walks (dict): as returned by helper_walks().
         nodes (list): of nodes (areas) to be compared.
         network_ids (list): list of network IDs as contained in performed_walks().
         top (int): top x nodes & edges are considered when calculating the correlation 
@@ -288,14 +219,12 @@ def helper_walk_sim(networks,  nodes, network_ids, undirected=True, top=10, retu
 
         for node in nodes:
             #get consensus walks
-            #since previously if node is not in networks has been set to an empty list this does not need to be checked for here
+            #since prefiously if node is not in networks has been set to an empty list this does not need to be checked for here
             #print("len c1 network", len(performed_walks[n1]))
-            #c1 = performed_walks[n1][node]
-            #c2 = performed_walks[n2][node]
+            c1 = performed_walks[n1][node]
+            c2 = performed_walks[n2][node]
 
-            #if len(c1) > 0 and len(c2) > 0:
-            #check if in rankings
-            if node in nodes_ranked[n1].keys() and node in nodes_ranked[n2].keys():
+            if len(c1) > 0 and len(c2) > 0:
 
                
                 kendall = global_distances.compare_walks(networks[index[0]], [nodes_ranked[n1][node], edges_ranked[n1][node]], walk2=[nodes_ranked[n2][node], edges_ranked[n2][node]], G2=networks[index[1]],undirected=undirected, comparison="ranked", top=top)
