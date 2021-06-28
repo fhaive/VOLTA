@@ -187,8 +187,7 @@ def perform_walks_compute_counts(networks, nodes, network_ids, steps=10, number_
         #provide networks[i] & networks_ids[i]
         
 
-        node_cnt_temp = {}
-        edge_cnt_temp = {}
+        
         node_frct_temp = {}
         edge_frct_temp = {}
         #split nodes into chunks
@@ -201,21 +200,19 @@ def perform_walks_compute_counts(networks, nodes, network_ids, steps=10, number_
             node_cnt_temp2, edge_cnt_temp2, node_frct_temp2, edge_frct_temp2 = helper_get_counts([network_ids[i]], [networks[i]], walks_temp2)
 
             #update dict
-            node_cnt_temp.update(node_cnt_temp2[network_ids[i]])
-            edge_cnt_temp.update(edge_cnt_temp2[network_ids[i]])
+            
             node_frct_temp.update(node_frct_temp2[network_ids[i]])
             edge_frct_temp.update(edge_frct_temp2[network_ids[i]])
 
         #append to main dict
         
 
-        node_cnt[network_ids[i]] = node_cnt_temp
-        edge_cnt[network_ids[i]] = edge_cnt_temp
+        
         node_frct[network_ids[i]] = node_frct_temp
         edge_frct[network_ids[i]] = edge_frct_temp
 
 
-    return  node_cnt, edge_cnt, node_frct, edge_frct
+    return  node_frct, edge_frct
 
 
 
