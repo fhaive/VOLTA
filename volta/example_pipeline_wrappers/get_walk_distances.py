@@ -149,7 +149,79 @@ def helper_get_counts(labels, networks, performed_walks):
     return nodes, edges, nodes_percentage, edges_percentage
 
 
+def perform_walks_compute_counts(networks, nodes, network_ids, steps=10, number_of_walks=10, degree=True,  probabilistic=True, weight="weight"):
+    
+    """
+    Estimates for networks number_of_walks walks of size steps.
 
+    Parameters:
+        networks (list): of networkX graph objects
+        nodes (list): of nodes (areas) to be compared.
+        network_ids (list): list of network IDs.
+        steps (int): is size of random walk
+        number_of_walks (int): how many random walks are performed on G
+        degree (boolean): if True then the number of random walks performed for each starting node is dependent on its degree and is estimated as degree*number_of_walks.
+        probabilisitc (boolean): if True edge weights are taken into account else all edges are considered equal.  If true then weight needs to be set
+        weight (str): edge attribute name as contained in G. Weight is evaluated as a similarity
+
+    Returns:
+        walks (dict): key is network IDs and value is dict where key is starting node and value is list of performed walks.
+                    Each walk is a sublist and contains the node IDs in order of their visit by the random walk.
+        node counts (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Node ID and value is its counts.
+        edge counts (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Edge ID and value is its counts.
+        node fraction (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Node ID and value is its fraction w.r.t to all visited nodes from that start node.
+        edge fraction (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Edge
+        
+    """
+
+    #call helper_walks() & helper_get_counts and chunks of nodes for each network & then merge dicts
+    walks = {}
+    node_cnt = {}
+    edge_cnt = {}
+    node_frct = {}
+    edge_frct = {}
+
+    for i in range(len(networks)):
+        #provide networks[i] & networks_ids[i]
+        walks_temp = {}
+
+        node_cnt_temp = {}
+        edge_cnt_temp = {}
+        node_frct_temp = {}
+        edge_frct_temp = {}
+        #split nodes into chunks
+        for c in [nodes[i:i + 10] for i in range(0, len(nodes), 10)]:
+            walks_temp2 = helper_walks(networks[i], c, network_ids[i], steps=steps, number_of_walks=number_of_walks, degree=degree,  probabilistic=probabilistic, weight=weight)
+
+            #merge with walks_temp
+            walks_temp.update(walks_temp2[network_ids[i]])
+
+            #call counter
+            node_cnt_temp2, edge_cnt_temp2, node_frct_temp2, edge_frct_temp2 = helper_get_counts(network_ids[i], networks[i], walks_temp2)
+
+            #update dict
+            node_cnt_temp.update(node_cnt_temp2[network_ids[i]])
+            edge_cnt_temp.update(edge_cnt_temp2[network_ids[i]])
+            node_frct_temp.update(node_frct_temp2[network_ids[i]])
+            edge_frct_temp.update(edge_frct_temp2[network_ids[i]])
+
+        #append to main dict
+        walks[network_ids[i]] = walks_temp
+
+        node_cnt[network_ids[i]] = node_cnt_temp
+        edge_cnt[network_ids[i]] = edge_cnt_temp
+        node_frct[network_ids[i]] = node_frct_temp
+        edge_frct[network_ids[i]] = edge_frct_temp
+
+
+    return walks, node_cnt, edge_cnt, node_frct, edge_frct
+
+
+
+
+
+
+    
 
 def helper_walk_sim(networks, performed_walks, nodes, network_ids, undirected=True, top=10, return_all=False, nodes_ranked=None, edges_ranked=None):
 
