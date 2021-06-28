@@ -168,8 +168,7 @@ def perform_walks_compute_counts(networks, nodes, network_ids, steps=10, number_
         weight (str): edge attribute name as contained in G. Weight is evaluated as a similarity
 
     Returns:
-        walks (dict): key is network IDs and value is dict where key is starting node and value is list of performed walks.
-                    Each walk is a sublist and contains the node IDs in order of their visit by the random walk.
+        
         node counts (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Node ID and value is its counts.
         edge counts (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Edge ID and value is its counts.
         node fraction (dict): key is network ID ordered as in labels. Value is dict where key is start node and value is dict where key is Node ID and value is its fraction w.r.t to all visited nodes from that start node.
@@ -178,7 +177,7 @@ def perform_walks_compute_counts(networks, nodes, network_ids, steps=10, number_
     """
 
     #call helper_walks() & helper_get_counts and chunks of nodes for each network & then merge dicts
-    walks = {}
+    
     node_cnt = {}
     edge_cnt = {}
     node_frct = {}
@@ -186,7 +185,7 @@ def perform_walks_compute_counts(networks, nodes, network_ids, steps=10, number_
 
     for i in range(len(networks)):
         #provide networks[i] & networks_ids[i]
-        walks_temp = {}
+        
 
         node_cnt_temp = {}
         edge_cnt_temp = {}
@@ -196,8 +195,7 @@ def perform_walks_compute_counts(networks, nodes, network_ids, steps=10, number_
         for c in [nodes[i:i + 10] for i in range(0, len(nodes), 10)]:
             walks_temp2 = helper_walks([networks[i]], c, [network_ids[i]], steps=steps, number_of_walks=number_of_walks, degree=degree,  probabilistic=probabilistic, weight=weight)
 
-            #merge with walks_temp
-            walks_temp.update(walks_temp2[network_ids[i]])
+            
 
             #call counter
             node_cnt_temp2, edge_cnt_temp2, node_frct_temp2, edge_frct_temp2 = helper_get_counts([network_ids[i]], [networks[i]], walks_temp2)
@@ -209,7 +207,7 @@ def perform_walks_compute_counts(networks, nodes, network_ids, steps=10, number_
             edge_frct_temp.update(edge_frct_temp2[network_ids[i]])
 
         #append to main dict
-        walks[network_ids[i]] = walks_temp
+        
 
         node_cnt[network_ids[i]] = node_cnt_temp
         edge_cnt[network_ids[i]] = edge_cnt_temp
@@ -217,7 +215,7 @@ def perform_walks_compute_counts(networks, nodes, network_ids, steps=10, number_
         edge_frct[network_ids[i]] = edge_frct_temp
 
 
-    return walks, node_cnt, edge_cnt, node_frct, edge_frct
+    return  node_cnt, edge_cnt, node_frct, edge_frct
 
 
 
@@ -226,14 +224,13 @@ def perform_walks_compute_counts(networks, nodes, network_ids, steps=10, number_
 
     
 
-def helper_walk_sim(networks, performed_walks, nodes, network_ids, undirected=True, top=10, return_all=False, nodes_ranked=None, edges_ranked=None):
+def helper_walk_sim(networks,  nodes, network_ids, undirected=True, top=10, return_all=False, nodes_ranked=None, edges_ranked=None):
 
     """
     Compares random walks based on their similarity of visited nodes/ edges. Estimates for each network pair a correlation score based on the mean of each node pairs random walks.
     
     Parameters:
         networks (list): of networkX graph objects
-        performed_walks (dict): as returned by helper_walks().
         nodes (list): of nodes (areas) to be compared.
         network_ids (list): list of network IDs as contained in performed_walks().
         top (int): top x nodes & edges are considered when calculating the correlation 
@@ -296,10 +293,12 @@ def helper_walk_sim(networks, performed_walks, nodes, network_ids, undirected=Tr
             #get consensus walks
             #since previously if node is not in networks has been set to an empty list this does not need to be checked for here
             #print("len c1 network", len(performed_walks[n1]))
-            c1 = performed_walks[n1][node]
-            c2 = performed_walks[n2][node]
+            #c1 = performed_walks[n1][node]
+            #c2 = performed_walks[n2][node]
 
-            if len(c1) > 0 and len(c2) > 0:
+            #if len(c1) > 0 and len(c2) > 0:
+            #check if in rankings
+            if node in nodes_ranked[n1].keys() and node in nodes_ranked[n2].keys():
 
                
                 kendall = global_distances.compare_walks(networks[index[0]], [nodes_ranked[n1][node], edges_ranked[n1][node]], walk2=[nodes_ranked[n2][node], edges_ranked[n2][node]], G2=networks[index[1]],undirected=undirected, comparison="ranked", top=top)
