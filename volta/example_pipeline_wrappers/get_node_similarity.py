@@ -220,7 +220,7 @@ def estimate_similarities_nodes(node_lists, sorted_nodes, binary,  kendall_x=50,
             b_b_top (numpy matrix): kendall p value based on top nodes ranked by degree betweenness between network pairs
             kendall_avg_top (numpy matrix): kendall correlation coefficient based on top nodes ranked by mean ranking between network pairs
             b_avg_top (numpy matrix): kendall p value based on top nodes ranked by mean ranking  between network pairs
-            hamming distance (numpy matrix): between network pairs
+            hamming (numpy matrix): distance between network pairs
             kendall_dc_bottom (numpy matrix): kendall correlation coefficient based on bottom nodes ranked by degree centrality between network pairs
             b_dc_bottom (numpy matrix): kendall p value based on bottom nodes ranked by degree centrality between network pairs
             kendall_cc_bottom (numpy matrix): kendall correlation coefficient based on bottom nodes ranked by closeness centrality between network pairs
@@ -229,7 +229,7 @@ def estimate_similarities_nodes(node_lists, sorted_nodes, binary,  kendall_x=50,
             b_b_bottom (numpy matrix): kendall p value based on bottom nodes ranked by degree betweenness between network pairs
             kendall_avg_bottom (numpy matrix): kendall correlation coefficient based on bottom nodes ranked by mean ranking between network pairs
             b_avg_bottom (numpy matrix): kendall p value based on bottom nodes ranked by mean ranking between network pairs
-            SMC (numpy matrix): between network pairs
+            smc (numpy matrix): between network pairs
             kendall_med_top (numpy matrix): kendall correlation coefficient based on top nodes ranked by median ranking between network pairs
             b_med_top (numpy matrix):  kendall p value based on top nodes ranked by median ranking  between network pairs
             kendall_med_bottom (numpy matrix): kendall correlation coefficient based on bottom nodes ranked by median ranking  between network pairs

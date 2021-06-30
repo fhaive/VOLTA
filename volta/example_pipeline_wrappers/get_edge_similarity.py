@@ -242,15 +242,16 @@ def estimate_similarities_edges(network_lists, sorted_networks, binary,  kendall
         in_async (boolean): if True then run in async where applicable.
 
     Returns:
-        jaccard similarity (numpy matrix): matrix of jaccard similarity between network pairs
-        jaccard distance (numpy matrix): matrix of jaccard distance between network pairs
-        percentage of shared edges (numpy matrix): matrix of shared edge percentage between network pairs
-        kendall correlation coefficient based on top edges (numpy matrix): matrix of kendall coefficient between network pairs
-        kendall p value based on top edges (numpy matrix): matrix of kendall coefficient pval between network pairs
-        kendall correlation coefficient based on bottom edges (numpy matrix): matrix of kendall coefficient between network pairs
-        kendall p value based on bottom edges (numpy matrix): matrix of kendall coefficient pval between network pairs
-        hamming distance (numpy matrix): matrix of hamming distance between network pairs
-        SMC (numpy matrix): matrix of SMC coefficient between network pairs
+        results (dict) where keys and values are:
+            jaccard similarity (numpy matrix): matrix of jaccard similarity between network pairs
+            jaccard distance (numpy matrix): matrix of jaccard distance between network pairs
+            percentage  (numpy matrix):of shared edges matrix of shared edge percentage between network pairs
+            kendall_top (numpy matrix): kendall correlation coefficient based on top edges matrix of kendall coefficient between network pairs
+            b_top (numpy matrix): kendall p value based on top edges matrix of kendall coefficient pval between network pairs
+            kendall_bottom (numpy matrix): kendall correlation coefficient based on bottom edges matrix of kendall coefficient between network pairs
+            b_bottom (numpy matrix): kendall p value based on bottom edges matrix of kendall coefficient pval between network pairs
+            hamming (numpy matrix): distance matrix of hamming distance between network pairs
+            smc (numpy matrix): matrix of SMC coefficient between network pairs
 
     """
 
@@ -265,5 +266,18 @@ def estimate_similarities_edges(network_lists, sorted_networks, binary,  kendall
 
     smc, p = node_edge_similarities.build_similarity_matrix_for_binary_and_ranked(binary, compute="smc")
 
+    res_dict = {}
 
-    return j, jd, percentage, kendall_top,b_top, kendall_bottom, b_bottom, hamming, smc
+    res_dict["jaccard similarity"] = j
+    res_dict["jaccard distance"] = jd
+
+    res_dict["percentage"] = percentage
+    res_dict["kendall_top"] = kendall_top
+    res_dict["b_top"] = b_top
+    res_dict["kendall_bottom"] = kendall_bottom
+    res_dict["b_bottom"] = b_bottom
+    res_dict["hamming"] = hamming
+    res_dict["smc"] = smc
+
+
+    return res_dict
