@@ -187,7 +187,7 @@ def label_propagation(G, return_object=True):
 
 def walktrap(G, return_object=True):
     """
-    Based on random walks.
+    Based on random walks. This algorithm can be given directed or undirected graph objects as input. 
 
     References:
         https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.walktrap.html#cdlib.algorithms.walktrap
@@ -230,7 +230,7 @@ def walktrap(G, return_object=True):
 
 def cpm(G, initial_membership=None, weights="weight", resolution_parameter=1, return_object=True):
     """
-    Finds communities of a particular density.
+    Finds communities of a particular density. As input directed or undirected graph objects can be provided.
 
     References:
         https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.cpm.html#cdlib.algorithms.cpm
@@ -296,7 +296,7 @@ def greedy_modularity(G, weights="weight", return_object=True):
 
 def leiden(G,  weights="weight", return_object=True):
     """
-    Based on the louvain algorithm.
+    Based on the louvain algorithm. This algorithm can be given directed or undirected graph objects as input.
 
     References:
         https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.leiden.html#cdlib.algorithms.leiden
@@ -559,6 +559,7 @@ def __disconnect_high_degree__(G, nodes=10, percentage=None, weight="weight"):
 def girvan_newman(G, valuable_edge="max_weight", k=1, is_leve=False, attribute="weight", w_max=True):
     """
     NetworkX girvan newman implementation. Removes "most valuable edge" from the graph to partition it.
+    As input directed or undirected graph objects can be provided.
 
     References:
         https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.community.centrality.girvan_newman.html
@@ -657,6 +658,7 @@ def girvan_newman(G, valuable_edge="max_weight", k=1, is_leve=False, attribute="
 def agglomerative_clustering(G, is_distance=True, linkage="complete", distance_threshold=0.2):
     """
     Clusters on the adjacency matrix of a graph. Cells need to contain distance or similarity values. Based on sklearn.
+    As input directed or undirected graph objects can be provided.
 
     Parameters:
         G (networkX graph object): to estimate on
@@ -699,6 +701,7 @@ def agglomerative_clustering(G, is_distance=True, linkage="complete", distance_t
 def markov_clustering(G, inflation=1.1):
     """
     Markov clustering on adjacency matrix. Based on the markovclustering package.
+    As input directed or undirected graph objects can be provided.
 
     Parameters:
         G (networkX graph object): to estimate on
@@ -741,6 +744,8 @@ def markov_clustering(G, inflation=1.1):
 
 def angel(G, treshold=0.5, min_community_size=3, return_object=True):
     """
+    As input directed or undirected graph objects can be provided.
+
     References:
         https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.angel.html#cdlib.algorithms.angel
 
@@ -775,6 +780,7 @@ def angel(G, treshold=0.5, min_community_size=3, return_object=True):
 def ego_networks(G, level=1, return_object=True):
     """
     Based on ego networks.
+    As input directed or undirected graph objects can be provided.
 
     References:
         https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.ego_networks.html#cdlib.algorithms.ego_networks
