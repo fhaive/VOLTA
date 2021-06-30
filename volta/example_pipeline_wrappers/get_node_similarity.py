@@ -23,6 +23,8 @@ import scipy
 def preprocess_graph(net_temp, attribute="weight", location = None, labels = None):
     """
     Converts list of networkX graph objects into a list of sublist format, which is used by most functions in this package.
+    A directed graph object can be provided as input, however each edge will be interpreted as bidirectional by most downstream functions
+        that require this converted network format.
 
     Parameters:
         net_temp (list): list of networkX graph objects
@@ -144,6 +146,7 @@ def preprocess_node_list(networks, is_file = False, location = None, names= None
 def sort_list_and_get_shared(node_lists, m, network_graphs, labels, degree=True, degree_centrality=True, closeness_centrality=True, betweenness=True, weight=None, is_file = False, in_async =True, k=None):
     """
     Preprocessing function to sort node list after their attributes, convert to a binary format and claculate shared nodes.
+    A directed graph object can be provided as input.
 
     parameters:
         node_lists (list): list of converted node IDs as returned by  preprocess_node_list()
@@ -205,31 +208,32 @@ def estimate_similarities_nodes(node_lists, sorted_nodes, binary,  kendall_x=50,
         in_async (boolean): if True then run in async where applicable.
 
     Returns:
-        jaccard similarity (numpy matrix): between network pairs
-        jaccard distance (numpy matrix): between network pairs
-        percentage of shared nodes (numpy matrix): between network pairs
-        kendall correlation coefficient based on top nodes ranked by degree centrality (numpy matrix): between network pairs
-        kendall p value based on top nodes ranked by degree centrality (numpy matrix): between network pairs
-        kendall correlation coefficient based on top nodes ranked by closeness centrality (numpy matrix): between network pairs
-        kendall p value based on top nodes ranked by closeness centrality (numpy matrix): between network pairs
-        kendall correlation coefficient based on top nodes ranked by betweenness centrality (numpy matrix): between network pairs
-        kendall p value based on top nodes ranked by degree betweenness (numpy matrix): between network pairs
-        kendall correlation coefficient based on top nodes ranked by mean ranking (numpy matrix): between network pairs
-        kendall p value based on top nodes ranked by mean ranking (numpy matrix): between network pairs
-        hamming distance (numpy matrix): between network pairs
-        kendall correlation coefficient based on bottom nodes ranked by degree centrality (numpy matrix): between network pairs
-        kendall p value based on bottom nodes ranked by degree centrality (numpy matrix): between network pairs
-        kendall correlation coefficient based on bottom nodes ranked by closeness centrality (numpy matrix): between network pairs
-        kendall p value based on bottom nodes ranked by closeness centrality (numpy matrix): between network pairs
-        kendall correlation coefficient based on bottom nodes ranked by betweenness centrality (numpy matrix): between network pairs
-        kendall p value based on bottom nodes ranked by degree betweenness (numpy matrix): between network pairs
-        kendall correlation coefficient based on bottom nodes ranked by mean ranking (numpy matrix): between network pairs
-        kendall p value based on bottom nodes ranked by mean ranking (numpy matrix): between network pairs
-        SMC (numpy matrix): between network pairs
-        kendall correlation coefficient based on top nodes ranked by median ranking (numpy matrix): between network pairs
-        kendall p value based on top nodes ranked by median ranking (numpy matrix): between network pairs
-        kendall correlation coefficient based on bottom nodes ranked by median ranking (numpy matrix): between network pairs
-        kendall p value based on bottom nodes ranked by meadianranking (numpy matrix): between network pairs
+        results (dict) where keys and values are:
+            jaccard similarity (numpy matrix): between network pairs
+            jaccard distance (numpy matrix): between network pairs
+            percentage of shared nodes (numpy matrix): between network pairs
+            kendall_dc_top (numpy matrix): kendall correlation coefficient based on top nodes ranked by degree centrality between network pairs
+            b_dc_top (numpy matrix): kendall p value based on top nodes ranked by degree centrality between network pairs
+            kendall_cc_top (numpy matrix): kendall correlation coefficient based on top nodes ranked by closeness centrality between network pairs
+            b_cc_top (numpy matrix): kendall p value based on top nodes ranked by closeness centrality between network pairs
+            kendall_betweenness_top (numpy matrix): kendall correlation coefficient based on top nodes ranked by betweenness centrality  between network pairs
+            b_b_top (numpy matrix): kendall p value based on top nodes ranked by degree betweenness between network pairs
+            kendall_avg_top (numpy matrix): kendall correlation coefficient based on top nodes ranked by mean ranking between network pairs
+            b_avg_top (numpy matrix): kendall p value based on top nodes ranked by mean ranking  between network pairs
+            hamming distance (numpy matrix): between network pairs
+            kendall_dc_bottom (numpy matrix): kendall correlation coefficient based on bottom nodes ranked by degree centrality between network pairs
+            b_dc_bottom (numpy matrix): kendall p value based on bottom nodes ranked by degree centrality between network pairs
+            kendall_cc_bottom (numpy matrix): kendall correlation coefficient based on bottom nodes ranked by closeness centrality between network pairs
+            b_cc_bottom (numpy matrix): kendall p value based on bottom nodes ranked by closeness centrality between network pairs
+            kendall_betweenness_bottom (numpy matrix): kendall correlation coefficient based on bottom nodes ranked by betweenness centrality between network pairs
+            b_b_bottom (numpy matrix): kendall p value based on bottom nodes ranked by degree betweenness between network pairs
+            kendall_avg_bottom (numpy matrix): kendall correlation coefficient based on bottom nodes ranked by mean ranking between network pairs
+            b_avg_bottom (numpy matrix): kendall p value based on bottom nodes ranked by mean ranking between network pairs
+            SMC (numpy matrix): between network pairs
+            kendall_med_top (numpy matrix): kendall correlation coefficient based on top nodes ranked by median ranking between network pairs
+            b_med_top (numpy matrix):  kendall p value based on top nodes ranked by median ranking  between network pairs
+            kendall_med_bottom (numpy matrix): kendall correlation coefficient based on bottom nodes ranked by median ranking  between network pairs
+            b_med_bottom (numpy matrix): kendall p value based on bottom nodes ranked by meadianranking between network pairs
 
     """
 
@@ -300,6 +304,37 @@ def estimate_similarities_nodes(node_lists, sorted_nodes, binary,  kendall_x=50,
 
     smc, p = node_edge_similarities.build_similarity_matrix_for_binary_and_ranked(binary, compute="smc")
 
-    return j, jd, s, kendall_dc_top, b_dc_top, kendall_cc_top, b_cc_top, kendall_betweenness_top, b_b_top, kendall_avg_top, b_avg_top, hamming, kendall_dc_bottom , b_dc_bottom , kendall_cc_bottom , b_cc_bottom , kendall_betweenness_bottom , b_b_bottom , kendall_avg_bottom , b_avg_bottom , smc, kendall_med_top, b_med_top, kendall_med_bottom, b_med_bottom
+    res_dict = {}
+    res_dict["jaccard distance"] = jd
+    res_dict["jaccard similarity"] = j
+    res_dict["percentage of shared nodes"] = s
+    res_dict["kendall_dc_top"] = kendall_dc_top
+    res_dict["b_dc_top"] = b_dc_top
+    res_dict["kendall_cc_top"] = kendall_cc_top
+    res_dict["b_cc_top"] = b_cc_top
+    res_dict["kendall_betweenness_top"] = kendall_betweenness_top
+    res_dict["b_b_top"] = b_b_top
+    res_dict["kendall_avg_top"] = kendall_avg_top
+    res_dict["b_avg_top"] = b_avg_top
+
+    res_dict["hamming"] = hamming
+    res_dict["kendall_dc_bottom"] = kendall_dc_bottom
+    res_dict[" b_dc_bottom"] =  b_dc_bottom
+    res_dict["kendall_cc_bottom"] = kendall_cc_bottom
+    res_dict["b_cc_bottom"] = b_cc_bottom
+    res_dict["kendall_betweenness_bottom"] = kendall_betweenness_bottom
+    res_dict["b_b_bottom"] = b_b_bottom 
+    res_dict["kendall_avg_bottom"] = kendall_avg_bottom
+    res_dict["b_avg_bottom"] = b_avg_bottom
+    res_dict["smc"] = smc
+
+    res_dict["kendall_med_top"] = kendall_med_top
+    res_dict["b_med_top"] = b_med_top
+    res_dict["kendall_med_bottom"] = kendall_med_bottom
+    res_dict["b_med_bottom"] = b_med_bottom
+
+
+
+    return res_dict
 
 
