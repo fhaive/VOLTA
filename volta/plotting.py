@@ -14,7 +14,7 @@ import random
 import volta.communities as communities
 
 
-def plot_heatmap(matrix, xlabels=None, ylabels=None, size=(10,8), cmap="bone", annotation=False):
+def plot_heatmap(matrix, xlabels=None, ylabels=None, size=(10,8), cmap="bone", annotation=False, diagonal=None):
 
     """
     Plots a heatmap. Return figure fig can be saved with fig.savefig(). For parameters refer to the matplotlib documentation.
@@ -26,6 +26,7 @@ def plot_heatmap(matrix, xlabels=None, ylabels=None, size=(10,8), cmap="bone", a
         size (tuple): plot size to be used
         cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
         annotation (boolea): if True then cell values are plotted
+        diagonal (float or None): if not None the values on the diagonal are replaced with the provided value
 
     Returns:
         fig (matplotlib figure): heatmap object
@@ -35,6 +36,9 @@ def plot_heatmap(matrix, xlabels=None, ylabels=None, size=(10,8), cmap="bone", a
         xlabels="auto"
     if ylabels is None:
         ylabels = "auto"
+
+    if diagonal is not None:
+        np.fill_diagonal(matrix, diagonal)
 
     if cmap is None:
         cmap = sns.cubehelix_palette(start=7, rot=0, dark=0.2, light=0.8, reverse=False, as_cmap=True)
@@ -78,7 +82,7 @@ def plot_hierarchical_clustering(matrix, xlabels=None, ylabels=None, size=(10,8)
     return sns.clustermap(matrix, annot=False, figsize=size, xticklabels=xlabels, yticklabels=ylabels, cmap=cmap)
 
     
-def plot_clustering_heatmap(clusters, matrix, labels, cmap="bone", size=(10,8)):
+def plot_clustering_heatmap(clusters, matrix, labels, cmap="bone", size=(10,8), diagonal=None):
 
     """
     Plots a clustering on top of a provided distance matrix.
@@ -89,6 +93,7 @@ def plot_clustering_heatmap(clusters, matrix, labels, cmap="bone", size=(10,8)):
         labels (list): list of labels to be used for plot. Needs to be in the same order as clusters
         cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
         size (tuple): figuresize
+        diagonal (float or None): if not None the values on the diagonal are replaced with the provided value
 
     Returns:
         fig (matplotlib figure): of clustering
@@ -127,6 +132,8 @@ def plot_clustering_heatmap(clusters, matrix, labels, cmap="bone", size=(10,8)):
             
             
     #create plot
+    if diagonal is not None:
+        np.fill_diagonal(matrix, diagonal)
 
     fig, ax = plt.subplots(1, 1, figsize=size)
     data = matrix[np.ix_(inds, inds)]
