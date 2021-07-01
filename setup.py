@@ -40,10 +40,10 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 
 setup(name='volta',
-      version='0.1.0',
+      version='0.1.1',
       license='',
-      description='Network Analysis for Biological Networks',
-      url='https://gitlab.com/alisa-p/graphalgorithms2',
+      description='adVanced mOLecular neTwork Analysis',
+      url='https://github.com/fhaive/VOLTA',
       author='Alisa Pavel',
       author_email='',
       classifiers=[
