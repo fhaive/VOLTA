@@ -1,0 +1,1542 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, minimum-scale=1" />
+<meta name="generator" content="pdoc 0.9.2" />
+<title>volta.distances.trees API documentation</title>
+<meta name="description" content="Converts a graph object into a (binary) tree, which can be used to compare networks structural makeup based on known tree distance measures.
+This …" />
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/sanitize.min.css" integrity="sha256-PK9q560IAAa6WVRRh76LtCaI8pjTJ2z11v0miyNNjrs=" crossorigin>
+<link rel="preload stylesheet" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/10up-sanitize.css/11.0.1/typography.min.css" integrity="sha256-7l/o7C8jubJiy74VsKTidCy1yBkRtiUGbVkYBylBqUg=" crossorigin>
+<link rel="stylesheet preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/styles/github.min.css" crossorigin>
+<style>:root{--highlight-color:#fe9}.flex{display:flex !important}body{line-height:1.5em}#content{padding:20px}#sidebar{padding:30px;overflow:hidden}#sidebar > *:last-child{margin-bottom:2cm}.http-server-breadcrumbs{font-size:130%;margin:0 0 15px 0}#footer{font-size:.75em;padding:5px 30px;border-top:1px solid #ddd;text-align:right}#footer p{margin:0 0 0 1em;display:inline-block}#footer p:last-child{margin-right:30px}h1,h2,h3,h4,h5{font-weight:300}h1{font-size:2.5em;line-height:1.1em}h2{font-size:1.75em;margin:1em 0 .50em 0}h3{font-size:1.4em;margin:25px 0 10px 0}h4{margin:0;font-size:105%}h1:target,h2:target,h3:target,h4:target,h5:target,h6:target{background:var(--highlight-color);padding:.2em 0}a{color:#058;text-decoration:none;transition:color .3s ease-in-out}a:hover{color:#e82}.title code{font-weight:bold}h2[id^="header-"]{margin-top:2em}.ident{color:#900}pre code{background:#f8f8f8;font-size:.8em;line-height:1.4em}code{background:#f2f2f1;padding:1px 4px;overflow-wrap:break-word}h1 code{background:transparent}pre{background:#f8f8f8;border:0;border-top:1px solid #ccc;border-bottom:1px solid #ccc;margin:1em 0;padding:1ex}#http-server-module-list{display:flex;flex-flow:column}#http-server-module-list div{display:flex}#http-server-module-list dt{min-width:10%}#http-server-module-list p{margin-top:0}.toc ul,#index{list-style-type:none;margin:0;padding:0}#index code{background:transparent}#index h3{border-bottom:1px solid #ddd}#index ul{padding:0}#index h4{margin-top:.6em;font-weight:bold}@media (min-width:200ex){#index .two-column{column-count:2}}@media (min-width:300ex){#index .two-column{column-count:3}}dl{margin-bottom:2em}dl dl:last-child{margin-bottom:4em}dd{margin:0 0 1em 3em}#header-classes + dl > dd{margin-bottom:3em}dd dd{margin-left:2em}dd p{margin:10px 0}.name{background:#eee;font-weight:bold;font-size:.85em;padding:5px 10px;display:inline-block;min-width:40%}.name:hover{background:#e0e0e0}dt:target .name{background:var(--highlight-color)}.name > span:first-child{white-space:nowrap}.name.class > span:nth-child(2){margin-left:.4em}.inherited{color:#999;border-left:5px solid #eee;padding-left:1em}.inheritance em{font-style:normal;font-weight:bold}.desc h2{font-weight:400;font-size:1.25em}.desc h3{font-size:1em}.desc dt code{background:inherit}.source summary,.git-link-div{color:#666;text-align:right;font-weight:400;font-size:.8em;text-transform:uppercase}.source summary > *{white-space:nowrap;cursor:pointer}.git-link{color:inherit;margin-left:1em}.source pre{max-height:500px;overflow:auto;margin:0}.source pre code{font-size:12px;overflow:visible}.hlist{list-style:none}.hlist li{display:inline}.hlist li:after{content:',\2002'}.hlist li:last-child:after{content:none}.hlist .hlist{display:inline;padding-left:1em}img{max-width:100%}td{padding:0 .5em}.admonition{padding:.1em .5em;margin-bottom:1em}.admonition-title{font-weight:bold}.admonition.note,.admonition.info,.admonition.important{background:#aef}.admonition.todo,.admonition.versionadded,.admonition.tip,.admonition.hint{background:#dfd}.admonition.warning,.admonition.versionchanged,.admonition.deprecated{background:#fd4}.admonition.error,.admonition.danger,.admonition.caution{background:lightpink}</style>
+<style media="screen and (min-width: 700px)">@media screen and (min-width:700px){#sidebar{width:30%;height:100vh;overflow:auto;position:sticky;top:0}#content{width:70%;max-width:100ch;padding:3em 4em;border-left:1px solid #ddd}pre code{font-size:1em}.item .name{font-size:1em}main{display:flex;flex-direction:row-reverse;justify-content:flex-end}.toc ul ul,#index ul{padding-left:1.5em}.toc > ul > li{margin-top:.5em}}</style>
+<style media="print">@media print{#sidebar h1{page-break-before:always}.source{display:none}}@media print{*{background:transparent !important;color:#000 !important;box-shadow:none !important;text-shadow:none !important}a[href]:after{content:" (" attr(href) ")";font-size:90%}a[href][title]:after{content:none}abbr[title]:after{content:" (" attr(title) ")"}.ir a:after,a[href^="javascript:"]:after,a[href^="#"]:after{content:""}pre,blockquote{border:1px solid #999;page-break-inside:avoid}thead{display:table-header-group}tr,img{page-break-inside:avoid}img{max-width:100% !important}@page{margin:0.5cm}p,h2,h3{orphans:3;widows:3}h1,h2,h3,h4,h5,h6{page-break-after:avoid}}</style>
+<script defer src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/10.1.1/highlight.min.js" integrity="sha256-Uv3H6lx7dJmRfRvH8TH6kJD1TSK1aFcwgx+mdg3epi8=" crossorigin></script>
+<script>window.addEventListener('DOMContentLoaded', () => hljs.initHighlighting())</script>
+</head>
+<body>
+<main>
+<article id="content">
+<header>
+<h1 class="title">Module <code>volta.distances.trees</code></h1>
+</header>
+<section id="section-intro">
+<p>Converts a graph object into a (binary) tree, which can be used to compare networks structural makeup based on known tree distance measures.
+This module is build upon treelib <a href="https://treelib.readthedocs.io/en/latest/treelib.html.">https://treelib.readthedocs.io/en/latest/treelib.html.</a></p>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">&#34;&#34;&#34;
+Converts a graph object into a (binary) tree, which can be used to compare networks structural makeup based on known tree distance measures.
+This module is build upon treelib https://treelib.readthedocs.io/en/latest/treelib.html.
+
+&#34;&#34;&#34;
+
+import pandas as pd
+import glob
+import sys
+import os
+import datetime
+import math
+import networkx as nx
+import collections
+#import matplotlib.pyplot as plt
+import random
+import treelib as bt
+import statistics
+from scipy.stats import kurtosis, skew, kendalltau
+from .node_edge_similarities import *
+from operator import itemgetter
+
+
+
+
+def construct_tree(H,  root=None, nr_trees=1, type=&#34;level&#34;, edge_attribute=&#34;weight&#34;, cycle_weight = &#34;max&#34;, initial_cycle_weight=True):
+        &#39;&#39;&#39;
+        Function to construct a binary tree from a graph object. This can reduce complexity since number of edges is reduced.
+
+        Parameters:
+                H (networkX graph object): graph to estimate on.
+                root (None, int or str): provide node ID which should be selected as root of the tree. If None then a random node is selected.
+                nr_trees (int): specifies how many trees are constructed. If root is None then multiple random trees can be created.
+                type (str): if is &#34;level&#34; then a hierarchical tree is created. Paths from the root indicate how far each nodes are from the root node. Edge weights are not considered.
+                                        if is &#34;cycle&#34; then a hierarchical tree is created where each node represents a cycle in the graph. 
+                                                Tree leaves are the original cycles in the graph and are merged into larger cycles through edge removal until all have been merged into a single cycle.
+                                                This method can be helpful to categorize cyclic graphs. The root parameter is not considered when this option is selected and only cyclic structures in the graph are considered.
+                edge_attribute (str): name of the edge weights to be considered if type = &#34;cycle&#34;.
+                cycle_weight (str): sets how cycles are merged i.e. which edges are removed to merge cycles into larger ones.
+                                                        if is &#34;max&#34; then the edge with the highest weight is removed first. if is &#34;min&#34; then the edge with the smalles weight is removed first.
+                                                        if is &#34;betweenness_max&#34; the the edge with the highest betweenness value is removed first.
+                                                        if is &#34;betweenness_min&#34; the edge with the lowest betweenness value is removed first.
+                initial_cycle_weight (boolean): if True the initial cycle basis is estimated based on edge weights with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.minimum_cycle_basis.html#networkx.algorithms.cycles.minimum_cycle_basis
+                                                                                if False the initial cycles are estimated based on steps only with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.cycle_basis.html#networkx.algorithms.cycles.cycle_basis
+
+        Returns:
+                trees (list): list of treelib objects
+                cycles (list): if level = &#34;cycle&#34; then additional a list of cycle IDs to edge mappings is returned
+                
+
+        &#39;&#39;&#39;
+        G = H.copy()
+
+        trees = []
+        if type == &#34;level&#34;:
+                
+                for i in range(nr_trees):
+                        if root is None:
+                                root_tree = random.choice(list(G.nodes()))
+                        else:
+                                root_tree = root
+
+                        tree = bt.Tree()
+
+                        #root
+                        tree.create_node(root_tree, root_tree)
+
+                        #create child nodes
+                        parents = [root_tree]
+                        in_tree = [root_tree]
+
+                        
+                        #get all one step neighbors for current node
+
+                        while len(parents) &gt; 0:
+                                parents_temp = []
+                                for par in parents:
+
+                                        if par in list(G.nodes()):
+                                                children = G.neighbors(par)
+
+                                                for child in children:
+                                                        if child not in in_tree:
+
+                                                                tree.create_node(child, child, parent=par)                              
+                                                                #add to new parent list
+                                                                parents_temp.append(child)
+                                                                in_tree.append(child)
+
+
+
+                                parents = parents_temp
+
+                        trees.append(tree)
+                return trees
+
+        elif type == &#34;cycle&#34;:
+                print(&#34;CAREFUL this only works if you have a cyclic graph!!! else only the structures containing cycles will be considered, this may result in a very small tree only containing some of the original nodes&#34;)
+                l = []
+                for i in range(nr_trees):
+                        #get all initial cycles in the graph
+                        X = G.copy()
+                        loops, relationship, all_loops = __create_loop_relationships__(X, initial_cycle_weight, cycle_weight, edge_attribute)
+
+                        if loops is not None:
+                                tree = __build_tree_hierarchical__(loops, relationship)
+                        else:
+                                tree = None
+
+                        trees.append(tree)
+                        l.append(all_loops)
+                return trees, l
+
+        else:
+                print(&#34;type is not implemented&#34;)
+
+
+
+                return trees
+
+def __build_tree_hierarchical__(loops, relationship):
+        &#34;&#34;&#34;
+        helper function to create a hierarchical tree based on return values of create_loop_relationships()
+        Input
+                dict of loops contained in a graph (or any other structure)
+
+                dict of relationships between the structures contained in loops
+
+        Output
+                a treelib tree
+        &#34;&#34;&#34;
+        #loops contains loop ID and corresponding edges/nodes in Graph
+
+        #build list out of stage information with each child/ leave from left to right 
+        print(&#34;building tree...&#34;)
+        z= 1
+        #get root node
+        print(relationship)
+        temp = sorted(relationship.keys())[-z]
+
+        #if root has no children jump to next node
+        while relationship[temp] == []:
+                z = z+1
+                temp = sorted(relationship.keys())[-z]
+
+
+        #construct tree
+
+        tree = bt.Tree()
+
+        #root
+        tree.create_node(temp, temp)
+
+        #create child nodes
+        parents = [temp]
+        in_tree = [temp]
+        while len(parents) &gt; 0:
+                parents_temp = []
+                for par in parents:
+
+                        children = relationship[par]
+
+                        for child in children:
+                                if child is not None:
+
+                                        tree.create_node(child, child, parent=par)                              
+                                        #add to new parent list
+                                        parents_temp.append(child)
+                                        in_tree.append(child)
+
+                parents = parents_temp
+
+        #build tree out of list
+        #tree = bt.build(nodes)
+        print(&#34;tree built&#34;)
+        return tree
+
+def __create_loop_relationships__(G,initial_cycle_weight, cycle_weight, edge_attribute):
+        &#34;&#34;&#34;
+        helper function to determine child parent relationship for loops (or any other structural components)
+
+        Input
+                networkx graph G
+
+                edge_attribute str, the name of the edge weight to be considered for type cycle
+
+                cycle_weight
+                        the weight based on which edge are removed
+                        max: edge with the highest edge weight
+                        min: edge with the lowest edge weight
+                        betweenness_max: edge with the highest betweenness value
+                        betweenness_min: edge with the lowest betweenness value
+
+                initial_cycle_weight
+                        if true then the initial cycle basis is estimated based on edge weight 
+                                with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.minimum_cycle_basis.html#networkx.algorithms.cycles.minimum_cycle_basis
+                        else the initial cycles are estimated based on steps only
+                                with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.cycle_basis.html#networkx.algorithms.cycles.cycle_basis
+
+                Output
+                        dict of final loops
+
+                        dict of relationships
+
+                        dict of all loops
+
+        &#34;&#34;&#34;
+        if initial_cycle_weight:
+                cycles = nx.minimum_cycle_basis(G)
+        else:
+                cycles = nx.cycle_basis(G)
+        #print(&#34;cycles&#34;, cycles)
+        #convert cycles into dict &amp; edge list
+        cycles_dict = __convert_cycles__(cycles)
+        #print(&#34;cycles&#34;, cycles_dict)
+
+        #construct dict to save cycles and give them id which is saved in tree
+        #append each new created loop to dict
+        save_loops = {}
+        all_loops = {}
+        for i in range(len(cycles_dict)):
+                all_loops[i] = cycles_dict[i]
+                save_loops[i] = cycles_dict[i]
+        
+        #2nd dict that stores loop id and  child nodes in list
+        #initialize leave nodes
+        relationship = {}
+        for loop in all_loops:
+                relationship[loop] = [None, None]
+
+        #merged cycles - stores cycles already merged
+        merged_nodes = []
+
+        print(&#34;start creating hierarchical tree&#34;)
+
+        while len(G.edges()) &gt; 0:
+
+                #community weight functions are used to find the most valuable edge
+
+                if cycle_weight == &#34;max&#34;:
+                        to_remove = __by_weight__(G, w_max=True, attribute=edge_attribute)
+                
+                elif cycle_weight ==&#34;min&#34;:
+                        to_remove = __by_weight__(G, w_max=False, attribute=edge_attribute)
+
+                elif cycle_weight ==&#34;betweenness_max&#34;:
+                        to_remove = __by_centrality__(G, w_max=True, attribute=edge_attribute, type=&#34;betweenness&#34;)
+
+                elif cycle_weight == &#34;betweenness_min&#34;:
+                        to_remove = __by_centrality__(G, w_max=False, attribute=edge_attribute, type=&#34;betweenness&#34;)
+
+                else:
+                        print(&#34;cycle weight not known, please select another one&#34;)
+                        return None
+                        break
+
+                #remove edge from graph
+                G.remove_edge(to_remove[0], to_remove[1])
+
+                children = []
+                cycle = []
+                for loop_ID, loop in all_loops.items():
+                #compare edges (independent of direction (x,y) == (y,x))
+                        #print(loop)
+                        #print(to_remove)
+                        if ((to_remove in loop) or ((to_remove[1], to_remove[0]) in loop)):
+                                                        
+                                children.append(loop_ID)
+                                merged_nodes.append(loop_ID)
+                                
+                                #new cycle is made up of all child edges except the removed edge
+                                for edge in loop:
+                                        if ((edge not in cycle) and ((edge[1], edge[0]) not in cycle)):
+                                                if edge != to_remove and edge != (to_remove[1], to_remove[0]):
+                                                        cycle.append(edge)
+
+                new_key = int(sorted(save_loops.keys())[-1]) + 1
+                all_loops[new_key] = cycle
+                save_loops[new_key] = cycle
+                
+                #and remove merged loops
+                for child in children:
+                        del all_loops[child]
+                
+                #add parent child connection to relationship
+                new_stage = int(sorted(relationship.keys())[-1]) + 1
+                #find ID of children
+
+                relationship[new_key] = children
+
+        print(&#34;finished edge removal&#34;)
+
+        return all_loops, relationship, save_loops
+
+def __by_weight__(G, w_max=True, attribute=&#34;weight&#34;):
+    &#34;&#34;&#34;
+    helper function to find the most valuable edge 
+    Input
+
+        networkx graph G
+
+        w_max
+            if true edge with the highest weight attribute is returned
+            else edge with the smallest edge attribute is returned
+
+        attribute
+            str of edge attribute name
+    &#34;&#34;&#34;
+    if w_max:
+        u, v, w = max(G.edges(data=attribute), key=itemgetter(2))
+    else:
+        
+        u, v, w = min(G.edges(data=attribute), key=itemgetter(2))
+
+    return (u, v)
+
+
+def __by_centrality__(G, w_max=True, attribute=&#34;weight&#34;, type=&#34;betweenness&#34;):
+    &#34;&#34;&#34;
+    helper function to find the most valuable edge 
+    returns the edge with the highest/ lowest  score
+
+    Input
+
+        networkx graph G
+
+        w_max
+            if true edge with the highest weight attribute is returned
+            else edge with the smallest edge attribute is returned
+
+        attribute
+            str of edge attribute name
+
+        type
+            what centrality measure should be used
+            options
+                betweenness : based on betweenness centrality
+                current_flow_betweenness :  based on current flow betweenness centrality
+                load : based on load centrality 
+
+    &#34;&#34;&#34;
+    if type == &#34;betweenness&#34;:
+        centrality = nx.edge_betweenness_centrality(G, weight=attribute)
+
+    elif type == &#34;current_flow_betweenness&#34;:
+        centrality = nx.edge_current_flow_betweenness_centrality(G, weight=attribute)
+    
+    elif type == &#34;load&#34;:
+        centrality = nx.algorithms.centrality.edge_load_centrality(G)
+
+
+    else:
+        print(&#34;method not implemented, please define your own function&#34;)
+        return None
+
+
+    if w_max:
+        return max(centrality, key=centrality.get)
+    else:
+        return min(centrality, key=centrality.get)
+
+
+                                
+def __convert_cycles__(cycles):
+        &#34;&#34;&#34;
+        helper function of construct_binary_tree() when tree is constructed based on cycles
+        it takes the output of nx.minimum_cycle_basis(G) or nx.cycle_basis(G)
+        and transforms it into an edge list
+
+        Input
+                list of sublists contianing node IDs of cycles
+
+        Output
+                dict, where each key represents a cycle ID &amp; contains list of edge tuples which construct the cycles
+        &#34;&#34;&#34;
+
+        cnt = 0
+        cycles_dict = {}
+        for cycle in cycles:
+                edges = []
+                for i in range(len(cycle)):
+                        if i == 0:
+                                initial = cycle[i]
+                                current = cycle[i]
+
+                        elif i == len(cycle) -1:
+                                #last one in list
+                                edge = (current, cycle[i])
+                                edges.append(edge)
+                                edge = (cycle[i], initial)
+                                current = cycle[i]
+                                edges.append(edge)
+
+                        else:
+                                edge = (current, cycle[i])
+                                current = cycle[i]
+                                edges.append(edge)
+                cycles_dict[cnt] = edges
+                cnt = cnt +1
+
+        return cycles_dict
+                
+
+def tree_node_level_similarity(t1, t2, type=&#34;percentage&#34;):
+        &#34;&#34;&#34;
+        Computes the similarity of nodes (based on their level in two rooted trees t1 and t2).
+
+        Parameters:
+                t1 (treelib tree object): first tree to compare
+                t2 (treelib tree object): second tree to compare with
+                type (str): defines comparison method. If type = &#34;percentage&#34; then for each level the percentage of shared nodes based on the max possible (length of smaller) shared nodes is estimated.
+                                        If type = &#34;correlation&#34; then Kendall rank correlation is estimated. Node rankings are estimated based on their level in the trees. If there are unequal number of nodes a subset of the larger one is selected.
+                                        If type = &#34;smc&#34; then the smc distance for each level is estimated.
+                                        If type ) &#34;jaccard&#34; then the jaccard similarity for each level is estimated.
+                
+        Returns:
+                mean similarity (list): mean similarity scores for each level
+                all scores (list):
+                if type = &#34;correlation&#34; then kendall tau (float) and its corresponding p-val (float) are returned instead.
+                
+        &#34;&#34;&#34;
+
+        t1_nodes = t1.all_nodes()
+        t2_nodes = t2.all_nodes()
+
+        t1_level = {}
+        t2_level = {}
+
+        max_level1 = 0
+        max_level2 = 0
+
+        for node in t1_nodes:
+                depth = t1.depth(node)
+                t1_level[node.tag] = depth
+
+                if depth &gt; max_level1:
+                        max_level1 = depth
+
+        for node in t2_nodes:
+                depth = t2.depth(node)
+                t2_level[node.tag] = depth
+
+                if depth &gt; max_level2:
+                        max_level2 = depth
+
+        #print(&#34;tree max levels/ depths are&#34;, max_level1, max_level2)
+        #print(t1_level)
+        #print(t2_level)
+        if type==&#34;percentage&#34;:
+                percentages = []
+                for i in range(max(max_level1, max_level2)+1):
+                        temp1 = [k for k,v in t1_level.items() if float(v) == i]
+                        temp2 = [k for k,v in t2_level.items() if float(v) == i]
+
+                        #if one is 0 p is set to 0
+                        if len(temp1) &lt; 1 or len(temp2) &lt; 1:
+                                print(&#34;level is 0, p is set to 0&#34;)
+                                p = 0
+
+                        else:
+                                if len(temp1) &gt; len(temp2):
+                                        shared = list(set(temp1).intersection(set(temp2)))
+
+                                else:
+                                        shared = list(set(temp2).intersection(set(temp1)))
+                                #print(shared)
+                                p = percentage_shared(shared, temp1, temp2, penalize=False)
+
+                        percentages.append(p)
+
+                mean_percentage = statistics.mean(percentages)
+
+                return mean_percentage, percentages
+
+        elif type == &#34;correlation&#34;:
+                #compute kendall between ranked node lists based on level ranking
+                ranked1 = []
+                ranked2 = []
+
+                for i in range(max(max_level1, max_level2)+1):
+                        temp1 = [k for k,v in t1_level.items() if float(v) == i]
+                        temp2 = [k for k,v in t2_level.items() if float(v) == i]
+
+                        #since kendall requires lists to be of same length
+                        #for each layer only same amount of nodes are taken into account
+
+                        m=min(len(temp1), len(temp2))
+                        
+                        ranked1.append(sorted(temp1)[:m])
+                        ranked2.append(sorted(temp2)[:m])
+
+                ranked1 = [item for sublist in ranked1 for item in sublist]
+                ranked2 = [item for sublist in ranked2 for item in sublist]
+                #print(&#34;ranked1&#34;, ranked1)
+
+                tau, p = kendalltau(ranked1, ranked2, nan_policy=&#34;omit&#34;)
+
+                return tau, p
+        
+
+        elif type ==&#34;smc&#34;:
+                #estimate smc distance of node lists
+
+                smc = []
+                for i in range(max(max_level1, max_level2)+1):
+                        temp1 = [k for k,v in t1_level.items() if float(v) == i]
+                        temp2 = [k for k,v in t2_level.items() if float(v) == i]
+
+                        #if one is 0 p is set to 0
+                        if len(temp1) &lt; 1 or len(temp2) &lt; 1:
+                                s = 0
+
+                        else:
+                                
+
+                                s = __compute_smc_level__(temp1, temp2)
+
+                        smc.append(s)
+
+                mean_smc = statistics.mean(smc)
+
+                return mean_smc, smc
+
+
+
+
+        elif type==&#34;jaccard&#34;:
+                jaccard = []
+                for i in range(max(max_level1, max_level2)+1):
+                        temp1 = [k for k,v in t1_level.items() if float(v) == i]
+                        temp2 = [k for k,v in t2_level.items() if float(v) == i]
+
+                        #if one is 0 p is set to 0
+                        if len(temp1) &lt; 1 or len(temp2) &lt; 1:
+                                j = 0
+
+                        else:
+                                if len(temp1) &gt; len(temp2):
+                                        shared = list(set(temp1).intersection(set(temp2)))
+
+                                else:
+                                        shared = list(set(temp2).intersection(set(temp1)))
+
+                                j = calculate_jaccard_index(shared, temp1, temp2, similarity=True)
+
+                        jaccard.append(j)
+
+                mean_jaccard = statistics.mean(jaccard)
+
+                return mean_jaccard, jaccard
+
+
+
+
+def __compute_smc_level__(list1, list2):
+        &#34;&#34;&#34;
+        helper function of tree_node_level_similarity()
+                smc adapted to tree levels
+                if a node is in both levels it is counted as a match if it is not in both levels it is counted as a mismatch
+
+        Input
+                it is assumed that list1 and list2 are nodes contained in the same level
+
+        Output
+        float, smc score
+        &#34;&#34;&#34;
+        match = 0
+        no_match = 0
+
+        checked = []
+
+        for k in range(len(list1)):
+                if list1[k] not in checked:
+                        if list1[k] in list2:
+                                match = match + 1
+                        else:
+                                no_match = no_match + 1
+
+                        checked.append(list1[k])
+
+        for k in range(len(list2)):
+                if list2[k] not in checked:
+                        if list2[k] in list1:
+                                match = match + 1
+                        else:
+                                no_match = no_match + 1
+
+                        checked.append(list2[k])
+
+        smc = match / (match + no_match)
+        return smc
+
+                
+
+
+
+def tree_depth(t):
+        &#34;&#34;&#34;
+        Returns depth of a tree
+
+        Parameters:
+                t (treelib tree object): tree to estimate on.
+
+        Returns:
+                tree depth (int): depth of provided tree
+        &#34;&#34;&#34;
+        return t.depth()
+
+def number_of_leaves(t):
+
+        &#34;&#34;&#34;
+        Returns the number of leaves in t.
+
+        Parameters:
+                t (treelib tree object): tree to estimate on.
+
+        Returns:
+                leaves (int): number of leaves of provided tree
+        &#34;&#34;&#34;
+
+        return (len(t.leaves()))
+
+def leave_path_metrics(t):
+        &#39;&#39;&#39;
+        Estimates the root - leave pathlength distribution.
+
+        Parameters:
+                t (treelib tree object): tree to estimate on.
+
+        Returns:
+                distribution (dict): keys are mean path length, median path length, std path length, skw path length, kurtosis path length, altitude, altitude magnitude, total exterior path length, total exterior magnitude
+        &#39;&#39;&#39;
+        path_to_leaves = t.paths_to_leaves()
+        nr_leaves=number_of_leaves(t)
+        length = []
+        for path in path_to_leaves:
+                length.append(len(path))
+        if len(length) &gt; 1:
+                avg_path = statistics.mean(length)
+                median_path = statistics.median(length)
+                std_path = statistics.stdev(length)     
+                skw_path = skew(length)
+                kurt_path = kurtosis(length)
+                altitude = sorted(length)[-1]
+                total_exterior_path_length = sum(length)
+                altitude_mag = altitude/nr_leaves
+                total_exterior_mag = altitude/nr_leaves
+
+        else:
+                print(&#34;less than two paths found, no distribution can be estimated&#34;)
+                avg_path = None
+                median_path = None
+                std_path = None
+                skw_path = None
+                kurt_path = None
+                altitude = None
+                total_exterior_path_length = None
+                altitude_mag = None
+                total_exterior_mag = None
+
+
+        return {&#34;mean path length&#34;:avg_path, &#34;median path length&#34;: median_path, &#34;std path length&#34;:std_path, &#34;skw path length&#34;:skw_path, &#34;kurtosis path length&#34;:kurt_path, &#34;altitude&#34;:altitude, &#34;altitude magnitude&#34;:altitude_mag, &#34;total exterior path length&#34;:total_exterior_path_length, &#34;total exterior magnitude&#34;:total_exterior_mag}
+
+def __partition_symmetry__(subtree):
+        &#34;&#34;&#34;
+        Estimates tree asymmetry based on all possible subtrees.
+        helper function of tree_asymmetry
+
+        Input
+                treelib object
+
+        Output
+                asymmetry, degree of tree
+        &#34;&#34;&#34;
+        #split subtree into its 2 subtrees
+        current_root = subtree.root
+
+        #degree of subtree
+                
+        degree = len(subtree.leaves())
+        #get children (new roots)
+        children = subtree.children(current_root)
+
+        child_1 = None
+        child_2 = None
+
+        if len(children) &gt; 0:
+                child_1 = children[0].tag
+        if len(children) &gt; 1:
+                child_2 = children[1].tag
+                
+        tree_1 = None
+        tree_2 = None
+
+        #build new subtrees
+        if child_1 is not None:
+                tree_1 = bt.Tree(subtree.subtree(child_1), deep = True)
+        if child_2 is not None:
+                tree_2 = bt.Tree(subtree.subtree(child_2), deep = True)
+
+        degree_1 = 0
+        degree_2 = 0
+        #get degree
+        if tree_1 is not None:
+
+                degree_1 = len(tree_1.leaves())
+
+        if tree_2 is not None:
+
+                degree_2 = len(tree_2.leaves())
+
+        if (degree_1 &gt;= degree_2) and (degree_1 != 0):
+                asymmetry = (degree_1 - degree_2) / degree_1
+        elif (degree_2 &gt;= degree_1) and (degree_2 != 0):
+                asymmetry = (degree_2 - degree_1) / degree_2
+        #shouldnt be assigned 
+        else:
+                asymmetry = 0
+
+
+        return degree * asymmetry, degree
+
+def tree_asymmetry(t, nr_leaves):
+        &#34;&#34;&#34;
+        Estimates tree asymmetry of a tree based on asymmetry of all possible subtrees
+        
+
+        Parameters:
+                t (treelib tree object): tree to estimate on.
+                nr_leaves (int): number of leave nodes contained in t.
+
+        Returns:
+                asymmetry (dict): keys are asymmetry, degree asymmetry (for each subtree)
+        &#34;&#34;&#34;
+
+        #weighted average of degree of all subpartitions (number of leaves)
+
+        #for all nodes (except leave nodes) calculate subtree and asymmetry of this tree
+        leaves = []
+        for leave in t.leaves():
+                leaves.append(leave.tag)
+                
+        total_weight = 0 
+        total_asymmetry = 0
+        degree_asymmetry = {}
+        for node in t.nodes:
+                #if not a leave node
+
+                if node not in leaves:
+                        asymmetry, weight = __partition_symmetry__(bt.Tree(t.subtree(node), deep = True))
+                        total_asymmetry = total_asymmetry + asymmetry
+                        total_weight = total_weight + weight
+                        degree_asymmetry[weight] = (1/weight)*asymmetry
+        if total_weight &gt; 0:
+                asymmetry = (1/total_weight) * total_asymmetry
+        else:
+                asymmetry = total_asymmetry
+
+        return {&#34;asymmetry&#34;:asymmetry, &#34;degree asymmetry&#34;:degree_asymmetry}
+
+def __set_strahler_number__(b_tree):
+        &#34;&#34;&#34;
+        helper function of strahler_branching_ratio(t) by initializing strahler numbers for each edge
+
+        Input
+                treelib object
+
+        Output
+                branching segments,
+                treelib object
+        &#34;&#34;&#34;
+
+        updated_children = []
+        for leave in b_tree.leaves():
+                #set strahler number 1
+                b_tree.update_node(leave.tag, data=1)
+                updated_children.append(leave.tag)
+        #update parent nodes
+        #dict to save number of segments
+        #continous line of same number is counted as one segment
+
+        branching_segments = {}
+        #all leave nodes are single segment of count 1
+        branching_segments[1] = len(updated_children)
+
+        while (b_tree.get_node(updated_children[0]).is_root() == False): #not root not reached
+                for node in updated_children:
+                        #get strahler number and number of sibling
+                        strahler1 = b_tree.nodes[node].data
+
+                        #get sibling node
+
+                        sibling = b_tree.siblings(node)
+                        if len(sibling) &gt; 0: #has sibling, max 1
+                                sib_id = sibling[0].identifier
+                                strahler2 = b_tree.nodes[sib_id].data
+
+                                #print(strahler2)
+                        else:
+                                strahler2 = 0
+                                sib_id = None
+
+                        #if sibling number not set jump 
+                        if strahler2 is not None:
+                                #strahler parent
+                                if strahler1 == strahler2:
+                                        strahler_parent = strahler1 + 1
+                                        #save in dict
+                                        #check if key already exists
+                                        if strahler_parent in branching_segments:
+                                                temp = int(branching_segments[strahler_parent]) + 1
+                                                branching_segments[strahler_parent] = temp
+                                        else:
+                                                branching_segments[strahler_parent] = 1
+                                #continous line of same number so counted as continous segment
+                                elif strahler1 &gt; strahler2:
+                                        strahler_parent = strahler1
+                                else:
+                                        strahler_parent = strahler2
+
+                                #get parent and update if not root
+                                NoneType = type(None)
+                                if isinstance(b_tree.parent(node), NoneType) == False:
+                                        parent = b_tree.parent(node).identifier
+                                        b_tree.update_node(parent, data=strahler_parent)
+
+                                        #add parent to list and remove children
+                                        updated_children.append(parent)
+                                updated_children.remove(node)
+                                if sib_id is not None and sib_id in updated_children:
+                                        updated_children.remove(sib_id)
+                                        
+        return branching_segments, b_tree
+
+def strahler_branching_ratio(t):
+        &#34;&#34;&#34;
+        Calculates the strahler branching ratio of a tree t.
+
+        Parameters:
+                t (treelib tree object): tree to estimate on.
+
+        Returns:
+                barnching distribution (dict): keys are mean branching ratio, median branching ratio, std branching ratio, skw branching ratio, kurtosis branching ratio
+        &#34;&#34;&#34;
+
+        branching, new_tree = __set_strahler_number__(t)
+        ratio = []
+        key = list(branching.keys())
+        for i in range(len(branching.keys())-1):
+                
+                ratio.append(int(branching[key[i]]) / int(branching[key[i+1]]) )
+        if len(ratio)&gt;1:
+                avg_ratio = statistics.mean(ratio)
+                median_ratio = statistics.median(ratio)
+                std_ratio = statistics.stdev(ratio)     
+                skw_ratio = skew(ratio)
+                kurt_ratio = kurtosis(ratio)
+        else:
+                print(&#34;less than two parameters in ratio, no distribution can be estimated&#34;)
+                avg_ratio = None
+                median_ratio = None
+                std_ratio = None
+                skw_ratio = None
+                kurt_ratio = None
+
+
+        return {&#34;mean branching ratio&#34;:avg_ratio, &#34;median branching ratio&#34;:median_ratio, &#34;std branching ratio&#34;:std_ratio, &#34;skw branching ratio&#34;:skw_ratio, &#34;kurtosis branching ratio&#34;:kurt_ratio}
+
+def __exterior_interior__(t):
+        &#34;&#34;&#34;
+        Calculates the number of external &amp; internal edges
+        helper function of exterior_interior_edges()
+
+        Input
+                treelib object
+
+        Output
+                count of external and internal edges
+        &#34;&#34;&#34;
+
+
+        #number of external and external/ internal edges
+        #use data from strahler (if both 1 then EE) if one large 1 then EI
+        EE = 0
+        EI = 0
+
+        branching, b_tree = __set_strahler_number__(t)
+
+        visited = []
+        for node in b_tree.leaves():
+
+                if node.identifier not in visited:
+                        #get parent and sibling of node
+                        sibling = b_tree.siblings(node.identifier)
+                        if len(sibling) &gt; 0: #has sibling, max 1
+                                sib_id = sibling[0].identifier
+                        else:
+                                sib_id = None
+
+                        #parent = b_tree.parent(node.identifier).identifier
+
+                        #if siblings have same strahler number they are EE edges
+                        if sib_id is not None:
+                                if b_tree.get_node(node.identifier).data == b_tree.get_node(sib_id).data:
+                                        EE = EE +1
+                                else:
+                                        EI = EI+1
+                                visited.append(sib_id)
+
+                        visited.append(node.identifier)
+        return EE, EI
+
+
+def exterior_interior_edges(t):
+        &#34;&#34;&#34;
+        Estimates the number of exterior (EE) &amp; interior (IE) edges and their magnitude
+
+        Parameters:
+                t (treelib tree object): tree to estimate on.
+
+        Returns:
+                exterior / interior edges (dict): keys are EE, EI, EE magnitude, EI magnitude
+        &#34;&#34;&#34;
+        ee, ei = __exterior_interior__(t)
+
+        nr_leaves = number_of_leaves(t)
+        ee_mag = ee/nr_leaves
+        ei_mag = ei/nr_leaves
+
+
+        return {&#34;EE&#34;:ee, &#34;EI&#34;:ei, &#34;EE magnitude&#34;:ee_mag, &#34;EI magnitude&#34;:ei_mag}</code></pre>
+</details>
+</section>
+<section>
+</section>
+<section>
+</section>
+<section>
+<h2 class="section-title" id="header-functions">Functions</h2>
+<dl>
+<dt id="volta.distances.trees.construct_tree"><code class="name flex">
+<span>def <span class="ident">construct_tree</span></span>(<span>H, root=None, nr_trees=1, type='level', edge_attribute='weight', cycle_weight='max', initial_cycle_weight=True)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Function to construct a binary tree from a graph object. This can reduce complexity since number of edges is reduced.</p>
+<h2 id="parameters">Parameters</h2>
+<p>H (networkX graph object): graph to estimate on.
+root (None, int or str): provide node ID which should be selected as root of the tree. If None then a random node is selected.
+nr_trees (int): specifies how many trees are constructed. If root is None then multiple random trees can be created.
+type (str): if is "level" then a hierarchical tree is created. Paths from the root indicate how far each nodes are from the root node. Edge weights are not considered.
+if is "cycle" then a hierarchical tree is created where each node represents a cycle in the graph.
+Tree leaves are the original cycles in the graph and are merged into larger cycles through edge removal until all have been merged into a single cycle.
+This method can be helpful to categorize cyclic graphs. The root parameter is not considered when this option is selected and only cyclic structures in the graph are considered.
+edge_attribute (str): name of the edge weights to be considered if type = "cycle".
+cycle_weight (str): sets how cycles are merged i.e. which edges are removed to merge cycles into larger ones.
+if is "max" then the edge with the highest weight is removed first. if is "min" then the edge with the smalles weight is removed first.
+if is "betweenness_max" the the edge with the highest betweenness value is removed first.
+if is "betweenness_min" the edge with the lowest betweenness value is removed first.
+initial_cycle_weight (boolean): if True the initial cycle basis is estimated based on edge weights with <a href="https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.minimum_cycle_basis.html#networkx.algorithms.cycles.minimum_cycle_basis">https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.minimum_cycle_basis.html#networkx.algorithms.cycles.minimum_cycle_basis</a>
+if False the initial cycles are estimated based on steps only with <a href="https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.cycle_basis.html#networkx.algorithms.cycles.cycle_basis">https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.cycle_basis.html#networkx.algorithms.cycles.cycle_basis</a></p>
+<h2 id="returns">Returns</h2>
+<p>trees (list): list of treelib objects
+cycles (list): if level = "cycle" then additional a list of cycle IDs to edge mappings is returned</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def construct_tree(H,  root=None, nr_trees=1, type=&#34;level&#34;, edge_attribute=&#34;weight&#34;, cycle_weight = &#34;max&#34;, initial_cycle_weight=True):
+        &#39;&#39;&#39;
+        Function to construct a binary tree from a graph object. This can reduce complexity since number of edges is reduced.
+
+        Parameters:
+                H (networkX graph object): graph to estimate on.
+                root (None, int or str): provide node ID which should be selected as root of the tree. If None then a random node is selected.
+                nr_trees (int): specifies how many trees are constructed. If root is None then multiple random trees can be created.
+                type (str): if is &#34;level&#34; then a hierarchical tree is created. Paths from the root indicate how far each nodes are from the root node. Edge weights are not considered.
+                                        if is &#34;cycle&#34; then a hierarchical tree is created where each node represents a cycle in the graph. 
+                                                Tree leaves are the original cycles in the graph and are merged into larger cycles through edge removal until all have been merged into a single cycle.
+                                                This method can be helpful to categorize cyclic graphs. The root parameter is not considered when this option is selected and only cyclic structures in the graph are considered.
+                edge_attribute (str): name of the edge weights to be considered if type = &#34;cycle&#34;.
+                cycle_weight (str): sets how cycles are merged i.e. which edges are removed to merge cycles into larger ones.
+                                                        if is &#34;max&#34; then the edge with the highest weight is removed first. if is &#34;min&#34; then the edge with the smalles weight is removed first.
+                                                        if is &#34;betweenness_max&#34; the the edge with the highest betweenness value is removed first.
+                                                        if is &#34;betweenness_min&#34; the edge with the lowest betweenness value is removed first.
+                initial_cycle_weight (boolean): if True the initial cycle basis is estimated based on edge weights with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.minimum_cycle_basis.html#networkx.algorithms.cycles.minimum_cycle_basis
+                                                                                if False the initial cycles are estimated based on steps only with https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.cycles.cycle_basis.html#networkx.algorithms.cycles.cycle_basis
+
+        Returns:
+                trees (list): list of treelib objects
+                cycles (list): if level = &#34;cycle&#34; then additional a list of cycle IDs to edge mappings is returned
+                
+
+        &#39;&#39;&#39;
+        G = H.copy()
+
+        trees = []
+        if type == &#34;level&#34;:
+                
+                for i in range(nr_trees):
+                        if root is None:
+                                root_tree = random.choice(list(G.nodes()))
+                        else:
+                                root_tree = root
+
+                        tree = bt.Tree()
+
+                        #root
+                        tree.create_node(root_tree, root_tree)
+
+                        #create child nodes
+                        parents = [root_tree]
+                        in_tree = [root_tree]
+
+                        
+                        #get all one step neighbors for current node
+
+                        while len(parents) &gt; 0:
+                                parents_temp = []
+                                for par in parents:
+
+                                        if par in list(G.nodes()):
+                                                children = G.neighbors(par)
+
+                                                for child in children:
+                                                        if child not in in_tree:
+
+                                                                tree.create_node(child, child, parent=par)                              
+                                                                #add to new parent list
+                                                                parents_temp.append(child)
+                                                                in_tree.append(child)
+
+
+
+                                parents = parents_temp
+
+                        trees.append(tree)
+                return trees
+
+        elif type == &#34;cycle&#34;:
+                print(&#34;CAREFUL this only works if you have a cyclic graph!!! else only the structures containing cycles will be considered, this may result in a very small tree only containing some of the original nodes&#34;)
+                l = []
+                for i in range(nr_trees):
+                        #get all initial cycles in the graph
+                        X = G.copy()
+                        loops, relationship, all_loops = __create_loop_relationships__(X, initial_cycle_weight, cycle_weight, edge_attribute)
+
+                        if loops is not None:
+                                tree = __build_tree_hierarchical__(loops, relationship)
+                        else:
+                                tree = None
+
+                        trees.append(tree)
+                        l.append(all_loops)
+                return trees, l
+
+        else:
+                print(&#34;type is not implemented&#34;)
+
+
+
+                return trees</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.trees.exterior_interior_edges"><code class="name flex">
+<span>def <span class="ident">exterior_interior_edges</span></span>(<span>t)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Estimates the number of exterior (EE) &amp; interior (IE) edges and their magnitude</p>
+<h2 id="parameters">Parameters</h2>
+<p>t (treelib tree object): tree to estimate on.</p>
+<h2 id="returns">Returns</h2>
+<p>exterior / interior edges (dict): keys are EE, EI, EE magnitude, EI magnitude</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def exterior_interior_edges(t):
+        &#34;&#34;&#34;
+        Estimates the number of exterior (EE) &amp; interior (IE) edges and their magnitude
+
+        Parameters:
+                t (treelib tree object): tree to estimate on.
+
+        Returns:
+                exterior / interior edges (dict): keys are EE, EI, EE magnitude, EI magnitude
+        &#34;&#34;&#34;
+        ee, ei = __exterior_interior__(t)
+
+        nr_leaves = number_of_leaves(t)
+        ee_mag = ee/nr_leaves
+        ei_mag = ei/nr_leaves
+
+
+        return {&#34;EE&#34;:ee, &#34;EI&#34;:ei, &#34;EE magnitude&#34;:ee_mag, &#34;EI magnitude&#34;:ei_mag}</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.trees.leave_path_metrics"><code class="name flex">
+<span>def <span class="ident">leave_path_metrics</span></span>(<span>t)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Estimates the root - leave pathlength distribution.</p>
+<h2 id="parameters">Parameters</h2>
+<p>t (treelib tree object): tree to estimate on.</p>
+<h2 id="returns">Returns</h2>
+<p>distribution (dict): keys are mean path length, median path length, std path length, skw path length, kurtosis path length, altitude, altitude magnitude, total exterior path length, total exterior magnitude</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def leave_path_metrics(t):
+        &#39;&#39;&#39;
+        Estimates the root - leave pathlength distribution.
+
+        Parameters:
+                t (treelib tree object): tree to estimate on.
+
+        Returns:
+                distribution (dict): keys are mean path length, median path length, std path length, skw path length, kurtosis path length, altitude, altitude magnitude, total exterior path length, total exterior magnitude
+        &#39;&#39;&#39;
+        path_to_leaves = t.paths_to_leaves()
+        nr_leaves=number_of_leaves(t)
+        length = []
+        for path in path_to_leaves:
+                length.append(len(path))
+        if len(length) &gt; 1:
+                avg_path = statistics.mean(length)
+                median_path = statistics.median(length)
+                std_path = statistics.stdev(length)     
+                skw_path = skew(length)
+                kurt_path = kurtosis(length)
+                altitude = sorted(length)[-1]
+                total_exterior_path_length = sum(length)
+                altitude_mag = altitude/nr_leaves
+                total_exterior_mag = altitude/nr_leaves
+
+        else:
+                print(&#34;less than two paths found, no distribution can be estimated&#34;)
+                avg_path = None
+                median_path = None
+                std_path = None
+                skw_path = None
+                kurt_path = None
+                altitude = None
+                total_exterior_path_length = None
+                altitude_mag = None
+                total_exterior_mag = None
+
+
+        return {&#34;mean path length&#34;:avg_path, &#34;median path length&#34;: median_path, &#34;std path length&#34;:std_path, &#34;skw path length&#34;:skw_path, &#34;kurtosis path length&#34;:kurt_path, &#34;altitude&#34;:altitude, &#34;altitude magnitude&#34;:altitude_mag, &#34;total exterior path length&#34;:total_exterior_path_length, &#34;total exterior magnitude&#34;:total_exterior_mag}</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.trees.number_of_leaves"><code class="name flex">
+<span>def <span class="ident">number_of_leaves</span></span>(<span>t)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns the number of leaves in t.</p>
+<h2 id="parameters">Parameters</h2>
+<p>t (treelib tree object): tree to estimate on.</p>
+<h2 id="returns">Returns</h2>
+<p>leaves (int): number of leaves of provided tree</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def number_of_leaves(t):
+
+        &#34;&#34;&#34;
+        Returns the number of leaves in t.
+
+        Parameters:
+                t (treelib tree object): tree to estimate on.
+
+        Returns:
+                leaves (int): number of leaves of provided tree
+        &#34;&#34;&#34;
+
+        return (len(t.leaves()))</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.trees.strahler_branching_ratio"><code class="name flex">
+<span>def <span class="ident">strahler_branching_ratio</span></span>(<span>t)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Calculates the strahler branching ratio of a tree t.</p>
+<h2 id="parameters">Parameters</h2>
+<p>t (treelib tree object): tree to estimate on.</p>
+<h2 id="returns">Returns</h2>
+<p>barnching distribution (dict): keys are mean branching ratio, median branching ratio, std branching ratio, skw branching ratio, kurtosis branching ratio</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def strahler_branching_ratio(t):
+        &#34;&#34;&#34;
+        Calculates the strahler branching ratio of a tree t.
+
+        Parameters:
+                t (treelib tree object): tree to estimate on.
+
+        Returns:
+                barnching distribution (dict): keys are mean branching ratio, median branching ratio, std branching ratio, skw branching ratio, kurtosis branching ratio
+        &#34;&#34;&#34;
+
+        branching, new_tree = __set_strahler_number__(t)
+        ratio = []
+        key = list(branching.keys())
+        for i in range(len(branching.keys())-1):
+                
+                ratio.append(int(branching[key[i]]) / int(branching[key[i+1]]) )
+        if len(ratio)&gt;1:
+                avg_ratio = statistics.mean(ratio)
+                median_ratio = statistics.median(ratio)
+                std_ratio = statistics.stdev(ratio)     
+                skw_ratio = skew(ratio)
+                kurt_ratio = kurtosis(ratio)
+        else:
+                print(&#34;less than two parameters in ratio, no distribution can be estimated&#34;)
+                avg_ratio = None
+                median_ratio = None
+                std_ratio = None
+                skw_ratio = None
+                kurt_ratio = None
+
+
+        return {&#34;mean branching ratio&#34;:avg_ratio, &#34;median branching ratio&#34;:median_ratio, &#34;std branching ratio&#34;:std_ratio, &#34;skw branching ratio&#34;:skw_ratio, &#34;kurtosis branching ratio&#34;:kurt_ratio}</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.trees.tree_asymmetry"><code class="name flex">
+<span>def <span class="ident">tree_asymmetry</span></span>(<span>t, nr_leaves)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Estimates tree asymmetry of a tree based on asymmetry of all possible subtrees</p>
+<h2 id="parameters">Parameters</h2>
+<p>t (treelib tree object): tree to estimate on.
+nr_leaves (int): number of leave nodes contained in t.</p>
+<h2 id="returns">Returns</h2>
+<p>asymmetry (dict): keys are asymmetry, degree asymmetry (for each subtree)</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tree_asymmetry(t, nr_leaves):
+        &#34;&#34;&#34;
+        Estimates tree asymmetry of a tree based on asymmetry of all possible subtrees
+        
+
+        Parameters:
+                t (treelib tree object): tree to estimate on.
+                nr_leaves (int): number of leave nodes contained in t.
+
+        Returns:
+                asymmetry (dict): keys are asymmetry, degree asymmetry (for each subtree)
+        &#34;&#34;&#34;
+
+        #weighted average of degree of all subpartitions (number of leaves)
+
+        #for all nodes (except leave nodes) calculate subtree and asymmetry of this tree
+        leaves = []
+        for leave in t.leaves():
+                leaves.append(leave.tag)
+                
+        total_weight = 0 
+        total_asymmetry = 0
+        degree_asymmetry = {}
+        for node in t.nodes:
+                #if not a leave node
+
+                if node not in leaves:
+                        asymmetry, weight = __partition_symmetry__(bt.Tree(t.subtree(node), deep = True))
+                        total_asymmetry = total_asymmetry + asymmetry
+                        total_weight = total_weight + weight
+                        degree_asymmetry[weight] = (1/weight)*asymmetry
+        if total_weight &gt; 0:
+                asymmetry = (1/total_weight) * total_asymmetry
+        else:
+                asymmetry = total_asymmetry
+
+        return {&#34;asymmetry&#34;:asymmetry, &#34;degree asymmetry&#34;:degree_asymmetry}</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.trees.tree_depth"><code class="name flex">
+<span>def <span class="ident">tree_depth</span></span>(<span>t)</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Returns depth of a tree</p>
+<h2 id="parameters">Parameters</h2>
+<p>t (treelib tree object): tree to estimate on.</p>
+<h2 id="returns">Returns</h2>
+<p>tree depth (int): depth of provided tree</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tree_depth(t):
+        &#34;&#34;&#34;
+        Returns depth of a tree
+
+        Parameters:
+                t (treelib tree object): tree to estimate on.
+
+        Returns:
+                tree depth (int): depth of provided tree
+        &#34;&#34;&#34;
+        return t.depth()</code></pre>
+</details>
+</dd>
+<dt id="volta.distances.trees.tree_node_level_similarity"><code class="name flex">
+<span>def <span class="ident">tree_node_level_similarity</span></span>(<span>t1, t2, type='percentage')</span>
+</code></dt>
+<dd>
+<div class="desc"><p>Computes the similarity of nodes (based on their level in two rooted trees t1 and t2).</p>
+<h2 id="parameters">Parameters</h2>
+<p>t1 (treelib tree object): first tree to compare
+t2 (treelib tree object): second tree to compare with
+type (str): defines comparison method. If type = "percentage" then for each level the percentage of shared nodes based on the max possible (length of smaller) shared nodes is estimated.
+If type = "correlation" then Kendall rank correlation is estimated. Node rankings are estimated based on their level in the trees. If there are unequal number of nodes a subset of the larger one is selected.
+If type = "smc" then the smc distance for each level is estimated.
+If type ) "jaccard" then the jaccard similarity for each level is estimated.</p>
+<h2 id="returns">Returns</h2>
+<p>mean similarity (list): mean similarity scores for each level
+all scores (list):
+if type = "correlation" then kendall tau (float) and its corresponding p-val (float) are returned instead.</p></div>
+<details class="source">
+<summary>
+<span>Expand source code</span>
+</summary>
+<pre><code class="python">def tree_node_level_similarity(t1, t2, type=&#34;percentage&#34;):
+        &#34;&#34;&#34;
+        Computes the similarity of nodes (based on their level in two rooted trees t1 and t2).
+
+        Parameters:
+                t1 (treelib tree object): first tree to compare
+                t2 (treelib tree object): second tree to compare with
+                type (str): defines comparison method. If type = &#34;percentage&#34; then for each level the percentage of shared nodes based on the max possible (length of smaller) shared nodes is estimated.
+                                        If type = &#34;correlation&#34; then Kendall rank correlation is estimated. Node rankings are estimated based on their level in the trees. If there are unequal number of nodes a subset of the larger one is selected.
+                                        If type = &#34;smc&#34; then the smc distance for each level is estimated.
+                                        If type ) &#34;jaccard&#34; then the jaccard similarity for each level is estimated.
+                
+        Returns:
+                mean similarity (list): mean similarity scores for each level
+                all scores (list):
+                if type = &#34;correlation&#34; then kendall tau (float) and its corresponding p-val (float) are returned instead.
+                
+        &#34;&#34;&#34;
+
+        t1_nodes = t1.all_nodes()
+        t2_nodes = t2.all_nodes()
+
+        t1_level = {}
+        t2_level = {}
+
+        max_level1 = 0
+        max_level2 = 0
+
+        for node in t1_nodes:
+                depth = t1.depth(node)
+                t1_level[node.tag] = depth
+
+                if depth &gt; max_level1:
+                        max_level1 = depth
+
+        for node in t2_nodes:
+                depth = t2.depth(node)
+                t2_level[node.tag] = depth
+
+                if depth &gt; max_level2:
+                        max_level2 = depth
+
+        #print(&#34;tree max levels/ depths are&#34;, max_level1, max_level2)
+        #print(t1_level)
+        #print(t2_level)
+        if type==&#34;percentage&#34;:
+                percentages = []
+                for i in range(max(max_level1, max_level2)+1):
+                        temp1 = [k for k,v in t1_level.items() if float(v) == i]
+                        temp2 = [k for k,v in t2_level.items() if float(v) == i]
+
+                        #if one is 0 p is set to 0
+                        if len(temp1) &lt; 1 or len(temp2) &lt; 1:
+                                print(&#34;level is 0, p is set to 0&#34;)
+                                p = 0
+
+                        else:
+                                if len(temp1) &gt; len(temp2):
+                                        shared = list(set(temp1).intersection(set(temp2)))
+
+                                else:
+                                        shared = list(set(temp2).intersection(set(temp1)))
+                                #print(shared)
+                                p = percentage_shared(shared, temp1, temp2, penalize=False)
+
+                        percentages.append(p)
+
+                mean_percentage = statistics.mean(percentages)
+
+                return mean_percentage, percentages
+
+        elif type == &#34;correlation&#34;:
+                #compute kendall between ranked node lists based on level ranking
+                ranked1 = []
+                ranked2 = []
+
+                for i in range(max(max_level1, max_level2)+1):
+                        temp1 = [k for k,v in t1_level.items() if float(v) == i]
+                        temp2 = [k for k,v in t2_level.items() if float(v) == i]
+
+                        #since kendall requires lists to be of same length
+                        #for each layer only same amount of nodes are taken into account
+
+                        m=min(len(temp1), len(temp2))
+                        
+                        ranked1.append(sorted(temp1)[:m])
+                        ranked2.append(sorted(temp2)[:m])
+
+                ranked1 = [item for sublist in ranked1 for item in sublist]
+                ranked2 = [item for sublist in ranked2 for item in sublist]
+                #print(&#34;ranked1&#34;, ranked1)
+
+                tau, p = kendalltau(ranked1, ranked2, nan_policy=&#34;omit&#34;)
+
+                return tau, p
+        
+
+        elif type ==&#34;smc&#34;:
+                #estimate smc distance of node lists
+
+                smc = []
+                for i in range(max(max_level1, max_level2)+1):
+                        temp1 = [k for k,v in t1_level.items() if float(v) == i]
+                        temp2 = [k for k,v in t2_level.items() if float(v) == i]
+
+                        #if one is 0 p is set to 0
+                        if len(temp1) &lt; 1 or len(temp2) &lt; 1:
+                                s = 0
+
+                        else:
+                                
+
+                                s = __compute_smc_level__(temp1, temp2)
+
+                        smc.append(s)
+
+                mean_smc = statistics.mean(smc)
+
+                return mean_smc, smc
+
+
+
+
+        elif type==&#34;jaccard&#34;:
+                jaccard = []
+                for i in range(max(max_level1, max_level2)+1):
+                        temp1 = [k for k,v in t1_level.items() if float(v) == i]
+                        temp2 = [k for k,v in t2_level.items() if float(v) == i]
+
+                        #if one is 0 p is set to 0
+                        if len(temp1) &lt; 1 or len(temp2) &lt; 1:
+                                j = 0
+
+                        else:
+                                if len(temp1) &gt; len(temp2):
+                                        shared = list(set(temp1).intersection(set(temp2)))
+
+                                else:
+                                        shared = list(set(temp2).intersection(set(temp1)))
+
+                                j = calculate_jaccard_index(shared, temp1, temp2, similarity=True)
+
+                        jaccard.append(j)
+
+                mean_jaccard = statistics.mean(jaccard)
+
+                return mean_jaccard, jaccard</code></pre>
+</details>
+</dd>
+</dl>
+</section>
+<section>
+</section>
+</article>
+<nav id="sidebar">
+<h1>Index</h1>
+<div class="toc">
+<ul></ul>
+</div>
+<ul id="index">
+<li><h3>Super-module</h3>
+<ul>
+<li><code><a title="volta.distances" href="index.html">volta.distances</a></code></li>
+</ul>
+</li>
+<li><h3><a href="#header-functions">Functions</a></h3>
+<ul class="">
+<li><code><a title="volta.distances.trees.construct_tree" href="#volta.distances.trees.construct_tree">construct_tree</a></code></li>
+<li><code><a title="volta.distances.trees.exterior_interior_edges" href="#volta.distances.trees.exterior_interior_edges">exterior_interior_edges</a></code></li>
+<li><code><a title="volta.distances.trees.leave_path_metrics" href="#volta.distances.trees.leave_path_metrics">leave_path_metrics</a></code></li>
+<li><code><a title="volta.distances.trees.number_of_leaves" href="#volta.distances.trees.number_of_leaves">number_of_leaves</a></code></li>
+<li><code><a title="volta.distances.trees.strahler_branching_ratio" href="#volta.distances.trees.strahler_branching_ratio">strahler_branching_ratio</a></code></li>
+<li><code><a title="volta.distances.trees.tree_asymmetry" href="#volta.distances.trees.tree_asymmetry">tree_asymmetry</a></code></li>
+<li><code><a title="volta.distances.trees.tree_depth" href="#volta.distances.trees.tree_depth">tree_depth</a></code></li>
+<li><code><a title="volta.distances.trees.tree_node_level_similarity" href="#volta.distances.trees.tree_node_level_similarity">tree_node_level_similarity</a></code></li>
+</ul>
+</li>
+</ul>
+</nav>
+</main>
+<footer id="footer">
+<p>Generated by <a href="https://pdoc3.github.io/pdoc"><cite>pdoc</cite> 0.9.2</a>.</p>
+</footer>
+</body>
+</html>
