@@ -61,7 +61,7 @@ Python Virtual Environment: https://docs.python.org/3/tutorial/venv.html
 To run the example pipelines a Jupyter Notebooks server needs to be installed (https://jupyter.org/install).
 
 Installation via Conda: *conda install -c conda-forge jupyterlab*
-Installation via pip: *pip3 install njupyterlab*
+Installation via pip: *pip3 install jupyterlab*
 
 Start with *jupyter notebook* in a terminal.
 
