@@ -218,7 +218,7 @@ def label_propagation(G, return_object=True):
 
 def walktrap(G, return_object=True):
     &#34;&#34;&#34;
-    Based on random walks.
+    Based on random walks. This algorithm can be given directed or undirected graph objects as input. 
 
     References:
         https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.walktrap.html#cdlib.algorithms.walktrap
@@ -261,7 +261,7 @@ def walktrap(G, return_object=True):
 
 def cpm(G, initial_membership=None, weights=&#34;weight&#34;, resolution_parameter=1, return_object=True):
     &#34;&#34;&#34;
-    Finds communities of a particular density.
+    Finds communities of a particular density. As input directed or undirected graph objects can be provided.
 
     References:
         https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.cpm.html#cdlib.algorithms.cpm
@@ -327,7 +327,7 @@ def greedy_modularity(G, weights=&#34;weight&#34;, return_object=True):
 
 def leiden(G,  weights=&#34;weight&#34;, return_object=True):
     &#34;&#34;&#34;
-    Based on the louvain algorithm.
+    Based on the louvain algorithm. This algorithm can be given directed or undirected graph objects as input.
 
     References:
         https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.leiden.html#cdlib.algorithms.leiden
@@ -590,6 +590,7 @@ def __disconnect_high_degree__(G, nodes=10, percentage=None, weight=&#34;weight&
 def girvan_newman(G, valuable_edge=&#34;max_weight&#34;, k=1, is_leve=False, attribute=&#34;weight&#34;, w_max=True):
     &#34;&#34;&#34;
     NetworkX girvan newman implementation. Removes &#34;most valuable edge&#34; from the graph to partition it.
+    As input directed or undirected graph objects can be provided.
 
     References:
         https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.community.centrality.girvan_newman.html
@@ -688,6 +689,7 @@ def girvan_newman(G, valuable_edge=&#34;max_weight&#34;, k=1, is_leve=False, att
 def agglomerative_clustering(G, is_distance=True, linkage=&#34;complete&#34;, distance_threshold=0.2):
     &#34;&#34;&#34;
     Clusters on the adjacency matrix of a graph. Cells need to contain distance or similarity values. Based on sklearn.
+    As input directed or undirected graph objects can be provided.
 
     Parameters:
         G (networkX graph object): to estimate on
@@ -730,6 +732,7 @@ def agglomerative_clustering(G, is_distance=True, linkage=&#34;complete&#34;, di
 def markov_clustering(G, inflation=1.1):
     &#34;&#34;&#34;
     Markov clustering on adjacency matrix. Based on the markovclustering package.
+    As input directed or undirected graph objects can be provided.
 
     Parameters:
         G (networkX graph object): to estimate on
@@ -772,6 +775,8 @@ def markov_clustering(G, inflation=1.1):
 
 def angel(G, treshold=0.5, min_community_size=3, return_object=True):
     &#34;&#34;&#34;
+    As input directed or undirected graph objects can be provided.
+
     References:
         https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.angel.html#cdlib.algorithms.angel
 
@@ -806,6 +811,7 @@ def angel(G, treshold=0.5, min_community_size=3, return_object=True):
 def ego_networks(G, level=1, return_object=True):
     &#34;&#34;&#34;
     Based on ego networks.
+    As input directed or undirected graph objects can be provided.
 
     References:
         https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.ego_networks.html#cdlib.algorithms.ego_networks
@@ -3245,7 +3251,8 @@ initialclustering (dict): the partitioning used on the provided graph in the ini
 <span>def <span class="ident">agglomerative_clustering</span></span>(<span>G, is_distance=True, linkage='complete', distance_threshold=0.2)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Clusters on the adjacency matrix of a graph. Cells need to contain distance or similarity values. Based on sklearn.</p>
+<div class="desc"><p>Clusters on the adjacency matrix of a graph. Cells need to contain distance or similarity values. Based on sklearn.
+As input directed or undirected graph objects can be provided.</p>
 <h2 id="parameters">Parameters</h2>
 <p>G (networkX graph object): to estimate on
 is_distance (boolean): if True the values contained in the adjacency matrix are used for clustering. If False they are converted into a distance first with 1-x.
@@ -3261,6 +3268,7 @@ distance_treshold (float): treshold above which clusters will be merged.</p>
 <pre><code class="python">def agglomerative_clustering(G, is_distance=True, linkage=&#34;complete&#34;, distance_threshold=0.2):
     &#34;&#34;&#34;
     Clusters on the adjacency matrix of a graph. Cells need to contain distance or similarity values. Based on sklearn.
+    As input directed or undirected graph objects can be provided.
 
     Parameters:
         G (networkX graph object): to estimate on
@@ -3301,7 +3309,8 @@ distance_treshold (float): treshold above which clusters will be merged.</p>
 <span>def <span class="ident">angel</span></span>(<span>G, treshold=0.5, min_community_size=3, return_object=True)</span>
 </code></dt>
 <dd>
-<div class="desc"><h2 id="references">References</h2>
+<div class="desc"><p>As input directed or undirected graph objects can be provided.</p>
+<h2 id="references">References</h2>
 <p><a href="https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.angel.html#cdlib.algorithms.angel">https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.angel.html#cdlib.algorithms.angel</a></p>
 <p>Rossetti, Giulio. “Exorcising the Demon: Angel, Efficient Node-Centric Community Discovery.”
 International Conference on Complex Networks and Their Applications. Springer, Cham, 2019.</p>
@@ -3320,6 +3329,8 @@ fitness parameters (NodeClustering object): if return_object is True.</p></div>
 </summary>
 <pre><code class="python">def angel(G, treshold=0.5, min_community_size=3, return_object=True):
     &#34;&#34;&#34;
+    As input directed or undirected graph objects can be provided.
+
     References:
         https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.angel.html#cdlib.algorithms.angel
 
@@ -3917,7 +3928,7 @@ Where keys are community IDs and values are lists of nodes in that community.</p
 <span>def <span class="ident">cpm</span></span>(<span>G, initial_membership=None, weights='weight', resolution_parameter=1, return_object=True)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Finds communities of a particular density.</p>
+<div class="desc"><p>Finds communities of a particular density. As input directed or undirected graph objects can be provided.</p>
 <h2 id="references">References</h2>
 <p><a href="https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.cpm.html#cdlib.algorithms.cpm">https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.cpm.html#cdlib.algorithms.cpm</a></p>
 <p>Traag, V. A., Van Dooren, P., &amp; Nesterov, Y. (2011).
@@ -3939,7 +3950,7 @@ fitness parameters (NodeClustering object): if return_object is True.</p></div>
 </summary>
 <pre><code class="python">def cpm(G, initial_membership=None, weights=&#34;weight&#34;, resolution_parameter=1, return_object=True):
     &#34;&#34;&#34;
-    Finds communities of a particular density.
+    Finds communities of a particular density. As input directed or undirected graph objects can be provided.
 
     References:
         https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.cpm.html#cdlib.algorithms.cpm
@@ -4108,7 +4119,8 @@ If there are less than 2 communities None is returned.</p></div>
 <span>def <span class="ident">ego_networks</span></span>(<span>G, level=1, return_object=True)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Based on ego networks.</p>
+<div class="desc"><p>Based on ego networks.
+As input directed or undirected graph objects can be provided.</p>
 <h2 id="references">References</h2>
 <p><a href="https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.ego_networks.html#cdlib.algorithms.ego_networks">https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.ego_networks.html#cdlib.algorithms.ego_networks</a></p>
 <h2 id="parameters">Parameters</h2>
@@ -4125,6 +4137,7 @@ fitness parameters (NodeClustering object): if return_object is True.</p></div>
 <pre><code class="python">def ego_networks(G, level=1, return_object=True):
     &#34;&#34;&#34;
     Based on ego networks.
+    As input directed or undirected graph objects can be provided.
 
     References:
         https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.ego_networks.html#cdlib.algorithms.ego_networks
@@ -4635,7 +4648,8 @@ individual nodes (dict): if in_detail is True. key is community ID and value is 
 <span>def <span class="ident">girvan_newman</span></span>(<span>G, valuable_edge='max_weight', k=1, is_leve=False, attribute='weight', w_max=True)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>NetworkX girvan newman implementation. Removes "most valuable edge" from the graph to partition it.</p>
+<div class="desc"><p>NetworkX girvan newman implementation. Removes "most valuable edge" from the graph to partition it.
+As input directed or undirected graph objects can be provided.</p>
 <h2 id="references">References</h2>
 <p><a href="https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.community.centrality.girvan_newman.html">https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.community.centrality.girvan_newman.html</a></p>
 <h2 id="parameters">Parameters</h2>
@@ -4658,6 +4672,7 @@ w_max (boolean): only applies if valuable_edge is not "max_weight" or "min_weigh
 <pre><code class="python">def girvan_newman(G, valuable_edge=&#34;max_weight&#34;, k=1, is_leve=False, attribute=&#34;weight&#34;, w_max=True):
     &#34;&#34;&#34;
     NetworkX girvan newman implementation. Removes &#34;most valuable edge&#34; from the graph to partition it.
+    As input directed or undirected graph objects can be provided.
 
     References:
         https://networkx.github.io/documentation/stable/reference/algorithms/generated/networkx.algorithms.community.centrality.girvan_newman.html
@@ -5136,7 +5151,7 @@ fitness parameters (NodeClustering object): if return_object is True.</p></div>
 <span>def <span class="ident">leiden</span></span>(<span>G, weights='weight', return_object=True)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Based on the louvain algorithm.</p>
+<div class="desc"><p>Based on the louvain algorithm. This algorithm can be given directed or undirected graph objects as input.</p>
 <h2 id="references">References</h2>
 <p><a href="https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.leiden.html#cdlib.algorithms.leiden">https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.leiden.html#cdlib.algorithms.leiden</a></p>
 <p>Traag, Vincent, Ludo Waltman, and Nees Jan van Eck.
@@ -5154,7 +5169,7 @@ fitness parameters (NodeClustering object): if return_object is True.</p></div>
 </summary>
 <pre><code class="python">def leiden(G,  weights=&#34;weight&#34;, return_object=True):
     &#34;&#34;&#34;
-    Based on the louvain algorithm.
+    Based on the louvain algorithm. This algorithm can be given directed or undirected graph objects as input.
 
     References:
         https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.leiden.html#cdlib.algorithms.leiden
@@ -5244,7 +5259,8 @@ fitness parameters (NodeClustering object): if return_object is True.</p></div>
 <span>def <span class="ident">markov_clustering</span></span>(<span>G, inflation=1.1)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Markov clustering on adjacency matrix. Based on the markovclustering package.</p>
+<div class="desc"><p>Markov clustering on adjacency matrix. Based on the markovclustering package.
+As input directed or undirected graph objects can be provided.</p>
 <p>Parameters:
 G (networkX graph object): to estimate on
 inflation (float): clustering parameter.</p>
@@ -5257,6 +5273,7 @@ inflation (float): clustering parameter.</p>
 <pre><code class="python">def markov_clustering(G, inflation=1.1):
     &#34;&#34;&#34;
     Markov clustering on adjacency matrix. Based on the markovclustering package.
+    As input directed or undirected graph objects can be provided.
 
     Parameters:
         G (networkX graph object): to estimate on
@@ -5950,7 +5967,7 @@ If there are less than 2 communities None is returned.</p></div>
 <span>def <span class="ident">walktrap</span></span>(<span>G, return_object=True)</span>
 </code></dt>
 <dd>
-<div class="desc"><p>Based on random walks.</p>
+<div class="desc"><p>Based on random walks. This algorithm can be given directed or undirected graph objects as input. </p>
 <h2 id="references">References</h2>
 <p><a href="https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.walktrap.html#cdlib.algorithms.walktrap">https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.walktrap.html#cdlib.algorithms.walktrap</a></p>
 <p>Pons, Pascal, and Matthieu Latapy. Computing communities in large networks using random walks.
@@ -5967,7 +5984,7 @@ fitness parameters (NodeClustering object): if return_object is True.</p></div>
 </summary>
 <pre><code class="python">def walktrap(G, return_object=True):
     &#34;&#34;&#34;
-    Based on random walks.
+    Based on random walks. This algorithm can be given directed or undirected graph objects as input. 
 
     References:
         https://cdlib.readthedocs.io/en/latest/reference/cd_algorithms/algs/cdlib.algorithms.walktrap.html#cdlib.algorithms.walktrap

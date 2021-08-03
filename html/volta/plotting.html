@@ -43,7 +43,7 @@ import random
 import volta.communities as communities
 
 
-def plot_heatmap(matrix, xlabels=None, ylabels=None, size=(10,8), cmap=&#34;bone&#34;, annotation=False):
+def plot_heatmap(matrix, xlabels=None, ylabels=None, size=(10,8), cmap=&#34;bone&#34;, annotation=False, diagonal=None):
 
     &#34;&#34;&#34;
     Plots a heatmap. Return figure fig can be saved with fig.savefig(). For parameters refer to the matplotlib documentation.
@@ -55,6 +55,7 @@ def plot_heatmap(matrix, xlabels=None, ylabels=None, size=(10,8), cmap=&#34;bone
         size (tuple): plot size to be used
         cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
         annotation (boolea): if True then cell values are plotted
+        diagonal (float or None): if not None the values on the diagonal are replaced with the provided value
 
     Returns:
         fig (matplotlib figure): heatmap object
@@ -64,6 +65,9 @@ def plot_heatmap(matrix, xlabels=None, ylabels=None, size=(10,8), cmap=&#34;bone
         xlabels=&#34;auto&#34;
     if ylabels is None:
         ylabels = &#34;auto&#34;
+
+    if diagonal is not None:
+        np.fill_diagonal(matrix, diagonal)
 
     if cmap is None:
         cmap = sns.cubehelix_palette(start=7, rot=0, dark=0.2, light=0.8, reverse=False, as_cmap=True)
@@ -107,7 +111,7 @@ def plot_hierarchical_clustering(matrix, xlabels=None, ylabels=None, size=(10,8)
     return sns.clustermap(matrix, annot=False, figsize=size, xticklabels=xlabels, yticklabels=ylabels, cmap=cmap)
 
     
-def plot_clustering_heatmap(clusters, matrix, labels, cmap=&#34;bone&#34;, size=(10,8)):
+def plot_clustering_heatmap(clusters, matrix, labels, cmap=&#34;bone&#34;, size=(10,8), diagonal=None):
 
     &#34;&#34;&#34;
     Plots a clustering on top of a provided distance matrix.
@@ -118,6 +122,7 @@ def plot_clustering_heatmap(clusters, matrix, labels, cmap=&#34;bone&#34;, size=
         labels (list): list of labels to be used for plot. Needs to be in the same order as clusters
         cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
         size (tuple): figuresize
+        diagonal (float or None): if not None the values on the diagonal are replaced with the provided value
 
     Returns:
         fig (matplotlib figure): of clustering
@@ -156,6 +161,8 @@ def plot_clustering_heatmap(clusters, matrix, labels, cmap=&#34;bone&#34;, size=
             
             
     #create plot
+    if diagonal is not None:
+        np.fill_diagonal(matrix, diagonal)
 
     fig, ax = plt.subplots(1, 1, figsize=size)
     data = matrix[np.ix_(inds, inds)]
@@ -445,7 +452,7 @@ aggreement matrix (matrix): containing the agreement values</p></div>
 </details>
 </dd>
 <dt id="volta.plotting.plot_clustering_heatmap"><code class="name flex">
-<span>def <span class="ident">plot_clustering_heatmap</span></span>(<span>clusters, matrix, labels, cmap='bone', size=(10, 8))</span>
+<span>def <span class="ident">plot_clustering_heatmap</span></span>(<span>clusters, matrix, labels, cmap='bone', size=(10, 8), diagonal=None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Plots a clustering on top of a provided distance matrix.</p>
@@ -454,14 +461,15 @@ aggreement matrix (matrix): containing the agreement values</p></div>
 matrix (matrix): distance or similarity matrix that has been provided as input for the clustering
 labels (list): list of labels to be used for plot. Needs to be in the same order as clusters
 cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
-size (tuple): figuresize</p>
+size (tuple): figuresize
+diagonal (float or None): if not None the values on the diagonal are replaced with the provided value</p>
 <h2 id="returns">Returns</h2>
 <p>fig (matplotlib figure): of clustering</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def plot_clustering_heatmap(clusters, matrix, labels, cmap=&#34;bone&#34;, size=(10,8)):
+<pre><code class="python">def plot_clustering_heatmap(clusters, matrix, labels, cmap=&#34;bone&#34;, size=(10,8), diagonal=None):
 
     &#34;&#34;&#34;
     Plots a clustering on top of a provided distance matrix.
@@ -472,6 +480,7 @@ size (tuple): figuresize</p>
         labels (list): list of labels to be used for plot. Needs to be in the same order as clusters
         cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
         size (tuple): figuresize
+        diagonal (float or None): if not None the values on the diagonal are replaced with the provided value
 
     Returns:
         fig (matplotlib figure): of clustering
@@ -510,6 +519,8 @@ size (tuple): figuresize</p>
             
             
     #create plot
+    if diagonal is not None:
+        np.fill_diagonal(matrix, diagonal)
 
     fig, ax = plt.subplots(1, 1, figsize=size)
     data = matrix[np.ix_(inds, inds)]
@@ -767,7 +778,7 @@ pos (dict): used node positining for plots</p></div>
 </details>
 </dd>
 <dt id="volta.plotting.plot_heatmap"><code class="name flex">
-<span>def <span class="ident">plot_heatmap</span></span>(<span>matrix, xlabels=None, ylabels=None, size=(10, 8), cmap='bone', annotation=False)</span>
+<span>def <span class="ident">plot_heatmap</span></span>(<span>matrix, xlabels=None, ylabels=None, size=(10, 8), cmap='bone', annotation=False, diagonal=None)</span>
 </code></dt>
 <dd>
 <div class="desc"><p>Plots a heatmap. Return figure fig can be saved with fig.savefig(). For parameters refer to the matplotlib documentation.</p>
@@ -777,14 +788,15 @@ xlabels (list or None): list of tick labels to be used for the x axis
 ylabels (list or None): list of tick labels to be used for the y axis
 size (tuple): plot size to be used
 cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
-annotation (boolea): if True then cell values are plotted</p>
+annotation (boolea): if True then cell values are plotted
+diagonal (float or None): if not None the values on the diagonal are replaced with the provided value</p>
 <h2 id="returns">Returns</h2>
 <p>fig (matplotlib figure): heatmap object</p></div>
 <details class="source">
 <summary>
 <span>Expand source code</span>
 </summary>
-<pre><code class="python">def plot_heatmap(matrix, xlabels=None, ylabels=None, size=(10,8), cmap=&#34;bone&#34;, annotation=False):
+<pre><code class="python">def plot_heatmap(matrix, xlabels=None, ylabels=None, size=(10,8), cmap=&#34;bone&#34;, annotation=False, diagonal=None):
 
     &#34;&#34;&#34;
     Plots a heatmap. Return figure fig can be saved with fig.savefig(). For parameters refer to the matplotlib documentation.
@@ -796,6 +808,7 @@ annotation (boolea): if True then cell values are plotted</p>
         size (tuple): plot size to be used
         cmap (matplotlib colormap): can be created colormap or name of a pre-defined color map
         annotation (boolea): if True then cell values are plotted
+        diagonal (float or None): if not None the values on the diagonal are replaced with the provided value
 
     Returns:
         fig (matplotlib figure): heatmap object
@@ -805,6 +818,9 @@ annotation (boolea): if True then cell values are plotted</p>
         xlabels=&#34;auto&#34;
     if ylabels is None:
         ylabels = &#34;auto&#34;
+
+    if diagonal is not None:
+        np.fill_diagonal(matrix, diagonal)
 
     if cmap is None:
         cmap = sns.cubehelix_palette(start=7, rot=0, dark=0.2, light=0.8, reverse=False, as_cmap=True)

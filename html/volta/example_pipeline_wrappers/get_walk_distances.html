@@ -199,6 +199,7 @@ def helper_walk_sim(networks, performed_walks, nodes, network_ids, undirected=Tr
         edges_ranked (dict): as returned by helper_get_counts())
 
     Returns:
+        results (dict): where keys and values are:
         correlation edges (numpy matrix): between network pairs
         correlation nodes (numpy matrix): between network pairs
         correlation edges p-value (numpy matrix): between network pairs
@@ -206,7 +207,7 @@ def helper_walk_sim(networks, performed_walks, nodes, network_ids, undirected=Tr
         intermediate correaltion scores edges (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes.
         intermediate correaltion scores nodes (dict):  if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes.
         intermediate p-values edges (dict): if return_all is True. Key is tuple of network IDs and value is list of p-values ordered as in nodes.
-        intermediate p-values edges (dict):  if return_all is True. Key is tuple of network IDs and value is list of p-values ordered as in nodes.
+        intermediate p-values nodes (dict):  if return_all is True. Key is tuple of network IDs and value is list of p-values ordered as in nodes.
 
     &#34;&#34;&#34;
                 
@@ -321,13 +322,31 @@ def helper_walk_sim(networks, performed_walks, nodes, network_ids, undirected=Tr
             results_edges_all[(n1, n2)] = edges_sim_all
             results_edges_p_all[(n1, n2)] = edges_sim_p_all
 
+    res_dict = {}
 
     if return_all:
-        return results_edges, results_nodes, results_edges_p, results_nodes_p, results_edges_all, results_nodes_all, results_edges_p_all, results_nodes_p_all
 
+        res_dict[&#34;correlation edges&#34;] = results_edges
+        res_dict[&#34;correlation nodes&#34;] = results_edges
+        res_dict[&#34;correlation edges p-value&#34;] = results_edges_p
+        res_dict[&#34;correlation nodes p-value&#34;] = results_nodes_p
+        res_dict[&#34;intermediate correaltion scores edges&#34;] = results_edges_all
+        res_dict[&#34;intermediate correaltion scores nodes&#34;] = results_nodes_all
+        res_dict[&#34;intermediate p-values edges&#34;] = results_edges_p_all
+        res_dict[&#34;intermediate p-values nodes&#34;] = results_nodes_p_all
+
+
+
+        return res_dict
     else:
 
-        return results_edges, results_nodes, results_edges_p, results_nodes_p
+        res_dict[&#34;correlation edges&#34;] = results_edges
+        res_dict[&#34;correlation nodes&#34;] = results_edges
+        res_dict[&#34;correlation edges p-value&#34;] = results_edges_p
+        res_dict[&#34;correlation nodes p-value&#34;] = results_nodes_p
+
+        return res_dict
+
 
 
 def __walks_multi__(nodes, net=None, network_id=None, steps=10, number_of_walks=10, degree=True, start=None, probabilistic=True, weight=&#34;weight&#34;):
@@ -528,7 +547,8 @@ return_all (boolean): if True then for each network pair its full correlation li
 nodes_ranked (dict): as returned by helper_get_counts()
 edges_ranked (dict): as returned by helper_get_counts())</p>
 <h2 id="returns">Returns</h2>
-<p>correlation edges (numpy matrix): between network pairs
+<p>results (dict): where keys and values are:
+correlation edges (numpy matrix): between network pairs
 correlation nodes (numpy matrix): between network pairs
 correlation edges p-value (numpy matrix): between network pairs
 correlation nodes p-value (numpy matrix): between network pairs
@@ -536,7 +556,7 @@ intermediate correaltion scores edges (dict): if return_all is True. Key is tupl
 intermediate correaltion scores nodes (dict):
 if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes.
 intermediate p-values edges (dict): if return_all is True. Key is tuple of network IDs and value is list of p-values ordered as in nodes.
-intermediate p-values edges (dict):
+intermediate p-values nodes (dict):
 if return_all is True. Key is tuple of network IDs and value is list of p-values ordered as in nodes.</p></div>
 <details class="source">
 <summary>
@@ -559,6 +579,7 @@ if return_all is True. Key is tuple of network IDs and value is list of p-values
         edges_ranked (dict): as returned by helper_get_counts())
 
     Returns:
+        results (dict): where keys and values are:
         correlation edges (numpy matrix): between network pairs
         correlation nodes (numpy matrix): between network pairs
         correlation edges p-value (numpy matrix): between network pairs
@@ -566,7 +587,7 @@ if return_all is True. Key is tuple of network IDs and value is list of p-values
         intermediate correaltion scores edges (dict): if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes.
         intermediate correaltion scores nodes (dict):  if return_all is True. Key is tuple of network IDs and value is list of scores ordered as in nodes.
         intermediate p-values edges (dict): if return_all is True. Key is tuple of network IDs and value is list of p-values ordered as in nodes.
-        intermediate p-values edges (dict):  if return_all is True. Key is tuple of network IDs and value is list of p-values ordered as in nodes.
+        intermediate p-values nodes (dict):  if return_all is True. Key is tuple of network IDs and value is list of p-values ordered as in nodes.
 
     &#34;&#34;&#34;
                 
@@ -681,13 +702,30 @@ if return_all is True. Key is tuple of network IDs and value is list of p-values
             results_edges_all[(n1, n2)] = edges_sim_all
             results_edges_p_all[(n1, n2)] = edges_sim_p_all
 
+    res_dict = {}
 
     if return_all:
-        return results_edges, results_nodes, results_edges_p, results_nodes_p, results_edges_all, results_nodes_all, results_edges_p_all, results_nodes_p_all
 
+        res_dict[&#34;correlation edges&#34;] = results_edges
+        res_dict[&#34;correlation nodes&#34;] = results_edges
+        res_dict[&#34;correlation edges p-value&#34;] = results_edges_p
+        res_dict[&#34;correlation nodes p-value&#34;] = results_nodes_p
+        res_dict[&#34;intermediate correaltion scores edges&#34;] = results_edges_all
+        res_dict[&#34;intermediate correaltion scores nodes&#34;] = results_nodes_all
+        res_dict[&#34;intermediate p-values edges&#34;] = results_edges_p_all
+        res_dict[&#34;intermediate p-values nodes&#34;] = results_nodes_p_all
+
+
+
+        return res_dict
     else:
 
-        return results_edges, results_nodes, results_edges_p, results_nodes_p</code></pre>
+        res_dict[&#34;correlation edges&#34;] = results_edges
+        res_dict[&#34;correlation nodes&#34;] = results_edges
+        res_dict[&#34;correlation edges p-value&#34;] = results_edges_p
+        res_dict[&#34;correlation nodes p-value&#34;] = results_nodes_p
+
+        return res_dict</code></pre>
 </details>
 </dd>
 <dt id="volta.example_pipeline_wrappers.get_walk_distances.helper_walks"><code class="name flex">
